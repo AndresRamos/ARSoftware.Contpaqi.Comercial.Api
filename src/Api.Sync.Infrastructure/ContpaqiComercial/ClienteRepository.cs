@@ -1,0 +1,63 @@
+﻿using Api.Core.Domain.Models;
+using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
+using ARSoftware.Contpaqi.Comercial.Sql.Contexts;
+using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+
+namespace Api.Sync.Infrastructure.ContpaqiComercial;
+
+public sealed class ClienteRepository : IClienteRepository
+{
+    private readonly ContpaqiComercialEmpresaDbContext _context;
+    private readonly IMapper _mapper;
+
+    public ClienteRepository(ContpaqiComercialEmpresaDbContext context, IMapper mapper)
+    {
+        _context = context;
+        _mapper = mapper;
+    }
+
+    public async Task<bool> ExistePorCodigoAsync(string codigo, CancellationToken cancellationToken)
+    {
+        return await _context.admClientes.AnyAsync(c => c.CCODIGOCLIENTE == codigo, cancellationToken);
+    }
+
+    public async Task<Cliente> BuscarPorCodigoAsync(string codigo, CancellationToken cancellationToken)
+    {
+        admClientes admCliente = await _context.admClientes.FirstAsync(c => c.CCODIGOCLIENTE == codigo, cancellationToken);
+
+        var cliente = _mapper.Map<Cliente>(admCliente);
+        cliente.DireccionFiscal = await BuscarDireccionFiscalAsync(admCliente.CIDCLIENTEPROVEEDOR, cancellationToken) ?? new Direccion();
+
+        return cliente;
+    }
+
+    public async Task<Cliente> BuscarPorIdAsync(int id, CancellationToken cancellationToken)
+    {
+        admClientes admCliente = await _context.admClientes.FirstAsync(c => c.CIDCLIENTEPROVEEDOR == id, cancellationToken);
+
+        var cliente = _mapper.Map<Cliente>(admCliente);
+        cliente.DireccionFiscal = await BuscarDireccionFiscalAsync(admCliente.CIDCLIENTEPROVEEDOR, cancellationToken) ?? new Direccion();
+
+        return cliente;
+    }
+
+    public async Task<bool> ExisteDireccionFiscalDelClienteAsync(string codigo, CancellationToken cancellationToken)
+    {
+        // Todo: cambiar  d.CTIPODIRECCION == (int)TipoDireccion.Fiscal y d.CTIPOCATALOGO == (int)TipoCatalogoDireccion.Clientes
+        admClientes cliente = await _context.admClientes.FirstAsync(c => c.CCODIGOCLIENTE == codigo, cancellationToken);
+        return await _context.admDomicilios.AnyAsync(d =>
+                d.CIDCATALOGO == cliente.CIDCLIENTEPROVEEDOR && d.CTIPODIRECCION == 0 && d.CTIPOCATALOGO == 1,
+            cancellationToken);
+    }
+
+    private async Task<Direccion?> BuscarDireccionFiscalAsync(int clienteId, CancellationToken cancellationToken)
+    {
+        admDomicilios? admDomicilio = await _context.admDomicilios.FirstOrDefaultAsync(d =>
+                d.CIDCATALOGO == clienteId && d.CTIPODIRECCION == 0 && d.CTIPOCATALOGO == 1,
+            cancellationToken);
+
+        return _mapper.Map<Direccion>(admDomicilio);
+    }
+}

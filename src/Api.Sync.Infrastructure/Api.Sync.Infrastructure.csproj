@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ARSoftware.Contpaqi.Comercial.Sql" Version="3.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Api.Sync.Core.Application\Api.Sync.Core.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ARSoftware.Contpaqi.Comercial.Sdk">
+      <HintPath>..\..\..\AndresRamos\ARSoftware.Contpaqi.Comercial\src\ARSoftware.Contpaqi.Comercial.Sdk.Extras\bin\Debug\netstandard2.0\ARSoftware.Contpaqi.Comercial.Sdk.dll</HintPath>
+    </Reference>
+    <Reference Include="ARSoftware.Contpaqi.Comercial.Sdk.Extras">
+      <HintPath>..\..\..\AndresRamos\ARSoftware.Contpaqi.Comercial\src\ARSoftware.Contpaqi.Comercial.Sdk.Extras\bin\Debug\netstandard2.0\ARSoftware.Contpaqi.Comercial.Sdk.Extras.dll</HintPath>
+    </Reference>
+    <Reference Include="ARSoftware.Contpaqi.Comercial.Sql.Models">
+      <HintPath>..\..\..\AndresRamos\ARSoftware.Contpaqi.Comercial\src\ARSoftware.Contpaqi.Comercial.Sdk.Extras\bin\Debug\netstandard2.0\ARSoftware.Contpaqi.Comercial.Sql.Models.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
