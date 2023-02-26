@@ -1,30 +1,31 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;1591</NoWarn>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<NoWarn>1701;1702;1591</NoWarn>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <NoWarn>1701;1702;1591</NoWarn>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<NoWarn>1701;1702;1591</NoWarn>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Reference Include="ARSoftware.Contpaqi.Comercial.Sdk">
-      <HintPath>..\..\..\AndresRamos\ARSoftware.Contpaqi.Comercial\src\ARSoftware.Contpaqi.Comercial.Sdk.Extras\bin\Debug\netstandard2.0\ARSoftware.Contpaqi.Comercial.Sdk.dll</HintPath>
-    </Reference>
-    <Reference Include="ARSoftware.Contpaqi.Comercial.Sdk.Extras">
-      <HintPath>..\..\..\AndresRamos\ARSoftware.Contpaqi.Comercial\src\ARSoftware.Contpaqi.Comercial.Sdk.Extras\bin\Debug\netstandard2.0\ARSoftware.Contpaqi.Comercial.Sdk.Extras.dll</HintPath>
-    </Reference>
-    <Reference Include="ARSoftware.Contpaqi.Comercial.Sql.Models">
-      <HintPath>..\..\..\AndresRamos\ARSoftware.Contpaqi.Comercial\src\ARSoftware.Contpaqi.Comercial.Sdk.Extras\bin\Debug\netstandard2.0\ARSoftware.Contpaqi.Comercial.Sql.Models.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+	<ItemGroup>
+	  <PackageReference Include="ARSoftware.Contpaqi.Comercial.Sdk.Extras" Version="4.2.0" />
+	  <PackageReference Include="MediatR" Version="12.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Using Include="Api.Core.Domain.Common" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Requests\Empresas\" />
+	</ItemGroup>
 
 </Project>

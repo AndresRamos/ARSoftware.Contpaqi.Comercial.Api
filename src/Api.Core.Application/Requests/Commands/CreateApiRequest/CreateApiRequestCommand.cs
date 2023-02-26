@@ -4,15 +4,7 @@ using MediatR;
 
 namespace Api.Core.Application.Requests.Commands.CreateApiRequest;
 
-public sealed class CreateApiRequestCommand : IRequest<Guid>
-{
-    public CreateApiRequestCommand(ApiRequestBase apiRequest)
-    {
-        ApiRequest = apiRequest;
-    }
-
-    public ApiRequestBase ApiRequest { get; }
-}
+public sealed record CreateApiRequestCommand(ApiRequestBase ApiRequest) : IRequest<Guid>;
 
 public sealed class CreateApiRequestCommandHandler : IRequestHandler<CreateApiRequestCommand, Guid>
 {
@@ -26,6 +18,8 @@ public sealed class CreateApiRequestCommandHandler : IRequestHandler<CreateApiRe
     public async Task<Guid> Handle(CreateApiRequestCommand request, CancellationToken cancellationToken)
     {
         ApiRequestBase apiRequest = request.ApiRequest;
+
+        apiRequest.SetCreateDefaults();
 
         _applicationDbContext.Requests.Add(apiRequest);
 

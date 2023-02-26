@@ -1,6 +1,6 @@
-﻿using System.Reflection;
-using Api.Core.Application.Common.Interfaces;
+﻿using Api.Core.Application.Common.Interfaces;
 using Api.Core.Domain.Common;
+using Api.Infrastructure.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Infrastructure.Persistence;
@@ -21,7 +21,10 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext
 
         builder.Entity<ApiRequestBase>().HasOne(r => r.Response).WithOne().HasForeignKey<ApiResponseBase>(r => r.Id);
 
-        builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        //builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+        ApiRequestConfiguration.ConfigureRequests(builder);
+        ApiResponseConfiguration.ConfigureResponses(builder);
 
         base.OnModelCreating(builder);
     }

@@ -5,15 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Core.Application.Requests.Queries.GetApiRequestById;
 
-public sealed class GetApiRequestByIdQuery : IRequest<ApiRequestBase?>
-{
-    public GetApiRequestByIdQuery(Guid apiRequestId)
-    {
-        ApiRequestId = apiRequestId;
-    }
-
-    public Guid ApiRequestId { get; }
-}
+public sealed record GetApiRequestByIdQuery(Guid ApiRequestId) : IRequest<ApiRequestBase?>;
 
 public sealed class GetApiRequestByIdQueryHandler : IRequestHandler<GetApiRequestByIdQuery, ApiRequestBase?>
 {

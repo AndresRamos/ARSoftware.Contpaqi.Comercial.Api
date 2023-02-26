@@ -15,10 +15,8 @@ public sealed class SendApiResponseCommandHandler : IRequestHandler<SendApiRespo
         _contpaqiComercialApiService = contpaqiComercialApiService;
     }
 
-    public async Task<Unit> Handle(SendApiResponseCommand request, CancellationToken cancellationToken)
+    public async Task Handle(SendApiResponseCommand request, CancellationToken cancellationToken)
     {
         await _contpaqiComercialApiService.SendResponseAsync(request.ApiResponse, cancellationToken);
-
-        return Unit.Value;
     }
 }

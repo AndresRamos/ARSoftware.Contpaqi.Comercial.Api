@@ -5,15 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Core.Application.Responses.Commands.CreateApiResponse;
 
-public sealed class CreateApiResponseCommand : IRequest
-{
-    public CreateApiResponseCommand(ApiResponseBase apiResponse)
-    {
-        ApiResponse = apiResponse;
-    }
-
-    public ApiResponseBase ApiResponse { get; }
-}
+public sealed record CreateApiResponseCommand(ApiResponseBase ApiResponse) : IRequest;
 
 public sealed class CreateApiResponseCommandHandler : IRequestHandler<CreateApiResponseCommand>
 {
@@ -24,17 +16,13 @@ public sealed class CreateApiResponseCommandHandler : IRequestHandler<CreateApiR
         _applicationDbContext = applicationDbContext;
     }
 
-    public async Task<Unit> Handle(CreateApiResponseCommand request, CancellationToken cancellationToken)
+    public async Task Handle(CreateApiResponseCommand request, CancellationToken cancellationToken)
     {
         ApiRequestBase apiRequest = await _applicationDbContext.Requests.FirstAsync(c => c.Id == request.ApiResponse.Id, cancellationToken);
 
         apiRequest.Response = request.ApiResponse;
-        apiRequest.IsProcessed = true;
-
-        //_applicationDbContext.Responses.Add(request.ApiResponse);
+        apiRequest.Status = RequestStatus.Processed;
 
         await _applicationDbContext.SaveChangesAsync(cancellationToken);
-
-        return Unit.Value;
     }
 }

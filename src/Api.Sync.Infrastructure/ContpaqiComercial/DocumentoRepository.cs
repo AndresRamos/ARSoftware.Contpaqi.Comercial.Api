@@ -1,6 +1,7 @@
 ﻿using Api.Core.Domain.Models;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
 using ARSoftware.Contpaqi.Comercial.Sdk.DatosAbstractos;
+using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sql.Contexts;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
 using AutoMapper;
@@ -21,43 +22,75 @@ public sealed class DocumentoRepository : IDocumentoRepository
         _clienteRepository = clienteRepository;
     }
 
-    public async Task<Documento> BuscarDocumentoPorIdAsync(int id, CancellationToken cancellationToken)
+    public async Task<Documento> BuscarPorIdAsync(int id, CancellationToken cancellationToken)
     {
-        admDocumentos admDocumento = await _context.admDocumentos.AsNoTracking().FirstAsync(c => c.CIDDOCUMENTO == id, cancellationToken);
+        admDocumentos documentoSql = await _context.admDocumentos.AsNoTracking().FirstAsync(c => c.CIDDOCUMENTO == id, cancellationToken);
 
-        var documento = _mapper.Map<Documento>(admDocumento);
+        var documento = _mapper.Map<Documento>(documentoSql);
 
-        await LoadRelatedProperties(admDocumento, documento, cancellationToken);
+        await CargarObjectosRelacionadosAsync(documento, documentoSql, cancellationToken);
 
         return documento;
     }
 
     public async Task<tLlaveDoc> BuscarLlavePorIdAsync(int id, CancellationToken cancellationToken)
     {
-        var admDocumento = await _context.admDocumentos.AsNoTracking()
+        var documentoSql = await _context.admDocumentos.AsNoTracking()
             .Where(m => m.CIDDOCUMENTO == id)
             .Select(m => new { m.CIDCONCEPTODOCUMENTO, m.CSERIEDOCUMENTO, m.CFOLIO })
             .FirstAsync(cancellationToken);
 
-        string? concepto = await _context.admConceptos.AsNoTracking()
-            .Where(m => m.CIDCONCEPTODOCUMENTO == admDocumento.CIDCONCEPTODOCUMENTO)
+        string? conceptoSql = await _context.admConceptos.AsNoTracking()
+            .Where(m => m.CIDCONCEPTODOCUMENTO == documentoSql.CIDCONCEPTODOCUMENTO)
             .Select(m => m.CCODIGOCONCEPTO)
             .FirstAsync(cancellationToken);
 
-        return new tLlaveDoc { aCodConcepto = concepto, aSerie = admDocumento.CSERIEDOCUMENTO, aFolio = admDocumento.CFOLIO };
+        return new tLlaveDoc { aCodConcepto = conceptoSql, aSerie = documentoSql.CSERIEDOCUMENTO, aFolio = documentoSql.CFOLIO };
     }
 
-    private async Task LoadRelatedProperties(admDocumentos admDocumento, Documento documento, CancellationToken cancellationToken)
+    public async Task<Documento> BuscarPorLlaveAsync(LlaveDocumento llaveDocumento, CancellationToken cancellationToken)
+    {
+        admConceptos conceptoSql = await _context.admConceptos.FirstAsync(c => c.CCODIGOCONCEPTO == llaveDocumento.ConceptoCodigo,
+            cancellationToken);
+
+        admDocumentos documentoSql = await _context.admDocumentos.AsNoTracking()
+            .FirstAsync(c => c.CIDCONCEPTODOCUMENTO == conceptoSql.CIDCONCEPTODOCUMENTO &&
+                             c.CSERIEDOCUMENTO == llaveDocumento.Serie &&
+                             // ReSharper disable once CompareOfFloatsByEqualityOperator
+                             c.CFOLIO == llaveDocumento.Folio,
+                cancellationToken);
+
+        var documento = _mapper.Map<Documento>(documentoSql);
+
+        await CargarObjectosRelacionadosAsync(documento, documentoSql, cancellationToken);
+
+        return documento;
+    }
+
+    public async Task<int> BusarIdPorLlaveAsync(LlaveDocumento llaveDocumento, CancellationToken cancellationToken)
+    {
+        admConceptos conceptoSql = await _context.admConceptos.FirstAsync(c => c.CCODIGOCONCEPTO == llaveDocumento.ConceptoCodigo,
+            cancellationToken);
+
+        admDocumentos documentoSql = await _context.admDocumentos.AsNoTracking()
+            .FirstAsync(c => c.CIDCONCEPTODOCUMENTO == conceptoSql.CIDCONCEPTODOCUMENTO &&
+                             c.CSERIEDOCUMENTO == llaveDocumento.Serie &&
+                             // ReSharper disable once CompareOfFloatsByEqualityOperator
+                             c.CFOLIO == llaveDocumento.Folio,
+                cancellationToken);
+
+        return documentoSql.CIDDOCUMENTO;
+    }
+
+    private async Task CargarObjectosRelacionadosAsync(Documento documento, admDocumentos documentoSql, CancellationToken cancellationToken)
     {
         admConceptos admConcepto =
-            await _context.admConceptos.FirstAsync(c => c.CIDCONCEPTODOCUMENTO == admDocumento.CIDCONCEPTODOCUMENTO, cancellationToken);
-        admClientes admCliente =
-            await _context.admClientes.FirstAsync(c => c.CIDCLIENTEPROVEEDOR == admDocumento.CIDCLIENTEPROVEEDOR, cancellationToken);
+            await _context.admConceptos.FirstAsync(c => c.CIDCONCEPTODOCUMENTO == documentoSql.CIDCONCEPTODOCUMENTO, cancellationToken);
 
         documento.Concepto = _mapper.Map<Concepto>(admConcepto);
-        documento.Cliente = await _clienteRepository.BuscarPorIdAsync(admDocumento.CIDCLIENTEPROVEEDOR, cancellationToken);
+        documento.Cliente = await _clienteRepository.BuscarPorIdAsync(documentoSql.CIDCLIENTEPROVEEDOR, cancellationToken) ?? new Cliente();
 
-        foreach (admMovimientos admMovimiento in await _context.admMovimientos.Where(m => m.CIDDOCUMENTO == admDocumento.CIDDOCUMENTO)
+        foreach (admMovimientos admMovimiento in await _context.admMovimientos.Where(m => m.CIDDOCUMENTO == documentoSql.CIDDOCUMENTO)
                      .ToListAsync(cancellationToken))
         {
             admProductos admProducto =
@@ -71,5 +104,7 @@ public sealed class DocumentoRepository : IDocumentoRepository
 
             documento.Movimientos.Add(movimiento);
         }
+
+        documento.DatosExtra = documentoSql.ToDatosDictionary<admDocumentos>();
     }
 }

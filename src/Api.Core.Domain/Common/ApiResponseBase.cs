@@ -1,11 +1,6 @@
-﻿using System.Text.Json.Serialization;
-using Api.Core.Domain.Requests;
+﻿namespace Api.Core.Domain.Common;
 
-namespace Api.Core.Domain.Common;
-
-[JsonDerivedType(typeof(CreateDocumentoResponse), nameof(CreateDocumentoResponse))]
-[JsonDerivedType(typeof(CreateClienteResponse), nameof(CreateClienteResponse))]
-[JsonDerivedType(typeof(CreateDocumentoDigitalResponse), nameof(CreateDocumentoDigitalResponse))]
+//[JsonDerivedType(typeof(CrearDocumentoResponse), nameof(CrearDocumentoResponse))]
 public abstract class ApiResponseBase
 {
     public Guid Id { get; set; }

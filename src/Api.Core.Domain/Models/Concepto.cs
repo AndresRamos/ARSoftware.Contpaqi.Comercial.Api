@@ -14,4 +14,9 @@ public sealed class Concepto
     ///     Nombre del concepto.
     /// </summary>
     public string Nombre { get; set; } = string.Empty;
+
+    /// <summary>
+    ///     Datos extra del concepto.
+    /// </summary>
+    public Dictionary<string, string> DatosExtra { get; set; } = new();
 }

@@ -8,8 +8,10 @@ using Microsoft.OpenApi.Models;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers(options => { options.ReturnHttpNotAcceptable = true; });
+builder.Services.AddControllers(options => { options.ReturnHttpNotAcceptable = true; })
+    .AddJsonOptions(options => options.JsonSerializerOptions.TypeInfoResolver = new PolymorphicTypeResolver());
 builder.Services.AddApplicationServices().AddInfrastructureServices(builder.Configuration);
+//builder.Services.ConfigureHttpJsonOptions(options => { options.SerializerOptions.TypeInfoResolver = new PolymorphicTypeResolver(); });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

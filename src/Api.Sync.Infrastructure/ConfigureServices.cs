@@ -32,12 +32,14 @@ public static class ConfigureServices
             httpClient.BaseAddress = new Uri(apiSyncConfig.BaseAddress);
         });
 
+        serviceCollection.AddTransient<IContpaqiComercialApiService, MockContpaqiComercialApiService>();
+
         return serviceCollection;
     }
 
     private static IServiceCollection AddContpaqiComercialServices(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
-        serviceCollection.AddDbContext<ContpaqiComercialGeneralesDbContext>((provider, builder) =>
+        serviceCollection.AddDbContext<ContpaqiComercialGeneralesDbContext>(builder =>
             {
                 builder.UseSqlServer(ContpaqiComercialSqlConnectionStringFactory.CreateContpaqiComercialGeneralesConnectionString(
                     configuration.GetConnectionString("Contpaqi")));
@@ -55,9 +57,13 @@ public static class ConfigureServices
             ServiceLifetime.Transient,
             ServiceLifetime.Transient);
 
-        serviceCollection.AddTransient<IEmpresaRepository, EmpresaRepository>();
-        serviceCollection.AddTransient<IDocumentoRepository, DocumentoRepository>();
+        serviceCollection.AddTransient<IAgenteRepository, AgenteRepository>();
+        serviceCollection.AddTransient<IAlmacenRepository, AlmacenRepository>();
         serviceCollection.AddTransient<IClienteRepository, ClienteRepository>();
+        serviceCollection.AddTransient<IConceptoRepository, ConceptoRepository>();
+        serviceCollection.AddTransient<IDocumentoRepository, DocumentoRepository>();
+        serviceCollection.AddTransient<IEmpresaRepository, EmpresaRepository>();
+        serviceCollection.AddTransient<IProductoRepository, ProductoRepository>();
 
         return serviceCollection;
     }

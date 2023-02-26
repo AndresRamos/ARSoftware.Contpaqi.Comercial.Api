@@ -14,4 +14,9 @@ public sealed class Agente
     ///     Nombre del agente.
     /// </summary>
     public string Nombre { get; set; } = string.Empty;
+
+    /// <summary>
+    ///     Datos extra del agente.
+    /// </summary>
+    public Dictionary<string, string> DatosExtra { get; set; } = new();
 }

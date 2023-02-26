@@ -1,10 +1,9 @@
 ﻿using System.Reflection;
+using Api.Core.Domain.Common;
 using Api.Sync.Core.Application.Common.Behaviours;
 using Api.Sync.Core.Application.Common.Models;
-using ARSoftware.Contpaqi.Comercial.Sdk;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras;
 using FluentValidation;
-using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,13 +15,17 @@ public static class ConfigureServices
     {
         serviceCollection.AddAutoMapper(Assembly.GetExecutingAssembly());
         serviceCollection.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly(), ServiceLifetime.Transient);
-        serviceCollection.AddMediatR(Assembly.GetExecutingAssembly());
-        serviceCollection.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+        serviceCollection.AddMediatR(serviceConfiguration =>
+        {
+            serviceConfiguration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+            serviceConfiguration.RegisterServicesFromAssemblyContaining<ApiRequestBase>();
+            serviceConfiguration.AddOpenBehavior(typeof(ValidationBehaviour<,>));
+        });
 
         serviceCollection.Configure<ApiSyncConfig>(configuration.GetSection(nameof(ApiSyncConfig)));
         serviceCollection.Configure<ContpaqiComercialConfig>(configuration.GetSection(nameof(ContpaqiComercialConfig)));
 
-        serviceCollection.AddContpaqiComercialSdkServices(TipoContpaqiSdk.Comercial);
+        serviceCollection.AddContpaqiComercialSdkServices();
 
         return serviceCollection;
     }

@@ -18,7 +18,20 @@ public sealed class Movimiento
     /// <summary>
     ///     Precio del producto
     /// </summary>
-    public double Precio { get; set; }
+    public decimal Precio { get; set; }
+
+    // Todo: Agregar impuestos
+    // Todo: Agregar descuentos
+
+    /// <summary>
+    ///     Subtotal del movimiento.
+    /// </summary>
+    public decimal Subtotal { get; set; }
+
+    /// <summary>
+    ///     Total del movimiento
+    /// </summary>
+    public decimal Total { get; set; }
 
     /// <summary>
     ///     Almacen del movimiento

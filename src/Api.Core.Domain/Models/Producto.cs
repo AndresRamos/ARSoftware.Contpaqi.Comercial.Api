@@ -16,6 +16,11 @@ public sealed class Producto
     public string Nombre { get; set; } = string.Empty;
 
     /// <summary>
+    ///     Clave SAT del producto.
+    /// </summary>
+    public string ClaveSat { get; set; } = string.Empty;
+
+    /// <summary>
     ///     Datos extra del producto.
     /// </summary>
     public Dictionary<string, string> DatosExtra { get; set; } = new();

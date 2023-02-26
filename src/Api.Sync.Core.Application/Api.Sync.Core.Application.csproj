@@ -7,9 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="ARSoftware.Contpaqi.Comercial.Sdk.Extras" Version="4.2.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
-    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.4.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.1" />
+    <PackageReference Include="MediatR" Version="12.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
@@ -17,18 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Api.Core.Domain\Api.Core.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="ARSoftware.Contpaqi.Comercial.Sdk">
-      <HintPath>..\..\..\AndresRamos\ARSoftware.Contpaqi.Comercial\src\ARSoftware.Contpaqi.Comercial.Sdk.Extras\bin\Debug\netstandard2.0\ARSoftware.Contpaqi.Comercial.Sdk.dll</HintPath>
-    </Reference>
-    <Reference Include="ARSoftware.Contpaqi.Comercial.Sdk.Extras">
-      <HintPath>..\..\..\AndresRamos\ARSoftware.Contpaqi.Comercial\src\ARSoftware.Contpaqi.Comercial.Sdk.Extras\bin\Debug\netstandard2.0\ARSoftware.Contpaqi.Comercial.Sdk.Extras.dll</HintPath>
-    </Reference>
-    <Reference Include="ARSoftware.Contpaqi.Comercial.Sql.Models">
-      <HintPath>..\..\..\AndresRamos\ARSoftware.Contpaqi.Comercial\src\ARSoftware.Contpaqi.Comercial.Sdk.Extras\bin\Debug\netstandard2.0\ARSoftware.Contpaqi.Comercial.Sql.Models.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

@@ -8,8 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Presentation.WebApi.Controllers;
 
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/[controller]")]
+[Produces("application/json")]
 public class RequestsController : ControllerBase
 {
     private readonly LinkGenerator _linkGenerator;
@@ -48,14 +49,28 @@ public class RequestsController : ControllerBase
     {
         Guid requestId = await _mediator.Send(new CreateApiRequestCommand(apiRequest));
 
+        await Task.Delay(10000);
+
+        ApiRequestBase? request = await _mediator.Send(new GetApiRequestByIdQuery(requestId));
+
         string? pathByAction = _linkGenerator.GetPathByAction("Get", "Requests", new { id = requestId });
 
-        return Created(pathByAction!, requestId);
+        return Created(pathByAction!, request);
     }
 
-    [HttpGet("Test")]
-    public ActionResult<ApiRequestBase> Test()
+    [HttpGet("JsonModel")]
+    public ActionResult<ApiRequestBase> JsonModel(string requestName)
     {
-        return Ok(new CreateDocumentoDigitalRequest());
+        Type requestType = typeof(CrearDocumentoRequest);
+        var requestFullName = $"{requestType.Namespace}.{requestName}";
+        Type? type = requestType.Assembly.GetType(requestFullName);
+
+        if (type is null)
+            throw new InvalidOperationException($"Couldn't find type for request with name {requestFullName}.");
+
+        if (Activator.CreateInstance(type) is not ApiRequestBase instance)
+            throw new InvalidOperationException($"Couldn't create instance for type {type}.");
+
+        return Ok(instance);
     }
 }

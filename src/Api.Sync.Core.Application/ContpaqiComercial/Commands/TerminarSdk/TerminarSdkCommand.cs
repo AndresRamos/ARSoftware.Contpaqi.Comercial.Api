@@ -17,13 +17,15 @@ public sealed class TerminarSdkCommandHandler : IRequestHandler<TerminarSdkComma
         _logger = logger;
     }
 
-    public Task<Unit> Handle(TerminarSdkCommand request, CancellationToken cancellationToken)
+    public Task Handle(TerminarSdkCommand request, CancellationToken cancellationToken)
     {
+        _logger.LogDebug("Current directory: {CurrentDirectory}", Directory.GetCurrentDirectory());
         if (_sdkSesionService.IsSdkInicializado)
             _sdkSesionService.TerminarSesionSdk();
 
-        _logger.LogInformation("SDK Terminado.");
+        _logger.LogDebug("SDK terminado. {@ComercialSdkSesionService}", _sdkSesionService);
+        _logger.LogDebug("Current directory: {CurrentDirectory}", Directory.GetCurrentDirectory());
 
-        return Unit.Task;
+        return Task.CompletedTask;
     }
 }
