@@ -36,6 +36,7 @@ namespace Api.Infrastructure.Persistence.Migrations
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ErrorMessage = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsSuccess = table.Column<bool>(type: "bit", nullable: false),
+                    ExecutionTime = table.Column<long>(type: "bigint", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Model = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },

@@ -7,4 +7,5 @@ public abstract class ApiResponseBase
     public DateTime DateCreated { get; set; } = DateTime.Today;
     public string ErrorMessage { get; set; } = string.Empty;
     public bool IsSuccess { get; set; }
+    public long ExecutionTime { get; set; }
 }

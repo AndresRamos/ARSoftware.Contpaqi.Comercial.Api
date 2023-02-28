@@ -50,5 +50,16 @@ public sealed class MappingsProfile : Profile
             .ForMember(dest => dest.cNumeroExterior, opt => opt.MapFrom(src => src.NumeroExterior))
             .ForMember(dest => dest.cNumeroInterior, opt => opt.MapFrom(src => src.NumeroInterior))
             .ForMember(dest => dest.cPais, opt => opt.MapFrom(src => src.Pais));
+
+        CreateMap<Documento, LlaveDocumento>()
+            .ForMember(dest => dest.ConceptoCodigo, opt => opt.MapFrom(src => src.Concepto.Codigo))
+            .ForMember(dest => dest.Serie, opt => opt.MapFrom(src => src.Serie))
+            .ForMember(dest => dest.Folio, opt => opt.MapFrom(src => src.Folio));
+
+        CreateMap<LlaveDocumento, tLlaveDoc>()
+            .ForMember(dest => dest.aCodConcepto, opt => opt.MapFrom(src => src.ConceptoCodigo))
+            .ForMember(dest => dest.aSerie, opt => opt.MapFrom(src => src.Serie))
+            .ForMember(dest => dest.aFolio, opt => opt.MapFrom(src => src.Folio))
+            .ReverseMap();
     }
 }

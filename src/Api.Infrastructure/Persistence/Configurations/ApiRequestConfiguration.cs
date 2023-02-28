@@ -22,12 +22,13 @@ public static class ApiRequestConfiguration
         builder.Configure<CrearAgenteRequest, CrearAgenteRequestModel, CrearAgenteRequestOptions>();
         builder.Configure<CrearAlmacenRequest, CrearAlmacenRequestModel, CrearAlmacenRequestOptions>();
         builder.Configure<CrearClienteRequest, CrearClienteRequestModel, CrearClienteRequestOptions>();
-        builder.Configure<CrearDocumentoDigitalRequest, CrearDocumentoDigitalRequestModel, CrearDocumentoDigitalRequestOptions>();
         builder.Configure<CrearDocumentoRequest, CrearDocumentoRequestModel, CrearDocumentoRequestOptions>();
+        builder.Configure<CrearFacturaRequest, CrearFacturaRequestModel, CrearFacturaRequestOptions>();
         builder.Configure<CrearProductoRequest, CrearProductoRequestModel, CrearProductoRequestOptions>();
         builder.Configure<EliminarClienteRequest, EliminarClienteRequestModel, EliminarClienteRequestOptions>();
         builder.Configure<EliminarDocumentoRequest, EliminarDocumentoRequestModel, EliminarDocumentoRequestOptions>();
         builder.Configure<EliminarProductoRequest, EliminarProductoRequestModel, EliminarProductoRequestOptions>();
+        builder.Configure<GenerarDocumentoDigitalRequest, GenerarDocumentoDigitalRequestModel, GenerarDocumentoDigitalRequestOptions>();
         builder.Configure<SaldarDocumentoRequest, SaldarDocumentoRequestModel, SaldarDocumentoRequestOptions>();
         builder.Configure<TimbrarDocumentoRequest, TimbrarDocumentoRequestModel, TimbrarDocumentoRequestOptions>();
     }

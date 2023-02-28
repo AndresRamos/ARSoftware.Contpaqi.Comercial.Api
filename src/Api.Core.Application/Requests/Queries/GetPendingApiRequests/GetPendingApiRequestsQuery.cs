@@ -18,6 +18,8 @@ public sealed class GetPendingApiRequestsQueryHandler : IRequestHandler<GetPendi
 
     public async Task<IEnumerable<ApiRequestBase>> Handle(GetPendingApiRequestsQuery request, CancellationToken cancellationToken)
     {
-        return await _applicationDbContext.Requests.Where(r => r.Status == RequestStatus.Pending).ToListAsync(cancellationToken);
+        return await _applicationDbContext.Requests.AsNoTracking()
+            .Where(r => r.Status == RequestStatus.Pending)
+            .ToListAsync(cancellationToken);
     }
 }

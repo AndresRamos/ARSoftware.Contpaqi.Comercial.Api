@@ -53,6 +53,13 @@ public sealed class MappingsProfile : Profile
             .ForMember(dest => dest.FormaPago, opt => opt.MapFrom(src => FormaPago.FromClave(src.CMETODOPAG) ?? FormaPago._99))
             .ForMember(dest => dest.Moneda, opt => opt.MapFrom(src => Moneda.FromId(src.CIDMONEDA)));
 
+        CreateMap<Empresas, Empresa>()
+            .ForMember(dest => dest.Nombre, opt => opt.MapFrom(src => src.CNOMBREEMPRESA))
+            .ForMember(dest => dest.Ruta, opt => opt.MapFrom(src => src.CRUTADATOS))
+            .ForMember(dest => dest.BaseDatos, opt => opt.MapFrom(src => new DirectoryInfo(src.CRUTADATOS).Name));
+
+        CreateMap<admFoliosDigitales, FolioDigital>().ForMember(dest => dest.Uuid, opt => opt.MapFrom(src => src.CUUID));
+
         CreateMap<admMovimientos, Movimiento>()
             .ForMember(dest => dest.Unidades, opt => opt.MapFrom(src => src.CUNIDADES))
             .ForMember(dest => dest.Precio, opt => opt.MapFrom(src => src.CPRECIO))
@@ -70,11 +77,6 @@ public sealed class MappingsProfile : Profile
             .ForMember(dest => dest.Estado, opt => opt.MapFrom(src => src.CESTADO))
             .ForMember(dest => dest.CodigoPostal, opt => opt.MapFrom(src => src.CCODIGOPOSTAL))
             .ForMember(dest => dest.Pais, opt => opt.MapFrom(src => src.CPAIS));
-
-        CreateMap<Empresas, Empresa>()
-            .ForMember(dest => dest.Nombre, opt => opt.MapFrom(src => src.CNOMBREEMPRESA))
-            .ForMember(dest => dest.Ruta, opt => opt.MapFrom(src => src.CRUTADATOS))
-            .ForMember(dest => dest.BaseDatos, opt => opt.MapFrom(src => new DirectoryInfo(src.CRUTADATOS).Name));
 
         CreateMap<admProductos, Producto>()
             .ForMember(dest => dest.Codigo, opt => opt.MapFrom(src => src.CCODIGOPRODUCTO))

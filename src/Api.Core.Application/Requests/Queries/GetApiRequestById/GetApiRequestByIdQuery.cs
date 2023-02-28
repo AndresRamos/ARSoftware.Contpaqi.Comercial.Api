@@ -18,7 +18,8 @@ public sealed class GetApiRequestByIdQueryHandler : IRequestHandler<GetApiReques
 
     public async Task<ApiRequestBase?> Handle(GetApiRequestByIdQuery request, CancellationToken cancellationToken)
     {
-        return await _applicationDbContext.Requests.Include(m => m.Response)
+        return await _applicationDbContext.Requests.AsNoTracking()
+            .Include(m => m.Response)
             .FirstOrDefaultAsync(m => m.Id == request.ApiRequestId, cancellationToken);
     }
 }

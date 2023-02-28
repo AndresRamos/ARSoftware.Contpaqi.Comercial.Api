@@ -1,5 +1,6 @@
 ﻿using Api.Core.Application.Requests.Commands.CreateApiRequest;
 using Api.Core.Application.Requests.Queries.GetApiRequestById;
+using Api.Core.Application.Requests.Queries.GetApiRequests;
 using Api.Core.Application.Requests.Queries.GetPendingApiRequests;
 using Api.Core.Domain.Common;
 using Api.Core.Domain.Requests;
@@ -31,6 +32,17 @@ public class RequestsController : ControllerBase
             return NotFound();
 
         return Ok(request);
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<ApiRequestBase>> Get(DateOnly startDate, DateOnly endDate)
+    {
+        IEnumerable<ApiRequestBase> apiRequests = await _mediator.Send(new GetApiRequestsQuery(startDate, endDate));
+
+        if (!apiRequests.Any())
+            return NoContent();
+
+        return Ok(apiRequests);
     }
 
     [HttpGet("Pending")]

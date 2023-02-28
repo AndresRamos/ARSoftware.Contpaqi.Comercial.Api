@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230225124703_InitialCreate")]
+    [Migration("20230227160808_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -69,6 +69,9 @@ namespace Api.Infrastructure.Persistence.Migrations
                     b.Property<string>("ErrorMessage")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ExecutionTime")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("IsSuccess")
                         .HasColumnType("bit");
@@ -253,6 +256,25 @@ namespace Api.Infrastructure.Persistence.Migrations
                     b.HasDiscriminator().HasValue("BuscarConceptosRequest");
                 });
 
+            modelBuilder.Entity("Api.Core.Domain.Requests.BuscarEmpresasRequest", b =>
+                {
+                    b.HasBaseType("Api.Core.Domain.Common.ApiRequestBase");
+
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Model");
+
+                    b.Property<string>("Options")
+                        .IsRequired()
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Options");
+
+                    b.HasDiscriminator().HasValue("BuscarEmpresasRequest");
+                });
+
             modelBuilder.Entity("Api.Core.Domain.Requests.BuscarProductosRequest", b =>
                 {
                     b.HasBaseType("Api.Core.Domain.Common.ApiRequestBase");
@@ -348,25 +370,6 @@ namespace Api.Infrastructure.Persistence.Migrations
                     b.HasDiscriminator().HasValue("CrearClienteRequest");
                 });
 
-            modelBuilder.Entity("Api.Core.Domain.Requests.CrearDocumentoDigitalRequest", b =>
-                {
-                    b.HasBaseType("Api.Core.Domain.Common.ApiRequestBase");
-
-                    b.Property<string>("Model")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Model");
-
-                    b.Property<string>("Options")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Options");
-
-                    b.HasDiscriminator().HasValue("CrearDocumentoDigitalRequest");
-                });
-
             modelBuilder.Entity("Api.Core.Domain.Requests.CrearDocumentoRequest", b =>
                 {
                     b.HasBaseType("Api.Core.Domain.Common.ApiRequestBase");
@@ -384,6 +387,25 @@ namespace Api.Infrastructure.Persistence.Migrations
                         .HasColumnName("Options");
 
                     b.HasDiscriminator().HasValue("CrearDocumentoRequest");
+                });
+
+            modelBuilder.Entity("Api.Core.Domain.Requests.CrearFacturaRequest", b =>
+                {
+                    b.HasBaseType("Api.Core.Domain.Common.ApiRequestBase");
+
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Model");
+
+                    b.Property<string>("Options")
+                        .IsRequired()
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Options");
+
+                    b.HasDiscriminator().HasValue("CrearFacturaRequest");
                 });
 
             modelBuilder.Entity("Api.Core.Domain.Requests.CrearProductoRequest", b =>
@@ -462,7 +484,7 @@ namespace Api.Infrastructure.Persistence.Migrations
                     b.HasDiscriminator().HasValue("EliminarProductoRequest");
                 });
 
-            modelBuilder.Entity("Api.Core.Domain.Requests.Empresas.BuscarEmpresasRequest", b =>
+            modelBuilder.Entity("Api.Core.Domain.Requests.GenerarDocumentoDigitalRequest", b =>
                 {
                     b.HasBaseType("Api.Core.Domain.Common.ApiRequestBase");
 
@@ -478,7 +500,7 @@ namespace Api.Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Options");
 
-                    b.HasDiscriminator().HasValue("BuscarEmpresasRequest");
+                    b.HasDiscriminator().HasValue("GenerarDocumentoDigitalRequest");
                 });
 
             modelBuilder.Entity("Api.Core.Domain.Requests.SaldarDocumentoRequest", b =>
@@ -636,6 +658,19 @@ namespace Api.Infrastructure.Persistence.Migrations
                     b.HasDiscriminator().HasValue("BuscarConceptosResponse");
                 });
 
+            modelBuilder.Entity("Api.Core.Domain.Requests.BuscarEmpresasResponse", b =>
+                {
+                    b.HasBaseType("Api.Core.Domain.Common.ApiResponseBase");
+
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Model");
+
+                    b.HasDiscriminator().HasValue("BuscarEmpresasResponse");
+                });
+
             modelBuilder.Entity("Api.Core.Domain.Requests.BuscarProductosResponse", b =>
                 {
                     b.HasBaseType("Api.Core.Domain.Common.ApiResponseBase");
@@ -701,19 +736,6 @@ namespace Api.Infrastructure.Persistence.Migrations
                     b.HasDiscriminator().HasValue("CrearClienteResponse");
                 });
 
-            modelBuilder.Entity("Api.Core.Domain.Requests.CrearDocumentoDigitalResponse", b =>
-                {
-                    b.HasBaseType("Api.Core.Domain.Common.ApiResponseBase");
-
-                    b.Property<string>("Model")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Model");
-
-                    b.HasDiscriminator().HasValue("CrearDocumentoDigitalResponse");
-                });
-
             modelBuilder.Entity("Api.Core.Domain.Requests.CrearDocumentoResponse", b =>
                 {
                     b.HasBaseType("Api.Core.Domain.Common.ApiResponseBase");
@@ -725,6 +747,19 @@ namespace Api.Infrastructure.Persistence.Migrations
                         .HasColumnName("Model");
 
                     b.HasDiscriminator().HasValue("CrearDocumentoResponse");
+                });
+
+            modelBuilder.Entity("Api.Core.Domain.Requests.CrearFacturaResponse", b =>
+                {
+                    b.HasBaseType("Api.Core.Domain.Common.ApiResponseBase");
+
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Model");
+
+                    b.HasDiscriminator().HasValue("CrearFacturaResponse");
                 });
 
             modelBuilder.Entity("Api.Core.Domain.Requests.CrearProductoResponse", b =>
@@ -779,7 +814,7 @@ namespace Api.Infrastructure.Persistence.Migrations
                     b.HasDiscriminator().HasValue("EliminarProductoResponse");
                 });
 
-            modelBuilder.Entity("Api.Core.Domain.Requests.Empresas.BuscarEmpresasResponse", b =>
+            modelBuilder.Entity("Api.Core.Domain.Requests.GenerarDocumentoDigitalResponse", b =>
                 {
                     b.HasBaseType("Api.Core.Domain.Common.ApiResponseBase");
 
@@ -789,7 +824,7 @@ namespace Api.Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Model");
 
-                    b.HasDiscriminator().HasValue("BuscarEmpresasResponse");
+                    b.HasDiscriminator().HasValue("GenerarDocumentoDigitalResponse");
                 });
 
             modelBuilder.Entity("Api.Core.Domain.Requests.SaldarDocumentoResponse", b =>

@@ -60,7 +60,6 @@ public sealed class Worker : BackgroundService
                 if (_apiSyncConfig.ShouldShutDown())
                 {
                     _logger.LogInformation("Application should shut down.");
-                    _hostApplicationLifetime.StopApplication();
                     break;
                 }
 
@@ -80,6 +79,8 @@ public sealed class Worker : BackgroundService
         {
             _logger.LogCritical(e, "Critical error ocurred.");
         }
+
+        _hostApplicationLifetime.StopApplication();
     }
 
     //private static async Task<bool> WaitForAppStartup(IHostApplicationLifetime lifetime, CancellationToken stoppingToken)

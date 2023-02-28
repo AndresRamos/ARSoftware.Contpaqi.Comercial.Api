@@ -12,22 +12,22 @@ using Microsoft.Extensions.Options;
 
 namespace Api.Sync.Core.Application.Documentos;
 
-public sealed class CrearDocumentoDigitalRequestHandler : IRequestHandler<CrearDocumentoDigitalRequest, ApiResponseBase>
+public sealed class GenerarDocumentoDigitalRequestHandler : IRequestHandler<GenerarDocumentoDigitalRequest, ApiResponseBase>
 {
     private readonly ContpaqiComercialConfig _contpaqiComercialConfig;
     private readonly IDocumentoService _documentoService;
     private readonly ILogger _logger;
 
-    public CrearDocumentoDigitalRequestHandler(IDocumentoService documentoService,
-                                               IOptions<ContpaqiComercialConfig> contpaqiComercialConfigOptions,
-                                               ILogger<CrearDocumentoDigitalRequest> logger)
+    public GenerarDocumentoDigitalRequestHandler(IDocumentoService documentoService,
+                                                 IOptions<ContpaqiComercialConfig> contpaqiComercialConfigOptions,
+                                                 ILogger<GenerarDocumentoDigitalRequest> logger)
     {
         _documentoService = documentoService;
         _logger = logger;
         _contpaqiComercialConfig = contpaqiComercialConfigOptions.Value;
     }
 
-    public Task<ApiResponseBase> Handle(CrearDocumentoDigitalRequest request, CancellationToken cancellationToken)
+    public Task<ApiResponseBase> Handle(GenerarDocumentoDigitalRequest request, CancellationToken cancellationToken)
     {
         LlaveDocumento llaveDocumento = request.Model.LlaveDocumento;
         try
@@ -44,7 +44,7 @@ public sealed class CrearDocumentoDigitalRequestHandler : IRequestHandler<CrearD
                 llaveDocumento.Serie,
                 llaveDocumento.Folio.ToString());
 
-            var responseModel = new CrearDocumentoDigitalResponseModel
+            var responseModel = new GenerarDocumentoDigitalResponseModel
             {
                 DocumentoDigital = new DocumentoDigital
                 {
@@ -55,13 +55,14 @@ public sealed class CrearDocumentoDigitalRequestHandler : IRequestHandler<CrearD
             };
 
             return Task.FromResult<ApiResponseBase>(
-                ApiResponseFactory.CreateSuccessfull<CrearDocumentoDigitalResponse, CrearDocumentoDigitalResponseModel>(request.Id,
+                ApiResponseFactory.CreateSuccessfull<GenerarDocumentoDigitalResponse, GenerarDocumentoDigitalResponseModel>(request.Id,
                     responseModel));
         }
         catch (Exception e)
         {
             _logger.LogError(e, "Error al crear el documento digital.");
-            return Task.FromResult<ApiResponseBase>(ApiResponseFactory.CreateFailed<CrearDocumentoDigitalResponse>(request.Id, e.Message));
+            return Task.FromResult<ApiResponseBase>(
+                ApiResponseFactory.CreateFailed<GenerarDocumentoDigitalResponse>(request.Id, e.Message));
         }
     }
 }

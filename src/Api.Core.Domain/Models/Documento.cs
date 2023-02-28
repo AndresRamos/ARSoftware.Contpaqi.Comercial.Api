@@ -88,6 +88,11 @@ public sealed class Documento
     public List<Movimiento> Movimientos { get; set; } = new();
 
     /// <summary>
+    ///     Folio digital del documento.
+    /// </summary>
+    public FolioDigital FolioDigital { get; set; } = new();
+
+    /// <summary>
     ///     Datos extra del documento.
     /// </summary>
     public Dictionary<string, string> DatosExtra { get; set; } = new();

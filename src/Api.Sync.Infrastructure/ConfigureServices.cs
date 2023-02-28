@@ -32,8 +32,6 @@ public static class ConfigureServices
             httpClient.BaseAddress = new Uri(apiSyncConfig.BaseAddress);
         });
 
-        serviceCollection.AddTransient<IContpaqiComercialApiService, MockContpaqiComercialApiService>();
-
         return serviceCollection;
     }
 
@@ -42,7 +40,8 @@ public static class ConfigureServices
         serviceCollection.AddDbContext<ContpaqiComercialGeneralesDbContext>(builder =>
             {
                 builder.UseSqlServer(ContpaqiComercialSqlConnectionStringFactory.CreateContpaqiComercialGeneralesConnectionString(
-                    configuration.GetConnectionString("Contpaqi")));
+                        configuration.GetConnectionString("Contpaqi")))
+                    .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTrackingWithIdentityResolution);
             },
             ServiceLifetime.Transient,
             ServiceLifetime.Transient);
@@ -51,8 +50,9 @@ public static class ConfigureServices
             {
                 ContpaqiComercialConfig config = provider.GetRequiredService<IOptions<ContpaqiComercialConfig>>().Value;
                 builder.UseSqlServer(ContpaqiComercialSqlConnectionStringFactory.CreateContpaqiComercialEmpresaConnectionString(
-                    configuration.GetConnectionString("Contpaqi"),
-                    config.Empresa.BaseDatos));
+                        configuration.GetConnectionString("Contpaqi"),
+                        config.Empresa.BaseDatos))
+                    .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTrackingWithIdentityResolution);
             },
             ServiceLifetime.Transient,
             ServiceLifetime.Transient);
@@ -63,6 +63,8 @@ public static class ConfigureServices
         serviceCollection.AddTransient<IConceptoRepository, ConceptoRepository>();
         serviceCollection.AddTransient<IDocumentoRepository, DocumentoRepository>();
         serviceCollection.AddTransient<IEmpresaRepository, EmpresaRepository>();
+        serviceCollection.AddTransient<IFolioDigitalRepository, FolioDigitalRepository>();
+        serviceCollection.AddTransient<IMovimientoRepository, MovimientoRepository>();
         serviceCollection.AddTransient<IProductoRepository, ProductoRepository>();
 
         return serviceCollection;

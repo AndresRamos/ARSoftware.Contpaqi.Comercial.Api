@@ -22,12 +22,13 @@ public static class ApiResponseConfiguration
         builder.Configure<CrearAgenteResponse, CrearAgenteResponseModel>();
         builder.Configure<CrearAlmacenResponse, CrearAlmacenResponseModel>();
         builder.Configure<CrearClienteResponse, CrearClienteResponseModel>();
-        builder.Configure<CrearDocumentoDigitalResponse, CrearDocumentoDigitalResponseModel>();
         builder.Configure<CrearDocumentoResponse, CrearDocumentoResponseModel>();
+        builder.Configure<CrearFacturaResponse, CrearFacturaResponseModel>();
         builder.Configure<CrearProductoResponse, CrearProductoResponseModel>();
         builder.Configure<EliminarClienteResponse, EliminarClienteResponseModel>();
         builder.Configure<EliminarDocumentoResponse, EliminarDocumentoResponseModel>();
         builder.Configure<EliminarProductoResponse, EliminarProductoResponseModel>();
+        builder.Configure<GenerarDocumentoDigitalResponse, GenerarDocumentoDigitalResponseModel>();
         builder.Configure<SaldarDocumentoResponse, SaldarDocumentoResponseModel>();
         builder.Configure<TimbrarDocumentoResponse, TimbrarDocumentoResponseModel>();
     }

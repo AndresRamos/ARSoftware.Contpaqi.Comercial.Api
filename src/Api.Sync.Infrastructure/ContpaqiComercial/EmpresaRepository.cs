@@ -33,8 +33,7 @@ public sealed class EmpresaRepository : IEmpresaRepository
     {
         var empresasList = new List<Empresa>();
 
-        List<Empresas> empresasSql = await _context.Empresas.AsNoTracking()
-            .Where(e => e.CIDEMPRESA != 1)
+        List<Empresas> empresasSql = await _context.Empresas.Where(e => e.CIDEMPRESA != 1)
             .OrderBy(m => m.CNOMBREEMPRESA)
             .ToListAsync(cancellationToken);
 
@@ -60,19 +59,9 @@ public sealed class EmpresaRepository : IEmpresaRepository
 
         _comercialEmpresaDbContext.Database.SetConnectionString(empresaConnectionString);
 
-        admParametros parametros = await _comercialEmpresaDbContext.admParametros.AsNoTracking().FirstAsync(cancellationToken);
+        admParametros parametros = await _comercialEmpresaDbContext.admParametros.FirstAsync(cancellationToken);
         empresa.GuidAdd = parametros.CGUIDDSL;
         empresa.Rfc = parametros.CRFCEMPRESA;
         empresa.DatosExtra = parametros.ToDatosDictionary<admParametros>();
-
-        //using (var empresaContext = new ContpaqiComercialEmpresaDbContext(optionsBuilder.Options))
-        //{
-        //    var parametros = await empresaContext.admParametros.AsNoTracking()
-        //        .Select(m => new { m.CGUIDDSL, m.CRFCEMPRESA })
-        //        .FirstAsync(cancellationToken);
-        //    empresa.GuidAdd = parametros.CGUIDDSL;
-        //    empresa.Rfc = parametros.CRFCEMPRESA;
-        //    empresa.DatosExtra = parametros.ToDatosDictionary<admParametros>();
-        //}
     }
 }

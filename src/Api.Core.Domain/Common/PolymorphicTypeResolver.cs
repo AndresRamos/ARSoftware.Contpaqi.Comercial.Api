@@ -35,12 +35,13 @@ public class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
                     new JsonDerivedType(typeof(CrearAgenteRequest), nameof(CrearAgenteRequest)),
                     new JsonDerivedType(typeof(CrearAlmacenRequest), nameof(CrearAlmacenRequest)),
                     new JsonDerivedType(typeof(CrearClienteRequest), nameof(CrearClienteRequest)),
-                    new JsonDerivedType(typeof(CrearDocumentoDigitalRequest), nameof(CrearDocumentoDigitalRequest)),
                     new JsonDerivedType(typeof(CrearDocumentoRequest), nameof(CrearDocumentoRequest)),
+                    new JsonDerivedType(typeof(CrearFacturaRequest), nameof(CrearFacturaRequest)),
                     new JsonDerivedType(typeof(CrearProductoRequest), nameof(CrearProductoRequest)),
                     new JsonDerivedType(typeof(EliminarClienteRequest), nameof(EliminarClienteRequest)),
                     new JsonDerivedType(typeof(EliminarDocumentoRequest), nameof(EliminarDocumentoRequest)),
                     new JsonDerivedType(typeof(EliminarProductoRequest), nameof(EliminarProductoRequest)),
+                    new JsonDerivedType(typeof(GenerarDocumentoDigitalRequest), nameof(GenerarDocumentoDigitalRequest)),
                     new JsonDerivedType(typeof(SaldarDocumentoRequest), nameof(SaldarDocumentoRequest)),
                     new JsonDerivedType(typeof(TimbrarDocumentoRequest), nameof(TimbrarDocumentoRequest))
                 }
@@ -70,12 +71,13 @@ public class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
                     new JsonDerivedType(typeof(CrearAgenteResponse), nameof(CrearAgenteResponse)),
                     new JsonDerivedType(typeof(CrearAlmacenResponse), nameof(CrearAlmacenResponse)),
                     new JsonDerivedType(typeof(CrearClienteResponse), nameof(CrearClienteResponse)),
-                    new JsonDerivedType(typeof(CrearDocumentoDigitalResponse), nameof(CrearDocumentoDigitalResponse)),
                     new JsonDerivedType(typeof(CrearDocumentoResponse), nameof(CrearDocumentoResponse)),
+                    new JsonDerivedType(typeof(CrearFacturaResponse), nameof(CrearFacturaResponse)),
                     new JsonDerivedType(typeof(CrearProductoResponse), nameof(CrearProductoResponse)),
                     new JsonDerivedType(typeof(EliminarClienteResponse), nameof(EliminarClienteResponse)),
                     new JsonDerivedType(typeof(EliminarDocumentoResponse), nameof(EliminarDocumentoResponse)),
                     new JsonDerivedType(typeof(EliminarProductoResponse), nameof(EliminarProductoResponse)),
+                    new JsonDerivedType(typeof(GenerarDocumentoDigitalResponse), nameof(GenerarDocumentoDigitalResponse)),
                     new JsonDerivedType(typeof(SaldarDocumentoResponse), nameof(SaldarDocumentoResponse)),
                     new JsonDerivedType(typeof(TimbrarDocumentoResponse), nameof(TimbrarDocumentoResponse))
                 }
