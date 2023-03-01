@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Core.Application.Requests.Queries.GetPendingApiRequests;
 
-public sealed record GetPendingApiRequestsQuery : IRequest<IEnumerable<ApiRequestBase>>;
+public sealed record GetPendingApiRequestsQuery(string SubscriptionKey) : IRequest<IEnumerable<ApiRequestBase>>;
 
 public sealed class GetPendingApiRequestsQueryHandler : IRequestHandler<GetPendingApiRequestsQuery, IEnumerable<ApiRequestBase>>
 {
@@ -19,7 +19,7 @@ public sealed class GetPendingApiRequestsQueryHandler : IRequestHandler<GetPendi
     public async Task<IEnumerable<ApiRequestBase>> Handle(GetPendingApiRequestsQuery request, CancellationToken cancellationToken)
     {
         return await _applicationDbContext.Requests.AsNoTracking()
-            .Where(r => r.Status == RequestStatus.Pending)
+            .Where(m => m.Status == RequestStatus.Pending && m.SubscriptionKey == request.SubscriptionKey)
             .ToListAsync(cancellationToken);
     }
 }

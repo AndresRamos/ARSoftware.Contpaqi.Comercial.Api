@@ -1,6 +1,5 @@
 ﻿namespace Api.Core.Domain.Common;
 
-//[JsonDerivedType(typeof(CrearDocumentoResponse), nameof(CrearDocumentoResponse))]
 public abstract class ApiResponseBase
 {
     public Guid Id { get; set; }

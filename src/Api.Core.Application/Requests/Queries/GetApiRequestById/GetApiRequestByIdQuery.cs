@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Core.Application.Requests.Queries.GetApiRequestById;
 
-public sealed record GetApiRequestByIdQuery(Guid ApiRequestId) : IRequest<ApiRequestBase?>;
+public sealed record GetApiRequestByIdQuery(Guid ApiRequestId, string SubscriptionKey) : IRequest<ApiRequestBase?>;
 
 public sealed class GetApiRequestByIdQueryHandler : IRequestHandler<GetApiRequestByIdQuery, ApiRequestBase?>
 {
@@ -20,6 +20,6 @@ public sealed class GetApiRequestByIdQueryHandler : IRequestHandler<GetApiReques
     {
         return await _applicationDbContext.Requests.AsNoTracking()
             .Include(m => m.Response)
-            .FirstOrDefaultAsync(m => m.Id == request.ApiRequestId, cancellationToken);
+            .FirstOrDefaultAsync(m => m.Id == request.ApiRequestId && m.SubscriptionKey == request.SubscriptionKey, cancellationToken);
     }
 }

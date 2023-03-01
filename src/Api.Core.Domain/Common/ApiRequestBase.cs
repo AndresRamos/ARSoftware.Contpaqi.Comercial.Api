@@ -3,11 +3,14 @@ using MediatR;
 
 namespace Api.Core.Domain.Common;
 
-//[JsonDerivedType(typeof(CrearClienteRequest), nameof(CrearClienteRequest))]
 public abstract class ApiRequestBase : IRequest<ApiResponseBase>
 {
     public Guid Id { get; set; }
+
+    public string SubscriptionKey { get; set; } = string.Empty;
+
     public string EmpresaRfc { get; set; } = string.Empty;
+
     public DateTime DateCreated { get; set; } = DateTime.Now;
 
     [JsonConverter(typeof(JsonStringEnumConverter))]
@@ -15,9 +18,10 @@ public abstract class ApiRequestBase : IRequest<ApiResponseBase>
 
     public ApiResponseBase? Response { get; set; }
 
-    public void SetCreateDefaults()
+    public void SetCreateDefaults(string subscriptionKey)
     {
         Id = Guid.Empty;
+        SubscriptionKey = subscriptionKey;
         DateCreated = DateTime.Now;
         Status = RequestStatus.Pending;
         Response = null;

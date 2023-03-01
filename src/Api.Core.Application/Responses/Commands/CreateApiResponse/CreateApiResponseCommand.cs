@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Core.Application.Responses.Commands.CreateApiResponse;
 
-public sealed record CreateApiResponseCommand(ApiResponseBase ApiResponse) : IRequest;
+public sealed record CreateApiResponseCommand(ApiResponseBase ApiResponse, string SubscriptionKey) : IRequest;
 
 public sealed class CreateApiResponseCommandHandler : IRequestHandler<CreateApiResponseCommand>
 {
@@ -18,7 +18,10 @@ public sealed class CreateApiResponseCommandHandler : IRequestHandler<CreateApiR
 
     public async Task Handle(CreateApiResponseCommand request, CancellationToken cancellationToken)
     {
-        ApiRequestBase apiRequest = await _applicationDbContext.Requests.FirstAsync(c => c.Id == request.ApiResponse.Id, cancellationToken);
+        ApiRequestBase apiRequest =
+            await _applicationDbContext.Requests.FirstAsync(
+                m => m.Id == request.ApiResponse.Id && m.SubscriptionKey == request.SubscriptionKey,
+                cancellationToken);
 
         apiRequest.Response = request.ApiResponse;
         apiRequest.Status = RequestStatus.Processed;

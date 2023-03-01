@@ -16,6 +16,7 @@ namespace Api.Infrastructure.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SubscriptionKey = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EmpresaRfc = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),

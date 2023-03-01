@@ -17,10 +17,13 @@ public class ResponsesController : ControllerBase
         _mediator = mediator;
     }
 
+    [FromHeader(Name = "Ocp-Apim-Subscription-Key")]
+    public string ApimSubscriptionKey { get; set; } = string.Empty;
+
     [HttpPost]
     public async Task<ActionResult> Post(ApiResponseBase apiResponse)
     {
-        await _mediator.Send(new CreateApiResponseCommand(apiResponse));
+        await _mediator.Send(new CreateApiResponseCommand(apiResponse, ApimSubscriptionKey));
 
         return Ok();
     }
@@ -28,9 +31,11 @@ public class ResponsesController : ControllerBase
     [HttpGet("JsonModel")]
     public ActionResult<ApiResponseBase> JsonModel(string responseName)
     {
-        Type requestType = typeof(CrearDocumentoResponse);
-        var responseFullName = $"{requestType.Namespace}.{responseName}";
-        Type? type = requestType.Assembly.GetType(responseFullName);
+        Type responseType = typeof(CrearDocumentoResponse);
+
+        var responseFullName = $"{responseType.Namespace}.{responseName}";
+
+        Type? type = responseType.Assembly.GetType(responseFullName);
 
         if (type is null)
             throw new InvalidOperationException($"Couldn't find type for response with name {responseFullName}.");

@@ -23,10 +23,13 @@ public class RequestsController : ControllerBase
         _linkGenerator = linkGenerator;
     }
 
+    [FromHeader(Name = "Ocp-Apim-Subscription-Key")]
+    public string ApimSubscriptionKey { get; set; } = string.Empty;
+
     [HttpGet("{id}")]
     public async Task<ActionResult<ApiRequestBase>> Get(Guid id)
     {
-        ApiRequestBase? request = await _mediator.Send(new GetApiRequestByIdQuery(id));
+        ApiRequestBase? request = await _mediator.Send(new GetApiRequestByIdQuery(id, ApimSubscriptionKey));
 
         if (request is null)
             return NotFound();
@@ -37,7 +40,7 @@ public class RequestsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<ApiRequestBase>> Get(DateOnly startDate, DateOnly endDate)
     {
-        IEnumerable<ApiRequestBase> apiRequests = await _mediator.Send(new GetApiRequestsQuery(startDate, endDate));
+        IEnumerable<ApiRequestBase> apiRequests = await _mediator.Send(new GetApiRequestsQuery(startDate, endDate, ApimSubscriptionKey));
 
         if (!apiRequests.Any())
             return NoContent();
@@ -48,7 +51,7 @@ public class RequestsController : ControllerBase
     [HttpGet("Pending")]
     public async Task<ActionResult<IEnumerable<ApiRequestBase>>> GetPending()
     {
-        IEnumerable<ApiRequestBase> apiRequests = await _mediator.Send(new GetPendingApiRequestsQuery());
+        IEnumerable<ApiRequestBase> apiRequests = await _mediator.Send(new GetPendingApiRequestsQuery(ApimSubscriptionKey));
 
         if (!apiRequests.Any())
             return NoContent();
@@ -59,11 +62,11 @@ public class RequestsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Guid>> Post(ApiRequestBase apiRequest)
     {
-        Guid requestId = await _mediator.Send(new CreateApiRequestCommand(apiRequest));
+        Guid requestId = await _mediator.Send(new CreateApiRequestCommand(apiRequest, ApimSubscriptionKey));
 
-        await Task.Delay(10000);
+        await Task.Delay(5000);
 
-        ApiRequestBase? request = await _mediator.Send(new GetApiRequestByIdQuery(requestId));
+        ApiRequestBase? request = await _mediator.Send(new GetApiRequestByIdQuery(requestId, ApimSubscriptionKey));
 
         string? pathByAction = _linkGenerator.GetPathByAction("Get", "Requests", new { id = requestId });
 
@@ -74,7 +77,9 @@ public class RequestsController : ControllerBase
     public ActionResult<ApiRequestBase> JsonModel(string requestName)
     {
         Type requestType = typeof(CrearDocumentoRequest);
+
         var requestFullName = $"{requestType.Namespace}.{requestName}";
+
         Type? type = requestType.Assembly.GetType(requestFullName);
 
         if (type is null)

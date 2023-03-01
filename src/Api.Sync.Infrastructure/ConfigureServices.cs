@@ -30,6 +30,7 @@ public static class ConfigureServices
         {
             ApiSyncConfig apiSyncConfig = serviceProvider.GetRequiredService<IOptions<ApiSyncConfig>>().Value;
             httpClient.BaseAddress = new Uri(apiSyncConfig.BaseAddress);
+            httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", apiSyncConfig.SubscriptionKey);
         });
 
         return serviceCollection;
