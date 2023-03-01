@@ -34,8 +34,9 @@ public sealed class MappingsProfile : Profile
             .ForMember(dest => dest.Codigo, opt => opt.MapFrom(src => src.CCODIGOCLIENTE))
             .ForMember(dest => dest.RazonSocial, opt => opt.MapFrom(src => src.CRAZONSOCIAL))
             .ForMember(dest => dest.Rfc, opt => opt.MapFrom(src => src.CRFC))
-            .ForMember(dest => dest.UsoCfdi, opt => opt.MapFrom(src => UsoCfdi.FromClave(src.CUSOCFDI)))
-            .ForMember(dest => dest.RegimenFiscal, opt => opt.MapFrom(src => RegimenFiscal.FromClave(src.CREGIMFISC)));
+            .ForMember(dest => dest.UsoCfdi, opt => opt.MapFrom(src => UsoCfdi.FromClave(src.CUSOCFDI) ?? UsoCfdi.P01))
+            .ForMember(dest => dest.RegimenFiscal,
+                opt => opt.MapFrom(src => RegimenFiscal.FromClave(src.CREGIMFISC) ?? RegimenFiscal._616));
 
         CreateMap<admConceptos, Concepto>()
             .ForMember(dest => dest.Codigo, opt => opt.MapFrom(src => src.CCODIGOCONCEPTO))

@@ -21,8 +21,6 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext
 
         builder.Entity<ApiRequestBase>().HasOne(r => r.Response).WithOne().HasForeignKey<ApiResponseBase>(r => r.Id);
 
-        //builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
         ApiRequestConfiguration.ConfigureRequests(builder);
         ApiResponseConfiguration.ConfigureResponses(builder);
 

@@ -64,7 +64,13 @@ public class RequestsController : ControllerBase
     {
         Guid requestId = await _mediator.Send(new CreateApiRequestCommand(apiRequest, ApimSubscriptionKey));
 
-        await Task.Delay(5000);
+        for (var i = 0; i < 3; i++)
+        {
+            await Task.Delay(3000);
+            ApiRequestBase? request2 = await _mediator.Send(new GetApiRequestByIdQuery(requestId, ApimSubscriptionKey));
+            if (request2?.Status == RequestStatus.Processed)
+                break;
+        }
 
         ApiRequestBase? request = await _mediator.Send(new GetApiRequestByIdQuery(requestId, ApimSubscriptionKey));
 
@@ -87,6 +93,9 @@ public class RequestsController : ControllerBase
 
         if (Activator.CreateInstance(type) is not ApiRequestBase instance)
             throw new InvalidOperationException($"Couldn't create instance for type {type}.");
+
+        instance.SubscriptionKey = ApimSubscriptionKey;
+        instance.EmpresaRfc = "XAXX010101000";
 
         return Ok(instance);
     }

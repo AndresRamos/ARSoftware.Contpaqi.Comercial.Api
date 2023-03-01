@@ -48,6 +48,8 @@ public sealed class Worker : BackgroundService
                 List<ApiRequestBase> apiRequests = (await _mediator.Send(new GetPendingApiRequestsQuery(), stoppingToken)).ToList();
                 _logger.LogInformation("{PendingRequests} pending requests.", apiRequests.Count);
 
+                Task waitingTask = Task.Delay(_apiSyncConfig.WaitTime.ToTimeSpan(), stoppingToken);
+
                 foreach (ApiRequestBase apiRequest in apiRequests)
                 {
                     int requestIndex = apiRequests.IndexOf(apiRequest) + 1;
@@ -65,9 +67,8 @@ public sealed class Worker : BackgroundService
 
                 if (_apiSyncConfig.WaitTime != TimeOnly.MinValue)
                 {
-                    var timeSpan = _apiSyncConfig.WaitTime.ToTimeSpan();
-                    _logger.LogInformation("Waiting {TimeSpan} for next run.", timeSpan);
-                    await Task.Delay(timeSpan, stoppingToken);
+                    _logger.LogDebug("Waiting for next run.");
+                    await waitingTask;
                 }
             }
         }

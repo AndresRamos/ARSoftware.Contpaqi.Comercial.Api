@@ -23,7 +23,14 @@ public class ResponsesController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> Post(ApiResponseBase apiResponse)
     {
-        await _mediator.Send(new CreateApiResponseCommand(apiResponse, ApimSubscriptionKey));
+        try
+        {
+            await _mediator.Send(new CreateApiResponseCommand(apiResponse, ApimSubscriptionKey));
+        }
+        catch (Exception e)
+        {
+            BadRequest(e.Message);
+        }
 
         return Ok();
     }

@@ -25,6 +25,10 @@ public sealed class AbrirEmpresaCommandHandler : IRequestHandler<AbrirEmpresaCom
 
     public Task Handle(AbrirEmpresaCommand request, CancellationToken cancellationToken)
     {
+        _logger.LogInformation("Abriendo empresa. {0} - {1}",
+            _contpaqiComercialConfig.Empresa.Nombre,
+            _contpaqiComercialConfig.Empresa.Rfc);
+
         if (!_sdkSesionService.IsEmpresaAbierta)
             _sdkSesionService.AbrirEmpresa(_contpaqiComercialConfig.Empresa.Ruta);
 

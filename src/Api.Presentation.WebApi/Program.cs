@@ -22,7 +22,7 @@ builder.Services.AddSwaggerGen(c =>
         {
             Title = "AR Software - CONTPAQi Comercial API",
             Version = "v1",
-            Description = "API used to create request to be processed in CONTPAQi Contabilidad",
+            Description = "Use this API to create requests to be processed in CONTPAQi Comercial.",
             Contact = new OpenApiContact { Name = "AR Software", Email = "andres@arsoft.net", Url = new Uri("https://www.arsoft.net") }
         });
 

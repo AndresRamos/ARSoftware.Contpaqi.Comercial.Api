@@ -25,14 +25,11 @@ public sealed class IniciarSdkCommandHandler : IRequestHandler<IniciarSdkCommand
 
     public Task Handle(IniciarSdkCommand request, CancellationToken cancellationToken)
     {
-        _logger.LogDebug("Current directory: {CurrentDirectory}", Directory.GetCurrentDirectory());
-
         if (!_sdkSesionService.IsSdkInicializado)
             _sdkSesionService.IniciarSesionSdk(_contpaqiComercialConfig.Usuario, _contpaqiComercialConfig.Contrasena);
 
         // Todo: Contabilidad?
         _logger.LogDebug("SDK inicializado. {@ComercialSdkSesionService}", _sdkSesionService);
-        _logger.LogDebug("Current directory: {CurrentDirectory}", Directory.GetCurrentDirectory());
 
         return Task.CompletedTask;
     }

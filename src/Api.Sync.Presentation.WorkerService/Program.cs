@@ -20,15 +20,25 @@ IHost host = Host.CreateDefaultBuilder(args)
     })
     .Build();
 
+var logger = host.Services.GetRequiredService<ILogger<Program>>();
+
 var mediator = host.Services.GetRequiredService<IMediator>();
-var sesionService = host.Services.GetRequiredService<IComercialSdkSesionService>();
+var sdkSesionService = host.Services.GetRequiredService<IComercialSdkSesionService>();
 
 await mediator.Send(new IniciarSdkCommand());
 
 host.Run();
 
-if (sesionService.CanCerrarEmpresa)
-    sesionService.CerrarEmpresa();
+if (sdkSesionService.CanCerrarEmpresa)
+{
+    logger.LogInformation("Cerrando empresa.");
+    sdkSesionService.CerrarEmpresa();
+    logger.LogDebug("Empresa cerrada. {@ComercialSdkSesionService}", sdkSesionService);
+}
 
-if (sesionService.CanTerminarSesion)
-    sesionService.TerminarSesionSdk();
+if (sdkSesionService.CanTerminarSesion)
+{
+    logger.LogInformation("Terminando SDK.");
+    sdkSesionService.TerminarSesionSdk();
+    logger.LogDebug("SDK Terminado. {@ComercialSdkSesionService}", sdkSesionService);
+}
