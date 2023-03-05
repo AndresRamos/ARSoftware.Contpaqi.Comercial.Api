@@ -3,15 +3,22 @@ using Api.Core.Application;
 using Api.Core.Application.Requests.Commands.CreateApiRequest;
 using Api.Core.Domain.Common;
 using Api.Infrastructure;
+using Api.Presentation.WebApi.Authentication;
 using Microsoft.OpenApi.Models;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers(options => { options.ReturnHttpNotAcceptable = true; })
+builder.Services.AddControllers(options =>
+    {
+        options.ReturnHttpNotAcceptable = true;
+        //options.Filters.Add<ApiKeyAuthFilter>();
+    })
     .AddJsonOptions(options => options.JsonSerializerOptions.TypeInfoResolver = new PolymorphicTypeResolver());
 builder.Services.AddApplicationServices().AddInfrastructureServices(builder.Configuration);
 //builder.Services.ConfigureHttpJsonOptions(options => { options.SerializerOptions.TypeInfoResolver = new PolymorphicTypeResolver(); });
+
+builder.Services.AddScoped<ApiKeyAuthFilter>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

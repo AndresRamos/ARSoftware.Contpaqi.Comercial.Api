@@ -4,6 +4,7 @@ using Api.Core.Application.Requests.Queries.GetApiRequests;
 using Api.Core.Application.Requests.Queries.GetPendingApiRequests;
 using Api.Core.Domain.Common;
 using Api.Core.Domain.Requests;
+using Api.Presentation.WebApi.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,7 @@ namespace Api.Presentation.WebApi.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
+[ServiceFilter(typeof(ApiKeyAuthFilter))]
 public class RequestsController : ControllerBase
 {
     private readonly LinkGenerator _linkGenerator;

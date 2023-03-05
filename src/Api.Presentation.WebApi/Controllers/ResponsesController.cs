@@ -1,13 +1,16 @@
 ﻿using Api.Core.Application.Responses.Commands.CreateApiResponse;
 using Api.Core.Domain.Common;
 using Api.Core.Domain.Requests;
+using Api.Presentation.WebApi.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Presentation.WebApi.Controllers;
 
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/[controller]")]
+[Produces("application/json")]
+[ServiceFilter(typeof(ApiKeyAuthFilter))]
 public class ResponsesController : ControllerBase
 {
     private readonly IMediator _mediator;
