@@ -32,7 +32,7 @@ public sealed class GenerarDocumentoDigitalRequestHandler : IRequestHandler<Gene
         LlaveDocumento llaveDocumento = request.Model.LlaveDocumento;
         try
         {
-            string rutaPlantilla = Path.Combine(_contpaqiComercialConfig.RutaPlantillas, request.Options.NombrePlantilla);
+            string rutaPlantilla = Path.Combine(_contpaqiComercialConfig.RutaPlantillasPdf, request.Options.NombrePlantilla);
             _documentoService.GenerarDocumentoDigital(llaveDocumento.ConceptoCodigo,
                 llaveDocumento.Serie,
                 llaveDocumento.Folio,
