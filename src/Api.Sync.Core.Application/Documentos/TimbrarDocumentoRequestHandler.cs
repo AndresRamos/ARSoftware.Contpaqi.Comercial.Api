@@ -32,7 +32,11 @@ public sealed class TimbrarDocumentoRequestHandler : IRequestHandler<TimbrarDocu
     {
         try
         {
-            _documentoService.Timbrar(_mapper.Map<tLlaveDoc>(request.Model.LlaveDocumento), request.Model.ContrasenaCertificado);
+            string rutaArchivoAdicional = await GetRutaArchivoAdicionalAsync(request, cancellationToken);
+
+            _documentoService.Timbrar(_mapper.Map<tLlaveDoc>(request.Model.LlaveDocumento),
+                request.Model.ContrasenaCertificado,
+                rutaArchivoAdicional);
 
             return ApiResponseFactory.CreateSuccessfull<TimbrarDocumentoResponse, TimbrarDocumentoResponseModel>(request.Id,
                 new TimbrarDocumentoResponseModel
@@ -45,5 +49,15 @@ public sealed class TimbrarDocumentoRequestHandler : IRequestHandler<TimbrarDocu
             _logger.LogError(e, "Error al saldar el documento.");
             return ApiResponseFactory.CreateFailed<TimbrarDocumentoResponse>(request.Id, e.Message);
         }
+    }
+
+    private async Task<string> GetRutaArchivoAdicionalAsync(TimbrarDocumentoRequest request, CancellationToken cancellationToken)
+    {
+        if (!request.Options.AgregarArchivo)
+            return string.Empty;
+
+        string rutaArchivoAdicional = Path.Combine(Path.GetTempPath(), request.Options.NombreArchivo);
+        await File.WriteAllTextAsync(rutaArchivoAdicional, request.Options.ContenidoArchivo, cancellationToken);
+        return rutaArchivoAdicional;
     }
 }

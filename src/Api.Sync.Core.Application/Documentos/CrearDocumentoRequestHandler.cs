@@ -73,6 +73,9 @@ public sealed class CrearDocumentoRequestHandler : IRequestHandler<CrearDocument
                 };
                 // todo: modificar porcentages e importes de impuestos y descuentos dependiendo de la configuracion del concepto
                 _movimientoService.Actualizar(movimientoSdkId, datosMovimiento);
+
+                foreach (SeriesCapas movimientoSeriesCapas in movimiento.SeriesCapas)
+                    _movimientoService.CrearSeriesCapas(movimientoSdkId, _mapper.Map<tSeriesCapas>(movimientoSeriesCapas));
             }
 
             var responseModel = new CrearDocumentoResponseModel

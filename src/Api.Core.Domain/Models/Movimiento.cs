@@ -20,9 +20,6 @@ public sealed class Movimiento
     /// </summary>
     public decimal Precio { get; set; }
 
-    // Todo: Agregar impuestos
-    // Todo: Agregar descuentos
-
     /// <summary>
     ///     Subtotal del movimiento.
     /// </summary>
@@ -47,6 +44,8 @@ public sealed class Movimiento
     ///     Observaciones del movimiento.
     /// </summary>
     public string Observaciones { get; set; } = string.Empty;
+
+    public List<SeriesCapas> SeriesCapas { get; set; } = new();
 
     /// <summary>
     ///     Datos extra del movimiento.

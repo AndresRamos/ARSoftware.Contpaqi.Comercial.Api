@@ -30,6 +30,20 @@ public sealed class MappingsProfile : Profile
             .ForMember(dest => dest.aReferencia, opt => opt.MapFrom(src => src.Referencia))
             .ForMember(dest => dest.aReferencia, opt => opt.MapFrom(src => src.Referencia));
 
+        CreateMap<SeriesCapas, tSeriesCapas>()
+            .ForMember(dest => dest.aUnidades, opt => opt.MapFrom(src => src.Unidades))
+            .ForMember(dest => dest.aTipoCambio, opt => opt.MapFrom(src => src.TipoCambio))
+            .ForMember(dest => dest.aSeries, opt => opt.MapFrom(src => src.Series))
+            .ForMember(dest => dest.aPedimento, opt => opt.MapFrom(src => src.Pedimento))
+            .ForMember(dest => dest.aAgencia, opt => opt.MapFrom(src => src.Agencia))
+            .ForMember(dest => dest.aFechaPedimento,
+                opt => opt.MapFrom(src => src.FechaPedimento != DateTime.MinValue ? src.FechaPedimento.ToSdkFecha() : string.Empty))
+            .ForMember(dest => dest.aNumeroLote, opt => opt.MapFrom(src => src.NumeroLote))
+            .ForMember(dest => dest.aFechaFabricacion,
+                opt => opt.MapFrom(src => src.FechaFabricacion != DateTime.MinValue ? src.FechaFabricacion.ToSdkFecha() : string.Empty))
+            .ForMember(dest => dest.aFechaCaducidad,
+                opt => opt.MapFrom(src => src.FechaCaducidad != DateTime.MinValue ? src.FechaCaducidad.ToSdkFecha() : string.Empty));
+
         CreateMap<Cliente, tCteProv>()
             .ForMember(dest => dest.cTipoCliente, opt => opt.MapFrom(src => TipoClienteHelper.ConvertToSdkValue(src.Tipo)))
             .ForMember(dest => dest.cCodigoCliente, opt => opt.MapFrom(src => src.Codigo))

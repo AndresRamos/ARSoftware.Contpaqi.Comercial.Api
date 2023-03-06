@@ -24,6 +24,9 @@ public sealed class CrearFacturaRequestOptions
     public bool GenerarDocumentosDigitales { get; set; }
     public bool GenerarPdf { get; set; }
     public string NombrePlantilla { get; set; } = string.Empty;
+    public bool AgregarArchivo { get; set; }
+    public string NombreArchivo { get; set; } = string.Empty;
+    public string ContenidoArchivo { get; set; } = string.Empty;
 }
 
 /// <inheritdoc cref="IApiResponse" />

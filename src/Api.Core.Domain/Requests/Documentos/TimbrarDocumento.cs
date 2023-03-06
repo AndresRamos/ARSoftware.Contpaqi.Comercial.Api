@@ -17,6 +17,9 @@ public sealed class TimbrarDocumentoRequestModel
 
 public sealed class TimbrarDocumentoRequestOptions
 {
+    public bool AgregarArchivo { get; set; }
+    public string NombreArchivo { get; set; } = string.Empty;
+    public string ContenidoArchivo { get; set; } = string.Empty;
 }
 
 /// <inheritdoc cref="IApiResponse" />

@@ -49,6 +49,9 @@ public class CrearFacturaRequestHandler : IRequestHandler<CrearFacturaRequest, A
                 var timbrarDocumentoRequest = new TimbrarDocumentoRequest();
                 timbrarDocumentoRequest.Model.LlaveDocumento = llaveDocumento;
                 timbrarDocumentoRequest.Model.ContrasenaCertificado = request.Options.ContrasenaCertificado;
+                timbrarDocumentoRequest.Options.AgregarArchivo = request.Options.AgregarArchivo;
+                timbrarDocumentoRequest.Options.NombreArchivo = request.Options.NombreArchivo;
+                timbrarDocumentoRequest.Options.ContenidoArchivo = request.Options.ContenidoArchivo;
                 ApiResponseBase timbrarDocumentoResponse = await _mediator.Send(timbrarDocumentoRequest, cancellationToken);
                 timbrarDocumentoResponse.ThrowIfError();
             }
