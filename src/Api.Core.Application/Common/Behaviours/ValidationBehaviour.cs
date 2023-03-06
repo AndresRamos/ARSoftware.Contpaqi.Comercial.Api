@@ -1,10 +1,11 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
+using ValidationException = Api.Core.Application.Exceptions.ValidationException;
 
 namespace Api.Core.Application.Common.Behaviours;
 
-public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
+public sealed class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;
 

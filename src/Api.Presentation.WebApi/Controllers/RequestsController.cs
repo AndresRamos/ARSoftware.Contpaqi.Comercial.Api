@@ -5,6 +5,7 @@ using Api.Core.Application.Requests.Queries.GetPendingApiRequests;
 using Api.Core.Domain.Common;
 using Api.Core.Domain.Requests;
 using Api.Presentation.WebApi.Authentication;
+using Api.Presentation.WebApi.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +15,7 @@ namespace Api.Presentation.WebApi.Controllers;
 [Route("api/[controller]")]
 [Produces("application/json")]
 [ServiceFilter(typeof(ApiKeyAuthFilter))]
+[ApiExceptionFilter]
 public class RequestsController : ControllerBase
 {
     private readonly LinkGenerator _linkGenerator;
@@ -28,7 +30,19 @@ public class RequestsController : ControllerBase
     [FromHeader(Name = "Ocp-Apim-Subscription-Key")]
     public string ApimSubscriptionKey { get; set; } = string.Empty;
 
-    [HttpGet("{id}")]
+    /// <summary>
+    ///     Busca una solicitud por id.
+    /// </summary>
+    /// <param name="id">Id de la solicitud a buscar.</param>
+    /// <returns>Una solicitud.</returns>
+    /// <response code="200">Retorna la solicitud.</response>
+    /// <response code="404">No se encontro la solicitud.</response>
+    /// <response code="400">Solicitud invalida.</response>
+    [HttpGet("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesDefaultResponseType]
     public async Task<ActionResult<ApiRequestBase>> Get(Guid id)
     {
         ApiRequestBase? request = await _mediator.Send(new GetApiRequestByIdQuery(id, ApimSubscriptionKey));
@@ -39,7 +53,20 @@ public class RequestsController : ControllerBase
         return Ok(request);
     }
 
+    /// <summary>
+    ///     Busca solicitudes por rango de fecha.
+    /// </summary>
+    /// <param name="startDate">Fecha inicio.</param>
+    /// <param name="endDate">Fecha fin.</param>
+    /// <returns>Coleccion de solicitudes dentro rango de fechas.</returns>
+    /// <response code="200">Coleccion de solicitudes dentro rango de fechas.</response>
+    /// <response code="204">No hay solicitudes dentro del rango de fecha.</response>
+    /// <response code="400">Solicitud invalida.</response>
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesDefaultResponseType]
     public async Task<ActionResult<ApiRequestBase>> Get(DateOnly startDate, DateOnly endDate)
     {
         IEnumerable<ApiRequestBase> apiRequests = await _mediator.Send(new GetApiRequestsQuery(startDate, endDate, ApimSubscriptionKey));
@@ -50,7 +77,19 @@ public class RequestsController : ControllerBase
         return Ok(apiRequests);
     }
 
+    /// <summary>
+    ///     Busca las solicitudes pendientes por procesar.
+    /// </summary>
+    /// <returns>Coleccion de solicitudes pendientes por procesar.</returns>
+    /// ///
+    /// <response code="200">Retorna coleccion de solicitudes pendientes por procesar.</response>
+    /// <response code="204">No hay solicitudes pendientes.</response>
+    /// <response code="400">Solicitud invalida.</response>
     [HttpGet("Pending")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesDefaultResponseType]
     public async Task<ActionResult<IEnumerable<ApiRequestBase>>> GetPending()
     {
         IEnumerable<ApiRequestBase> apiRequests = await _mediator.Send(new GetPendingApiRequestsQuery(ApimSubscriptionKey));
@@ -61,7 +100,17 @@ public class RequestsController : ControllerBase
         return Ok(apiRequests);
     }
 
+    /// <summary>
+    ///     Crear una solicitud en la base de datos para ser procesada en CONTPAQi Comercial.
+    /// </summary>
+    /// <param name="apiRequest">Solicitud a procesar.</param>
+    /// <returns>La solicitud creada.</returns>
+    /// <response code="201">Retorna la solicitud creada.</response>
+    /// <response code="400">Solicitud invalida.</response>
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesDefaultResponseType]
     public async Task<ActionResult<Guid>> Post(ApiRequestBase apiRequest)
     {
         Guid requestId = await _mediator.Send(new CreateApiRequestCommand(apiRequest, ApimSubscriptionKey));
@@ -81,7 +130,15 @@ public class RequestsController : ControllerBase
         return Created(pathByAction!, request);
     }
 
+    /// <summary>
+    ///     Regresa la estructura de una solicitud serializada en JSON.
+    /// </summary>
+    /// <param name="requestName">La solicitud a serializar.</param>
+    /// <returns>La estructura de una solicitud serializada en JSON.</returns>
+    /// <response code="200">La estructura de una solicitud serializada en JSON.</response>
     [HttpGet("JsonModel")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesDefaultResponseType]
     public ActionResult<ApiRequestBase> JsonModel(string requestName)
     {
         Type requestType = typeof(CrearDocumentoRequest);

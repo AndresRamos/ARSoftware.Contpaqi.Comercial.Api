@@ -2,6 +2,7 @@
 using Api.Core.Domain.Common;
 using Api.Core.Domain.Requests;
 using Api.Presentation.WebApi.Authentication;
+using Api.Presentation.WebApi.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace Api.Presentation.WebApi.Controllers;
 [Route("api/[controller]")]
 [Produces("application/json")]
 [ServiceFilter(typeof(ApiKeyAuthFilter))]
+[ApiExceptionFilter]
 public class ResponsesController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -38,7 +40,15 @@ public class ResponsesController : ControllerBase
         return Ok();
     }
 
+    /// <summary>
+    ///     Regresa la estructura de una respuesta serializada en JSON.
+    /// </summary>
+    /// <param name="responseName">La respuesta a serializar.</param>
+    /// <returns>La estructura de una respuesta serializada en JSON.</returns>
+    /// <response code="200">La estructura de una respuesta serializada en JSON.</response>
     [HttpGet("JsonModel")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesDefaultResponseType]
     public ActionResult<ApiResponseBase> JsonModel(string responseName)
     {
         Type responseType = typeof(CrearDocumentoResponse);
