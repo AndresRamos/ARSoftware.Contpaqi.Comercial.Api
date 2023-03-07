@@ -7,7 +7,7 @@ using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
 
 namespace Api.Sdk.ConsoleApp.JsonFactories;
 
-internal class ClienteFactory
+public static class ClienteFactory
 {
     public const string Codigo = "CTE001";
     public const string Nombre = "Cliente 1";
