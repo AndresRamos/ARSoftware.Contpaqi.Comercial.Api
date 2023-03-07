@@ -7,7 +7,7 @@ public abstract class ApiRequestBase : IRequest<ApiResponseBase>
 {
     public Guid Id { get; set; }
 
-    public string SubscriptionKey { get; set; } = string.Empty;
+    public string SubscriptionKey { get; set; } = Guid.Empty.ToString("N");
 
     public string EmpresaRfc { get; set; } = string.Empty;
 

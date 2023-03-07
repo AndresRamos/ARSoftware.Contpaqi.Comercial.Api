@@ -11,7 +11,7 @@ public sealed class ActualizarAlmacenRequest : ApiRequestBase, IApiRequest<Actua
 
 public sealed class ActualizarAlmacenRequestModel
 {
-    public string Codigo { get; set; } = string.Empty;
+    public string CodigoAlmacen { get; set; } = string.Empty;
     public Dictionary<string, string> DatosAlmacen { get; set; } = new();
 }
 

@@ -22,7 +22,7 @@ public sealed class EliminarClienteRequestHandler : IRequestHandler<EliminarClie
     {
         try
         {
-            _clienteProveedorService.Eliminar(request.Model.ClienteCodigo);
+            _clienteProveedorService.Eliminar(request.Model.CodigoCliente);
 
             return Task.FromResult<ApiResponseBase>(
                 ApiResponseFactory.CreateSuccessfull<EliminarClienteResponse, EliminarClienteResponseModel>(request.Id,

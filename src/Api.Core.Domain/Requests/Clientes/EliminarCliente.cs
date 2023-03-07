@@ -9,7 +9,7 @@ public sealed class EliminarClienteRequest : ApiRequestBase, IApiRequest<Elimina
 
 public sealed class EliminarClienteRequestModel
 {
-    public string ClienteCodigo { get; set; } = string.Empty;
+    public string CodigoCliente { get; set; } = string.Empty;
 }
 
 public sealed class EliminarClienteRequestOptions

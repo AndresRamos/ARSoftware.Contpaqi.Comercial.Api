@@ -23,7 +23,8 @@ public sealed class MappingsProfile : Profile
 
         CreateMap<admAgentes, Agente>()
             .ForMember(dest => dest.Codigo, opt => opt.MapFrom(src => src.CCODIGOAGENTE))
-            .ForMember(dest => dest.Nombre, opt => opt.MapFrom(src => src.CNOMBREAGENTE));
+            .ForMember(dest => dest.Nombre, opt => opt.MapFrom(src => src.CNOMBREAGENTE))
+            .ForMember(dest => dest.Tipo, opt => opt.MapFrom(src => TipoAgenteHelper.ConvertFromSdkValue(src.CTIPOAGENTE)));
 
         CreateMap<admAlmacenes, Almacen>()
             .ForMember(dest => dest.Codigo, opt => opt.MapFrom(src => src.CCODIGOALMACEN))
