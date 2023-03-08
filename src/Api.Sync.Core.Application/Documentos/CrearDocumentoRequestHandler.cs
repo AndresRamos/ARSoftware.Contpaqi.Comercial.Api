@@ -21,6 +21,7 @@ public sealed class CrearDocumentoRequestHandler : IRequestHandler<CrearDocument
     private readonly ILogger _logger;
     private readonly IMapper _mapper;
     private readonly IMovimientoService _movimientoService;
+    private int _documentoSdkId;
 
     public CrearDocumentoRequestHandler(IDocumentoService documentoService,
                                         IMapper mapper,
@@ -52,25 +53,31 @@ public sealed class CrearDocumentoRequestHandler : IRequestHandler<CrearDocument
                 documentoSdk.aFolio = siguienteFolio.aFolio;
             }
 
-            int documentoSdkId = _documentoService.Crear(documentoSdk);
+            _documentoSdkId = _documentoService.Crear(documentoSdk);
 
-            var datosDocumento = new Dictionary<string, string>(documento.DatosExtra)
-            {
-                { nameof(admDocumentos.COBSERVACIONES), documento.Observaciones },
-                { nameof(admDocumentos.CMETODOPAG), documento.FormaPago.Clave },
-                { nameof(admDocumentos.CCANTPARCI), MetodoPagoHelper.ConvertToSdkValue(documento.MetodoPago).ToString() }
-            };
+            var datosDocumento = new Dictionary<string, string>(documento.DatosExtra);
 
-            _documentoService.Actualizar(documentoSdkId, datosDocumento);
+            if (!datosDocumento.ContainsKey(nameof(admDocumentos.COBSERVACIONES)))
+                datosDocumento.Add(nameof(admDocumentos.COBSERVACIONES), documento.Observaciones);
+
+            if (documento.FormaPago is not null && !datosDocumento.ContainsKey(nameof(admDocumentos.CMETODOPAG)))
+                datosDocumento.Add(nameof(admDocumentos.CMETODOPAG), documento.FormaPago.Clave);
+
+            if (documento.MetodoPago is not null && !datosDocumento.ContainsKey(nameof(admDocumentos.CCANTPARCI)))
+                datosDocumento.Add(nameof(admDocumentos.CCANTPARCI), MetodoPagoHelper.ConvertToSdkValue(documento.MetodoPago).ToString());
+
+            _documentoService.Actualizar(_documentoSdkId, datosDocumento);
 
             foreach (Movimiento movimiento in documento.Movimientos)
             {
                 var movimientoSdk = _mapper.Map<tMovimiento>(movimiento);
-                int movimientoSdkId = _movimientoService.Crear(documentoSdkId, movimientoSdk);
-                var datosMovimiento = new Dictionary<string, string>(movimiento.DatosExtra)
-                {
-                    { nameof(admMovimientos.COBSERVAMOV), movimiento.Observaciones }
-                };
+                int movimientoSdkId = _movimientoService.Crear(_documentoSdkId, movimientoSdk);
+
+                var datosMovimiento = new Dictionary<string, string>(movimiento.DatosExtra);
+
+                if (!datosMovimiento.ContainsKey(nameof(admMovimientos.COBSERVAMOV)))
+                    datosMovimiento.Add(nameof(admMovimientos.COBSERVAMOV), movimiento.Observaciones);
+
                 // todo: modificar porcentages e importes de impuestos y descuentos dependiendo de la configuracion del concepto
                 _movimientoService.Actualizar(movimientoSdkId, datosMovimiento);
 
@@ -80,7 +87,7 @@ public sealed class CrearDocumentoRequestHandler : IRequestHandler<CrearDocument
 
             var responseModel = new CrearDocumentoResponseModel
             {
-                Documento = await _documentoRepository.BuscarPorIdAsync(documentoSdkId, cancellationToken)
+                Documento = await _documentoRepository.BuscarPorIdAsync(_documentoSdkId, cancellationToken)
             };
 
             return ApiResponseFactory.CreateSuccessfull<CrearDocumentoResponse, CrearDocumentoResponseModel>(request.Id, responseModel);
@@ -90,6 +97,10 @@ public sealed class CrearDocumentoRequestHandler : IRequestHandler<CrearDocument
             _logger.LogError(e, "Error Processing {ApiRequest}", nameof(CrearDocumentoRequest));
             // Todo: Borrar documento si hay error
             return ApiResponseFactory.CreateFailed<CrearDocumentoResponse>(request.Id, e.Message);
+        }
+        finally
+        {
+            _documentoService.DesbloquearDocumento(_documentoSdkId);
         }
     }
 }

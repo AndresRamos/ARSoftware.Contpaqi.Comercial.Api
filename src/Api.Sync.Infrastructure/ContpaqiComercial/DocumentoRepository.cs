@@ -11,6 +11,7 @@ namespace Api.Sync.Infrastructure.ContpaqiComercial;
 
 public sealed class DocumentoRepository : IDocumentoRepository
 {
+    private readonly IAgenteRepository _agenteRepository;
     private readonly IClienteRepository _clienteRepository;
     private readonly IConceptoRepository _conceptoRepository;
     private readonly ContpaqiComercialEmpresaDbContext _context;
@@ -26,6 +27,7 @@ public sealed class DocumentoRepository : IDocumentoRepository
         _folioDigitalRepository = new FolioDigitalRepository(context, mapper);
         _conceptoRepository = new ConceptoRepository(context, mapper);
         _movimientoRepository = new MovimientoRepository(context, mapper);
+        _agenteRepository = new AgenteRepository(context, mapper);
     }
 
     public async Task<Documento> BuscarPorIdAsync(int id, CancellationToken cancellationToken)
@@ -90,7 +92,10 @@ public sealed class DocumentoRepository : IDocumentoRepository
     {
         documento.Concepto = await _conceptoRepository.BuscarPorIdAsync(documentoSql.CIDCONCEPTODOCUMENTO, cancellationToken) ??
                              new Concepto();
-        documento.Cliente = await _clienteRepository.BuscarPorIdAsync(documentoSql.CIDCLIENTEPROVEEDOR, cancellationToken) ?? new Cliente();
+
+        documento.Cliente = await _clienteRepository.BuscarPorIdAsync(documentoSql.CIDCLIENTEPROVEEDOR, cancellationToken);
+
+        documento.Agente = await _agenteRepository.BuscarPorIdAsync(documentoSql.CIDAGENTE, cancellationToken);
 
         documento.Movimientos =
             (await _movimientoRepository.BuscarPorDocumentoIdAsync(documentoSql.CIDDOCUMENTO, cancellationToken)).ToList();
@@ -98,8 +103,7 @@ public sealed class DocumentoRepository : IDocumentoRepository
         documento.FolioDigital =
             await _folioDigitalRepository.BuscarPorDocumentoIdAsync(documentoSql.CIDCONCEPTODOCUMENTO,
                 documentoSql.CIDDOCUMENTO,
-                cancellationToken) ??
-            new FolioDigital();
+                cancellationToken);
 
         documento.DatosExtra = documentoSql.ToDatosDictionary<admDocumentos>();
     }

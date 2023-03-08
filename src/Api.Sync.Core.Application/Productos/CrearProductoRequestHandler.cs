@@ -35,11 +35,12 @@ public sealed class CrearProductoRequestHandler : IRequestHandler<CrearProductoR
         {
             int productoId = _productoService.Crear(_mapper.Map<tProducto>(request.Model.Producto));
 
-            _productoService.Actualizar(productoId,
-                new Dictionary<string, string>(request.Model.Producto.DatosExtra)
-                {
-                    { nameof(admProductos.CCLAVESAT), request.Model.Producto.ClaveSat }
-                });
+            var datosExtra = new Dictionary<string, string>(request.Model.Producto.DatosExtra);
+
+            if (!datosExtra.ContainsKey(nameof(admProductos.CCLAVESAT)))
+                datosExtra.Add(nameof(admProductos.CCLAVESAT), request.Model.Producto.ClaveSat);
+
+            _productoService.Actualizar(productoId, datosExtra);
 
             return ApiResponseFactory.CreateSuccessfull<CrearProductoResponse, CrearProductoResponseModel>(request.Id,
                 new CrearProductoResponseModel { Producto = (await _productoRepository.BuscarPorIdAsync(productoId, cancellationToken))! });

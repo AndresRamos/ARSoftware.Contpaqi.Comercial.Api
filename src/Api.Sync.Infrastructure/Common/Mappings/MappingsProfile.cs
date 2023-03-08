@@ -35,9 +35,8 @@ public sealed class MappingsProfile : Profile
             .ForMember(dest => dest.Codigo, opt => opt.MapFrom(src => src.CCODIGOCLIENTE))
             .ForMember(dest => dest.RazonSocial, opt => opt.MapFrom(src => src.CRAZONSOCIAL))
             .ForMember(dest => dest.Rfc, opt => opt.MapFrom(src => src.CRFC))
-            .ForMember(dest => dest.UsoCfdi, opt => opt.MapFrom(src => UsoCfdi.FromClave(src.CUSOCFDI) ?? UsoCfdi.P01))
-            .ForMember(dest => dest.RegimenFiscal,
-                opt => opt.MapFrom(src => RegimenFiscal.FromClave(src.CREGIMFISC) ?? RegimenFiscal._616));
+            .ForMember(dest => dest.UsoCfdi, opt => opt.MapFrom(src => UsoCfdi.FromClave(src.CUSOCFDI)))
+            .ForMember(dest => dest.RegimenFiscal, opt => opt.MapFrom(src => RegimenFiscal.FromClave(src.CREGIMFISC)));
 
         CreateMap<admConceptos, Concepto>()
             .ForMember(dest => dest.Codigo, opt => opt.MapFrom(src => src.CCODIGOCONCEPTO))
@@ -52,7 +51,7 @@ public sealed class MappingsProfile : Profile
             .ForMember(dest => dest.Total, opt => opt.MapFrom(src => src.CTOTAL))
             .ForMember(dest => dest.Observaciones, opt => opt.MapFrom(src => src.COBSERVACIONES))
             .ForMember(dest => dest.MetodoPago, opt => opt.MapFrom(src => MetodoPagoHelper.ConvertFromSdkValue(src.CCANTPARCI)))
-            .ForMember(dest => dest.FormaPago, opt => opt.MapFrom(src => FormaPago.FromClave(src.CMETODOPAG) ?? FormaPago._99))
+            .ForMember(dest => dest.FormaPago, opt => opt.MapFrom(src => FormaPago.FromClave(src.CMETODOPAG)))
             .ForMember(dest => dest.Moneda, opt => opt.MapFrom(src => Moneda.FromId(src.CIDMONEDA)));
 
         CreateMap<Empresas, Empresa>()
@@ -81,6 +80,7 @@ public sealed class MappingsProfile : Profile
             .ForMember(dest => dest.Pais, opt => opt.MapFrom(src => src.CPAIS));
 
         CreateMap<admProductos, Producto>()
+            .ForMember(dest => dest.Tipo, opt => opt.MapFrom(src => TipoProductoHelper.ConvertFromSdkValue(src.CTIPOPRODUCTO)))
             .ForMember(dest => dest.Codigo, opt => opt.MapFrom(src => src.CCODIGOPRODUCTO))
             .ForMember(dest => dest.Nombre, opt => opt.MapFrom(src => src.CNOMBREPRODUCTO))
             .ForMember(dest => dest.ClaveSat, opt => opt.MapFrom(src => src.CCLAVESAT));

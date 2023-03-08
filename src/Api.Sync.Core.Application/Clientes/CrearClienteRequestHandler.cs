@@ -43,12 +43,15 @@ public sealed class CrearClienteRequestHandler : IRequestHandler<CrearClienteReq
         {
             int clienteId = _clienteProveedorService.Crear(_mapper.Map<tCteProv>(cliente));
 
-            _clienteProveedorService.Actualizar(clienteId,
-                new Dictionary<string, string>(cliente.DatosExtra)
-                {
-                    { nameof(admClientes.CUSOCFDI), cliente.UsoCfdi.Clave },
-                    { nameof(admClientes.CREGIMFISC), cliente.RegimenFiscal.Clave }
-                });
+            var datosCliente = new Dictionary<string, string>(cliente.DatosExtra);
+
+            if (cliente.UsoCfdi is not null && !datosCliente.ContainsKey(nameof(admClientes.CUSOCFDI)))
+                datosCliente.Add(nameof(admClientes.CUSOCFDI), cliente.UsoCfdi.Clave);
+
+            if (cliente.RegimenFiscal is not null && !datosCliente.ContainsKey(nameof(admClientes.CREGIMFISC)))
+                datosCliente.Add(nameof(admClientes.CREGIMFISC), cliente.RegimenFiscal.Clave);
+
+            _clienteProveedorService.Actualizar(clienteId, datosCliente);
 
             await ActualizarDireccionFiscalAsync(cliente.Codigo, cliente.DireccionFiscal, cancellationToken);
 

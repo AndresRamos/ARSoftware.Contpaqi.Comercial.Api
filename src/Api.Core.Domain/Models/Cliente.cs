@@ -34,13 +34,13 @@ public sealed class Cliente
     ///     Uso del CFDI del cliente.
     /// </summary>
     [JsonConverter(typeof(UsoCfdiJsonConverter))]
-    public UsoCfdi UsoCfdi { get; set; } = UsoCfdi.S01;
+    public UsoCfdi? UsoCfdi { get; set; }
 
     /// <summary>
     ///     Regimen fiscal del cliente.
     /// </summary>
     [JsonConverter(typeof(RegimenFiscalJsonConverter))]
-    public RegimenFiscal RegimenFiscal { get; set; } = RegimenFiscal._616;
+    public RegimenFiscal? RegimenFiscal { get; set; }
 
     /// <summary>
     ///     Direccion fiscal del cliente.

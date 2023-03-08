@@ -33,7 +33,7 @@ public sealed class Documento
     /// <summary>
     ///     Cliente o proveedor del documento.
     /// </summary>
-    public Cliente Cliente { get; set; } = new();
+    public Cliente? Cliente { get; set; }
 
     /// <summary>
     ///     Moneda del documento.
@@ -63,24 +63,24 @@ public sealed class Documento
     /// <summary>
     ///     Agente del documento.
     /// </summary>
-    public Agente Agente { get; set; } = new();
+    public Agente? Agente { get; set; } = new();
 
     /// <summary>
     ///     Direccion fiscal del documento
     /// </summary>
-    public Direccion DireccionFiscal { get; set; } = new();
+    public Direccion? DireccionFiscal { get; set; } = new();
 
     /// <summary>
     ///     Forma de pago del documento.
     /// </summary>
     [JsonConverter(typeof(FormaPagoJsonConverter))]
-    public FormaPago FormaPago { get; set; } = FormaPago._01;
+    public FormaPago? FormaPago { get; set; }
 
     /// <summary>
     ///     Metodo de pago del documento.
     /// </summary>
     [JsonConverter(typeof(MetodoPagoJsonConverter))]
-    public MetodoPago MetodoPago { get; set; } = MetodoPago.PPD;
+    public MetodoPago? MetodoPago { get; set; }
 
     /// <summary>
     ///     Movimientos del documento.
@@ -90,7 +90,7 @@ public sealed class Documento
     /// <summary>
     ///     Folio digital del documento.
     /// </summary>
-    public FolioDigital FolioDigital { get; set; } = new();
+    public FolioDigital? FolioDigital { get; set; } = new();
 
     /// <summary>
     ///     Datos extra del documento.

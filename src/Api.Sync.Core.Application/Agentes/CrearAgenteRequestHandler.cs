@@ -28,11 +28,13 @@ public class CrearAgenteRequestHandler : IRequestHandler<CrearAgenteRequest, Api
     {
         try
         {
-            var datosAgente = new Dictionary<string, string>(request.Model.Agente.DatosExtra)
-            {
-                { nameof(admAgentes.CCODIGOAGENTE), request.Model.Agente.Codigo },
-                { nameof(admAgentes.CNOMBREAGENTE), request.Model.Agente.Nombre }
-            };
+            var datosAgente = new Dictionary<string, string>(request.Model.Agente.DatosExtra);
+
+            if (!datosAgente.ContainsKey(nameof(admAgentes.CCODIGOAGENTE)))
+                datosAgente.Add(nameof(admAgentes.CCODIGOAGENTE), request.Model.Agente.Codigo);
+
+            if (!datosAgente.ContainsKey(nameof(admAgentes.CNOMBREAGENTE)))
+                datosAgente.Add(nameof(admAgentes.CNOMBREAGENTE), request.Model.Agente.Nombre);
 
             int agenteId = _agenteService.Crear(datosAgente);
 

@@ -15,11 +15,11 @@ public sealed class MappingsProfile : Profile
             .ForMember(dest => dest.aSerie, opt => opt.MapFrom(src => src.Serie))
             .ForMember(dest => dest.aFolio, opt => opt.MapFrom(src => src.Folio))
             .ForMember(dest => dest.aFecha, opt => opt.MapFrom(src => src.Fecha.ToSdkFecha()))
-            .ForMember(dest => dest.aCodigoCteProv, opt => opt.MapFrom(src => src.Cliente.Codigo))
+            .ForMember(dest => dest.aCodigoCteProv, opt => opt.MapFrom(src => src.Cliente!.Codigo))
             .ForMember(dest => dest.aNumMoneda, opt => opt.MapFrom(src => src.Moneda.Id))
             .ForMember(dest => dest.aTipoCambio, opt => opt.MapFrom(src => src.TipoCambio))
             .ForMember(dest => dest.aImporte, opt => opt.MapFrom(src => src.Total))
-            .ForMember(dest => dest.aCodigoAgente, opt => opt.MapFrom(src => src.Agente.Codigo))
+            .ForMember(dest => dest.aCodigoAgente, opt => opt.MapFrom(src => src.Agente!.Codigo))
             .ForMember(dest => dest.aReferencia, opt => opt.MapFrom(src => src.Referencia));
 
         CreateMap<Movimiento, tMovimiento>()
@@ -69,6 +69,11 @@ public sealed class MappingsProfile : Profile
             .ForMember(dest => dest.ConceptoCodigo, opt => opt.MapFrom(src => src.Concepto.Codigo))
             .ForMember(dest => dest.Serie, opt => opt.MapFrom(src => src.Serie))
             .ForMember(dest => dest.Folio, opt => opt.MapFrom(src => src.Folio));
+
+        CreateMap<Producto, tProducto>()
+            .ForMember(dest => dest.cTipoProducto, opt => opt.MapFrom(src => TipoProductoHelper.ConvertToSdkValue(src.Tipo)))
+            .ForMember(dest => dest.cCodigoProducto, opt => opt.MapFrom(src => src.Codigo))
+            .ForMember(dest => dest.cNombreProducto, opt => opt.MapFrom(src => src.Nombre));
 
         CreateMap<LlaveDocumento, tLlaveDoc>()
             .ForMember(dest => dest.aCodConcepto, opt => opt.MapFrom(src => src.ConceptoCodigo))
