@@ -27,19 +27,20 @@ public sealed class BuscarConceptosRequestHandler : IRequestHandler<BuscarConcep
 
             if (request.Model.Id is not null)
             {
-                Concepto? concepto = await _conceptoRepository.BuscarPorIdAsync(request.Model.Id.Value, cancellationToken);
+                Concepto? concepto = await _conceptoRepository.BuscarPorIdAsync(request.Model.Id.Value, request.Options, cancellationToken);
                 if (concepto is not null)
                     conceptos.Add(concepto);
             }
             else if (request.Model.Codigo is not null)
             {
-                Concepto? concepto = await _conceptoRepository.BuscarPorCodigoAsync(request.Model.Codigo, cancellationToken);
+                Concepto? concepto =
+                    await _conceptoRepository.BuscarPorCodigoAsync(request.Model.Codigo, request.Options, cancellationToken);
                 if (concepto is not null)
                     conceptos.Add(concepto);
             }
             else
             {
-                conceptos.AddRange(await _conceptoRepository.BuscarTodoAsync(cancellationToken));
+                conceptos.AddRange(await _conceptoRepository.BuscarTodoAsync(request.Options, cancellationToken));
             }
 
             return ApiResponseFactory.CreateSuccessfull<BuscarConceptosResponse, BuscarConceptosResponseModel>(request.Id,

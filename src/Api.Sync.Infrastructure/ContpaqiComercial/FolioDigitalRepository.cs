@@ -1,9 +1,12 @@
-﻿using Api.Core.Domain.Models;
+﻿using Api.Core.Domain.Common;
+using Api.Core.Domain.Models;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
+using Api.Sync.Infrastructure.ContpaqiComercial.Models;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sql.Contexts;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Sync.Infrastructure.ContpaqiComercial;
@@ -19,10 +22,14 @@ public sealed class FolioDigitalRepository : IFolioDigitalRepository
         _mapper = mapper;
     }
 
-    public async Task<FolioDigital?> BuscarPorDocumentoIdAsync(int conceptoId, int documentoId, CancellationToken cancellationToken)
+    public async Task<FolioDigital?> BuscarPorDocumentoIdAsync(int conceptoId,
+                                                               int documentoId,
+                                                               ILoadRelatedDataOptions loadRelatedDataOptions,
+                                                               CancellationToken cancellationToken)
     {
-        admFoliosDigitales? folioDigitalSql = await _context.admFoliosDigitales
+        FolioDigitalSql? folioDigitalSql = await _context.admFoliosDigitales
             .Where(m => m.CIDCPTODOC == conceptoId && m.CIDDOCTO == documentoId)
+            .ProjectTo<FolioDigitalSql>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(cancellationToken);
 
         if (folioDigitalSql is null)
@@ -30,13 +37,19 @@ public sealed class FolioDigitalRepository : IFolioDigitalRepository
 
         var folioDigital = _mapper.Map<FolioDigital>(folioDigitalSql);
 
-        CargarObjectosRelacionados(folioDigital, folioDigitalSql);
+        await CargarDatosRelacionadosAsync(folioDigital, folioDigitalSql, loadRelatedDataOptions, cancellationToken);
 
         return folioDigital;
     }
 
-    private void CargarObjectosRelacionados(FolioDigital folioDigital, admFoliosDigitales folioDigitalSql)
+    private async Task CargarDatosRelacionadosAsync(FolioDigital folioDigital,
+                                                    FolioDigitalSql folioDigitalSql,
+                                                    ILoadRelatedDataOptions loadRelatedDataOptions,
+                                                    CancellationToken cancellationToken)
     {
-        folioDigital.DatosExtra = folioDigitalSql.ToDatosDictionary<admFoliosDigitales>();
+        if (loadRelatedDataOptions.CargarDatosExtra)
+            folioDigital.DatosExtra =
+                (await _context.admFoliosDigitales.FirstAsync(m => m.CIDFOLDIG == folioDigitalSql.CIDFOLDIG, cancellationToken))
+                .ToDatosDictionary<admFoliosDigitales>();
     }
 }

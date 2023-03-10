@@ -13,8 +13,9 @@ public sealed class BuscarEmpresasRequestModel
 {
 }
 
-public sealed class BuscarEmpresasRequestOptions
+public sealed class BuscarEmpresasRequestOptions : ILoadRelatedDataOptions
 {
+    public bool CargarDatosExtra { get; set; }
 }
 
 /// <inheritdoc cref="IApiResponse" />

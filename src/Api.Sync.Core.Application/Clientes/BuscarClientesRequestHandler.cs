@@ -27,19 +27,19 @@ public sealed class BuscarClientesRequestHandler : IRequestHandler<BuscarCliente
 
             if (request.Model.Id is not null)
             {
-                Cliente? cliente = await _clienteRepository.BuscarPorIdAsync(request.Model.Id.Value, cancellationToken);
+                Cliente? cliente = await _clienteRepository.BuscarPorIdAsync(request.Model.Id.Value, request.Options, cancellationToken);
                 if (cliente is not null)
                     clientes.Add(cliente);
             }
             else if (request.Model.Codigo is not null)
             {
-                Cliente? cliente = await _clienteRepository.BuscarPorCodigoAsync(request.Model.Codigo, cancellationToken);
+                Cliente? cliente = await _clienteRepository.BuscarPorCodigoAsync(request.Model.Codigo, request.Options, cancellationToken);
                 if (cliente is not null)
                     clientes.Add(cliente);
             }
             else
             {
-                clientes.AddRange(await _clienteRepository.BuscarTodoAsync(cancellationToken));
+                clientes.AddRange(await _clienteRepository.BuscarTodoAsync(request.Options, cancellationToken));
             }
 
             return ApiResponseFactory.CreateSuccessfull<BuscarClientesResponse, BuscarClientesResponseModel>(request.Id,

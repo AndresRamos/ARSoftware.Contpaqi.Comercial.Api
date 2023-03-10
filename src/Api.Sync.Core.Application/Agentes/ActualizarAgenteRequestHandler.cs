@@ -31,7 +31,9 @@ public sealed class ActualizarAgenteRequestHandler : IRequestHandler<ActualizarA
             return ApiResponseFactory.CreateSuccessfull<ActualizarAgenteResponse, ActualizarAgenteResponseModel>(request.Id,
                 new ActualizarAgenteResponseModel
                 {
-                    Agente = (await _agenteRepository.BuscarPorCodigoAsync(request.Model.CodigoAgente, cancellationToken))!
+                    Agente = (await _agenteRepository.BuscarPorCodigoAsync(request.Model.CodigoAgente,
+                        request.Options,
+                        cancellationToken))!
                 });
         }
         catch (Exception e)

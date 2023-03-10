@@ -14,8 +14,9 @@ public sealed class CrearProductoRequestModel
     public Producto Producto { get; set; } = new();
 }
 
-public sealed class CrearProductoRequestOptions
+public sealed class CrearProductoRequestOptions : ILoadRelatedDataOptions
 {
+    public bool CargarDatosExtra { get; set; }
 }
 
 /// <inheritdoc cref="IApiResponse" />

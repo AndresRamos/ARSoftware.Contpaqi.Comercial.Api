@@ -27,19 +27,19 @@ public sealed class BuscarAlmacenesRequestHandler : IRequestHandler<BuscarAlmace
 
             if (request.Model.Id is not null)
             {
-                Almacen? almacen = await _almacenRepository.BuscarPorIdAsync(request.Model.Id.Value, cancellationToken);
+                Almacen? almacen = await _almacenRepository.BuscarPorIdAsync(request.Model.Id.Value, request.Options, cancellationToken);
                 if (almacen is not null)
                     almacenes.Add(almacen);
             }
             else if (request.Model.Codigo is not null)
             {
-                Almacen? almacen = await _almacenRepository.BuscarPorCodigoAsync(request.Model.Codigo, cancellationToken);
+                Almacen? almacen = await _almacenRepository.BuscarPorCodigoAsync(request.Model.Codigo, request.Options, cancellationToken);
                 if (almacen is not null)
                     almacenes.Add(almacen);
             }
             else
             {
-                almacenes.AddRange(await _almacenRepository.BuscarTodoAsync(cancellationToken));
+                almacenes.AddRange(await _almacenRepository.BuscarTodoAsync(request.Options, cancellationToken));
             }
 
             return ApiResponseFactory.CreateSuccessfull<BuscarAlmacenesResponse, BuscarAlmacenesResponseModel>(request.Id,

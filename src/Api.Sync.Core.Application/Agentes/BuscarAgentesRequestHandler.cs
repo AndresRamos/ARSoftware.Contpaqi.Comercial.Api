@@ -27,19 +27,19 @@ public sealed class BuscarAgentesRequestHandler : IRequestHandler<BuscarAgentesR
 
             if (request.Model.Id is not null)
             {
-                Agente? agente = await _agenteRepository.BuscarPorIdAsync(request.Model.Id.Value, cancellationToken);
+                Agente? agente = await _agenteRepository.BuscarPorIdAsync(request.Model.Id.Value, request.Options, cancellationToken);
                 if (agente is not null)
                     agentes.Add(agente);
             }
             else if (request.Model.Codigo is not null)
             {
-                Agente? agente = await _agenteRepository.BuscarPorCodigoAsync(request.Model.Codigo, cancellationToken);
+                Agente? agente = await _agenteRepository.BuscarPorCodigoAsync(request.Model.Codigo, request.Options, cancellationToken);
                 if (agente is not null)
                     agentes.Add(agente);
             }
             else
             {
-                agentes.AddRange(await _agenteRepository.BuscarTodoAsync(cancellationToken));
+                agentes.AddRange(await _agenteRepository.BuscarTodoAsync(request.Options, cancellationToken));
             }
 
             return ApiResponseFactory.CreateSuccessfull<BuscarAgentesResponse, BuscarAgentesResponseModel>(request.Id,

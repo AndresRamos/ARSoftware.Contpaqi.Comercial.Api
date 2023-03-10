@@ -14,8 +14,9 @@ public sealed class CrearAlmacenRequestModel
     public Almacen Almacen { get; set; } = new();
 }
 
-public sealed class CrearAlmacenRequestOptions
+public sealed class CrearAlmacenRequestOptions : ILoadRelatedDataOptions
 {
+    public bool CargarDatosExtra { get; set; }
 }
 
 /// <inheritdoc cref="IApiResponse" />

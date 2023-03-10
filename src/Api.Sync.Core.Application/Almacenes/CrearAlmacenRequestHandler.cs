@@ -35,7 +35,10 @@ public sealed class CrearAlmacenRequestHandler : IRequestHandler<CrearAlmacenReq
             });
 
             return ApiResponseFactory.CreateSuccessfull<CrearAlmacenResponse, CrearAlmacenResponseModel>(request.Id,
-                new CrearAlmacenResponseModel { Almacen = (await _almacenRepository.BuscarPorIdAsync(almacenId, cancellationToken))! });
+                new CrearAlmacenResponseModel
+                {
+                    Almacen = (await _almacenRepository.BuscarPorIdAsync(almacenId, request.Options, cancellationToken))!
+                });
         }
         catch (Exception e)
         {

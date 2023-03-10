@@ -1,9 +1,12 @@
-﻿using Api.Core.Domain.Models;
+﻿using Api.Core.Domain.Common;
+using Api.Core.Domain.Models;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
+using Api.Sync.Infrastructure.ContpaqiComercial.Models;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sql.Contexts;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Sync.Infrastructure.ContpaqiComercial;
@@ -19,45 +22,54 @@ public sealed class AgenteRepository : IAgenteRepository
         _mapper = mapper;
     }
 
-    public async Task<Agente?> BuscarPorIdAsync(int id, CancellationToken cancellationToken)
+    public async Task<Agente?> BuscarPorIdAsync(int id, ILoadRelatedDataOptions loadRelatedDataOptions, CancellationToken cancellationToken)
     {
-        admAgentes? agenteSql = await _context.admAgentes.FirstOrDefaultAsync(m => m.CIDAGENTE == id, cancellationToken);
+        AgenteSql? agenteSql = await _context.admAgentes.Where(m => m.CIDAGENTE == id)
+            .ProjectTo<AgenteSql>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(cancellationToken);
 
         if (agenteSql is null)
             return null;
 
         var agente = _mapper.Map<Agente>(agenteSql);
 
-        BuscarObjectosRelacionados(agente, agenteSql);
+        await CargarDatosRelacionadosAsync(agente, agenteSql, loadRelatedDataOptions, cancellationToken);
 
         return agente;
     }
 
-    public async Task<Agente?> BuscarPorCodigoAsync(string codigo, CancellationToken cancellationToken)
+    public async Task<Agente?> BuscarPorCodigoAsync(string codigo,
+                                                    ILoadRelatedDataOptions loadRelatedDataOptions,
+                                                    CancellationToken cancellationToken)
     {
-        admAgentes? agenteSql = await _context.admAgentes.FirstOrDefaultAsync(m => m.CCODIGOAGENTE == codigo, cancellationToken);
+        AgenteSql? agenteSql = await _context.admAgentes.Where(m => m.CCODIGOAGENTE == codigo)
+            .ProjectTo<AgenteSql>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(cancellationToken);
 
         if (agenteSql is null)
             return null;
 
         var agente = _mapper.Map<Agente>(agenteSql);
 
-        BuscarObjectosRelacionados(agente, agenteSql);
+        await CargarDatosRelacionadosAsync(agente, agenteSql, loadRelatedDataOptions, cancellationToken);
 
         return agente;
     }
 
-    public async Task<IEnumerable<Agente>> BuscarTodoAsync(CancellationToken cancellationToken)
+    public async Task<IEnumerable<Agente>> BuscarTodoAsync(ILoadRelatedDataOptions loadRelatedDataOptions,
+                                                           CancellationToken cancellationToken)
     {
         var agentesList = new List<Agente>();
 
-        List<admAgentes> agentesSql = await _context.admAgentes.OrderBy(c => c.CNOMBREAGENTE).ToListAsync(cancellationToken);
+        List<AgenteSql> agentesSql = await _context.admAgentes.OrderBy(c => c.CNOMBREAGENTE)
+            .ProjectTo<AgenteSql>(_mapper.ConfigurationProvider)
+            .ToListAsync(cancellationToken);
 
-        foreach (admAgentes agenteSql in agentesSql)
+        foreach (AgenteSql agenteSql in agentesSql)
         {
             var agente = _mapper.Map<Agente>(agenteSql);
 
-            BuscarObjectosRelacionados(agente, agenteSql);
+            await CargarDatosRelacionadosAsync(agente, agenteSql, loadRelatedDataOptions, cancellationToken);
 
             agentesList.Add(agente);
         }
@@ -65,8 +77,13 @@ public sealed class AgenteRepository : IAgenteRepository
         return agentesList;
     }
 
-    private void BuscarObjectosRelacionados(Agente agente, admAgentes agenteSql)
+    private async Task CargarDatosRelacionadosAsync(Agente agente,
+                                                    AgenteSql agenteSql,
+                                                    ILoadRelatedDataOptions loadRelatedDataOptions,
+                                                    CancellationToken cancellationToken)
     {
-        agente.DatosExtra = agenteSql.ToDatosDictionary<admAgentes>();
+        if (loadRelatedDataOptions.CargarDatosExtra)
+            agente.DatosExtra = (await _context.admAgentes.FirstAsync(m => m.CIDAGENTE == agenteSql.CIDAGENTE, cancellationToken))
+                .ToDatosDictionary<admAgentes>();
     }
 }

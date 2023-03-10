@@ -43,7 +43,10 @@ public sealed class CrearProductoRequestHandler : IRequestHandler<CrearProductoR
             _productoService.Actualizar(productoId, datosExtra);
 
             return ApiResponseFactory.CreateSuccessfull<CrearProductoResponse, CrearProductoResponseModel>(request.Id,
-                new CrearProductoResponseModel { Producto = (await _productoRepository.BuscarPorIdAsync(productoId, cancellationToken))! });
+                new CrearProductoResponseModel
+                {
+                    Producto = (await _productoRepository.BuscarPorIdAsync(productoId, request.Options, cancellationToken))!
+                });
         }
         catch (Exception e)
         {

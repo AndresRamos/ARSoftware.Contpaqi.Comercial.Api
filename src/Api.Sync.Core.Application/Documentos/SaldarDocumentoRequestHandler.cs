@@ -40,8 +40,14 @@ public sealed class SaldarDocumentoRequestHandler : IRequestHandler<SaldarDocume
             return ApiResponseFactory.CreateSuccessfull<SaldarDocumentoResponse, SaldarDocumentoResponseModel>(request.Id,
                 new SaldarDocumentoResponseModel
                 {
-                    DocumentoPagar = await _documentoRepository.BuscarPorLlaveAsync(request.Model.DocumentoAPagar, cancellationToken),
-                    DocumentoPago = await _documentoRepository.BuscarPorLlaveAsync(request.Model.DocumentoPago, cancellationToken)
+                    DocumentoPagar =
+                        (await _documentoRepository.BuscarPorLlaveAsync(request.Model.DocumentoAPagar,
+                            request.Options,
+                            cancellationToken))!,
+                    DocumentoPago =
+                        (await _documentoRepository.BuscarPorLlaveAsync(request.Model.DocumentoPago,
+                            request.Options,
+                            cancellationToken))!
                 });
         }
         catch (Exception e)

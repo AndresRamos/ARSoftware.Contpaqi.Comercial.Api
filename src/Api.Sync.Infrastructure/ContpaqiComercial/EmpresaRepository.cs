@@ -1,11 +1,13 @@
-﻿using Api.Core.Domain.Models;
+﻿using Api.Core.Domain.Common;
+using Api.Core.Domain.Models;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
+using Api.Sync.Infrastructure.ContpaqiComercial.Models;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sql.Contexts;
 using ARSoftware.Contpaqi.Comercial.Sql.Factories;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
-using ARSoftware.Contpaqi.Comercial.Sql.Models.Generales;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -29,19 +31,20 @@ public sealed class EmpresaRepository : IEmpresaRepository
         _comercialEmpresaDbContext = comercialEmpresaDbContext;
     }
 
-    public async Task<IEnumerable<Empresa>> BuscarTodoAsync(CancellationToken cancellationToken)
+    public async Task<IEnumerable<Empresa>> BuscarTodoAsync(ILoadRelatedDataOptions relatedDataOptions, CancellationToken cancellationToken)
     {
         var empresasList = new List<Empresa>();
 
-        List<Empresas> empresasSql = await _context.Empresas.Where(e => e.CIDEMPRESA != 1)
+        List<EmpresaSql> empresasSql = await _context.Empresas.Where(e => e.CIDEMPRESA != 1)
             .OrderBy(m => m.CNOMBREEMPRESA)
+            .ProjectTo<EmpresaSql>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 
-        foreach (Empresas empresaSql in empresasSql)
+        foreach (EmpresaSql? empresaSql in empresasSql)
         {
             var empresa = _mapper.Map<Empresa>(empresaSql);
 
-            await CargarObjectosRelacionadosAsync(empresa, cancellationToken);
+            await CargarDatosRelacionadosAsync(empresa, relatedDataOptions, cancellationToken);
 
             empresasList.Add(empresa);
         }
@@ -49,7 +52,9 @@ public sealed class EmpresaRepository : IEmpresaRepository
         return empresasList;
     }
 
-    private async Task CargarObjectosRelacionadosAsync(Empresa empresa, CancellationToken cancellationToken)
+    private async Task CargarDatosRelacionadosAsync(Empresa empresa,
+                                                    ILoadRelatedDataOptions relatedDataOptions,
+                                                    CancellationToken cancellationToken)
     {
         var optionsBuilder = new DbContextOptionsBuilder<ContpaqiComercialEmpresaDbContext>();
         string empresaConnectionString = ContpaqiComercialSqlConnectionStringFactory.CreateContpaqiComercialEmpresaConnectionString(
@@ -59,9 +64,14 @@ public sealed class EmpresaRepository : IEmpresaRepository
 
         _comercialEmpresaDbContext.Database.SetConnectionString(empresaConnectionString);
 
-        admParametros parametros = await _comercialEmpresaDbContext.admParametros.FirstAsync(cancellationToken);
-        empresa.GuidAdd = parametros.CGUIDDSL;
-        empresa.Rfc = parametros.CRFCEMPRESA;
-        empresa.DatosExtra = parametros.ToDatosDictionary<admParametros>();
+        ParametrosSql parametrosSql = await _comercialEmpresaDbContext.admParametros.ProjectTo<ParametrosSql>(_mapper.ConfigurationProvider)
+            .FirstAsync(cancellationToken);
+
+        empresa.GuidAdd = parametrosSql.CGUIDDSL;
+        empresa.Rfc = parametrosSql.CRFCEMPRESA;
+
+        if (relatedDataOptions.CargarDatosExtra)
+            empresa.DatosExtra = (await _comercialEmpresaDbContext.admParametros.FirstAsync(cancellationToken))
+                .ToDatosDictionary<admParametros>();
     }
 }

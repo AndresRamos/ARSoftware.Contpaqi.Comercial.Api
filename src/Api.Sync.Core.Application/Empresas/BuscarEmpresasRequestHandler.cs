@@ -23,7 +23,7 @@ public sealed class BuscarEmpresasRequestHandler : IRequestHandler<BuscarEmpresa
     {
         try
         {
-            List<Empresa> empresas = (await _empresaRepository.BuscarTodoAsync(cancellationToken)).ToList();
+            List<Empresa> empresas = (await _empresaRepository.BuscarTodoAsync(request.Options, cancellationToken)).ToList();
 
             return ApiResponseFactory.CreateSuccessfull<BuscarEmpresasResponse, BuscarEmpresasResponseModel>(request.Id,
                 new BuscarEmpresasResponseModel { Empresas = empresas });

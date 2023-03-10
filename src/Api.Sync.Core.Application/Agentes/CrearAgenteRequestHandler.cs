@@ -39,7 +39,10 @@ public class CrearAgenteRequestHandler : IRequestHandler<CrearAgenteRequest, Api
             int agenteId = _agenteService.Crear(datosAgente);
 
             return ApiResponseFactory.CreateSuccessfull<CrearAgenteResponse, CrearAgenteResponseModel>(request.Id,
-                new CrearAgenteResponseModel { Agente = (await _agenteRepository.BuscarPorIdAsync(agenteId, cancellationToken))! });
+                new CrearAgenteResponseModel
+                {
+                    Agente = (await _agenteRepository.BuscarPorIdAsync(agenteId, request.Options, cancellationToken))!
+                });
         }
         catch (Exception e)
         {

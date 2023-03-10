@@ -14,7 +14,7 @@ public sealed class CrearFacturaRequestModel
     public Documento Documento { get; set; } = new();
 }
 
-public sealed class CrearFacturaRequestOptions
+public sealed class CrearFacturaRequestOptions : ILoadRelatedDataOptions
 {
     public bool UsarFechaDelDia { get; set; } = true;
     public bool BuscarSiguienteFolio { get; set; } = true;
@@ -27,6 +27,7 @@ public sealed class CrearFacturaRequestOptions
     public bool AgregarArchivo { get; set; }
     public string NombreArchivo { get; set; } = string.Empty;
     public string ContenidoArchivo { get; set; } = string.Empty;
+    public bool CargarDatosExtra { get; set; }
 }
 
 /// <inheritdoc cref="IApiResponse" />

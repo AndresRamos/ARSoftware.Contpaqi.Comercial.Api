@@ -32,7 +32,9 @@ public sealed class ActualizarProductoRequestHandler : IRequestHandler<Actualiza
             return ApiResponseFactory.CreateSuccessfull<ActualizarProductoResponse, ActualizarProductoResponseModel>(request.Id,
                 new ActualizarProductoResponseModel
                 {
-                    Producto = (await _productoRepository.BuscarPorCodigoAsync(request.Model.CodigoProducto, cancellationToken))!
+                    Producto = (await _productoRepository.BuscarPorCodigoAsync(request.Model.CodigoProducto,
+                        request.Options,
+                        cancellationToken))!
                 });
         }
         catch (Exception e)

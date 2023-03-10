@@ -1,9 +1,12 @@
-﻿using Api.Core.Domain.Models;
+﻿using Api.Core.Domain.Common;
+using Api.Core.Domain.Models;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
+using Api.Sync.Infrastructure.ContpaqiComercial.Models;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sql.Contexts;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Sync.Infrastructure.ContpaqiComercial;
@@ -19,57 +22,6 @@ public sealed class ClienteRepository : IClienteRepository
         _mapper = mapper;
     }
 
-    public async Task<bool> ExistePorCodigoAsync(string codigo, CancellationToken cancellationToken)
-    {
-        return await _context.admClientes.AnyAsync(c => c.CCODIGOCLIENTE == codigo, cancellationToken);
-    }
-
-    public async Task<Cliente?> BuscarPorCodigoAsync(string codigo, CancellationToken cancellationToken)
-    {
-        admClientes? clienteSql = await _context.admClientes.FirstOrDefaultAsync(c => c.CCODIGOCLIENTE == codigo, cancellationToken);
-
-        if (clienteSql is null)
-            return null;
-
-        var cliente = _mapper.Map<Cliente>(clienteSql);
-
-        await CargarObjectosRelacionadosAsync(cliente, clienteSql, cancellationToken);
-
-        return cliente;
-    }
-
-    public async Task<Cliente?> BuscarPorIdAsync(int id, CancellationToken cancellationToken)
-    {
-        admClientes? clienteSql = await _context.admClientes.FirstOrDefaultAsync(c => c.CIDCLIENTEPROVEEDOR == id, cancellationToken);
-
-        if (clienteSql is null)
-            return null;
-
-        var cliente = _mapper.Map<Cliente>(clienteSql);
-
-        await CargarObjectosRelacionadosAsync(cliente, clienteSql, cancellationToken);
-
-        return cliente;
-    }
-
-    public async Task<IEnumerable<Cliente>> BuscarTodoAsync(CancellationToken cancellationToken)
-    {
-        var clientesList = new List<Cliente>();
-
-        List<admClientes> clientesSql = await _context.admClientes.OrderBy(c => c.CRAZONSOCIAL).ToListAsync(cancellationToken);
-
-        foreach (admClientes clienteSql in clientesSql)
-        {
-            var cliente = _mapper.Map<Cliente>(clienteSql);
-
-            await CargarObjectosRelacionadosAsync(cliente, clienteSql, cancellationToken);
-
-            clientesList.Add(cliente);
-        }
-
-        return clientesList;
-    }
-
     public async Task<bool> ExisteDireccionFiscalDelClienteAsync(string codigo, CancellationToken cancellationToken)
     {
         // Todo: cambiar  d.CTIPODIRECCION == (int)TipoDireccion.Fiscal y d.CTIPOCATALOGO == (int)TipoCatalogoDireccion.Clientes
@@ -79,11 +31,74 @@ public sealed class ClienteRepository : IClienteRepository
             cancellationToken);
     }
 
-    private async Task CargarObjectosRelacionadosAsync(Cliente cliente, admClientes clienteSql, CancellationToken cancellationToken)
+    public async Task<Cliente?> BuscarPorCodigoAsync(string codigo,
+                                                     ILoadRelatedDataOptions loadRelatedDataOptions,
+                                                     CancellationToken cancellationToken)
+    {
+        ClienteSql? clienteSql = await _context.admClientes.Where(c => c.CCODIGOCLIENTE == codigo)
+            .ProjectTo<ClienteSql>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        if (clienteSql is null)
+            return null;
+
+        var cliente = _mapper.Map<Cliente>(clienteSql);
+
+        await CargarDatosRelacionadosAsync(cliente, clienteSql, loadRelatedDataOptions, cancellationToken);
+
+        return cliente;
+    }
+
+    public async Task<Cliente?> BuscarPorIdAsync(int id,
+                                                 ILoadRelatedDataOptions loadRelatedDataOptions,
+                                                 CancellationToken cancellationToken)
+    {
+        ClienteSql? clienteSql = await _context.admClientes.Where(c => c.CIDCLIENTEPROVEEDOR == id)
+            .ProjectTo<ClienteSql>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        if (clienteSql is null)
+            return null;
+
+        var cliente = _mapper.Map<Cliente>(clienteSql);
+
+        await CargarDatosRelacionadosAsync(cliente, clienteSql, loadRelatedDataOptions, cancellationToken);
+
+        return cliente;
+    }
+
+    public async Task<IEnumerable<Cliente>> BuscarTodoAsync(ILoadRelatedDataOptions loadRelatedDataOptions,
+                                                            CancellationToken cancellationToken)
+    {
+        var clientesList = new List<Cliente>();
+
+        List<ClienteSql> clientesSql = await _context.admClientes.OrderBy(c => c.CRAZONSOCIAL)
+            .ProjectTo<ClienteSql>(_mapper.ConfigurationProvider)
+            .ToListAsync(cancellationToken);
+
+        foreach (ClienteSql? clienteSql in clientesSql)
+        {
+            var cliente = _mapper.Map<Cliente>(clienteSql);
+
+            await CargarDatosRelacionadosAsync(cliente, clienteSql, loadRelatedDataOptions, cancellationToken);
+
+            clientesList.Add(cliente);
+        }
+
+        return clientesList;
+    }
+
+    private async Task CargarDatosRelacionadosAsync(Cliente cliente,
+                                                    ClienteSql clienteSql,
+                                                    ILoadRelatedDataOptions loadRelatedDataOptions,
+                                                    CancellationToken cancellationToken)
     {
         cliente.DireccionFiscal = await BuscarDireccionFiscalAsync(clienteSql.CIDCLIENTEPROVEEDOR, cancellationToken) ?? new Direccion();
 
-        cliente.DatosExtra = clienteSql.ToDatosDictionary<admClientes>();
+        if (loadRelatedDataOptions.CargarDatosExtra)
+            cliente.DatosExtra =
+                (await _context.admClientes.FirstAsync(c => c.CIDCLIENTEPROVEEDOR == clienteSql.CIDCLIENTEPROVEEDOR, cancellationToken))
+                .ToDatosDictionary<admClientes>();
     }
 
     private async Task<Direccion?> BuscarDireccionFiscalAsync(int clienteId, CancellationToken cancellationToken)

@@ -15,8 +15,9 @@ public sealed class BuscarAlmacenesRequestModel
     public string? Codigo { get; set; }
 }
 
-public sealed class BuscarAlmacenesRequestOptions
+public sealed class BuscarAlmacenesRequestOptions : ILoadRelatedDataOptions
 {
+    public bool CargarDatosExtra { get; set; }
 }
 
 /// <inheritdoc cref="IApiResponse" />

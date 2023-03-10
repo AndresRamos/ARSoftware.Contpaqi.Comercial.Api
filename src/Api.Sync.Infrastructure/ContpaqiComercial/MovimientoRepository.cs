@@ -1,9 +1,12 @@
-﻿using Api.Core.Domain.Models;
+﻿using Api.Core.Domain.Common;
+using Api.Core.Domain.Models;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
+using Api.Sync.Infrastructure.ContpaqiComercial.Models;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sql.Contexts;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Sync.Infrastructure.ContpaqiComercial;
@@ -23,19 +26,21 @@ public sealed class MovimientoRepository : IMovimientoRepository
         _almacenRepository = new AlmacenRepository(context, mapper);
     }
 
-    public async Task<IEnumerable<Movimiento>> BuscarPorDocumentoIdAsync(int documentoId, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Movimiento>> BuscarPorDocumentoIdAsync(int documentoId,
+                                                                         ILoadRelatedDataOptions loadRelatedDataOptions,
+                                                                         CancellationToken cancellationToken)
     {
         var movimientosList = new List<Movimiento>();
 
-        List<admMovimientos> movimientosSql = await _context.admMovimientos
-            .Where(m => m.CIDDOCUMENTO == documentoId)
+        List<MovimientoSql> movimientosSql = await _context.admMovimientos.Where(m => m.CIDDOCUMENTO == documentoId)
+            .ProjectTo<MovimientoSql>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 
-        foreach (admMovimientos movimientoSql in movimientosSql)
+        foreach (MovimientoSql? movimientoSql in movimientosSql)
         {
             var movimiento = _mapper.Map<Movimiento>(movimientoSql);
 
-            await CargarObjectosRelacionadosAsync(movimiento, movimientoSql, cancellationToken);
+            await CargarDatosRelacionadosAsync(movimiento, movimientoSql, loadRelatedDataOptions, cancellationToken);
 
             movimientosList.Add(movimiento);
         }
@@ -43,12 +48,20 @@ public sealed class MovimientoRepository : IMovimientoRepository
         return movimientosList;
     }
 
-    private async Task CargarObjectosRelacionadosAsync(Movimiento movimiento,
-                                                       admMovimientos movimientoSql,
-                                                       CancellationToken cancellationToken)
+    private async Task CargarDatosRelacionadosAsync(Movimiento movimiento,
+                                                    MovimientoSql movimientoSql,
+                                                    ILoadRelatedDataOptions loadRelatedDataOptions,
+                                                    CancellationToken cancellationToken)
     {
-        movimiento.Producto = await _productoRepository.BuscarPorIdAsync(movimientoSql.CIDPRODUCTO, cancellationToken) ?? new Producto();
-        movimiento.Almacen = await _almacenRepository.BuscarPorIdAsync(movimientoSql.CIDALMACEN, cancellationToken) ?? new Almacen();
-        movimiento.DatosExtra = movimientoSql.ToDatosDictionary<admMovimientos>();
+        movimiento.Producto =
+            await _productoRepository.BuscarPorIdAsync(movimientoSql.CIDPRODUCTO, loadRelatedDataOptions, cancellationToken) ??
+            new Producto();
+        movimiento.Almacen =
+            await _almacenRepository.BuscarPorIdAsync(movimientoSql.CIDALMACEN, loadRelatedDataOptions, cancellationToken) ?? new Almacen();
+
+        if (loadRelatedDataOptions.CargarDatosExtra)
+            movimiento.DatosExtra =
+                (await _context.admMovimientos.FirstAsync(m => m.CIDMOVIMIENTO == movimientoSql.CIDMOVIMIENTO, cancellationToken))
+                .ToDatosDictionary<admMovimientos>();
     }
 }

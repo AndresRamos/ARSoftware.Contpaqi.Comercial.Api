@@ -15,8 +15,9 @@ public sealed class CrearClienteRequestModel
     public Cliente Cliente { get; set; } = new();
 }
 
-public sealed class CrearClienteRequestOptions
+public sealed class CrearClienteRequestOptions : ILoadRelatedDataOptions
 {
+    public bool CargarDatosExtra { get; set; }
 }
 
 /// <inheritdoc cref="IApiResponse" />

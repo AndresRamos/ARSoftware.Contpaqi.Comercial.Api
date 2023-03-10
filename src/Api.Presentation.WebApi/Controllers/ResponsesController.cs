@@ -1,4 +1,5 @@
-﻿using Api.Core.Application.Responses.Commands.CreateApiResponse;
+﻿using Api.Core.Application.Requests.Queries.GetApiRequestById;
+using Api.Core.Application.Responses.Commands.CreateApiResponse;
 using Api.Core.Domain.Common;
 using Api.Core.Domain.Requests;
 using Api.Presentation.WebApi.Authentication;
@@ -24,6 +25,29 @@ public class ResponsesController : ControllerBase
 
     [FromHeader(Name = "Ocp-Apim-Subscription-Key")]
     public string ApimSubscriptionKey { get; set; } = string.Empty;
+
+    /// <summary>
+    ///     Busca una respuesta por id.
+    /// </summary>
+    /// <param name="id">Id de la respuesta a buscar.</param>
+    /// <returns>Una respuesta.</returns>
+    /// <response code="200">Retorna la respuesta.</response>
+    /// <response code="404">No se encontro la respuesta.</response>
+    /// <response code="400">Solicitud invalida.</response>
+    [HttpGet("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesDefaultResponseType]
+    public async Task<ActionResult<ApiRequestBase>> Get(Guid id)
+    {
+        ApiRequestBase? request = await _mediator.Send(new GetApiRequestByIdQuery(id, ApimSubscriptionKey));
+
+        if (request?.Response is null)
+            return NotFound();
+
+        return Ok(request.Response);
+    }
 
     [HttpPost]
     public async Task<ActionResult> Post(ApiResponseBase apiResponse)

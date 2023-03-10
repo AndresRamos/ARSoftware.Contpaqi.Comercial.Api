@@ -16,8 +16,9 @@ public sealed class ActualizarProductoRequestModel
     public Dictionary<string, string> DatosProducto { get; set; } = new();
 }
 
-public sealed class ActualizarProductoRequestOptions
+public sealed class ActualizarProductoRequestOptions : ILoadRelatedDataOptions
 {
+    public bool CargarDatosExtra { get; set; }
 }
 
 /// <inheritdoc cref="IApiResponse" />

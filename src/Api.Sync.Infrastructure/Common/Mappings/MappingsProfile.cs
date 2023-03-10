@@ -1,4 +1,5 @@
 ﻿using Api.Core.Domain.Models;
+using Api.Sync.Infrastructure.ContpaqiComercial.Models;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Helpers;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Models;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Models.Enums;
@@ -21,16 +22,19 @@ public sealed class MappingsProfile : Profile
     {
         CreateMap<string, string>().ConvertUsing(s => s ?? string.Empty);
 
-        CreateMap<admAgentes, Agente>()
+        CreateMap<admAgentes, AgenteSql>();
+        CreateMap<AgenteSql, Agente>()
             .ForMember(dest => dest.Codigo, opt => opt.MapFrom(src => src.CCODIGOAGENTE))
             .ForMember(dest => dest.Nombre, opt => opt.MapFrom(src => src.CNOMBREAGENTE))
             .ForMember(dest => dest.Tipo, opt => opt.MapFrom(src => TipoAgenteHelper.ConvertFromSdkValue(src.CTIPOAGENTE)));
 
-        CreateMap<admAlmacenes, Almacen>()
+        CreateMap<admAlmacenes, AlmacenSql>();
+        CreateMap<AlmacenSql, Almacen>()
             .ForMember(dest => dest.Codigo, opt => opt.MapFrom(src => src.CCODIGOALMACEN))
             .ForMember(dest => dest.Nombre, opt => opt.MapFrom(src => src.CNOMBREALMACEN));
 
-        CreateMap<admClientes, Cliente>()
+        CreateMap<admClientes, ClienteSql>();
+        CreateMap<ClienteSql, Cliente>()
             .ForMember(dest => dest.Tipo, opt => opt.MapFrom(src => TipoClienteHelper.ConvertFromSdkValue(src.CTIPOCLIENTE)))
             .ForMember(dest => dest.Codigo, opt => opt.MapFrom(src => src.CCODIGOCLIENTE))
             .ForMember(dest => dest.RazonSocial, opt => opt.MapFrom(src => src.CRAZONSOCIAL))
@@ -38,11 +42,13 @@ public sealed class MappingsProfile : Profile
             .ForMember(dest => dest.UsoCfdi, opt => opt.MapFrom(src => UsoCfdi.FromClave(src.CUSOCFDI)))
             .ForMember(dest => dest.RegimenFiscal, opt => opt.MapFrom(src => RegimenFiscal.FromClave(src.CREGIMFISC)));
 
-        CreateMap<admConceptos, Concepto>()
+        CreateMap<admConceptos, ConceptoSql>();
+        CreateMap<ConceptoSql, Concepto>()
             .ForMember(dest => dest.Codigo, opt => opt.MapFrom(src => src.CCODIGOCONCEPTO))
             .ForMember(dest => dest.Nombre, opt => opt.MapFrom(src => src.CNOMBRECONCEPTO));
 
-        CreateMap<admDocumentos, Documento>()
+        CreateMap<admDocumentos, DocumentoSql>();
+        CreateMap<DocumentoSql, Documento>()
             .ForMember(dest => dest.Fecha, opt => opt.MapFrom(src => src.CFECHA))
             .ForMember(dest => dest.Serie, opt => opt.MapFrom(src => src.CSERIEDOCUMENTO))
             .ForMember(dest => dest.Folio, opt => opt.MapFrom(src => src.CFOLIO))
@@ -54,14 +60,18 @@ public sealed class MappingsProfile : Profile
             .ForMember(dest => dest.FormaPago, opt => opt.MapFrom(src => FormaPago.FromClave(src.CMETODOPAG)))
             .ForMember(dest => dest.Moneda, opt => opt.MapFrom(src => Moneda.FromId(src.CIDMONEDA)));
 
-        CreateMap<Empresas, Empresa>()
+        CreateMap<Empresas, EmpresaSql>();
+        CreateMap<EmpresaSql, Empresa>()
             .ForMember(dest => dest.Nombre, opt => opt.MapFrom(src => src.CNOMBREEMPRESA))
             .ForMember(dest => dest.Ruta, opt => opt.MapFrom(src => src.CRUTADATOS))
             .ForMember(dest => dest.BaseDatos, opt => opt.MapFrom(src => new DirectoryInfo(src.CRUTADATOS).Name));
+        CreateMap<admParametros, ParametrosSql>();
 
-        CreateMap<admFoliosDigitales, FolioDigital>().ForMember(dest => dest.Uuid, opt => opt.MapFrom(src => src.CUUID));
+        CreateMap<admFoliosDigitales, FolioDigitalSql>();
+        CreateMap<FolioDigitalSql, FolioDigital>().ForMember(dest => dest.Uuid, opt => opt.MapFrom(src => src.CUUID));
 
-        CreateMap<admMovimientos, Movimiento>()
+        CreateMap<admMovimientos, MovimientoSql>();
+        CreateMap<MovimientoSql, Movimiento>()
             .ForMember(dest => dest.Unidades, opt => opt.MapFrom(src => src.CUNIDADES))
             .ForMember(dest => dest.Precio, opt => opt.MapFrom(src => src.CPRECIO))
             .ForMember(dest => dest.Subtotal, opt => opt.MapFrom(src => src.CNETO))
@@ -79,7 +89,8 @@ public sealed class MappingsProfile : Profile
             .ForMember(dest => dest.CodigoPostal, opt => opt.MapFrom(src => src.CCODIGOPOSTAL))
             .ForMember(dest => dest.Pais, opt => opt.MapFrom(src => src.CPAIS));
 
-        CreateMap<admProductos, Producto>()
+        CreateMap<admProductos, ProductoSql>();
+        CreateMap<ProductoSql, Producto>()
             .ForMember(dest => dest.Tipo, opt => opt.MapFrom(src => TipoProductoHelper.ConvertFromSdkValue(src.CTIPOPRODUCTO)))
             .ForMember(dest => dest.Codigo, opt => opt.MapFrom(src => src.CCODIGOPRODUCTO))
             .ForMember(dest => dest.Nombre, opt => opt.MapFrom(src => src.CNOMBREPRODUCTO))

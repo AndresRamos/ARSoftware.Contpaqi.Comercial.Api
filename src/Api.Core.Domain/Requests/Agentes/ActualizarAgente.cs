@@ -15,8 +15,9 @@ public sealed class ActualizarAgenteRequestModel
     public Dictionary<string, string> DatosAgente { get; set; } = new();
 }
 
-public sealed class ActualizarAgenteRequestOptions
+public sealed class ActualizarAgenteRequestOptions : ILoadRelatedDataOptions
 {
+    public bool CargarDatosExtra { get; set; }
 }
 
 /// <inheritdoc cref="IApiResponse" />

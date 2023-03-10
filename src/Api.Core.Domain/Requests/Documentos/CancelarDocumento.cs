@@ -17,9 +17,10 @@ public sealed class CancelarDocumentoRequestModel
     public string Uuid { get; set; } = string.Empty;
 }
 
-public sealed class CancelarDocumentoRequestOptions
+public sealed class CancelarDocumentoRequestOptions : ILoadRelatedDataOptions
 {
     public bool Administrativamente { get; set; } = false;
+    public bool CargarDatosExtra { get; set; }
 }
 
 /// <inheritdoc cref="IApiResponse" />

@@ -87,7 +87,7 @@ public sealed class CrearDocumentoRequestHandler : IRequestHandler<CrearDocument
 
             var responseModel = new CrearDocumentoResponseModel
             {
-                Documento = await _documentoRepository.BuscarPorIdAsync(_documentoSdkId, cancellationToken)
+                Documento = (await _documentoRepository.BuscarPorIdAsync(_documentoSdkId, request.Options, cancellationToken))!
             };
 
             return ApiResponseFactory.CreateSuccessfull<CrearDocumentoResponse, CrearDocumentoResponseModel>(request.Id, responseModel);

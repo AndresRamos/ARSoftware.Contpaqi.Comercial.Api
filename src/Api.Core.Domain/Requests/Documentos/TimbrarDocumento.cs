@@ -15,11 +15,12 @@ public sealed class TimbrarDocumentoRequestModel
     public string ContrasenaCertificado { get; set; } = string.Empty;
 }
 
-public sealed class TimbrarDocumentoRequestOptions
+public sealed class TimbrarDocumentoRequestOptions : ILoadRelatedDataOptions
 {
     public bool AgregarArchivo { get; set; }
     public string NombreArchivo { get; set; } = string.Empty;
     public string ContenidoArchivo { get; set; } = string.Empty;
+    public bool CargarDatosExtra { get; set; }
 }
 
 /// <inheritdoc cref="IApiResponse" />

@@ -33,8 +33,10 @@ public sealed class CancelarDocumentoRequestHandler : IRequestHandler<CancelarDo
     {
         try
         {
-            int documentoId = await _documentoRepository.BusarIdPorLlaveAsync(request.Model.LlaveDocumento, cancellationToken);
+            int documentoId =
+                await _documentoRepository.BusarIdPorLlaveAsync(request.Model.LlaveDocumento, request.Options, cancellationToken);
 
+            // Todo: Cancelar documento por llave para eliminar BusarIdPorLlaveAsync
             if (request.Options.Administrativamente)
                 _documentoService.CancelarAdministrativamente(_mapper.Map<tLlaveDoc>(request.Model.LlaveDocumento));
             else
@@ -43,7 +45,8 @@ public sealed class CancelarDocumentoRequestHandler : IRequestHandler<CancelarDo
                     request.Model.MotivoCancelacion,
                     request.Model.Uuid);
 
-            Documento documento = await _documentoRepository.BuscarPorLlaveAsync(request.Model.LlaveDocumento, cancellationToken);
+            Documento documento =
+                (await _documentoRepository.BuscarPorLlaveAsync(request.Model.LlaveDocumento, request.Options, cancellationToken))!;
 
             return ApiResponseFactory.CreateSuccessfull<CancelarDocumentoResponse, CancelarDocumentoResponseModel>(request.Id,
                 new CancelarDocumentoResponseModel { Documento = documento });

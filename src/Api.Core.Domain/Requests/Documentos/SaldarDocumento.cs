@@ -17,8 +17,9 @@ public sealed class SaldarDocumentoRequestModel
     public decimal Importe { get; set; }
 }
 
-public sealed class SaldarDocumentoRequestOptions
+public sealed class SaldarDocumentoRequestOptions : ILoadRelatedDataOptions
 {
+    public bool CargarDatosExtra { get; set; }
 }
 
 /// <inheritdoc cref="IApiResponse" />

@@ -41,7 +41,9 @@ public sealed class TimbrarDocumentoRequestHandler : IRequestHandler<TimbrarDocu
             return ApiResponseFactory.CreateSuccessfull<TimbrarDocumentoResponse, TimbrarDocumentoResponseModel>(request.Id,
                 new TimbrarDocumentoResponseModel
                 {
-                    Documento = await _documentoRepository.BuscarPorLlaveAsync(request.Model.LlaveDocumento, cancellationToken)
+                    Documento = (await _documentoRepository.BuscarPorLlaveAsync(request.Model.LlaveDocumento,
+                        request.Options,
+                        cancellationToken))!
                 });
         }
         catch (Exception e)

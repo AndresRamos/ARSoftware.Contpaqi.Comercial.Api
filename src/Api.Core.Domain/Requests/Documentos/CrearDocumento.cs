@@ -14,11 +14,12 @@ public sealed class CrearDocumentoRequestModel
     public Documento Documento { get; set; } = new();
 }
 
-public sealed class CrearDocumentoRequestOptions
+public sealed class CrearDocumentoRequestOptions : ILoadRelatedDataOptions
 {
     public bool UsarFechaDelDia { get; set; } = true;
     public bool BuscarSiguienteFolio { get; set; } = true;
     public bool CrearCatalogos { get; set; }
+    public bool CargarDatosExtra { get; set; }
 }
 
 /// <inheritdoc cref="IApiResponse" />

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using Api.Core.Domain.Models;
+using Api.Sync.Core.Application.Common.Models;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
 using MediatR;
 
@@ -18,7 +19,8 @@ public sealed class BuscarEmpresaPorRfcQueryHandler : IRequestHandler<BuscarEmpr
 
     public async Task<Empresa> Handle(BuscarEmpresaPorRfcQuery request, CancellationToken cancellationToken)
     {
-        ImmutableList<Empresa> empresas = (await _empresaRepository.BuscarTodoAsync(cancellationToken)).ToImmutableList();
+        ImmutableList<Empresa> empresas = (await _empresaRepository.BuscarTodoAsync(LoadRelatedDataOptions.Default, cancellationToken))
+            .ToImmutableList();
 
         return empresas.First(e => e.Rfc == request.Rfc);
     }

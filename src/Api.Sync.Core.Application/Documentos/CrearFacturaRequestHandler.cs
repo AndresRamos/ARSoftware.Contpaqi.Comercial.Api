@@ -63,7 +63,8 @@ public class CrearFacturaRequestHandler : IRequestHandler<CrearFacturaRequest, A
                 timbrarDocumentoResponse.ThrowIfError();
             }
 
-            responseModel.Documento = await _documentoRepository.BuscarPorLlaveAsync(_llaveDocumento, cancellationToken);
+            responseModel.Documento =
+                (await _documentoRepository.BuscarPorLlaveAsync(_llaveDocumento, request.Options, cancellationToken))!;
 
             if (request.Options.GenerarDocumentosDigitales)
             {

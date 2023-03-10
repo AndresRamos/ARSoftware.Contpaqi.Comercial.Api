@@ -32,7 +32,9 @@ public sealed class ActualizarClienteRequestHandler : IRequestHandler<Actualizar
             return ApiResponseFactory.CreateSuccessfull<ActualizarClienteResponse, ActualizarClienteResponseModel>(request.Id,
                 new ActualizarClienteResponseModel
                 {
-                    Cliente = (await _clienteRepository.BuscarPorCodigoAsync(request.Model.CodigoCliente, cancellationToken))!
+                    Cliente = (await _clienteRepository.BuscarPorCodigoAsync(request.Model.CodigoCliente,
+                        request.Options,
+                        cancellationToken))!
                 });
         }
         catch (Exception e)

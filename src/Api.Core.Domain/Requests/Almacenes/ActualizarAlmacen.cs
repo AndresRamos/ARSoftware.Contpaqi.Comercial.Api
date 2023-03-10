@@ -15,8 +15,9 @@ public sealed class ActualizarAlmacenRequestModel
     public Dictionary<string, string> DatosAlmacen { get; set; } = new();
 }
 
-public sealed class ActualizarAlmacenRequestOptions
+public sealed class ActualizarAlmacenRequestOptions : ILoadRelatedDataOptions
 {
+    public bool CargarDatosExtra { get; set; }
 }
 
 /// <inheritdoc cref="IApiResponse" />

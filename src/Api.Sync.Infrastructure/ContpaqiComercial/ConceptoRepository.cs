@@ -1,9 +1,12 @@
-﻿using Api.Core.Domain.Models;
+﻿using Api.Core.Domain.Common;
+using Api.Core.Domain.Models;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
+using Api.Sync.Infrastructure.ContpaqiComercial.Models;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sql.Contexts;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Sync.Infrastructure.ContpaqiComercial;
@@ -19,45 +22,56 @@ public sealed class ConceptoRepository : IConceptoRepository
         _mapper = mapper;
     }
 
-    public async Task<Concepto?> BuscarPorIdAsync(int id, CancellationToken cancellationToken)
+    public async Task<Concepto?> BuscarPorIdAsync(int id,
+                                                  ILoadRelatedDataOptions loadRelatedDataOptions,
+                                                  CancellationToken cancellationToken)
     {
-        admConceptos? conceptoSql = await _context.admConceptos.FirstOrDefaultAsync(m => m.CIDCONCEPTODOCUMENTO == id, cancellationToken);
+        ConceptoSql? conceptoSql = await _context.admConceptos.Where(m => m.CIDCONCEPTODOCUMENTO == id)
+            .ProjectTo<ConceptoSql>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(cancellationToken);
 
         if (conceptoSql is null)
             return null;
 
-        var agente = _mapper.Map<Concepto>(conceptoSql);
+        var concepto = _mapper.Map<Concepto>(conceptoSql);
 
-        BuscarObjectosRelacionados(agente, conceptoSql);
+        await CargarDatosRelacionadosAsync(concepto, conceptoSql, loadRelatedDataOptions, cancellationToken);
 
-        return agente;
+        return concepto;
     }
 
-    public async Task<Concepto?> BuscarPorCodigoAsync(string codigo, CancellationToken cancellationToken)
+    public async Task<Concepto?> BuscarPorCodigoAsync(string codigo,
+                                                      ILoadRelatedDataOptions loadRelatedDataOptions,
+                                                      CancellationToken cancellationToken)
     {
-        admConceptos? conceptoSql = await _context.admConceptos.FirstOrDefaultAsync(m => m.CCODIGOCONCEPTO == codigo, cancellationToken);
+        ConceptoSql? conceptoSql = await _context.admConceptos.Where(m => m.CCODIGOCONCEPTO == codigo)
+            .ProjectTo<ConceptoSql>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(cancellationToken);
 
         if (conceptoSql is null)
             return null;
 
-        var agente = _mapper.Map<Concepto>(conceptoSql);
+        var concepto = _mapper.Map<Concepto>(conceptoSql);
 
-        BuscarObjectosRelacionados(agente, conceptoSql);
+        await CargarDatosRelacionadosAsync(concepto, conceptoSql, loadRelatedDataOptions, cancellationToken);
 
-        return agente;
+        return concepto;
     }
 
-    public async Task<IEnumerable<Concepto>> BuscarTodoAsync(CancellationToken cancellationToken)
+    public async Task<IEnumerable<Concepto>> BuscarTodoAsync(ILoadRelatedDataOptions loadRelatedDataOptions,
+                                                             CancellationToken cancellationToken)
     {
         var conceptosList = new List<Concepto>();
 
-        List<admConceptos> coneptosSql = await _context.admConceptos.OrderBy(c => c.CNOMBRECONCEPTO).ToListAsync(cancellationToken);
+        List<ConceptoSql> coneptosSql = await _context.admConceptos.OrderBy(c => c.CNOMBRECONCEPTO)
+            .ProjectTo<ConceptoSql>(_mapper.ConfigurationProvider)
+            .ToListAsync(cancellationToken);
 
-        foreach (admConceptos conceptoSql in coneptosSql)
+        foreach (ConceptoSql conceptoSql in coneptosSql)
         {
             var concepto = _mapper.Map<Concepto>(conceptoSql);
 
-            BuscarObjectosRelacionados(concepto, conceptoSql);
+            await CargarDatosRelacionadosAsync(concepto, conceptoSql, loadRelatedDataOptions, cancellationToken);
 
             conceptosList.Add(concepto);
         }
@@ -65,8 +79,14 @@ public sealed class ConceptoRepository : IConceptoRepository
         return conceptosList;
     }
 
-    private void BuscarObjectosRelacionados(Concepto concepto, admConceptos conceptoSql)
+    private async Task CargarDatosRelacionadosAsync(Concepto concepto,
+                                                    ConceptoSql conceptoSql,
+                                                    ILoadRelatedDataOptions loadRelatedDataOptions,
+                                                    CancellationToken cancellationToken)
     {
-        concepto.DatosExtra = conceptoSql.ToDatosDictionary<admConceptos>();
+        if (loadRelatedDataOptions.CargarDatosExtra)
+            concepto.DatosExtra =
+                (await _context.admConceptos.FirstAsync(c => c.CIDCONCEPTODOCUMENTO == conceptoSql.CIDCONCEPTODOCUMENTO, cancellationToken))
+                .ToDatosDictionary<admConceptos>();
     }
 }

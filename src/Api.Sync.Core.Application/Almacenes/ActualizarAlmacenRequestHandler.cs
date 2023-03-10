@@ -32,7 +32,9 @@ public sealed class ActualizarAlmacenRequestHandler : IRequestHandler<Actualizar
             return ApiResponseFactory.CreateSuccessfull<ActualizarAlmacenResponse, ActualizarAlmacenResponseModel>(request.Id,
                 new ActualizarAlmacenResponseModel
                 {
-                    Almacen = (await _almacenRepository.BuscarPorCodigoAsync(request.Model.CodigoAlmacen, cancellationToken))!
+                    Almacen = (await _almacenRepository.BuscarPorCodigoAsync(request.Model.CodigoAlmacen,
+                        request.Options,
+                        cancellationToken))!
                 });
         }
         catch (Exception e)

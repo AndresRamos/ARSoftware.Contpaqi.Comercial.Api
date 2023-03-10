@@ -14,8 +14,9 @@ public sealed class CrearAgenteRequestModel
     public Agente Agente { get; set; } = new();
 }
 
-public sealed class CrearAgenteRequestOptions
+public sealed class CrearAgenteRequestOptions : ILoadRelatedDataOptions
 {
+    public bool CargarDatosExtra { get; set; }
 }
 
 /// <inheritdoc cref="IApiResponse" />

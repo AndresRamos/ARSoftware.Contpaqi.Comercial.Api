@@ -56,7 +56,10 @@ public sealed class CrearClienteRequestHandler : IRequestHandler<CrearClienteReq
             await ActualizarDireccionFiscalAsync(cliente.Codigo, cliente.DireccionFiscal, cancellationToken);
 
             return ApiResponseFactory.CreateSuccessfull<CrearClienteResponse, CrearClienteResponseModel>(request.Id,
-                new CrearClienteResponseModel { Cliente = (await _clienteRepository.BuscarPorIdAsync(clienteId, cancellationToken))! });
+                new CrearClienteResponseModel
+                {
+                    Cliente = (await _clienteRepository.BuscarPorIdAsync(clienteId, request.Options, cancellationToken))!
+                });
         }
         catch (Exception e)
         {

@@ -115,14 +115,6 @@ public class RequestsController : ControllerBase
     {
         Guid requestId = await _mediator.Send(new CreateApiRequestCommand(apiRequest, ApimSubscriptionKey));
 
-        for (var i = 0; i < 3; i++)
-        {
-            await Task.Delay(3000);
-            ApiRequestBase? request2 = await _mediator.Send(new GetApiRequestByIdQuery(requestId, ApimSubscriptionKey));
-            if (request2?.Status == RequestStatus.Processed)
-                break;
-        }
-
         ApiRequestBase? request = await _mediator.Send(new GetApiRequestByIdQuery(requestId, ApimSubscriptionKey));
 
         string? pathByAction = _linkGenerator.GetPathByAction("Get", "Requests", new { id = requestId });

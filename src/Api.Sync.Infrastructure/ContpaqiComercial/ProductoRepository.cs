@@ -1,9 +1,12 @@
-﻿using Api.Core.Domain.Models;
+﻿using Api.Core.Domain.Common;
+using Api.Core.Domain.Models;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
+using Api.Sync.Infrastructure.ContpaqiComercial.Models;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sql.Contexts;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Sync.Infrastructure.ContpaqiComercial;
@@ -19,45 +22,56 @@ public sealed class ProductoRepository : IProductoRepository
         _mapper = mapper;
     }
 
-    public async Task<Producto?> BuscarPorIdAsync(int id, CancellationToken cancellationToken)
+    public async Task<Producto?> BuscarPorIdAsync(int id,
+                                                  ILoadRelatedDataOptions loadRelatedDataOptions,
+                                                  CancellationToken cancellationToken)
     {
-        admProductos? productoSql = await _context.admProductos.FirstOrDefaultAsync(m => m.CIDPRODUCTO == id, cancellationToken);
+        ProductoSql? productoSql = await _context.admProductos.Where(m => m.CIDPRODUCTO == id)
+            .ProjectTo<ProductoSql>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(cancellationToken);
 
         if (productoSql is null)
             return null;
 
         var producto = _mapper.Map<Producto>(productoSql);
 
-        BuscarObjectosRelacionados(producto, productoSql);
+        await CargarDatosRelacionadosAsync(producto, productoSql, loadRelatedDataOptions, cancellationToken);
 
         return producto;
     }
 
-    public async Task<Producto?> BuscarPorCodigoAsync(string codigo, CancellationToken cancellationToken)
+    public async Task<Producto?> BuscarPorCodigoAsync(string codigo,
+                                                      ILoadRelatedDataOptions loadRelatedDataOptions,
+                                                      CancellationToken cancellationToken)
     {
-        admProductos? productoSql = await _context.admProductos.FirstOrDefaultAsync(m => m.CCODIGOPRODUCTO == codigo, cancellationToken);
+        ProductoSql? productoSql = await _context.admProductos.Where(m => m.CCODIGOPRODUCTO == codigo)
+            .ProjectTo<ProductoSql>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(cancellationToken);
 
         if (productoSql is null)
             return null;
 
         var producto = _mapper.Map<Producto>(productoSql);
 
-        BuscarObjectosRelacionados(producto, productoSql);
+        await CargarDatosRelacionadosAsync(producto, productoSql, loadRelatedDataOptions, cancellationToken);
 
         return producto;
     }
 
-    public async Task<IEnumerable<Producto>> BuscarTodoAsync(CancellationToken cancellationToken)
+    public async Task<IEnumerable<Producto>> BuscarTodoAsync(ILoadRelatedDataOptions loadRelatedDataOptions,
+                                                             CancellationToken cancellationToken)
     {
         var productosList = new List<Producto>();
 
-        List<admProductos> productosSql = await _context.admProductos.OrderBy(c => c.CNOMBREPRODUCTO).ToListAsync(cancellationToken);
+        List<ProductoSql> productosSql = await _context.admProductos.OrderBy(c => c.CNOMBREPRODUCTO)
+            .ProjectTo<ProductoSql>(_mapper.ConfigurationProvider)
+            .ToListAsync(cancellationToken);
 
-        foreach (admProductos productoSql in productosSql)
+        foreach (ProductoSql productoSql in productosSql)
         {
             var producto = _mapper.Map<Producto>(productoSql);
 
-            BuscarObjectosRelacionados(producto, productoSql);
+            await CargarDatosRelacionadosAsync(producto, productoSql, loadRelatedDataOptions, cancellationToken);
 
             productosList.Add(producto);
         }
@@ -65,8 +79,13 @@ public sealed class ProductoRepository : IProductoRepository
         return productosList;
     }
 
-    private void BuscarObjectosRelacionados(Producto producto, admProductos productoSql)
+    private async Task CargarDatosRelacionadosAsync(Producto producto,
+                                                    ProductoSql productoSql,
+                                                    ILoadRelatedDataOptions loadRelatedDataOptions,
+                                                    CancellationToken cancellationToken)
     {
-        producto.DatosExtra = productoSql.ToDatosDictionary<admProductos>();
+        if (loadRelatedDataOptions.CargarDatosExtra)
+            producto.DatosExtra = (await _context.admProductos.FirstAsync(m => m.CIDPRODUCTO == productoSql.CIDPRODUCTO, cancellationToken))
+                .ToDatosDictionary<admProductos>();
     }
 }

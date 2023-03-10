@@ -21,6 +21,7 @@ public static class ClienteFactory
         request.Model.Cliente.Tipo = TipoCliente.ClienteProveedor;
         request.Model.Cliente.Codigo = Codigo;
         request.Model.Cliente.RazonSocial = Nombre;
+        request.Model.Cliente.Rfc = Rfc;
         request.Model.Cliente.UsoCfdi = UsoCfdi.S01;
         request.Model.Cliente.RegimenFiscal = RegimenFiscal._616;
         request.Model.Cliente.DireccionFiscal.Calle = "Pablo Villaseñor";

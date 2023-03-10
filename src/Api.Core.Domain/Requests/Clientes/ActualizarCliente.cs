@@ -15,8 +15,9 @@ public sealed class ActualizarClienteRequestModel
     public Dictionary<string, string> DatosCliente { get; set; } = new();
 }
 
-public sealed class ActualizarClienteRequestOptions
+public sealed class ActualizarClienteRequestOptions : ILoadRelatedDataOptions
 {
+    public bool CargarDatosExtra { get; set; }
 }
 
 /// <inheritdoc cref="IApiResponse" />

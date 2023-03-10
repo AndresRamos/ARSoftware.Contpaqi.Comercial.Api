@@ -27,19 +27,20 @@ public sealed class BuscarProductosRequestHandler : IRequestHandler<BuscarProduc
 
             if (request.Model.Id is not null)
             {
-                Producto? producto = await _productoRepository.BuscarPorIdAsync(request.Model.Id.Value, cancellationToken);
+                Producto? producto = await _productoRepository.BuscarPorIdAsync(request.Model.Id.Value, request.Options, cancellationToken);
                 if (producto is not null)
                     productos.Add(producto);
             }
             else if (request.Model.Codigo is not null)
             {
-                Producto? producto = await _productoRepository.BuscarPorCodigoAsync(request.Model.Codigo, cancellationToken);
+                Producto? producto =
+                    await _productoRepository.BuscarPorCodigoAsync(request.Model.Codigo, request.Options, cancellationToken);
                 if (producto is not null)
                     productos.Add(producto);
             }
             else
             {
-                productos.AddRange(await _productoRepository.BuscarTodoAsync(cancellationToken));
+                productos.AddRange(await _productoRepository.BuscarTodoAsync(request.Options, cancellationToken));
             }
 
             return ApiResponseFactory.CreateSuccessfull<BuscarProductosResponse, BuscarProductosResponseModel>(request.Id,

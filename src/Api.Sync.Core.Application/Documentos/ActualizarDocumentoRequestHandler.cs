@@ -35,7 +35,8 @@ public sealed class ActualizarDocumentoRequestHandler : IRequestHandler<Actualiz
         {
             _documentoService.Actualizar(_mapper.Map<tLlaveDoc>(request.Model.LlaveDocumento), request.Model.DatosDocumento);
 
-            Documento documento = await _documentoRepository.BuscarPorLlaveAsync(request.Model.LlaveDocumento, cancellationToken);
+            Documento documento =
+                (await _documentoRepository.BuscarPorLlaveAsync(request.Model.LlaveDocumento, request.Options, cancellationToken))!;
 
             return ApiResponseFactory.CreateSuccessfull<ActualizarDocumentoResponse, ActualizarDocumentoResponseModel>(request.Id,
                 new ActualizarDocumentoResponseModel { Documento = documento });
