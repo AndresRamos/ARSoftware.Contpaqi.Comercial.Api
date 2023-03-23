@@ -60,6 +60,6 @@ public sealed class TimbrarDocumentoRequestHandler : IRequestHandler<TimbrarDocu
 
         string rutaArchivoAdicional = Path.Combine(Path.GetTempPath(), request.Options.NombreArchivo);
         await File.WriteAllTextAsync(rutaArchivoAdicional, request.Options.ContenidoArchivo, cancellationToken);
-        return rutaArchivoAdicional;
+        return $"Complemento:{rutaArchivoAdicional}";
     }
 }

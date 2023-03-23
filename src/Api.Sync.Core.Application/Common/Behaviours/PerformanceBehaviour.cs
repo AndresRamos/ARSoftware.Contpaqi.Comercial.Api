@@ -29,7 +29,7 @@ public sealed class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavio
         if (response is ApiResponseBase apiResponse)
         {
             apiResponse.ExecutionTime = _timer.ElapsedMilliseconds;
-            _logger.LogWarning("Api Request Processing Time: {Name} ({ElapsedMilliseconds} milliseconds) {@Request}",
+            _logger.LogDebug("Api Request Processing Time: {Name} ({ElapsedMilliseconds} milliseconds) {@Request}",
                 typeof(TRequest).Name,
                 elapsedMilliseconds,
                 request);
