@@ -1,5 +1,6 @@
 ﻿using Api.Core.Domain.Common;
 using Api.Core.Domain.Models;
+using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
 using Api.Sync.Infrastructure.ContpaqiComercial.Models;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
@@ -58,10 +59,11 @@ public sealed class DocumentoRepository : IDocumentoRepository
             .ProjectTo<ConceptoSql>(_mapper.ConfigurationProvider)
             .FirstAsync(cancellationToken);
 
-        DocumentoSql? documentoSql = await _context.admDocumentos.Where(c => c.CIDCONCEPTODOCUMENTO == conceptoSql.CIDCONCEPTODOCUMENTO &&
-                                                                             c.CSERIEDOCUMENTO == llaveDocumento.Serie &&
-                                                                             // ReSharper disable once CompareOfFloatsByEqualityOperator
-                                                                             c.CFOLIO == llaveDocumento.Folio)
+        // ReSharper disable once CompareOfFloatsByEqualityOperator
+        DocumentoSql? documentoSql = await _context.admDocumentos
+            .Where(c => c.CIDCONCEPTODOCUMENTO == conceptoSql.CIDCONCEPTODOCUMENTO &&
+                        c.CSERIEDOCUMENTO == llaveDocumento.Serie &&
+                        c.CFOLIO == llaveDocumento.Folio)
             .ProjectTo<DocumentoSql>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(cancellationToken);
 
@@ -73,6 +75,99 @@ public sealed class DocumentoRepository : IDocumentoRepository
         await CargarObjectosRelacionadosAsync(documento, documentoSql, loadRelatedDataOptions, cancellationToken);
 
         return documento;
+    }
+
+    public async Task<IEnumerable<Documento>> BuscarPorRequestModelAsync(BuscarDocumentosRequestModel requestModel,
+                                                                         ILoadRelatedDataOptions loadRelatedDataOptions,
+                                                                         CancellationToken cancellationToken)
+    {
+        var documentosList = new List<Documento>();
+
+        IQueryable<admDocumentos> documentosQuery = !string.IsNullOrWhiteSpace(requestModel.SqlQuery)
+            ? _context.admDocumentos.FromSqlRaw($"SELECT * FROM admDocumentos  WHERE {requestModel.SqlQuery}")
+            : _context.admDocumentos.AsQueryable();
+
+        if (requestModel.Id.HasValue)
+            documentosQuery = documentosQuery.Where(d => d.CIDDOCUMENTO == requestModel.Id.Value);
+
+        if (requestModel.Llave is not null)
+        {
+            int conceptoId = await _context.admConceptos.Where(c => c.CCODIGOCONCEPTO == requestModel.Llave.ConceptoCodigo)
+                .Select(c => c.CIDCONCEPTODOCUMENTO)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            documentosQuery = documentosQuery.Where(d =>
+                d.CIDCONCEPTODOCUMENTO == conceptoId &&
+                d.CSERIEDOCUMENTO == requestModel.Llave.Serie &&
+                d.CFOLIO == requestModel.Llave.Folio);
+        }
+
+        if (!string.IsNullOrWhiteSpace(requestModel.ConceptoCodigo))
+        {
+            int conceptoId = await _context.admConceptos.Where(c => c.CCODIGOCONCEPTO == requestModel.ConceptoCodigo)
+                .Select(c => c.CIDCONCEPTODOCUMENTO)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            documentosQuery = documentosQuery.Where(d => d.CIDCONCEPTODOCUMENTO == conceptoId);
+        }
+
+        if (!string.IsNullOrWhiteSpace(requestModel.ClienteCodigo))
+        {
+            int clienteId = await _context.admClientes.Where(c => c.CCODIGOCLIENTE == requestModel.ClienteCodigo)
+                .Select(c => c.CIDCLIENTEPROVEEDOR)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            documentosQuery = documentosQuery.Where(d => d.CIDCONCEPTODOCUMENTO == clienteId);
+        }
+
+        if (requestModel.FechaInicio.HasValue)
+        {
+            var fechaInicio = requestModel.FechaInicio.Value.ToDateTime(TimeOnly.MinValue);
+            documentosQuery = documentosQuery.Where(d => d.CFECHA >= fechaInicio);
+        }
+
+        if (requestModel.FechaFin.HasValue)
+        {
+            var fechaFin = requestModel.FechaFin.Value.ToDateTime(TimeOnly.MaxValue);
+            documentosQuery = documentosQuery.Where(d => d.CFECHA <= fechaFin);
+        }
+
+        List<DocumentoSql> documentosSql = await documentosQuery.ProjectTo<DocumentoSql>(_mapper.ConfigurationProvider)
+            .ToListAsync(cancellationToken);
+
+        foreach (DocumentoSql? documentoSql in documentosSql)
+        {
+            var documento = _mapper.Map<Documento>(documentoSql);
+
+            await CargarObjectosRelacionadosAsync(documento, documentoSql, loadRelatedDataOptions, cancellationToken);
+
+            documentosList.Add(documento);
+        }
+
+        return documentosList;
+    }
+
+    public async Task<IEnumerable<Documento>> BuscarPorSqlQueryAsync(string sqlQuery,
+                                                                     ILoadRelatedDataOptions loadRelatedDataOptions,
+                                                                     CancellationToken cancellationToken)
+    {
+        var documentosList = new List<Documento>();
+
+        List<DocumentoSql> documentosSql = await _context.admDocumentos.FromSqlRaw($"SELECT * FROM admDocumentos WHERE {sqlQuery}")
+            .ProjectTo<DocumentoSql>(_mapper.ConfigurationProvider)
+            .ToListAsync(cancellationToken);
+
+        foreach (DocumentoSql? documentoSql in documentosSql)
+        {
+            var documento = _mapper.Map<Documento>(documentoSql);
+
+            await CargarObjectosRelacionadosAsync(documento, documentoSql, loadRelatedDataOptions, cancellationToken);
+
+            documentosList.Add(documento);
+        }
+
+        return documentosList;
     }
 
     public async Task<int> BusarIdPorLlaveAsync(LlaveDocumento llaveDocumento,

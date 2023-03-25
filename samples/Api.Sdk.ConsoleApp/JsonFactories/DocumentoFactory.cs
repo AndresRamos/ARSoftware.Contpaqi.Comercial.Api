@@ -3,7 +3,9 @@ using Api.Core.Domain.Common;
 using Api.Core.Domain.Requests;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Models;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Models.Enums;
+using ARSoftware.Contpaqi.Comercial.Sql.Contexts;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
+using Microsoft.EntityFrameworkCore;
 using Almacen = Api.Core.Domain.Models.Almacen;
 using Documento = Api.Core.Domain.Models.Documento;
 using Movimiento = Api.Core.Domain.Models.Movimiento;
@@ -134,6 +136,26 @@ public static class DocumentoFactory
         };
     }
 
+    public static BuscarDocumentosRequest BuscarPorSql()
+    {
+        var request = new BuscarDocumentosRequest();
+
+        request.Model.FechaInicio = DateOnly.FromDateTime(DateTime.Today);
+        request.Model.FechaFin = DateOnly.FromDateTime(DateTime.Today);
+        request.Model.SqlQuery = @"CPENDIENTE > 0.00";
+
+        var optionsBuilder = new DbContextOptionsBuilder<ContpaqiComercialEmpresaDbContext>();
+        optionsBuilder.UseSqlServer(
+            @"Data Source=AR-SERVER\COMPAC;Initial Catalog=adUNIVERSIDAD_ROBOTICA;User ID=sa;Password=Sdmramos1;Connect Timeout=30;");
+
+        var context = new ContpaqiComercialEmpresaDbContext(optionsBuilder.Options);
+
+        string queryString = context.admDocumentos.Where(d => d.CPENDIENTE > 0).ToQueryString();
+        Console.WriteLine(queryString);
+
+        return request;
+    }
+
     private static Documento GetDocumento()
     {
         var documento = new Documento();
@@ -191,5 +213,8 @@ public static class DocumentoFactory
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(CancelarDocumentoRequest)}.json"),
             JsonSerializer.Serialize<ApiRequestBase>(Cancelar(), options));
+
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarDocumentosRequest)}.json"),
+            JsonSerializer.Serialize<ApiRequestBase>(BuscarPorSql(), options));
     }
 }

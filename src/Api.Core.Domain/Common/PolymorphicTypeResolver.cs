@@ -5,7 +5,7 @@ using Api.Core.Domain.Requests;
 
 namespace Api.Core.Domain.Common;
 
-public class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
+public sealed class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
 {
     public override JsonTypeInfo GetTypeInfo(Type type, JsonSerializerOptions options)
     {
@@ -29,6 +29,7 @@ public class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
                     new JsonDerivedType(typeof(BuscarAlmacenesRequest), nameof(BuscarAlmacenesRequest)),
                     new JsonDerivedType(typeof(BuscarClientesRequest), nameof(BuscarClientesRequest)),
                     new JsonDerivedType(typeof(BuscarConceptosRequest), nameof(BuscarConceptosRequest)),
+                    new JsonDerivedType(typeof(BuscarDocumentosRequest), nameof(BuscarDocumentosRequest)),
                     new JsonDerivedType(typeof(BuscarEmpresasRequest), nameof(BuscarEmpresasRequest)),
                     new JsonDerivedType(typeof(BuscarProductosRequest), nameof(BuscarProductosRequest)),
                     new JsonDerivedType(typeof(CancelarDocumentoRequest), nameof(CancelarDocumentoRequest)),
@@ -65,6 +66,7 @@ public class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
                     new JsonDerivedType(typeof(BuscarAlmacenesResponse), nameof(BuscarAlmacenesResponse)),
                     new JsonDerivedType(typeof(BuscarClientesResponse), nameof(BuscarClientesResponse)),
                     new JsonDerivedType(typeof(BuscarConceptosResponse), nameof(BuscarConceptosResponse)),
+                    new JsonDerivedType(typeof(BuscarDocumentosResponse), nameof(BuscarDocumentosResponse)),
                     new JsonDerivedType(typeof(BuscarEmpresasResponse), nameof(BuscarEmpresasResponse)),
                     new JsonDerivedType(typeof(BuscarProductosResponse), nameof(BuscarProductosResponse)),
                     new JsonDerivedType(typeof(CancelarDocumentoResponse), nameof(CancelarDocumentoResponse)),

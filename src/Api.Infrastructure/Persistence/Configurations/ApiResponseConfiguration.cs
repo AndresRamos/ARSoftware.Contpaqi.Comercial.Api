@@ -16,6 +16,7 @@ public static class ApiResponseConfiguration
         builder.Configure<BuscarAlmacenesResponse, BuscarAlmacenesResponseModel>();
         builder.Configure<BuscarClientesResponse, BuscarClientesResponseModel>();
         builder.Configure<BuscarConceptosResponse, BuscarConceptosResponseModel>();
+        builder.Configure<BuscarDocumentosResponse, BuscarDocumentosResponseModel>();
         builder.Configure<BuscarEmpresasResponse, BuscarEmpresasResponseModel>();
         builder.Configure<BuscarProductosResponse, BuscarProductosResponseModel>();
         builder.Configure<CancelarDocumentoResponse, CancelarDocumentoResponseModel>();

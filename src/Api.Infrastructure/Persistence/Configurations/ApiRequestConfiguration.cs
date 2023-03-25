@@ -16,6 +16,7 @@ public static class ApiRequestConfiguration
         builder.Configure<BuscarAlmacenesRequest, BuscarAlmacenesRequestModel, BuscarAlmacenesRequestOptions>();
         builder.Configure<BuscarClientesRequest, BuscarClientesRequestModel, BuscarClientesRequestOptions>();
         builder.Configure<BuscarConceptosRequest, BuscarConceptosRequestModel, BuscarConceptosRequestOptions>();
+        builder.Configure<BuscarDocumentosRequest, BuscarDocumentosRequestModel, BuscarDocumentosRequestOptions>();
         builder.Configure<BuscarEmpresasRequest, BuscarEmpresasRequestModel, BuscarEmpresasRequestOptions>();
         builder.Configure<BuscarProductosRequest, BuscarProductosRequestModel, BuscarProductosRequestOptions>();
         builder.Configure<CancelarDocumentoRequest, CancelarDocumentoRequestModel, CancelarDocumentoRequestOptions>();
