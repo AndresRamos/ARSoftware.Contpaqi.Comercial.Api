@@ -100,7 +100,8 @@ public sealed class CrearDocumentoRequestHandler : IRequestHandler<CrearDocument
         }
         finally
         {
-            _documentoService.DesbloquearDocumento(_documentoSdkId);
+            if (_documentoSdkId is not 0)
+                _documentoService.DesbloquearDocumento(_documentoSdkId);
         }
     }
 }
