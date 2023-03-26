@@ -2,7 +2,9 @@
 
 namespace Api.Core.Domain.Requests;
 
-/// <inheritdoc cref="IApiRequest" />
+/// <summary>
+///     Solicitud para crear un cliente.
+/// </summary>
 public sealed class CrearClienteRequest : ApiRequestBase, IApiRequest<CrearClienteRequestModel, CrearClienteRequestOptions>
 
 {
@@ -10,22 +12,34 @@ public sealed class CrearClienteRequest : ApiRequestBase, IApiRequest<CrearClien
     public CrearClienteRequestOptions Options { get; set; } = new();
 }
 
+/// <summary>
+///     Modelo de la solicitud CrearClienteRequest.
+/// </summary>
 public sealed class CrearClienteRequestModel
 {
     public Cliente Cliente { get; set; } = new();
 }
 
+/// <summary>
+///     Opciones de la solicitud CrearClienteRequest.
+/// </summary>
+/// <inheritdoc cref="ILoadRelatedDataOptions" />
 public sealed class CrearClienteRequestOptions : ILoadRelatedDataOptions
 {
     public bool CargarDatosExtra { get; set; }
 }
 
-/// <inheritdoc cref="IApiResponse" />
+/// <summary>
+///     Respuesta de la solicitud CrearClienteRequest.
+/// </summary>
 public sealed class CrearClienteResponse : ApiResponseBase, IApiResponse<CrearClienteResponseModel>
 {
     public CrearClienteResponseModel Model { get; set; } = new();
 }
 
+/// <summary>
+///     Modelo de la respuesta CrearClienteResponse
+/// </summary>
 public sealed class CrearClienteResponseModel
 {
     public Cliente Cliente { get; set; } = new();
