@@ -31,11 +31,9 @@ public sealed class ActualizarAgenteRequestModel
 /// <summary>
 ///     Opciones de la solicitud ActualizarAgenteRequest.
 /// </summary>
+/// <inheritdoc cref="ILoadRelatedDataOptions" />
 public sealed class ActualizarAgenteRequestOptions : ILoadRelatedDataOptions
 {
-    /// <summary>
-    ///     Opcion para cargar los datos extra de los objectos.
-    /// </summary>
     public bool CargarDatosExtra { get; set; }
 }
 

@@ -24,9 +24,6 @@ public sealed class CrearAgenteRequestModel
 /// </summary>
 public sealed class CrearAgenteRequestOptions : ILoadRelatedDataOptions
 {
-    /// <summary>
-    ///     Opcion para cargar los datos extra de los objectos.
-    /// </summary>
     public bool CargarDatosExtra { get; set; }
 }
 

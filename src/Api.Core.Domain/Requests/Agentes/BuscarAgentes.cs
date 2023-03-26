@@ -32,9 +32,6 @@ public sealed class BuscarAgentesRequestModel
 /// </summary>
 public sealed class BuscarAgentesRequestOptions : ILoadRelatedDataOptions
 {
-    /// <summary>
-    ///     Opcion para cargar los datos extra de los objectos.
-    /// </summary>
     public bool CargarDatosExtra { get; set; }
 }
 
