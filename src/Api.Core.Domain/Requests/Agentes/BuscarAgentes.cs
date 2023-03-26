@@ -30,6 +30,7 @@ public sealed class BuscarAgentesRequestModel
 /// <summary>
 ///     Opciones de la solicitud BuscarAgentesRequest.
 /// </summary>
+/// <inheritdoc cref="ILoadRelatedDataOptions" />
 public sealed class BuscarAgentesRequestOptions : ILoadRelatedDataOptions
 {
     public bool CargarDatosExtra { get; set; }

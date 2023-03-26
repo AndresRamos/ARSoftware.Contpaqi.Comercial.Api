@@ -30,6 +30,7 @@ public sealed class ActualizarAlmacenRequestModel
 /// <summary>
 ///     Opciones de la solicitud ActualizarAlmacenRequest.
 /// </summary>
+/// <inheritdoc cref="ILoadRelatedDataOptions" />
 public sealed class ActualizarAlmacenRequestOptions : ILoadRelatedDataOptions
 {
     public bool CargarDatosExtra { get; set; }

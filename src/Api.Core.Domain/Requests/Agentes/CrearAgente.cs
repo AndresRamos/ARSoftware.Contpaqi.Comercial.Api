@@ -22,6 +22,7 @@ public sealed class CrearAgenteRequestModel
 /// <summary>
 ///     Opciones de la solicitud CrearAgenteRequest.
 /// </summary>
+/// <inheritdoc cref="ILoadRelatedDataOptions" />
 public sealed class CrearAgenteRequestOptions : ILoadRelatedDataOptions
 {
     public bool CargarDatosExtra { get; set; }

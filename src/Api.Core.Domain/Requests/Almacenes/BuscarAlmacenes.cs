@@ -30,6 +30,7 @@ public sealed class BuscarAlmacenesRequestModel
 /// <summary>
 ///     Opciones de la solicitud BuscarAlmacenesRequest.
 /// </summary>
+/// <inheritdoc cref="ILoadRelatedDataOptions" />
 public sealed class BuscarAlmacenesRequestOptions : ILoadRelatedDataOptions
 {
     public bool CargarDatosExtra { get; set; }
