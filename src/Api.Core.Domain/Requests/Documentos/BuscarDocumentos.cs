@@ -62,11 +62,9 @@ public sealed class BuscarDocumentosRequestModel
 /// <summary>
 ///     Opciones de la solicitud BuscarDocumentosRequest.
 /// </summary>
+/// <inheritdoc cref="ILoadRelatedDataOptions" />
 public sealed class BuscarDocumentosRequestOptions : ILoadRelatedDataOptions
 {
-    /// <summary>
-    ///     Opcion para cargar los datos extra de los objectos.
-    /// </summary>
     public bool CargarDatosExtra { get; set; }
 }
 
