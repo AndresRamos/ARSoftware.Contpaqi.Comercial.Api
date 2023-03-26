@@ -84,7 +84,7 @@ public sealed class DocumentoRepository : IDocumentoRepository
         var documentosList = new List<Documento>();
 
         IQueryable<admDocumentos> documentosQuery = !string.IsNullOrWhiteSpace(requestModel.SqlQuery)
-            ? _context.admDocumentos.FromSqlRaw($"SELECT * FROM admDocumentos  WHERE {requestModel.SqlQuery}")
+            ? _context.admDocumentos.FromSqlRaw($"SELECT * FROM admDocumentos WHERE {requestModel.SqlQuery}")
             : _context.admDocumentos.AsQueryable();
 
         if (requestModel.Id.HasValue)
@@ -136,29 +136,7 @@ public sealed class DocumentoRepository : IDocumentoRepository
         List<DocumentoSql> documentosSql = await documentosQuery.ProjectTo<DocumentoSql>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 
-        foreach (DocumentoSql? documentoSql in documentosSql)
-        {
-            var documento = _mapper.Map<Documento>(documentoSql);
-
-            await CargarObjectosRelacionadosAsync(documento, documentoSql, loadRelatedDataOptions, cancellationToken);
-
-            documentosList.Add(documento);
-        }
-
-        return documentosList;
-    }
-
-    public async Task<IEnumerable<Documento>> BuscarPorSqlQueryAsync(string sqlQuery,
-                                                                     ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                                     CancellationToken cancellationToken)
-    {
-        var documentosList = new List<Documento>();
-
-        List<DocumentoSql> documentosSql = await _context.admDocumentos.FromSqlRaw($"SELECT * FROM admDocumentos WHERE {sqlQuery}")
-            .ProjectTo<DocumentoSql>(_mapper.ConfigurationProvider)
-            .ToListAsync(cancellationToken);
-
-        foreach (DocumentoSql? documentoSql in documentosSql)
+        foreach (DocumentoSql documentoSql in documentosSql)
         {
             var documento = _mapper.Map<Documento>(documentoSql);
 

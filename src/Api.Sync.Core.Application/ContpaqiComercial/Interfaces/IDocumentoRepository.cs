@@ -16,10 +16,6 @@ public interface IDocumentoRepository
                                                             ILoadRelatedDataOptions loadRelatedDataOptions,
                                                             CancellationToken cancellationToken);
 
-    Task<IEnumerable<Documento>> BuscarPorSqlQueryAsync(string sqlQuery,
-                                                        ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                        CancellationToken cancellationToken);
-
     Task<int> BusarIdPorLlaveAsync(LlaveDocumento llaveDocumento,
                                    ILoadRelatedDataOptions loadRelatedDataOptions,
                                    CancellationToken cancellationToken);
