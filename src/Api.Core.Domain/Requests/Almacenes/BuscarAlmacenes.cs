@@ -25,6 +25,17 @@ public sealed class BuscarAlmacenesRequestModel
     ///     Parametro para buscar almacenes por codigo.
     /// </summary>
     public string? Codigo { get; set; }
+
+    /// <summary>
+    ///     Parametro para buscar almacenes por SQL. El valor debe ser el WHERE clause y debes asegurarte de sanatizar tu SQL.
+    ///     <example>
+    ///         <para>Ejemplo para buscar almacenes por nombre:</para>
+    ///         <code>SqlQuery = "CNOMBREALMACEN = 'nombre'"</code>
+    ///         <para>se traduce a </para>
+    ///         <code>SELECT * FROM admAlmacenes WHERE CNOMBREALMACEN = 'nombre'</code>
+    ///     </example>
+    /// </summary>
+    public string? SqlQuery { get; set; }
 }
 
 /// <summary>
