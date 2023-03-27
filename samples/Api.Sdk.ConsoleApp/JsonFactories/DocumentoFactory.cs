@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using Api.Core.Domain.Common;
+using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Models;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Models.Enums;
@@ -139,11 +140,65 @@ public static class DocumentoFactory
     public static BuscarDocumentosRequest BuscarPorSql()
     {
         var request = new BuscarDocumentosRequest();
+        request.EmpresaRfc = Constants.EmpresaRfc;
+        request.Model.SqlQuery = @"CPENDIENTE > 0.00";
+
+        return request;
+    }
+
+    public static BuscarDocumentosRequest BuscarPorRangoFecha()
+    {
+        var request = new BuscarDocumentosRequest();
+        request.EmpresaRfc = Constants.EmpresaRfc;
 
         request.Model.FechaInicio = DateOnly.FromDateTime(DateTime.Today);
         request.Model.FechaFin = DateOnly.FromDateTime(DateTime.Today);
-        request.Model.SqlQuery = @"CPENDIENTE > 0.00";
 
+        return request;
+    }
+
+    public static BuscarDocumentosRequest BuscarPorId()
+    {
+        var request = new BuscarDocumentosRequest();
+        request.EmpresaRfc = Constants.EmpresaRfc;
+
+        request.Model.Id = 1;
+
+        return request;
+    }
+
+    public static BuscarDocumentosRequest BuscarPorLlave()
+    {
+        var request = new BuscarDocumentosRequest();
+        request.EmpresaRfc = Constants.EmpresaRfc;
+
+        request.Model.Llave = new LlaveDocumento { ConceptoCodigo = "400", Serie = "FACT", Folio = 1 };
+
+        return request;
+    }
+
+    public static BuscarDocumentosRequest BuscarPorConcepto()
+    {
+        var request = new BuscarDocumentosRequest();
+        request.EmpresaRfc = Constants.EmpresaRfc;
+
+        request.Model.ConceptoCodigo = "400";
+
+        return request;
+    }
+
+    public static BuscarDocumentosRequest BuscarPorCliente()
+    {
+        var request = new BuscarDocumentosRequest();
+        request.EmpresaRfc = Constants.EmpresaRfc;
+
+        request.Model.ClienteCodigo = "CTE001";
+
+        return request;
+    }
+
+    private static void BuildSqlQuery()
+    {
         var optionsBuilder = new DbContextOptionsBuilder<ContpaqiComercialEmpresaDbContext>();
         optionsBuilder.UseSqlServer(
             @"Data Source=AR-SERVER\COMPAC;Initial Catalog=adUNIVERSIDAD_ROBOTICA;User ID=sa;Password=Sdmramos1;Connect Timeout=30;");
@@ -151,9 +206,6 @@ public static class DocumentoFactory
         var context = new ContpaqiComercialEmpresaDbContext(optionsBuilder.Options);
 
         string queryString = context.admDocumentos.Where(d => d.CPENDIENTE > 0).ToQueryString();
-        Console.WriteLine(queryString);
-
-        return request;
     }
 
     private static Documento GetDocumento()
@@ -214,7 +266,22 @@ public static class DocumentoFactory
         File.WriteAllText(Path.Combine(directory, $"{nameof(CancelarDocumentoRequest)}.json"),
             JsonSerializer.Serialize<ApiRequestBase>(Cancelar(), options));
 
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarDocumentosRequest)}.json"),
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarDocumentosRequest)}_PorId.json"),
+            JsonSerializer.Serialize<ApiRequestBase>(BuscarPorId(), options));
+
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarDocumentosRequest)}_PorLlave.json"),
+            JsonSerializer.Serialize<ApiRequestBase>(BuscarPorLlave(), options));
+
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarDocumentosRequest)}_PorConcepto.json"),
+            JsonSerializer.Serialize<ApiRequestBase>(BuscarPorConcepto(), options));
+
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarDocumentosRequest)}_PorCliente.json"),
+            JsonSerializer.Serialize<ApiRequestBase>(BuscarPorCliente(), options));
+
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarDocumentosRequest)}_PorRangoFecha.json"),
+            JsonSerializer.Serialize<ApiRequestBase>(BuscarPorRangoFecha(), options));
+
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarDocumentosRequest)}_PorSql.json"),
             JsonSerializer.Serialize<ApiRequestBase>(BuscarPorSql(), options));
     }
 }

@@ -56,6 +56,16 @@ public static class AgenteFactory
         return request;
     }
 
+    public static BuscarAgentesRequest BuscarPorSql()
+    {
+        var request = new BuscarAgentesRequest();
+        request.EmpresaRfc = Constants.EmpresaRfc;
+
+        request.Model.SqlQuery = "CTIPOAGENTE = 1";
+
+        return request;
+    }
+
     public static BuscarAgentesRequest BuscarTodo()
     {
         var request = new BuscarAgentesRequest();
@@ -92,6 +102,9 @@ public static class AgenteFactory
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAgentesRequest)}_PorCodigo.json"),
             JsonSerializer.Serialize<ApiRequestBase>(BuscarPorCodigo(), options));
+
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAgentesRequest)}_Sql.json"),
+            JsonSerializer.Serialize<ApiRequestBase>(BuscarPorSql(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAgentesRequest)}_Todo.json"),
             JsonSerializer.Serialize<ApiRequestBase>(BuscarTodo(), options));

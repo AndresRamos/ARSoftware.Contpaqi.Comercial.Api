@@ -57,6 +57,16 @@ public static class ProductoFactory
         return request;
     }
 
+    public static BuscarProductosRequest BuscarPorSql()
+    {
+        var request = new BuscarProductosRequest();
+        request.EmpresaRfc = Constants.EmpresaRfc;
+
+        request.Model.SqlQuery = "CNOMBREPRODUCTO = 'nombre'";
+
+        return request;
+    }
+
     public static BuscarProductosRequest BuscarTodo()
     {
         var request = new BuscarProductosRequest();
@@ -104,6 +114,9 @@ public static class ProductoFactory
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarProductosRequest)}_PorCodigo.json"),
             JsonSerializer.Serialize<ApiRequestBase>(BuscarPorCodigo(), options));
+
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarProductosRequest)}_PorSql.json"),
+            JsonSerializer.Serialize<ApiRequestBase>(BuscarPorSql(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarProductosRequest)}_Todo.json"),
             JsonSerializer.Serialize<ApiRequestBase>(BuscarTodo(), options));

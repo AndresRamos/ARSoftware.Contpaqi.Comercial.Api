@@ -68,6 +68,16 @@ public static class ClienteFactory
         return request;
     }
 
+    public static BuscarClientesRequest BuscarPorSql()
+    {
+        var request = new BuscarClientesRequest();
+        request.EmpresaRfc = Constants.EmpresaRfc;
+
+        request.Model.SqlQuery = "CRAZONSOCIAL = 'razonSocial'";
+
+        return request;
+    }
+
     public static BuscarClientesRequest BuscarTodo()
     {
         var request = new BuscarClientesRequest();
@@ -115,6 +125,9 @@ public static class ClienteFactory
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarClientesRequest)}_PorCodigo.json"),
             JsonSerializer.Serialize<ApiRequestBase>(BuscarPorCodigo(), options));
+
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarClientesRequest)}_PorSql.json"),
+            JsonSerializer.Serialize<ApiRequestBase>(BuscarPorSql(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarClientesRequest)}_Todo.json"),
             JsonSerializer.Serialize<ApiRequestBase>(BuscarTodo(), options));

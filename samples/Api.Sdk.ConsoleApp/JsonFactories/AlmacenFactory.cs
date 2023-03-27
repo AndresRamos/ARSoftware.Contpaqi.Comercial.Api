@@ -54,6 +54,16 @@ public static class AlmacenFactory
         return request;
     }
 
+    public static BuscarAlmacenesRequest BuscarPorSql()
+    {
+        var request = new BuscarAlmacenesRequest();
+        request.EmpresaRfc = Constants.EmpresaRfc;
+
+        request.Model.SqlQuery = "CNOMBREALMACEN = 'nombre'";
+
+        return request;
+    }
+
     public static BuscarAlmacenesRequest BuscarTodo()
     {
         var request = new BuscarAlmacenesRequest();
@@ -89,6 +99,9 @@ public static class AlmacenFactory
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAlmacenesRequest)}_PorCodigo.json"),
             JsonSerializer.Serialize<ApiRequestBase>(BuscarPorCodigo(), options));
+
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAlmacenesRequest)}_PorSql.json"),
+            JsonSerializer.Serialize<ApiRequestBase>(BuscarPorSql(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAlmacenesRequest)}_Todo.json"),
             JsonSerializer.Serialize<ApiRequestBase>(BuscarTodo(), options));
