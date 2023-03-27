@@ -25,6 +25,17 @@ public sealed class BuscarProductosRequestModel
     ///     Parametro para buscar productos por codigo.
     /// </summary>
     public string? Codigo { get; set; }
+
+    /// <summary>
+    ///     Parametro para buscar productos por SQL. El valor debe ser el WHERE clause y debes asegurarte de sanatizar tu SQL.
+    ///     <example>
+    ///         <para>Ejemplo para buscar productos por nombre:</para>
+    ///         <code>SqlQuery = "CNOMBREPRODUCTO = 'nombre'"</code>
+    ///         <para>se traduce a </para>
+    ///         <code>SELECT * FROM admProductos WHERE CNOMBREPRODUCTO = 'nombre'</code>
+    ///     </example>
+    /// </summary>
+    public string? SqlQuery { get; set; }
 }
 
 /// <summary>

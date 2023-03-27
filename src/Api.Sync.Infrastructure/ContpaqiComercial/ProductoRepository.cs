@@ -1,5 +1,6 @@
 ﻿using Api.Core.Domain.Common;
 using Api.Core.Domain.Models;
+using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
 using Api.Sync.Infrastructure.ContpaqiComercial.Models;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
@@ -64,6 +65,38 @@ public sealed class ProductoRepository : IProductoRepository
         var productosList = new List<Producto>();
 
         List<ProductoSql> productosSql = await _context.admProductos.OrderBy(c => c.CNOMBREPRODUCTO)
+            .ProjectTo<ProductoSql>(_mapper.ConfigurationProvider)
+            .ToListAsync(cancellationToken);
+
+        foreach (ProductoSql productoSql in productosSql)
+        {
+            var producto = _mapper.Map<Producto>(productoSql);
+
+            await CargarDatosRelacionadosAsync(producto, productoSql, loadRelatedDataOptions, cancellationToken);
+
+            productosList.Add(producto);
+        }
+
+        return productosList;
+    }
+
+    public async Task<IEnumerable<Producto>> BuscarPorRequestModel(BuscarProductosRequestModel requestModel,
+                                                                   ILoadRelatedDataOptions loadRelatedDataOptions,
+                                                                   CancellationToken cancellationToken)
+    {
+        var productosList = new List<Producto>();
+
+        IQueryable<admProductos> productosQuery = !string.IsNullOrWhiteSpace(requestModel.SqlQuery)
+            ? _context.admProductos.FromSqlRaw($"SELECT * FROM admProductos WHERE {requestModel.SqlQuery}")
+            : _context.admProductos.AsQueryable();
+
+        if (requestModel.Id is not null)
+            productosQuery = productosQuery.Where(a => a.CIDPRODUCTO == requestModel.Id);
+
+        if (!string.IsNullOrWhiteSpace(requestModel.Codigo))
+            productosQuery = productosQuery.Where(a => a.CCODIGOPRODUCTO == requestModel.Codigo);
+
+        List<ProductoSql> productosSql = await productosQuery
             .ProjectTo<ProductoSql>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 
