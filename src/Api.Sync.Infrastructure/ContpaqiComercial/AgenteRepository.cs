@@ -1,5 +1,6 @@
 ﻿using Api.Core.Domain.Common;
 using Api.Core.Domain.Models;
+using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
 using Api.Sync.Infrastructure.ContpaqiComercial.Models;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
@@ -54,6 +55,36 @@ public sealed class AgenteRepository : IAgenteRepository
         await CargarDatosRelacionadosAsync(agente, agenteSql, loadRelatedDataOptions, cancellationToken);
 
         return agente;
+    }
+
+    public async Task<IEnumerable<Agente>> BuscarPorRequestModelAsync(BuscarAgentesRequestModel requestModel,
+                                                                      ILoadRelatedDataOptions loadRelatedDataOptions,
+                                                                      CancellationToken cancellationToken)
+    {
+        var agentesList = new List<Agente>();
+
+        IQueryable<admAgentes> agentesQuery = !string.IsNullOrWhiteSpace(requestModel.SqlQuery)
+            ? _context.admAgentes.FromSqlRaw($"SELECT * FROM admAgentes WHERE {requestModel.SqlQuery}")
+            : _context.admAgentes.AsQueryable();
+
+        if (requestModel.Id is not null)
+            agentesQuery = agentesQuery.Where(a => a.CIDAGENTE == requestModel.Id);
+
+        if (!string.IsNullOrWhiteSpace(requestModel.Codigo))
+            agentesQuery = agentesQuery.Where(a => a.CCODIGOAGENTE == requestModel.Codigo);
+
+        List<AgenteSql> agentesSql = await agentesQuery.ProjectTo<AgenteSql>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
+
+        foreach (AgenteSql agenteSql in agentesSql)
+        {
+            var agente = _mapper.Map<Agente>(agenteSql);
+
+            await CargarDatosRelacionadosAsync(agente, agenteSql, loadRelatedDataOptions, cancellationToken);
+
+            agentesList.Add(agente);
+        }
+
+        return agentesList;
     }
 
     public async Task<IEnumerable<Agente>> BuscarTodoAsync(ILoadRelatedDataOptions loadRelatedDataOptions,

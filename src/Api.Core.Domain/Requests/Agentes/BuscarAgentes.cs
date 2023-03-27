@@ -25,6 +25,17 @@ public sealed class BuscarAgentesRequestModel
     ///     Parametro para buscar agentes por codigo.
     /// </summary>
     public string? Codigo { get; set; }
+
+    /// <summary>
+    ///     Parametro para buscar agentes por SQL. El valor debe ser el WHERE clause y debes asegurarte de sanatizar tu SQL.
+    ///     <example>
+    ///         <para>Ejemplo para buscar agentes de tipo Agente de Ventas:</para>
+    ///         <code>SqlQuery = "CTIPOAGENTE = 1"</code>
+    ///         <para>se traduce a </para>
+    ///         <code>SELECT * FROM admAgentes WHERE CTIPOAGENTE = 1</code>
+    ///     </example>
+    /// </summary>
+    public string? SqlQuery { get; set; }
 }
 
 /// <summary>
