@@ -25,6 +25,17 @@ public sealed class BuscarConceptosRequestModel
     ///     Parametro para buscar conceptos por codigo.
     /// </summary>
     public string? Codigo { get; set; }
+
+    /// <summary>
+    ///     Parametro para buscar conceptos por SQL. El valor debe ser el WHERE clause y debes asegurarte de sanatizar tu SQL.
+    ///     <example>
+    ///         <para>Ejemplo para buscar conceptos por nombre:</para>
+    ///         <code>SqlQuery = "CNOMBRECONCEPTO = 'nombre'"</code>
+    ///         <para>se traduce a </para>
+    ///         <code>SELECT * FROM admConceptos WHERE CNOMBRECONCEPTO = 'nombre'</code>
+    ///     </example>
+    /// </summary>
+    public string? SqlQuery { get; set; }
 }
 
 /// <summary>

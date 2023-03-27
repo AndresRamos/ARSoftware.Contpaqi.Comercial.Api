@@ -1,5 +1,6 @@
 ﻿using Api.Core.Domain.Common;
 using Api.Core.Domain.Models;
+using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
 using Api.Sync.Infrastructure.ContpaqiComercial.Models;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
@@ -64,6 +65,38 @@ public sealed class ConceptoRepository : IConceptoRepository
         var conceptosList = new List<Concepto>();
 
         List<ConceptoSql> coneptosSql = await _context.admConceptos.OrderBy(c => c.CNOMBRECONCEPTO)
+            .ProjectTo<ConceptoSql>(_mapper.ConfigurationProvider)
+            .ToListAsync(cancellationToken);
+
+        foreach (ConceptoSql conceptoSql in coneptosSql)
+        {
+            var concepto = _mapper.Map<Concepto>(conceptoSql);
+
+            await CargarDatosRelacionadosAsync(concepto, conceptoSql, loadRelatedDataOptions, cancellationToken);
+
+            conceptosList.Add(concepto);
+        }
+
+        return conceptosList;
+    }
+
+    public async Task<IEnumerable<Concepto>> BuscarPorRequstModelAsync(BuscarConceptosRequestModel requestModel,
+                                                                       ILoadRelatedDataOptions loadRelatedDataOptions,
+                                                                       CancellationToken cancellationToken)
+    {
+        var conceptosList = new List<Concepto>();
+
+        IQueryable<admConceptos> conceptosQuery = !string.IsNullOrWhiteSpace(requestModel.SqlQuery)
+            ? _context.admConceptos.FromSqlRaw($"SELECT * FROM admConceptos WHERE {requestModel.SqlQuery}")
+            : _context.admConceptos.AsQueryable();
+
+        if (requestModel.Id is not null)
+            conceptosQuery = conceptosQuery.Where(a => a.CIDCONCEPTODOCUMENTO == requestModel.Id);
+
+        if (!string.IsNullOrWhiteSpace(requestModel.Codigo))
+            conceptosQuery = conceptosQuery.Where(a => a.CCODIGOCONCEPTO == requestModel.Codigo);
+
+        List<ConceptoSql> coneptosSql = await conceptosQuery
             .ProjectTo<ConceptoSql>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 
