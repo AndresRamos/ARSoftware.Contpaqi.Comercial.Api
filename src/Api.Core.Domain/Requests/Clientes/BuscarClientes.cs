@@ -25,6 +25,17 @@ public sealed class BuscarClientesRequestModel
     ///     Parametro para buscar clientes por codigo.
     /// </summary>
     public string? Codigo { get; set; }
+
+    /// <summary>
+    ///     Parametro para buscar clientes por SQL. El valor debe ser el WHERE clause y debes asegurarte de sanatizar tu SQL.
+    ///     <example>
+    ///         <para>Ejemplo para buscar clientes por razon social:</para>
+    ///         <code>SqlQuery = "CRAZONSOCIAL = 'razonSocial'"</code>
+    ///         <para>se traduce a </para>
+    ///         <code>SELECT * FROM admClientes WHERE CRAZONSOCIAL = 'razonSocial'</code>
+    ///     </example>
+    /// </summary>
+    public string? SqlQuery { get; set; }
 }
 
 /// <summary>

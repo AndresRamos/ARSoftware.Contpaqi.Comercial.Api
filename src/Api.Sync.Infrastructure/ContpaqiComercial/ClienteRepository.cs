@@ -1,5 +1,6 @@
 ﻿using Api.Core.Domain.Common;
 using Api.Core.Domain.Models;
+using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
 using Api.Sync.Infrastructure.ContpaqiComercial.Models;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
@@ -20,6 +21,38 @@ public sealed class ClienteRepository : IClienteRepository
     {
         _context = context;
         _mapper = mapper;
+    }
+
+    public async Task<IEnumerable<Cliente>> BuscarPorRequestModel(BuscarClientesRequestModel requestModel,
+                                                                  ILoadRelatedDataOptions loadRelatedDataOptions,
+                                                                  CancellationToken cancellationToken)
+    {
+        var clientesList = new List<Cliente>();
+
+        IQueryable<admClientes> clientesQuery = !string.IsNullOrWhiteSpace(requestModel.SqlQuery)
+            ? _context.admClientes.FromSqlRaw($"SELECT * FROM admClientes WHERE {requestModel.SqlQuery}")
+            : _context.admClientes.AsQueryable();
+
+        if (requestModel.Id is not null)
+            clientesQuery = clientesQuery.Where(a => a.CIDCLIENTEPROVEEDOR == requestModel.Id);
+
+        if (!string.IsNullOrWhiteSpace(requestModel.Codigo))
+            clientesQuery = clientesQuery.Where(a => a.CCODIGOCLIENTE == requestModel.Codigo);
+
+        List<ClienteSql> clientesSql = await clientesQuery
+            .ProjectTo<ClienteSql>(_mapper.ConfigurationProvider)
+            .ToListAsync(cancellationToken);
+
+        foreach (ClienteSql? clienteSql in clientesSql)
+        {
+            var cliente = _mapper.Map<Cliente>(clienteSql);
+
+            await CargarDatosRelacionadosAsync(cliente, clienteSql, loadRelatedDataOptions, cancellationToken);
+
+            clientesList.Add(cliente);
+        }
+
+        return clientesList;
     }
 
     public async Task<bool> ExisteDireccionFiscalDelClienteAsync(string codigo, CancellationToken cancellationToken)
