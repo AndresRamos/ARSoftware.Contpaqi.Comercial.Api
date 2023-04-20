@@ -5,7 +5,7 @@ namespace Api.Core.Domain.Requests;
 /// <summary>
 ///     Solicitud para saldar un documento.
 /// </summary>
-public sealed class SaldarDocumentoRequest : ApiRequestBase, IApiRequest<SaldarDocumentoRequestModel, SaldarDocumentoRequestOptions>
+public sealed class SaldarDocumentoRequest : IContpaqiRequest<SaldarDocumentoRequestModel, SaldarDocumentoRequestOptions>
 {
     public SaldarDocumentoRequestModel Model { get; set; } = new();
     public SaldarDocumentoRequestOptions Options { get; set; } = new();
@@ -42,7 +42,7 @@ public sealed class SaldarDocumentoRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud SaldarDocumentoRequest.
 /// </summary>
-public sealed class SaldarDocumentoResponse : ApiResponseBase, IApiResponse<SaldarDocumentoResponseModel>
+public sealed class SaldarDocumentoResponse : IContpaqiResponse<SaldarDocumentoResponseModel>
 {
     public SaldarDocumentoResponseModel Model { get; set; } = new();
 }

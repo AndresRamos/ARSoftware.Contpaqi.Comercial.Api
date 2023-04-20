@@ -5,7 +5,7 @@ namespace Api.Core.Domain.Requests;
 /// <summary>
 ///     Solicitud para buscar agentes.
 /// </summary>
-public sealed class BuscarAgentesRequest : ApiRequestBase, IApiRequest<BuscarAgentesRequestModel, BuscarAgentesRequestOptions>
+public sealed class BuscarAgentesRequest : IContpaqiRequest<BuscarAgentesRequestModel, BuscarAgentesRequestOptions>
 {
     public BuscarAgentesRequestModel Model { get; set; } = new();
     public BuscarAgentesRequestOptions Options { get; set; } = new();
@@ -50,7 +50,7 @@ public sealed class BuscarAgentesRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud BuscarAgentesRequest.
 /// </summary>
-public sealed class BuscarAgentesResponse : ApiResponseBase, IApiResponse<BuscarAgentesResponseModel>
+public sealed class BuscarAgentesResponse : IContpaqiResponse<BuscarAgentesResponseModel>
 {
     public BuscarAgentesResponseModel Model { get; set; } = new();
 }
@@ -60,5 +60,6 @@ public sealed class BuscarAgentesResponse : ApiResponseBase, IApiResponse<Buscar
 /// </summary>
 public sealed class BuscarAgentesResponseModel
 {
+    public int NumeroRegistros => Agentes.Count;
     public List<Agente> Agentes { get; set; } = new();
 }

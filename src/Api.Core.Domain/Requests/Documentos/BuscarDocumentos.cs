@@ -5,7 +5,7 @@ namespace Api.Core.Domain.Requests;
 /// <summary>
 ///     Solicitud para buscar documentos.
 /// </summary>
-public sealed class BuscarDocumentosRequest : ApiRequestBase, IApiRequest<BuscarDocumentosRequestModel, BuscarDocumentosRequestOptions>
+public sealed class BuscarDocumentosRequest : IContpaqiRequest<BuscarDocumentosRequestModel, BuscarDocumentosRequestOptions>
 {
     public BuscarDocumentosRequestModel Model { get; set; } = new();
 
@@ -71,7 +71,7 @@ public sealed class BuscarDocumentosRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud BuscarDocumentosRequest.
 /// </summary>
-public sealed class BuscarDocumentosResponse : ApiResponseBase, IApiResponse<BuscarDocumentosResponseModel>
+public sealed class BuscarDocumentosResponse : IContpaqiResponse<BuscarDocumentosResponseModel>
 {
     public BuscarDocumentosResponseModel Model { get; set; } = new();
 }
@@ -81,6 +81,8 @@ public sealed class BuscarDocumentosResponse : ApiResponseBase, IApiResponse<Bus
 /// </summary>
 public sealed class BuscarDocumentosResponseModel
 {
+    public int NumeroRegistros => Documentos.Count;
+
     /// <summary>
     ///     Lista de documentos encontrados.
     /// </summary>

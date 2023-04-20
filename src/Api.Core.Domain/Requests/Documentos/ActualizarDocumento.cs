@@ -5,8 +5,7 @@ namespace Api.Core.Domain.Requests;
 /// <summary>
 ///     Solicitud para actualizar un documento.
 /// </summary>
-public sealed class ActualizarDocumentoRequest : ApiRequestBase,
-    IApiRequest<ActualizarDocumentoRequestModel, ActualizarDocumentoRequestOptions>
+public sealed class ActualizarDocumentoRequest : IContpaqiRequest<ActualizarDocumentoRequestModel, ActualizarDocumentoRequestOptions>
 {
     public ActualizarDocumentoRequestModel Model { get; set; } = new();
     public ActualizarDocumentoRequestOptions Options { get; set; } = new();
@@ -40,7 +39,7 @@ public sealed class ActualizarDocumentoRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud ActualizarDocumentoRequest.
 /// </summary>
-public sealed class ActualizarDocumentoResponse : ApiResponseBase, IApiResponse<ActualizarDocumentoResponseModel>
+public sealed class ActualizarDocumentoResponse : IContpaqiResponse<ActualizarDocumentoResponseModel>
 {
     public ActualizarDocumentoResponseModel Model { get; set; } = new();
 }

@@ -5,7 +5,7 @@ namespace Api.Core.Domain.Requests;
 /// <summary>
 ///     Solicitud para crear un agente.
 /// </summary>
-public sealed class CrearAgenteRequest : ApiRequestBase, IApiRequest<CrearAgenteRequestModel, CrearAgenteRequestOptions>
+public sealed class CrearAgenteRequest : IContpaqiRequest<CrearAgenteRequestModel, CrearAgenteRequestOptions>
 {
     public CrearAgenteRequestModel Model { get; set; } = new();
     public CrearAgenteRequestOptions Options { get; set; } = new();
@@ -31,7 +31,7 @@ public sealed class CrearAgenteRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud CrearAgenteRequest.
 /// </summary>
-public sealed class CrearAgenteResponse : ApiResponseBase, IApiResponse<CrearAgenteResponseModel>
+public sealed class CrearAgenteResponse : IContpaqiResponse<CrearAgenteResponseModel>
 {
     public CrearAgenteResponseModel Model { get; set; } = new();
 }

@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
+using Api.Sync.Core.Application.Api.Interfaces;
 using Api.Sync.Core.Application.Common.Models;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
-using Api.Sync.Core.Application.ContpaqiComercialApi.Interfaces;
 using Api.Sync.Infrastructure.ContpaqiComercial;
 using Api.Sync.Infrastructure.ContpaqiComercialApi;
 using ARSoftware.Contpaqi.Comercial.Sql.Contexts;
@@ -29,8 +29,10 @@ public static class ConfigureServices
         serviceCollection.AddHttpClient<IContpaqiComercialApiService, ContpaqiComercialApiService>((serviceProvider, httpClient) =>
         {
             ApiSyncConfig apiSyncConfig = serviceProvider.GetRequiredService<IOptions<ApiSyncConfig>>().Value;
+            ContpaqiComercialConfig contpaqiComercialConfig = serviceProvider.GetRequiredService<IOptions<ContpaqiComercialConfig>>().Value;
             httpClient.BaseAddress = new Uri(apiSyncConfig.BaseAddress);
             httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", apiSyncConfig.SubscriptionKey);
+            httpClient.DefaultRequestHeaders.Add("x-Empresa-Rfc", contpaqiComercialConfig.Empresa.Rfc);
         });
 
         return serviceCollection;
@@ -38,25 +40,21 @@ public static class ConfigureServices
 
     private static IServiceCollection AddContpaqiComercialServices(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
-        serviceCollection.AddDbContext<ContpaqiComercialGeneralesDbContext>(builder =>
+        serviceCollection.AddDbContext<ContpaqiComercialGeneralesDbContext>(
+            builder =>
             {
                 builder.UseSqlServer(ContpaqiComercialSqlConnectionStringFactory.CreateContpaqiComercialGeneralesConnectionString(
                         configuration.GetConnectionString("Contpaqi")))
                     .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTrackingWithIdentityResolution);
-            },
-            ServiceLifetime.Transient,
-            ServiceLifetime.Transient);
+            }, ServiceLifetime.Transient, ServiceLifetime.Transient);
 
         serviceCollection.AddDbContext<ContpaqiComercialEmpresaDbContext>((provider, builder) =>
-            {
-                ContpaqiComercialConfig config = provider.GetRequiredService<IOptions<ContpaqiComercialConfig>>().Value;
-                builder.UseSqlServer(ContpaqiComercialSqlConnectionStringFactory.CreateContpaqiComercialEmpresaConnectionString(
-                        configuration.GetConnectionString("Contpaqi"),
-                        config.Empresa.BaseDatos))
-                    .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTrackingWithIdentityResolution);
-            },
-            ServiceLifetime.Transient,
-            ServiceLifetime.Transient);
+        {
+            ContpaqiComercialConfig config = provider.GetRequiredService<IOptions<ContpaqiComercialConfig>>().Value;
+            builder.UseSqlServer(ContpaqiComercialSqlConnectionStringFactory.CreateContpaqiComercialEmpresaConnectionString(
+                    configuration.GetConnectionString("Contpaqi"), config.Empresa.BaseDatos))
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTrackingWithIdentityResolution);
+        }, ServiceLifetime.Transient, ServiceLifetime.Transient);
 
         serviceCollection.AddTransient<IAgenteRepository, AgenteRepository>();
         serviceCollection.AddTransient<IAlmacenRepository, AlmacenRepository>();

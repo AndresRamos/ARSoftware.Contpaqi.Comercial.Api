@@ -5,7 +5,7 @@ namespace Api.Core.Domain.Requests;
 /// <summary>
 ///     Solicitud para actualizar un cliente.
 /// </summary>
-public sealed class ActualizarClienteRequest : ApiRequestBase, IApiRequest<ActualizarClienteRequestModel, ActualizarClienteRequestOptions>
+public sealed class ActualizarClienteRequest : IContpaqiRequest<ActualizarClienteRequestModel, ActualizarClienteRequestOptions>
 {
     public ActualizarClienteRequestModel Model { get; set; } = new();
     public ActualizarClienteRequestOptions Options { get; set; } = new();
@@ -39,7 +39,7 @@ public sealed class ActualizarClienteRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud ActualizarClienteRequest.
 /// </summary>
-public sealed class ActualizarClienteResponse : ApiResponseBase, IApiResponse<ActualizarClienteResponseModel>
+public sealed class ActualizarClienteResponse : IContpaqiResponse<ActualizarClienteResponseModel>
 {
     public ActualizarClienteResponseModel Model { get; set; } = new();
 }

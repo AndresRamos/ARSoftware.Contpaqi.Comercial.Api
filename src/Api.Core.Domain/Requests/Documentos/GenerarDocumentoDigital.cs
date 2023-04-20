@@ -7,8 +7,8 @@ namespace Api.Core.Domain.Requests;
 /// <summary>
 ///     Solicitud para generar el XML o PDF del documento.
 /// </summary>
-public sealed class GenerarDocumentoDigitalRequest : ApiRequestBase,
-    IApiRequest<GenerarDocumentoDigitalRequestModel, GenerarDocumentoDigitalRequestOptions>
+public sealed class GenerarDocumentoDigitalRequest : 
+    IContpaqiRequest<GenerarDocumentoDigitalRequestModel, GenerarDocumentoDigitalRequestOptions>
 {
     public GenerarDocumentoDigitalRequestModel Model { get; set; } = new();
     public GenerarDocumentoDigitalRequestOptions Options { get; set; } = new();
@@ -42,7 +42,7 @@ public sealed class GenerarDocumentoDigitalRequestOptions
 /// <summary>
 ///     Respuesta de la solicitud GenerarDocumentoDigitalRequest.
 /// </summary>
-public sealed class GenerarDocumentoDigitalResponse : ApiResponseBase, IApiResponse<GenerarDocumentoDigitalResponseModel>
+public sealed class GenerarDocumentoDigitalResponse : IContpaqiResponse<GenerarDocumentoDigitalResponseModel>
 {
     public GenerarDocumentoDigitalResponseModel Model { get; set; } = new();
 }

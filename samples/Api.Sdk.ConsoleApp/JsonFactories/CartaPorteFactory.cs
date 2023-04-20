@@ -19,7 +19,7 @@ public sealed class CartaPorteFactory
     public static CrearFacturaRequest Crear()
     {
         var request = new CrearFacturaRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
+        
 
         request.Model.Documento = GetDocumento();
 
@@ -79,6 +79,6 @@ public sealed class CartaPorteFactory
         Directory.CreateDirectory(directory);
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(CrearDocumentoRequest)}.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(Crear(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(Crear(), options));
     }
 }

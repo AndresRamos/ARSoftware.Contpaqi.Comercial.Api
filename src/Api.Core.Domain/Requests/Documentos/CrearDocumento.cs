@@ -5,7 +5,7 @@ namespace Api.Core.Domain.Requests;
 /// <summary>
 ///     Solicitud para crear un documento.
 /// </summary>
-public sealed class CrearDocumentoRequest : ApiRequestBase, IApiRequest<CrearDocumentoRequestModel, CrearDocumentoRequestOptions>
+public sealed class CrearDocumentoRequest : IContpaqiRequest<CrearDocumentoRequestModel, CrearDocumentoRequestOptions>
 {
     public CrearDocumentoRequestModel Model { get; set; } = new();
     public CrearDocumentoRequestOptions Options { get; set; } = new();
@@ -46,7 +46,7 @@ public sealed class CrearDocumentoRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud CrearDocumentoRequest.
 /// </summary>
-public sealed class CrearDocumentoResponse : ApiResponseBase, IApiResponse<CrearDocumentoResponseModel>
+public sealed class CrearDocumentoResponse : IContpaqiResponse<CrearDocumentoResponseModel>
 {
     public CrearDocumentoResponseModel Model { get; set; } = new();
 }

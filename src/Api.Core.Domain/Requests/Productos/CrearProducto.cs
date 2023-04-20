@@ -5,7 +5,7 @@ namespace Api.Core.Domain.Requests;
 /// <summary>
 ///     Solicitud para crear un producto.
 /// </summary>
-public sealed class CrearProductoRequest : ApiRequestBase, IApiRequest<CrearProductoRequestModel, CrearProductoRequestOptions>
+public sealed class CrearProductoRequest : IContpaqiRequest<CrearProductoRequestModel, CrearProductoRequestOptions>
 {
     public CrearProductoRequestModel Model { get; set; } = new();
     public CrearProductoRequestOptions Options { get; set; } = new();
@@ -31,7 +31,7 @@ public sealed class CrearProductoRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud CrearProductoRequest.
 /// </summary>
-public sealed class CrearProductoResponse : ApiResponseBase, IApiResponse<CrearProductoResponseModel>
+public sealed class CrearProductoResponse : IContpaqiResponse<CrearProductoResponseModel>
 {
     public CrearProductoResponseModel Model { get; set; } = new();
 }

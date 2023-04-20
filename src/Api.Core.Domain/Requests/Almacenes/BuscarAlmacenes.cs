@@ -5,7 +5,7 @@ namespace Api.Core.Domain.Requests;
 /// <summary>
 ///     Solicitud para buscar almacenes.
 /// </summary>
-public sealed class BuscarAlmacenesRequest : ApiRequestBase, IApiRequest<BuscarAlmacenesRequestModel, BuscarAlmacenesRequestOptions>
+public sealed class BuscarAlmacenesRequest : IContpaqiRequest<BuscarAlmacenesRequestModel, BuscarAlmacenesRequestOptions>
 {
     public BuscarAlmacenesRequestModel Model { get; set; } = new();
     public BuscarAlmacenesRequestOptions Options { get; set; } = new();
@@ -50,7 +50,7 @@ public sealed class BuscarAlmacenesRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud BuscarAlmacenesRequest.
 /// </summary>
-public sealed class BuscarAlmacenesResponse : ApiResponseBase, IApiResponse<BuscarAlmacenesResponseModel>
+public sealed class BuscarAlmacenesResponse : IContpaqiResponse<BuscarAlmacenesResponseModel>
 {
     public BuscarAlmacenesResponseModel Model { get; set; } = new();
 }
@@ -60,6 +60,8 @@ public sealed class BuscarAlmacenesResponse : ApiResponseBase, IApiResponse<Busc
 /// </summary>
 public sealed class BuscarAlmacenesResponseModel
 {
+    public int NumeroRegistros => Almacenes.Count;
+
     /// <summary>
     ///     Lista de almacenes encontrados.
     /// </summary>

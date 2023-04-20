@@ -4,11 +4,10 @@ public sealed class ApiSyncConfig
 {
     private readonly TimeOnly _timeStarted = TimeOnly.FromDateTime(DateTime.Now);
     public string SubscriptionKey { get; set; } = "00000000000000000000000000000000";
-    public string ApiKey { get; set; } = "00000000000000000000000000000000";
-    public string EmpresaRfc { get; set; } = string.Empty;
     public string BaseAddress { get; set; } = string.Empty;
     public TimeOnly WaitTime { get; set; } = TimeOnly.MinValue;
     public TimeOnly ShutdownTime { get; set; } = new(20, 0, 0);
+    public List<string> Empresas { get; set; } = new();
 
     public bool ShouldShutDown()
     {

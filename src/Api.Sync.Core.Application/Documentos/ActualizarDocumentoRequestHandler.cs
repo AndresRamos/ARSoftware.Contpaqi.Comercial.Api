@@ -1,5 +1,4 @@
 ﻿using Api.Core.Domain.Common;
-using Api.Core.Domain.Factories;
 using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
@@ -11,17 +10,15 @@ using Microsoft.Extensions.Logging;
 
 namespace Api.Sync.Core.Application.Documentos;
 
-public sealed class ActualizarDocumentoRequestHandler : IRequestHandler<ActualizarDocumentoRequest, ApiResponseBase>
+public sealed class ActualizarDocumentoRequestHandler : IRequestHandler<ActualizarDocumentoRequest, ApiResponse>
 {
     private readonly IDocumentoRepository _documentoRepository;
     private readonly IDocumentoService _documentoService;
     private readonly ILogger _logger;
     private readonly IMapper _mapper;
 
-    public ActualizarDocumentoRequestHandler(IDocumentoService documentoService,
-                                             IDocumentoRepository documentoRepository,
-                                             ILogger<ActualizarDocumentoRequestHandler> logger,
-                                             IMapper mapper)
+    public ActualizarDocumentoRequestHandler(IDocumentoService documentoService, IDocumentoRepository documentoRepository,
+        ILogger<ActualizarDocumentoRequestHandler> logger, IMapper mapper)
     {
         _documentoService = documentoService;
         _documentoRepository = documentoRepository;
@@ -29,7 +26,7 @@ public sealed class ActualizarDocumentoRequestHandler : IRequestHandler<Actualiz
         _mapper = mapper;
     }
 
-    public async Task<ApiResponseBase> Handle(ActualizarDocumentoRequest request, CancellationToken cancellationToken)
+    public async Task<ApiResponse> Handle(ActualizarDocumentoRequest request, CancellationToken cancellationToken)
     {
         try
         {
@@ -38,13 +35,13 @@ public sealed class ActualizarDocumentoRequestHandler : IRequestHandler<Actualiz
             Documento documento =
                 (await _documentoRepository.BuscarPorLlaveAsync(request.Model.LlaveDocumento, request.Options, cancellationToken))!;
 
-            return ApiResponseFactory.CreateSuccessfull<ActualizarDocumentoResponse, ActualizarDocumentoResponseModel>(request.Id,
+            return ApiResponse.CreateSuccessfull<ActualizarDocumentoResponse, ActualizarDocumentoResponseModel>(
                 new ActualizarDocumentoResponseModel { Documento = documento });
         }
         catch (Exception e)
         {
             _logger.LogError(e, "Error al actualizar el documento.");
-            return ApiResponseFactory.CreateFailed<ActualizarDocumentoResponse>(request.Id, e.Message);
+            return ApiResponse.CreateFailed(e.Message);
         }
     }
 }

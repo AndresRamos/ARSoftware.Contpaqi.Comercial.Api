@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Core.Application.Requests.Queries.GetApiRequestById;
 
-public sealed record GetApiRequestByIdQuery(Guid ApiRequestId, string SubscriptionKey) : IRequest<ApiRequestBase?>;
+public sealed record GetApiRequestByIdQuery(Guid ApiRequestId, string SubscriptionKey) : IRequest<ApiRequest?>;
 
-public sealed class GetApiRequestByIdQueryHandler : IRequestHandler<GetApiRequestByIdQuery, ApiRequestBase?>
+public sealed class GetApiRequestByIdQueryHandler : IRequestHandler<GetApiRequestByIdQuery, ApiRequest?>
 {
     private readonly IApplicationDbContext _applicationDbContext;
 
@@ -16,7 +16,7 @@ public sealed class GetApiRequestByIdQueryHandler : IRequestHandler<GetApiReques
         _applicationDbContext = applicationDbContext;
     }
 
-    public async Task<ApiRequestBase?> Handle(GetApiRequestByIdQuery request, CancellationToken cancellationToken)
+    public async Task<ApiRequest?> Handle(GetApiRequestByIdQuery request, CancellationToken cancellationToken)
     {
         return await _applicationDbContext.Requests.AsNoTracking()
             .Include(m => m.Response)

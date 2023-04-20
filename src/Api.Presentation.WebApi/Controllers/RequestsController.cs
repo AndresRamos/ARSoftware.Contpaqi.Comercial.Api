@@ -30,6 +30,9 @@ public class RequestsController : ControllerBase
     [FromHeader(Name = "Ocp-Apim-Subscription-Key")]
     public string ApimSubscriptionKey { get; set; } = string.Empty;
 
+    [FromHeader(Name = "x-Empresa-Rfc")]
+    public string EmpresaRfc { get; set; } = string.Empty;
+
     /// <summary>
     ///     Busca una solicitud por id.
     /// </summary>
@@ -43,9 +46,9 @@ public class RequestsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<ApiRequestBase>> Get(Guid id)
+    public async Task<ActionResult<ApiRequest>> Get(Guid id)
     {
-        ApiRequestBase? request = await _mediator.Send(new GetApiRequestByIdQuery(id, ApimSubscriptionKey));
+        ApiRequest? request = await _mediator.Send(new GetApiRequestByIdQuery(id, ApimSubscriptionKey));
 
         if (request is null)
             return NotFound();
@@ -67,9 +70,9 @@ public class RequestsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<ApiRequestBase>> Get(DateOnly startDate, DateOnly endDate)
+    public async Task<ActionResult<ApiRequest>> Get(DateOnly startDate, DateOnly endDate)
     {
-        IEnumerable<ApiRequestBase> apiRequests = await _mediator.Send(new GetApiRequestsQuery(startDate, endDate, ApimSubscriptionKey));
+        IEnumerable<ApiRequest> apiRequests = await _mediator.Send(new GetApiRequestsQuery(startDate, endDate, ApimSubscriptionKey));
 
         if (!apiRequests.Any())
             return NoContent();
@@ -90,9 +93,9 @@ public class RequestsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<IEnumerable<ApiRequestBase>>> GetPending()
+    public async Task<ActionResult<IEnumerable<ApiRequest>>> GetPending()
     {
-        IEnumerable<ApiRequestBase> apiRequests = await _mediator.Send(new GetPendingApiRequestsQuery(ApimSubscriptionKey));
+        IEnumerable<ApiRequest> apiRequests = await _mediator.Send(new GetPendingApiRequestsQuery(EmpresaRfc, ApimSubscriptionKey));
 
         if (!apiRequests.Any())
             return NoContent();
@@ -111,11 +114,11 @@ public class RequestsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<Guid>> Post(ApiRequestBase apiRequest)
+    public async Task<ActionResult<Guid>> Post(IContpaqiRequest apiRequest)
     {
-        Guid requestId = await _mediator.Send(new CreateApiRequestCommand(apiRequest, ApimSubscriptionKey));
+        Guid requestId = await _mediator.Send(new CreateApiRequestCommand(apiRequest, ApimSubscriptionKey, EmpresaRfc));
 
-        ApiRequestBase? request = await _mediator.Send(new GetApiRequestByIdQuery(requestId, ApimSubscriptionKey));
+        ApiRequest? request = await _mediator.Send(new GetApiRequestByIdQuery(requestId, ApimSubscriptionKey));
 
         string? pathByAction = _linkGenerator.GetPathByAction("Get", "Requests", new { id = requestId });
 
@@ -131,9 +134,9 @@ public class RequestsController : ControllerBase
     [HttpGet("JsonModel")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesDefaultResponseType]
-    public ActionResult<ApiRequestBase> JsonModel(string requestName)
+    public ActionResult<IContpaqiRequest> JsonModel(string requestName)
     {
-        Type requestType = typeof(CrearDocumentoRequest);
+        Type requestType = typeof(CrearFacturaRequest);
 
         var requestFullName = $"{requestType.Namespace}.{requestName}";
 
@@ -142,11 +145,8 @@ public class RequestsController : ControllerBase
         if (type is null)
             throw new InvalidOperationException($"Couldn't find type for request with name {requestFullName}.");
 
-        if (Activator.CreateInstance(type) is not ApiRequestBase instance)
+        if (Activator.CreateInstance(type) is not IContpaqiRequest instance)
             throw new InvalidOperationException($"Couldn't create instance for type {type}.");
-
-        instance.SubscriptionKey = ApimSubscriptionKey;
-        instance.EmpresaRfc = "XAXX010101000";
 
         return Ok(instance);
     }

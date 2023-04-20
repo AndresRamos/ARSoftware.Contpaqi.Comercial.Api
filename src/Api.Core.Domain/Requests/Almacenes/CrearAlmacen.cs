@@ -5,7 +5,7 @@ namespace Api.Core.Domain.Requests;
 /// <summary>
 ///     Solicitud para crear un almacen.
 /// </summary>
-public sealed class CrearAlmacenRequest : ApiRequestBase, IApiRequest<CrearAlmacenRequestModel, CrearAlmacenRequestOptions>
+public sealed class CrearAlmacenRequest : IContpaqiRequest<CrearAlmacenRequestModel, CrearAlmacenRequestOptions>
 {
     public CrearAlmacenRequestModel Model { get; set; } = new();
     public CrearAlmacenRequestOptions Options { get; set; } = new();
@@ -31,7 +31,7 @@ public sealed class CrearAlmacenRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud CrearAlmacenRequest.
 /// </summary>
-public sealed class CrearAlmacenResponse : ApiResponseBase, IApiResponse<CrearAlmacenResponseModel>
+public sealed class CrearAlmacenResponse : IContpaqiResponse<CrearAlmacenResponseModel>
 {
     public CrearAlmacenResponseModel Model { get; set; } = new();
 }

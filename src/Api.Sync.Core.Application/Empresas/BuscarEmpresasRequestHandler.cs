@@ -1,5 +1,4 @@
 ﻿using Api.Core.Domain.Common;
-using Api.Core.Domain.Factories;
 using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
@@ -8,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Api.Sync.Core.Application.Empresas;
 
-public sealed class BuscarEmpresasRequestHandler : IRequestHandler<BuscarEmpresasRequest, ApiResponseBase>
+public sealed class BuscarEmpresasRequestHandler : IRequestHandler<BuscarEmpresasRequest, ApiResponse>
 {
     private readonly IEmpresaRepository _empresaRepository;
     private readonly ILogger _logger;
@@ -19,19 +18,19 @@ public sealed class BuscarEmpresasRequestHandler : IRequestHandler<BuscarEmpresa
         _logger = logger;
     }
 
-    public async Task<ApiResponseBase> Handle(BuscarEmpresasRequest request, CancellationToken cancellationToken)
+    public async Task<ApiResponse> Handle(BuscarEmpresasRequest request, CancellationToken cancellationToken)
     {
         try
         {
             List<Empresa> empresas = (await _empresaRepository.BuscarTodoAsync(request.Options, cancellationToken)).ToList();
 
-            return ApiResponseFactory.CreateSuccessfull<BuscarEmpresasResponse, BuscarEmpresasResponseModel>(request.Id,
+            return ApiResponse.CreateSuccessfull<BuscarEmpresasResponse, BuscarEmpresasResponseModel>(
                 new BuscarEmpresasResponseModel { Empresas = empresas });
         }
         catch (Exception e)
         {
             _logger.LogError(e, "Error al buscar empresas.");
-            return ApiResponseFactory.CreateFailed<BuscarEmpresasResponse>(request.Id, e.Message);
+            return ApiResponse.CreateFailed(e.Message);
         }
     }
 }

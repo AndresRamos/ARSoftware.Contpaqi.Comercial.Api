@@ -1,5 +1,4 @@
 ﻿using Api.Core.Domain.Common;
-using Api.Core.Domain.Factories;
 using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
 using ARSoftware.Contpaqi.Comercial.Sdk.DatosAbstractos;
@@ -10,17 +9,15 @@ using Microsoft.Extensions.Logging;
 
 namespace Api.Sync.Core.Application.Documentos;
 
-public sealed class TimbrarDocumentoRequestHandler : IRequestHandler<TimbrarDocumentoRequest, ApiResponseBase>
+public sealed class TimbrarDocumentoRequestHandler : IRequestHandler<TimbrarDocumentoRequest, ApiResponse>
 {
     private readonly IDocumentoRepository _documentoRepository;
     private readonly IDocumentoService _documentoService;
     private readonly ILogger _logger;
     private readonly IMapper _mapper;
 
-    public TimbrarDocumentoRequestHandler(IDocumentoService documentoService,
-                                          IDocumentoRepository documentoRepository,
-                                          ILogger<TimbrarDocumentoRequestHandler> logger,
-                                          IMapper mapper)
+    public TimbrarDocumentoRequestHandler(IDocumentoService documentoService, IDocumentoRepository documentoRepository,
+        ILogger<TimbrarDocumentoRequestHandler> logger, IMapper mapper)
     {
         _documentoService = documentoService;
         _documentoRepository = documentoRepository;
@@ -28,28 +25,25 @@ public sealed class TimbrarDocumentoRequestHandler : IRequestHandler<TimbrarDocu
         _mapper = mapper;
     }
 
-    public async Task<ApiResponseBase> Handle(TimbrarDocumentoRequest request, CancellationToken cancellationToken)
+    public async Task<ApiResponse> Handle(TimbrarDocumentoRequest request, CancellationToken cancellationToken)
     {
         try
         {
             string rutaArchivoAdicional = await GetRutaArchivoAdicionalAsync(request, cancellationToken);
 
-            _documentoService.Timbrar(_mapper.Map<tLlaveDoc>(request.Model.LlaveDocumento),
-                request.Model.ContrasenaCertificado,
+            _documentoService.Timbrar(_mapper.Map<tLlaveDoc>(request.Model.LlaveDocumento), request.Model.ContrasenaCertificado,
                 rutaArchivoAdicional);
 
-            return ApiResponseFactory.CreateSuccessfull<TimbrarDocumentoResponse, TimbrarDocumentoResponseModel>(request.Id,
-                new TimbrarDocumentoResponseModel
-                {
-                    Documento = (await _documentoRepository.BuscarPorLlaveAsync(request.Model.LlaveDocumento,
-                        request.Options,
-                        cancellationToken))!
-                });
+            return ApiResponse.CreateSuccessfull<TimbrarDocumentoResponse, TimbrarDocumentoResponseModel>(new TimbrarDocumentoResponseModel
+            {
+                Documento = (await _documentoRepository.BuscarPorLlaveAsync(request.Model.LlaveDocumento, request.Options,
+                    cancellationToken))!
+            });
         }
         catch (Exception e)
         {
             _logger.LogError(e, "Error al saldar el documento.");
-            return ApiResponseFactory.CreateFailed<TimbrarDocumentoResponse>(request.Id, e.Message);
+            return ApiResponse.CreateFailed(e.Message);
         }
     }
 

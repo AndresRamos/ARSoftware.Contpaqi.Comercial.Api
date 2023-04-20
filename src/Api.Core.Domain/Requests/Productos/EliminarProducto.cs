@@ -3,7 +3,7 @@
 /// <summary>
 ///     Solicitud para eliminar un producto.
 /// </summary>
-public sealed class EliminarProductoRequest : ApiRequestBase, IApiRequest<EliminarProductoRequestModel, EliminarProductoRequestOptions>
+public sealed class EliminarProductoRequest : IContpaqiRequest<EliminarProductoRequestModel, EliminarProductoRequestOptions>
 {
     public EliminarProductoRequestModel Model { get; set; } = new();
     public EliminarProductoRequestOptions Options { get; set; } = new();
@@ -30,7 +30,7 @@ public sealed class EliminarProductoRequestOptions
 /// <summary>
 ///     Respuesta de la solicitud EliminarProductoRequest.
 /// </summary>
-public sealed class EliminarProductoResponse : ApiResponseBase, IApiResponse<EliminarProductoResponseModel>
+public sealed class EliminarProductoResponse : IContpaqiResponse<EliminarProductoResponseModel>
 {
     public EliminarProductoResponseModel Model { get; set; } = new();
 }

@@ -5,7 +5,7 @@ namespace Api.Core.Domain.Requests;
 /// <summary>
 ///     Solicitud para crear una factura.
 /// </summary>
-public sealed class CrearFacturaRequest : ApiRequestBase, IApiRequest<CrearFacturaRequestModel, CrearFacturaRequestOptions>
+public sealed class CrearFacturaRequest : IContpaqiRequest<CrearFacturaRequestModel, CrearFacturaRequestOptions>
 {
     public CrearFacturaRequestModel Model { get; set; } = new();
     public CrearFacturaRequestOptions Options { get; set; } = new();
@@ -54,7 +54,7 @@ public sealed class CrearFacturaRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud CrearFacturaRequest.
 /// </summary>
-public sealed class CrearFacturaResponse : ApiResponseBase, IApiResponse<CrearFacturaResponseModel>
+public sealed class CrearFacturaResponse : IContpaqiResponse<CrearFacturaResponseModel>
 {
     public CrearFacturaResponseModel Model { get; set; } = new();
 }

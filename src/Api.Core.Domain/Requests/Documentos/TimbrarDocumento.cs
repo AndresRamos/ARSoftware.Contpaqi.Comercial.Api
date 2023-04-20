@@ -5,7 +5,7 @@ namespace Api.Core.Domain.Requests;
 /// <summary>
 ///     Solicitud para timbrar un documento.
 /// </summary>
-public sealed class TimbrarDocumentoRequest : ApiRequestBase, IApiRequest<TimbrarDocumentoRequestModel, TimbrarDocumentoRequestOptions>
+public sealed class TimbrarDocumentoRequest : IContpaqiRequest<TimbrarDocumentoRequestModel, TimbrarDocumentoRequestOptions>
 {
     public TimbrarDocumentoRequestModel Model { get; set; } = new();
     public TimbrarDocumentoRequestOptions Options { get; set; } = new();
@@ -51,7 +51,7 @@ public sealed class TimbrarDocumentoRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud TimbrarDocumentoRequest.
 /// </summary>
-public sealed class TimbrarDocumentoResponse : ApiResponseBase, IApiResponse<TimbrarDocumentoResponseModel>
+public sealed class TimbrarDocumentoResponse : IContpaqiResponse<TimbrarDocumentoResponseModel>
 {
     public TimbrarDocumentoResponseModel Model { get; set; } = new();
 }

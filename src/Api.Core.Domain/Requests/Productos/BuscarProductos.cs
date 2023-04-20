@@ -5,7 +5,7 @@ namespace Api.Core.Domain.Requests;
 /// <summary>
 ///     Solicitud para buscar productos.
 /// </summary>
-public sealed class BuscarProductosRequest : ApiRequestBase, IApiRequest<BuscarProductosRequestModel, BuscarProductosRequestOptions>
+public sealed class BuscarProductosRequest : IContpaqiRequest<BuscarProductosRequestModel, BuscarProductosRequestOptions>
 {
     public BuscarProductosRequestModel Model { get; set; } = new();
     public BuscarProductosRequestOptions Options { get; set; } = new();
@@ -50,13 +50,15 @@ public sealed class BuscarProductosRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud BuscarProductosRequest.
 /// </summary>
-public sealed class BuscarProductosResponse : ApiResponseBase, IApiResponse<BuscarProductosResponseModel>
+public sealed class BuscarProductosResponse : IContpaqiResponse<BuscarProductosResponseModel>
 {
     public BuscarProductosResponseModel Model { get; set; } = new();
 }
 
 public sealed class BuscarProductosResponseModel
 {
+    public int NumeroRegistros => Productos.Count;
+
     /// <summary>
     ///     Lista de productos encontrados.
     /// </summary>

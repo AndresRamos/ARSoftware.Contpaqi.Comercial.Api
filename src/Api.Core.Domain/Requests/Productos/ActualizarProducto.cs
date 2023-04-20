@@ -5,8 +5,8 @@ namespace Api.Core.Domain.Requests;
 /// <summary>
 ///     Solicitud para actualizar un producto.
 /// </summary>
-public sealed class ActualizarProductoRequest : ApiRequestBase,
-    IApiRequest<ActualizarProductoRequestModel, ActualizarProductoRequestOptions>
+public sealed class ActualizarProductoRequest : 
+    IContpaqiRequest<ActualizarProductoRequestModel, ActualizarProductoRequestOptions>
 {
     public ActualizarProductoRequestModel Model { get; set; } = new();
     public ActualizarProductoRequestOptions Options { get; set; } = new();
@@ -40,7 +40,7 @@ public sealed class ActualizarProductoRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud ActualizarProductoRequest.
 /// </summary>
-public sealed class ActualizarProductoResponse : ApiResponseBase, IApiResponse<ActualizarProductoResponseModel>
+public sealed class ActualizarProductoResponse : IContpaqiResponse<ActualizarProductoResponseModel>
 {
     public ActualizarProductoResponseModel Model { get; set; } = new();
 }

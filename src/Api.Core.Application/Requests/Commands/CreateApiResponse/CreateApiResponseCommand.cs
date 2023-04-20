@@ -3,9 +3,9 @@ using Api.Core.Domain.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Api.Core.Application.Responses.Commands.CreateApiResponse;
+namespace Api.Core.Application.Requests.Commands.CreateApiResponse;
 
-public sealed record CreateApiResponseCommand(ApiResponseBase ApiResponse, string SubscriptionKey) : IRequest;
+public sealed record CreateApiResponseCommand(ApiResponse ApiResponse, string SubscriptionKey, Guid ApiRequestId) : IRequest;
 
 public sealed class CreateApiResponseCommandHandler : IRequestHandler<CreateApiResponseCommand>
 {
@@ -18,13 +18,11 @@ public sealed class CreateApiResponseCommandHandler : IRequestHandler<CreateApiR
 
     public async Task Handle(CreateApiResponseCommand request, CancellationToken cancellationToken)
     {
-        ApiRequestBase apiRequest =
+        ApiRequest apiRequest =
             await _applicationDbContext.Requests.FirstAsync(
-                m => m.Id == request.ApiResponse.Id && m.SubscriptionKey == request.SubscriptionKey,
-                cancellationToken);
+                m => m.Id == request.ApiRequestId && m.SubscriptionKey == request.SubscriptionKey, cancellationToken);
 
-        apiRequest.Response = request.ApiResponse;
-        apiRequest.Status = RequestStatus.Processed;
+        apiRequest.SetResponse(request.ApiResponse);
 
         await _applicationDbContext.SaveChangesAsync(cancellationToken);
     }

@@ -10,13 +10,13 @@ public sealed record AbrirEmpresaCommand : IRequest;
 
 public sealed class AbrirEmpresaCommandHandler : IRequestHandler<AbrirEmpresaCommand>
 {
+    private static string _empresaRfc = "";
     private readonly ContpaqiComercialConfig _contpaqiComercialConfig;
     private readonly ILogger _logger;
     private readonly IComercialSdkSesionService _sdkSesionService;
 
     public AbrirEmpresaCommandHandler(IComercialSdkSesionService sdkSesionService,
-                                      IOptions<ContpaqiComercialConfig> contpaqiComercialConfigOptions,
-                                      ILogger<AbrirEmpresaCommand> logger)
+        IOptions<ContpaqiComercialConfig> contpaqiComercialConfigOptions, ILogger<AbrirEmpresaCommand> logger)
     {
         _sdkSesionService = sdkSesionService;
         _logger = logger;
@@ -25,14 +25,21 @@ public sealed class AbrirEmpresaCommandHandler : IRequestHandler<AbrirEmpresaCom
 
     public Task Handle(AbrirEmpresaCommand request, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Abriendo empresa. {0} - {1}",
-            _contpaqiComercialConfig.Empresa.Nombre,
+        if (_sdkSesionService.IsEmpresaAbierta && _empresaRfc != _contpaqiComercialConfig.Empresa.Rfc)
+        {
+            _logger.LogDebug("Ceranndo empresa {EmpresaRfc}", _empresaRfc);
+            _sdkSesionService.CerrarEmpresa();
+        }
+
+        _logger.LogInformation("Abriendo empresa. {0} - {1}", _contpaqiComercialConfig.Empresa.Nombre,
             _contpaqiComercialConfig.Empresa.Rfc);
 
         if (!_sdkSesionService.IsEmpresaAbierta)
+        {
             _sdkSesionService.AbrirEmpresa(_contpaqiComercialConfig.Empresa.Ruta);
-
-        _logger.LogDebug("Empresa abierta. {@ComercialSdkSesionService}", _sdkSesionService);
+            _empresaRfc = _contpaqiComercialConfig.Empresa.Rfc;
+            _logger.LogDebug("Empresa abierta. {@ComercialSdkSesionService}", _sdkSesionService);
+        }
 
         return Task.CompletedTask;
     }

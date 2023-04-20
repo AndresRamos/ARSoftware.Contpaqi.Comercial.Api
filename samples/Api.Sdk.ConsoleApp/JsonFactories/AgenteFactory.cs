@@ -15,7 +15,6 @@ public static class AgenteFactory
     public static CrearAgenteRequest Crear()
     {
         var request = new CrearAgenteRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
 
         request.Model.Agente.Codigo = Codigo;
         request.Model.Agente.Nombre = Nombre;
@@ -28,7 +27,6 @@ public static class AgenteFactory
     public static ActualizarAgenteRequest Actualizar()
     {
         var request = new ActualizarAgenteRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
 
         request.Model.CodigoAgente = Codigo;
         request.Model.DatosAgente = GetDatosExtra();
@@ -39,7 +37,6 @@ public static class AgenteFactory
     public static BuscarAgentesRequest BuscarPorId()
     {
         var request = new BuscarAgentesRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
 
         request.Model.Id = 100;
 
@@ -49,7 +46,6 @@ public static class AgenteFactory
     public static BuscarAgentesRequest BuscarPorCodigo()
     {
         var request = new BuscarAgentesRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
 
         request.Model.Codigo = Codigo;
 
@@ -59,7 +55,6 @@ public static class AgenteFactory
     public static BuscarAgentesRequest BuscarPorSql()
     {
         var request = new BuscarAgentesRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
 
         request.Model.SqlQuery = "CTIPOAGENTE = 1";
 
@@ -69,7 +64,6 @@ public static class AgenteFactory
     public static BuscarAgentesRequest BuscarTodo()
     {
         var request = new BuscarAgentesRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
 
         return request;
     }
@@ -92,21 +86,21 @@ public static class AgenteFactory
         Directory.CreateDirectory(directory);
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(CrearAgenteRequest)}.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(Crear(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(Crear(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(ActualizarAgenteRequest)}.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(Actualizar(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(Actualizar(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAgentesRequest)}_PorId.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(BuscarPorId(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorId(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAgentesRequest)}_PorCodigo.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(BuscarPorCodigo(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorCodigo(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAgentesRequest)}_Sql.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(BuscarPorSql(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorSql(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAgentesRequest)}_Todo.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(BuscarTodo(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(BuscarTodo(), options));
     }
 }

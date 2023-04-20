@@ -5,7 +5,7 @@ namespace Api.Core.Domain.Requests;
 /// <summary>
 ///     Solicitud para buscar empresas.
 /// </summary>
-public sealed class BuscarEmpresasRequest : ApiRequestBase, IApiRequest<BuscarEmpresasRequestModel, BuscarEmpresasRequestOptions>
+public sealed class BuscarEmpresasRequest : IContpaqiRequest<BuscarEmpresasRequestModel, BuscarEmpresasRequestOptions>
 {
     public BuscarEmpresasRequestModel Model { get; set; } = new();
     public BuscarEmpresasRequestOptions Options { get; set; } = new();
@@ -30,7 +30,7 @@ public sealed class BuscarEmpresasRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud BuscarEmpresasRequest.
 /// </summary>
-public sealed class BuscarEmpresasResponse : ApiResponseBase, IApiResponse<BuscarEmpresasResponseModel>
+public sealed class BuscarEmpresasResponse : IContpaqiResponse<BuscarEmpresasResponseModel>
 {
     public BuscarEmpresasResponseModel Model { get; set; } = new();
 }
@@ -40,6 +40,8 @@ public sealed class BuscarEmpresasResponse : ApiResponseBase, IApiResponse<Busca
 /// </summary>
 public sealed class BuscarEmpresasResponseModel
 {
+    public int NumeroRegistros => Empresas.Count;
+
     /// <summary>
     ///     Lista de empresas encontradas.
     /// </summary>

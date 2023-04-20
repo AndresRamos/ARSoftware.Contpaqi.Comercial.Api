@@ -1,29 +1,36 @@
-﻿using Api.Core.Application.Common.Interfaces;
+﻿using System.Text.Json;
+using Api.Core.Application.Common.Interfaces;
 using Api.Core.Domain.Common;
-using Api.Infrastructure.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Infrastructure.Persistence;
 
-public sealed class ApplicationDbContext : DbContext, IApplicationDbContext
+public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     public ApplicationDbContext(DbContextOptions options) : base(options)
     {
     }
 
-    public DbSet<ApiRequestBase> Requests => Set<ApiRequestBase>();
-    public DbSet<ApiResponseBase> Responses => Set<ApiResponseBase>();
+    public DbSet<ApiRequest> Requests => Set<ApiRequest>();
+    public DbSet<ApiResponse> Responses => Set<ApiResponse>();
 
-    protected override void OnModelCreating(ModelBuilder builder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        builder.Entity<ApiRequestBase>().UseTphMappingStrategy().ToTable("Requests");
-        builder.Entity<ApiResponseBase>().UseTphMappingStrategy().ToTable("Responses");
+        modelBuilder.Entity<ApiRequest>().UseTphMappingStrategy();
+        modelBuilder.Entity<ApiResponse>().UseTphMappingStrategy();
 
-        builder.Entity<ApiRequestBase>().HasOne(r => r.Response).WithOne().HasForeignKey<ApiResponseBase>(r => r.Id);
+        modelBuilder.Entity<ApiRequest>().HasOne(r => r.Response).WithOne().HasForeignKey<ApiResponse>(r => r.Id);
 
-        ApiRequestConfiguration.ConfigureRequests(builder);
-        ApiResponseConfiguration.ConfigureResponses(builder);
+        modelBuilder.Entity<ApiRequest>()
+            .Property(e => e.ContpaqiRequest)
+            .HasConversion(v => JsonSerializer.Serialize(v, JsonExtensions.GetJsonSerializerOptions()),
+                v => JsonSerializer.Deserialize<IContpaqiRequest>(v, JsonExtensions.GetJsonSerializerOptions())!);
 
-        base.OnModelCreating(builder);
+        modelBuilder.Entity<ApiResponse>()
+            .Property(e => e.ContpaqiResponse)
+            .HasConversion(v => JsonSerializer.Serialize(v, JsonExtensions.GetJsonSerializerOptions()),
+                v => JsonSerializer.Deserialize<IContpaqiResponse>(v, JsonExtensions.GetJsonSerializerOptions())!);
+
+        base.OnModelCreating(modelBuilder);
     }
 }

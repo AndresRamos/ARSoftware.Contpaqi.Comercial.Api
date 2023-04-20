@@ -5,9 +5,7 @@ namespace Api.Core.Application.Common.Interfaces;
 
 public interface IApplicationDbContext
 {
-    DbSet<ApiRequestBase> Requests { get; }
-
-    DbSet<ApiResponseBase> Responses { get; }
-
+    DbSet<ApiRequest> Requests { get; }
+    DbSet<ApiResponse> Responses { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

@@ -1,5 +1,5 @@
-﻿using Api.Core.Application.Requests.Queries.GetApiRequestById;
-using Api.Core.Application.Responses.Commands.CreateApiResponse;
+﻿using Api.Core.Application.Requests.Commands.CreateApiResponse;
+using Api.Core.Application.Requests.Queries.GetApiRequestById;
 using Api.Core.Domain.Common;
 using Api.Core.Domain.Requests;
 using Api.Presentation.WebApi.Authentication;
@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Presentation.WebApi.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/requests/{id:guid}/response")]
 [Produces("application/json")]
 [ServiceFilter(typeof(ApiKeyAuthFilter))]
 [ApiExceptionFilter]
@@ -34,14 +34,14 @@ public class ResponsesController : ControllerBase
     /// <response code="200">Retorna la respuesta.</response>
     /// <response code="404">No se encontro la respuesta.</response>
     /// <response code="400">Solicitud invalida.</response>
-    [HttpGet("{id:guid}")]
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<ApiRequestBase>> Get(Guid id)
+    public async Task<ActionResult<ApiResponse>> Get(Guid id)
     {
-        ApiRequestBase? request = await _mediator.Send(new GetApiRequestByIdQuery(id, ApimSubscriptionKey));
+        ApiRequest? request = await _mediator.Send(new GetApiRequestByIdQuery(id, ApimSubscriptionKey));
 
         if (request?.Response is null)
             return NotFound();
@@ -50,11 +50,11 @@ public class ResponsesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> Post(ApiResponseBase apiResponse)
+    public async Task<ActionResult> Post([FromRoute] Guid id, ApiResponse apiResponse)
     {
         try
         {
-            await _mediator.Send(new CreateApiResponseCommand(apiResponse, ApimSubscriptionKey));
+            await _mediator.Send(new CreateApiResponseCommand(apiResponse, ApimSubscriptionKey, id));
         }
         catch (Exception e)
         {
@@ -73,7 +73,7 @@ public class ResponsesController : ControllerBase
     [HttpGet("JsonModel")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesDefaultResponseType]
-    public ActionResult<ApiResponseBase> JsonModel(string responseName)
+    public ActionResult<IContpaqiResponse> JsonModel(string responseName)
     {
         Type responseType = typeof(CrearDocumentoResponse);
 
@@ -84,7 +84,7 @@ public class ResponsesController : ControllerBase
         if (type is null)
             throw new InvalidOperationException($"Couldn't find type for response with name {responseFullName}.");
 
-        if (Activator.CreateInstance(type) is not ApiResponseBase instance)
+        if (Activator.CreateInstance(type) is not IContpaqiResponse instance)
             throw new InvalidOperationException($"Couldn't create instance for type {type}.");
 
         return Ok(instance);

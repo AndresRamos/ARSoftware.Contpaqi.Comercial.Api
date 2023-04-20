@@ -16,7 +16,7 @@ public static class ClienteFactory
     public static CrearClienteRequest Crear()
     {
         var request = new CrearClienteRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
+        
 
         request.Model.Cliente.Tipo = TipoCliente.ClienteProveedor;
         request.Model.Cliente.Codigo = Codigo;
@@ -40,7 +40,7 @@ public static class ClienteFactory
     public static ActualizarClienteRequest Actualizar()
     {
         var request = new ActualizarClienteRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
+        
 
         request.Model.CodigoCliente = Codigo;
         request.Model.DatosCliente = GetDatosExtra();
@@ -51,7 +51,7 @@ public static class ClienteFactory
     public static BuscarClientesRequest BuscarPorId()
     {
         var request = new BuscarClientesRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
+        
 
         request.Model.Id = 100;
 
@@ -61,7 +61,7 @@ public static class ClienteFactory
     public static BuscarClientesRequest BuscarPorCodigo()
     {
         var request = new BuscarClientesRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
+        
 
         request.Model.Codigo = Codigo;
 
@@ -71,7 +71,7 @@ public static class ClienteFactory
     public static BuscarClientesRequest BuscarPorSql()
     {
         var request = new BuscarClientesRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
+        
 
         request.Model.SqlQuery = "CRAZONSOCIAL = 'razonSocial'";
 
@@ -81,7 +81,7 @@ public static class ClienteFactory
     public static BuscarClientesRequest BuscarTodo()
     {
         var request = new BuscarClientesRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
+        
 
         return request;
     }
@@ -89,7 +89,7 @@ public static class ClienteFactory
     public static EliminarClienteRequest Eliminar()
     {
         var request = new EliminarClienteRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
+        
 
         request.Model.CodigoCliente = Codigo;
 
@@ -115,24 +115,24 @@ public static class ClienteFactory
         Directory.CreateDirectory(directory);
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(CrearClienteRequest)}.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(Crear(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(Crear(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(ActualizarClienteRequest)}.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(Actualizar(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(Actualizar(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarClientesRequest)}_PorId.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(BuscarPorId(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorId(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarClientesRequest)}_PorCodigo.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(BuscarPorCodigo(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorCodigo(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarClientesRequest)}_PorSql.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(BuscarPorSql(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorSql(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarClientesRequest)}_Todo.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(BuscarTodo(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(BuscarTodo(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(EliminarClienteRequest)}.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(Eliminar(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(Eliminar(), options));
     }
 }

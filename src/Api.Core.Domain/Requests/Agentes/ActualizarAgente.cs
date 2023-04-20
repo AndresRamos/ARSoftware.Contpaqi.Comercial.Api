@@ -5,7 +5,7 @@ namespace Api.Core.Domain.Requests;
 /// <summary>
 ///     Solicitud para actualizar un agente.
 /// </summary>
-public sealed class ActualizarAgenteRequest : ApiRequestBase, IApiRequest<ActualizarAgenteRequestModel, ActualizarAgenteRequestOptions>
+public sealed class ActualizarAgenteRequest : IContpaqiRequest<ActualizarAgenteRequestModel, ActualizarAgenteRequestOptions>
 {
     public ActualizarAgenteRequestModel Model { get; set; } = new();
 
@@ -40,7 +40,7 @@ public sealed class ActualizarAgenteRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud ActualizarAgenteRequest.
 /// </summary>
-public sealed class ActualizarAgenteResponse : ApiResponseBase, IApiResponse<ActualizarAgenteResponseModel>
+public sealed class ActualizarAgenteResponse : IContpaqiResponse<ActualizarAgenteResponseModel>
 {
     public ActualizarAgenteResponseModel Model { get; set; } = new();
 }

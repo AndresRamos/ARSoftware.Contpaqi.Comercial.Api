@@ -1,5 +1,4 @@
 ﻿using Api.Core.Domain.Common;
-using Api.Core.Domain.Factories;
 using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.Common.Extensions;
@@ -14,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Api.Sync.Core.Application.Documentos;
 
-public class CrearFacturaRequestHandler : IRequestHandler<CrearFacturaRequest, ApiResponseBase>
+public class CrearFacturaRequestHandler : IRequestHandler<CrearFacturaRequest, ApiResponse>
 {
     private readonly IDocumentoRepository _documentoRepository;
     private readonly ILogger _logger;
@@ -23,11 +22,8 @@ public class CrearFacturaRequestHandler : IRequestHandler<CrearFacturaRequest, A
     private readonly IContpaqiSdk _sdk;
     private LlaveDocumento? _llaveDocumento;
 
-    public CrearFacturaRequestHandler(IMapper mapper,
-                                      ILogger<CrearFacturaRequestHandler> logger,
-                                      IDocumentoRepository documentoRepository,
-                                      IMediator mediator,
-                                      IContpaqiSdk sdk)
+    public CrearFacturaRequestHandler(IMapper mapper, ILogger<CrearFacturaRequestHandler> logger, IDocumentoRepository documentoRepository,
+        IMediator mediator, IContpaqiSdk sdk)
     {
         _mapper = mapper;
         _logger = logger;
@@ -36,7 +32,7 @@ public class CrearFacturaRequestHandler : IRequestHandler<CrearFacturaRequest, A
         _sdk = sdk;
     }
 
-    public async Task<ApiResponseBase> Handle(CrearFacturaRequest request, CancellationToken cancellationToken)
+    public async Task<ApiResponse> Handle(CrearFacturaRequest request, CancellationToken cancellationToken)
     {
         try
         {
@@ -44,12 +40,13 @@ public class CrearFacturaRequestHandler : IRequestHandler<CrearFacturaRequest, A
             crearDocumentoRequest.Model.Documento = request.Model.Documento;
             crearDocumentoRequest.Options.UsarFechaDelDia = request.Options.UsarFechaDelDia;
             crearDocumentoRequest.Options.CrearCatalogos = request.Options.CrearCatalogos;
-            var crearDocumentoResponse = (await _mediator.Send(crearDocumentoRequest, cancellationToken) as CrearDocumentoResponse)!;
+            ApiResponse crearDocumentoResponse = await _mediator.Send(crearDocumentoRequest, cancellationToken);
             crearDocumentoResponse.ThrowIfError();
 
             var responseModel = new CrearFacturaResponseModel();
 
-            _llaveDocumento = _mapper.Map<LlaveDocumento>(crearDocumentoResponse.Model.Documento);
+            _llaveDocumento =
+                _mapper.Map<LlaveDocumento>((crearDocumentoResponse.ContpaqiResponse as CrearDocumentoResponse)!.Model.Documento);
 
             if (request.Options.Timbrar)
             {
@@ -59,7 +56,7 @@ public class CrearFacturaRequestHandler : IRequestHandler<CrearFacturaRequest, A
                 timbrarDocumentoRequest.Options.AgregarArchivo = request.Options.AgregarArchivo;
                 timbrarDocumentoRequest.Options.NombreArchivo = request.Options.NombreArchivo;
                 timbrarDocumentoRequest.Options.ContenidoArchivo = request.Options.ContenidoArchivo;
-                ApiResponseBase timbrarDocumentoResponse = await _mediator.Send(timbrarDocumentoRequest, cancellationToken);
+                ApiResponse timbrarDocumentoResponse = await _mediator.Send(timbrarDocumentoRequest, cancellationToken);
                 timbrarDocumentoResponse.ThrowIfError();
             }
 
@@ -71,9 +68,9 @@ public class CrearFacturaRequestHandler : IRequestHandler<CrearFacturaRequest, A
                 var generarXmlRequest = new GenerarDocumentoDigitalRequest();
                 generarXmlRequest.Model.LlaveDocumento = _llaveDocumento;
                 generarXmlRequest.Options.Tipo = TipoArchivoDigital.Xml;
-                var generarXmlResponse = (await _mediator.Send(generarXmlRequest, cancellationToken) as GenerarDocumentoDigitalResponse)!;
+                ApiResponse generarXmlResponse = await _mediator.Send(generarXmlRequest, cancellationToken);
 
-                responseModel.Xml = generarXmlResponse.Model.DocumentoDigital;
+                responseModel.Xml = (generarXmlResponse.ContpaqiResponse as GenerarDocumentoDigitalResponse)!.Model.DocumentoDigital;
 
                 if (request.Options.GenerarPdf)
                 {
@@ -81,19 +78,18 @@ public class CrearFacturaRequestHandler : IRequestHandler<CrearFacturaRequest, A
                     generarPdfRequest.Model.LlaveDocumento = _llaveDocumento;
                     generarPdfRequest.Options.Tipo = TipoArchivoDigital.Pdf;
                     generarPdfRequest.Options.NombrePlantilla = request.Options.NombrePlantilla;
-                    var generarPdfResponse =
-                        (await _mediator.Send(generarPdfRequest, cancellationToken) as GenerarDocumentoDigitalResponse)!;
-                    responseModel.Pdf = generarPdfResponse.Model.DocumentoDigital;
+                    ApiResponse generarPdfResponse = await _mediator.Send(generarPdfRequest, cancellationToken);
+                    responseModel.Pdf = (generarPdfResponse.ContpaqiResponse as GenerarDocumentoDigitalResponse)!.Model.DocumentoDigital;
                 }
             }
 
-            return ApiResponseFactory.CreateSuccessfull<CrearFacturaResponse, CrearFacturaResponseModel>(request.Id, responseModel);
+            return ApiResponse.CreateSuccessfull<CrearFacturaResponse, CrearFacturaResponseModel>(responseModel);
         }
         catch (Exception e)
         {
             _logger.LogError(e, "Error Processing {ApiRequest}", nameof(CrearDocumentoRequest));
             // Todo: Borrar documento si hay error
-            return ApiResponseFactory.CreateFailed<CrearFacturaResponse>(request.Id, e.Message);
+            return ApiResponse.CreateFailed(e.Message);
         }
         finally
         {

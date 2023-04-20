@@ -11,7 +11,7 @@ public sealed class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
     {
         JsonTypeInfo jsonTypeInfo = base.GetTypeInfo(type, options);
 
-        Type apiRequestBaseType = typeof(ApiRequestBase);
+        Type apiRequestBaseType = typeof(IContpaqiRequest);
         if (jsonTypeInfo.Type == apiRequestBaseType)
             jsonTypeInfo.PolymorphismOptions = new JsonPolymorphismOptions
             {
@@ -48,7 +48,7 @@ public sealed class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
                 }
             };
 
-        Type apiResponseBaseType = typeof(ApiResponseBase);
+        Type apiResponseBaseType = typeof(IContpaqiResponse);
         if (jsonTypeInfo.Type == apiResponseBaseType)
             jsonTypeInfo.PolymorphismOptions = new JsonPolymorphismOptions
             {

@@ -5,7 +5,8 @@ namespace Api.Core.Domain.Requests;
 /// <summary>
 ///     Solicitud para eliminar un documento.
 /// </summary>
-public sealed class EliminarDocumentoRequest : ApiRequestBase, IApiRequest<EliminarDocumentoRequestModel, EliminarDocumentoRequestOptions>
+public sealed class EliminarDocumentoRequest : 
+    IContpaqiRequest<EliminarDocumentoRequestModel, EliminarDocumentoRequestOptions>
 {
     public EliminarDocumentoRequestModel Model { get; set; } = new();
     public EliminarDocumentoRequestOptions Options { get; set; } = new();
@@ -29,7 +30,7 @@ public sealed class EliminarDocumentoRequestOptions
 /// <summary>
 ///     Respuesta de la solicitud EliminarDocumentoRequest.
 /// </summary>
-public sealed class EliminarDocumentoResponse : ApiResponseBase, IApiResponse<EliminarDocumentoResponseModel>
+public sealed class EliminarDocumentoResponse : IContpaqiResponse<EliminarDocumentoResponseModel>
 {
     public EliminarDocumentoResponseModel Model { get; set; } = new();
 }

@@ -15,7 +15,7 @@ public static class ProductoFactory
     public static CrearProductoRequest Crear()
     {
         var request = new CrearProductoRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
+        
 
         request.Model.Producto.Codigo = Codigo;
         request.Model.Producto.Nombre = Nombre;
@@ -29,7 +29,7 @@ public static class ProductoFactory
     public static ActualizarProductoRequest Actualizar()
     {
         var request = new ActualizarProductoRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
+        
 
         request.Model.CodigoProducto = Codigo;
         request.Model.DatosProducto = GetDatosExtra();
@@ -40,7 +40,7 @@ public static class ProductoFactory
     public static BuscarProductosRequest BuscarPorId()
     {
         var request = new BuscarProductosRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
+        
 
         request.Model.Id = 100;
 
@@ -50,7 +50,7 @@ public static class ProductoFactory
     public static BuscarProductosRequest BuscarPorCodigo()
     {
         var request = new BuscarProductosRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
+        
 
         request.Model.Codigo = Codigo;
 
@@ -60,7 +60,7 @@ public static class ProductoFactory
     public static BuscarProductosRequest BuscarPorSql()
     {
         var request = new BuscarProductosRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
+        
 
         request.Model.SqlQuery = "CNOMBREPRODUCTO = 'nombre'";
 
@@ -70,7 +70,7 @@ public static class ProductoFactory
     public static BuscarProductosRequest BuscarTodo()
     {
         var request = new BuscarProductosRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
+        
 
         return request;
     }
@@ -78,7 +78,7 @@ public static class ProductoFactory
     public static EliminarProductoRequest Eliminar()
     {
         var request = new EliminarProductoRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
+        
 
         request.Model.CodigoProducto = Codigo;
 
@@ -104,24 +104,24 @@ public static class ProductoFactory
         Directory.CreateDirectory(directory);
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(CrearProductoRequest)}.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(Crear(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(Crear(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(ActualizarProductoRequest)}.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(Actualizar(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(Actualizar(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarProductosRequest)}_PorId.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(BuscarPorId(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorId(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarProductosRequest)}_PorCodigo.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(BuscarPorCodigo(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorCodigo(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarProductosRequest)}_PorSql.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(BuscarPorSql(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorSql(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarProductosRequest)}_Todo.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(BuscarTodo(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(BuscarTodo(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(EliminarProductoRequest)}.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(Eliminar(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(Eliminar(), options));
     }
 }

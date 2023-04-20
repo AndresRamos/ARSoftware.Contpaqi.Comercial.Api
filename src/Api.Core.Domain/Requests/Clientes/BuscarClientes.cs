@@ -5,7 +5,7 @@ namespace Api.Core.Domain.Requests;
 /// <summary>
 ///     Solicitud para buscar clientes.
 /// </summary>
-public sealed class BuscarClientesRequest : ApiRequestBase, IApiRequest<BuscarClientesRequestModel, BuscarClientesRequestOptions>
+public sealed class BuscarClientesRequest : IContpaqiRequest<BuscarClientesRequestModel, BuscarClientesRequestOptions>
 {
     public BuscarClientesRequestModel Model { get; set; } = new();
     public BuscarClientesRequestOptions Options { get; set; } = new();
@@ -50,7 +50,7 @@ public sealed class BuscarClientesRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud BuscarClientesRequest.
 /// </summary>
-public sealed class BuscarClientesResponse : ApiResponseBase, IApiResponse<BuscarClientesResponseModel>
+public sealed class BuscarClientesResponse : IContpaqiResponse<BuscarClientesResponseModel>
 {
     public BuscarClientesResponseModel Model { get; set; } = new();
 }
@@ -60,6 +60,8 @@ public sealed class BuscarClientesResponse : ApiResponseBase, IApiResponse<Busca
 /// </summary>
 public sealed class BuscarClientesResponseModel
 {
+    public int NumeroRegistros => Clientes.Count;
+
     /// <summary>
     ///     Lista de clientes encontrados.
     /// </summary>

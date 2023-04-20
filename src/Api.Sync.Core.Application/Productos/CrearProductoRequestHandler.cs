@@ -1,5 +1,4 @@
 ﻿using Api.Core.Domain.Common;
-using Api.Core.Domain.Factories;
 using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
 using ARSoftware.Contpaqi.Comercial.Sdk.DatosAbstractos;
@@ -11,17 +10,15 @@ using Microsoft.Extensions.Logging;
 
 namespace Api.Sync.Core.Application.Productos;
 
-public sealed class CrearProductoRequestHandler : IRequestHandler<CrearProductoRequest, ApiResponseBase>
+public sealed class CrearProductoRequestHandler : IRequestHandler<CrearProductoRequest, ApiResponse>
 {
     private readonly ILogger _logger;
     private readonly IMapper _mapper;
     private readonly IProductoRepository _productoRepository;
     private readonly IProductoService _productoService;
 
-    public CrearProductoRequestHandler(IProductoService productoService,
-                                       IProductoRepository productoRepository,
-                                       ILogger<CrearProductoRequestHandler> logger,
-                                       IMapper mapper)
+    public CrearProductoRequestHandler(IProductoService productoService, IProductoRepository productoRepository,
+        ILogger<CrearProductoRequestHandler> logger, IMapper mapper)
     {
         _productoService = productoService;
         _productoRepository = productoRepository;
@@ -29,7 +26,7 @@ public sealed class CrearProductoRequestHandler : IRequestHandler<CrearProductoR
         _mapper = mapper;
     }
 
-    public async Task<ApiResponseBase> Handle(CrearProductoRequest request, CancellationToken cancellationToken)
+    public async Task<ApiResponse> Handle(CrearProductoRequest request, CancellationToken cancellationToken)
     {
         try
         {
@@ -37,21 +34,19 @@ public sealed class CrearProductoRequestHandler : IRequestHandler<CrearProductoR
 
             var datosExtra = new Dictionary<string, string>(request.Model.Producto.DatosExtra);
 
-            if (!datosExtra.ContainsKey(nameof(admProductos.CCLAVESAT)))
-                datosExtra.Add(nameof(admProductos.CCLAVESAT), request.Model.Producto.ClaveSat);
+            datosExtra.TryAdd(nameof(admProductos.CCLAVESAT), request.Model.Producto.ClaveSat);
 
             _productoService.Actualizar(productoId, datosExtra);
 
-            return ApiResponseFactory.CreateSuccessfull<CrearProductoResponse, CrearProductoResponseModel>(request.Id,
-                new CrearProductoResponseModel
-                {
-                    Producto = (await _productoRepository.BuscarPorIdAsync(productoId, request.Options, cancellationToken))!
-                });
+            return ApiResponse.CreateSuccessfull<CrearProductoResponse, CrearProductoResponseModel>(new CrearProductoResponseModel
+            {
+                Producto = (await _productoRepository.BuscarPorIdAsync(productoId, request.Options, cancellationToken))!
+            });
         }
         catch (Exception e)
         {
             _logger.LogError(e, "Error al crear el producto.");
-            return ApiResponseFactory.CreateFailed<CrearProductoResponse>(request.Id, e.Message);
+            return ApiResponse.CreateFailed(e.Message);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Api.Core.Domain.Common;
-using Api.Core.Domain.Factories;
 using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
@@ -8,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Api.Sync.Core.Application.Almacenes;
 
-public sealed class BuscarAlmacenesRequestHandler : IRequestHandler<BuscarAlmacenesRequest, ApiResponseBase>
+public sealed class BuscarAlmacenesRequestHandler : IRequestHandler<BuscarAlmacenesRequest, ApiResponse>
 {
     private readonly IAlmacenRepository _almacenRepository;
     private readonly ILogger _logger;
@@ -19,20 +18,20 @@ public sealed class BuscarAlmacenesRequestHandler : IRequestHandler<BuscarAlmace
         _logger = logger;
     }
 
-    public async Task<ApiResponseBase> Handle(BuscarAlmacenesRequest request, CancellationToken cancellationToken)
+    public async Task<ApiResponse> Handle(BuscarAlmacenesRequest request, CancellationToken cancellationToken)
     {
         try
         {
             List<Almacen> almacenes =
                 (await _almacenRepository.BuscarPorRequestModelAsync(request.Model, request.Options, cancellationToken)).ToList();
 
-            return ApiResponseFactory.CreateSuccessfull<BuscarAlmacenesResponse, BuscarAlmacenesResponseModel>(request.Id,
+            return ApiResponse.CreateSuccessfull<BuscarAlmacenesResponse, BuscarAlmacenesResponseModel>(
                 new BuscarAlmacenesResponseModel { Almacenes = almacenes });
         }
         catch (Exception e)
         {
             _logger.LogError(e, "Error al buscar almacenes.");
-            return ApiResponseFactory.CreateFailed<BuscarAlmacenesResponse>(request.Id, e.Message);
+            return ApiResponse.CreateFailed(e.Message);
         }
     }
 }

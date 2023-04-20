@@ -18,11 +18,10 @@ namespace Api.Infrastructure.Persistence.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SubscriptionKey = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EmpresaRfc = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Model = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Options = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    DateCreated = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    ContpaqiRequestType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContpaqiRequest = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -34,12 +33,12 @@ namespace Api.Infrastructure.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ErrorMessage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateCreated = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     IsSuccess = table.Column<bool>(type: "bit", nullable: false),
-                    ExecutionTime = table.Column<long>(type: "bigint", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Model = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ContpaqiResponseType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContpaqiResponse = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ErrorMessage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ExecutionTime = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {

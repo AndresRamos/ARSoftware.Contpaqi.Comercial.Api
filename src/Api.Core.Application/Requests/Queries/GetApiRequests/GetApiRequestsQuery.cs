@@ -5,10 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Core.Application.Requests.Queries.GetApiRequests;
 
-public sealed record GetApiRequestsQuery
-    (DateOnly StartDate, DateOnly EndDate, string SubscriptionKey) : IRequest<IEnumerable<ApiRequestBase>>;
+public sealed record GetApiRequestsQuery(DateOnly StartDate, DateOnly EndDate, string SubscriptionKey) : IRequest<IEnumerable<ApiRequest>>;
 
-public sealed class GetApiRequestsQueryHandler : IRequestHandler<GetApiRequestsQuery, IEnumerable<ApiRequestBase>>
+public sealed class GetApiRequestsQueryHandler : IRequestHandler<GetApiRequestsQuery, IEnumerable<ApiRequest>>
 {
     private readonly IApplicationDbContext _applicationDbContext;
 
@@ -17,7 +16,7 @@ public sealed class GetApiRequestsQueryHandler : IRequestHandler<GetApiRequestsQ
         _applicationDbContext = applicationDbContext;
     }
 
-    public async Task<IEnumerable<ApiRequestBase>> Handle(GetApiRequestsQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<ApiRequest>> Handle(GetApiRequestsQuery request, CancellationToken cancellationToken)
     {
         return await _applicationDbContext.Requests.AsNoTracking()
             .Include(m => m.Response)

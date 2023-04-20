@@ -16,7 +16,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="ARSoftware.Contpaqi.Comercial.Sdk.Extras" Version="4.3.0" />
+	  <PackageReference Include="ARSoftware.Contpaqi.Comercial.Sdk.Extras" Version="4.4.0" />
 	  <PackageReference Include="MediatR" Version="12.0.1" />
 	</ItemGroup>
 

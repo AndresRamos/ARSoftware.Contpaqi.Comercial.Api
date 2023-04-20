@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Api.Core.Application.Requests.Commands.CreateApiRequest;
 
-public sealed record CreateApiRequestCommand(ApiRequestBase ApiRequest, string SubscriptionKey) : IRequest<Guid>;
+public sealed record CreateApiRequestCommand(IContpaqiRequest ApiRequest, string SubscriptionKey, string EmpresaRfc) : IRequest<Guid>;
 
 public sealed class CreateApiRequestCommandHandler : IRequestHandler<CreateApiRequestCommand, Guid>
 {
@@ -17,8 +17,7 @@ public sealed class CreateApiRequestCommandHandler : IRequestHandler<CreateApiRe
 
     public async Task<Guid> Handle(CreateApiRequestCommand request, CancellationToken cancellationToken)
     {
-        ApiRequestBase apiRequest = request.ApiRequest;
-        apiRequest.SetCreateDefaults(request.SubscriptionKey);
+        var apiRequest = new ApiRequest(request.SubscriptionKey, request.EmpresaRfc, request.ApiRequest);
 
         _applicationDbContext.Requests.Add(apiRequest);
 

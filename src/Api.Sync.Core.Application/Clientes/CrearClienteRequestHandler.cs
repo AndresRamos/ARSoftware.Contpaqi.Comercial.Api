@@ -1,5 +1,4 @@
 ﻿using Api.Core.Domain.Common;
-using Api.Core.Domain.Factories;
 using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
@@ -14,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Api.Sync.Core.Application.Clientes;
 
-public sealed class CrearClienteRequestHandler : IRequestHandler<CrearClienteRequest, ApiResponseBase>
+public sealed class CrearClienteRequestHandler : IRequestHandler<CrearClienteRequest, ApiResponse>
 {
     private readonly IClienteProveedorService _clienteProveedorService;
     private readonly IClienteRepository _clienteRepository;
@@ -22,11 +21,8 @@ public sealed class CrearClienteRequestHandler : IRequestHandler<CrearClienteReq
     private readonly ILogger _logger;
     private readonly IMapper _mapper;
 
-    public CrearClienteRequestHandler(IClienteProveedorService clienteProveedorService,
-                                      IClienteRepository clienteRepository,
-                                      IMapper mapper,
-                                      IDireccionService direccionService,
-                                      ILogger<CrearClienteRequestHandler> logger)
+    public CrearClienteRequestHandler(IClienteProveedorService clienteProveedorService, IClienteRepository clienteRepository,
+        IMapper mapper, IDireccionService direccionService, ILogger<CrearClienteRequestHandler> logger)
     {
         _clienteProveedorService = clienteProveedorService;
         _clienteRepository = clienteRepository;
@@ -35,7 +31,7 @@ public sealed class CrearClienteRequestHandler : IRequestHandler<CrearClienteReq
         _logger = logger;
     }
 
-    public async Task<ApiResponseBase> Handle(CrearClienteRequest request, CancellationToken cancellationToken)
+    public async Task<ApiResponse> Handle(CrearClienteRequest request, CancellationToken cancellationToken)
     {
         Cliente cliente = request.Model.Cliente;
 
@@ -45,26 +41,25 @@ public sealed class CrearClienteRequestHandler : IRequestHandler<CrearClienteReq
 
             var datosCliente = new Dictionary<string, string>(cliente.DatosExtra);
 
-            if (cliente.UsoCfdi is not null && !datosCliente.ContainsKey(nameof(admClientes.CUSOCFDI)))
-                datosCliente.Add(nameof(admClientes.CUSOCFDI), cliente.UsoCfdi.Clave);
+            if (cliente.UsoCfdi is not null)
+                datosCliente.TryAdd(nameof(admClientes.CUSOCFDI), cliente.UsoCfdi.Clave);
 
-            if (cliente.RegimenFiscal is not null && !datosCliente.ContainsKey(nameof(admClientes.CREGIMFISC)))
-                datosCliente.Add(nameof(admClientes.CREGIMFISC), cliente.RegimenFiscal.Clave);
+            if (cliente.RegimenFiscal is not null)
+                datosCliente.TryAdd(nameof(admClientes.CREGIMFISC), cliente.RegimenFiscal.Clave);
 
             _clienteProveedorService.Actualizar(clienteId, datosCliente);
 
             await ActualizarDireccionFiscalAsync(cliente.Codigo, cliente.DireccionFiscal, cancellationToken);
 
-            return ApiResponseFactory.CreateSuccessfull<CrearClienteResponse, CrearClienteResponseModel>(request.Id,
-                new CrearClienteResponseModel
-                {
-                    Cliente = (await _clienteRepository.BuscarPorIdAsync(clienteId, request.Options, cancellationToken))!
-                });
+            return ApiResponse.CreateSuccessfull<CrearClienteResponse, CrearClienteResponseModel>(new CrearClienteResponseModel
+            {
+                Cliente = (await _clienteRepository.BuscarPorIdAsync(clienteId, request.Options, cancellationToken))!
+            });
         }
         catch (Exception e)
         {
             _logger.LogError(e, "Error al crear el cliente.");
-            return ApiResponseFactory.CreateFailed<CrearClienteResponse>(request.Id, e.Message);
+            return ApiResponse.CreateFailed(e.Message);
         }
     }
 

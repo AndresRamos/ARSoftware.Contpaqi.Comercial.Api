@@ -1,10 +1,10 @@
 ﻿using Api.Core.Domain.Common;
-using Api.Sync.Core.Application.ContpaqiComercialApi.Interfaces;
+using Api.Sync.Core.Application.Api.Interfaces;
 using MediatR;
 
-namespace Api.Sync.Core.Application.ContpaqiComercialApi.Commands.SendApiResponse;
+namespace Api.Sync.Core.Application.Api.Commands.SendApiResponse;
 
-public sealed record SendApiResponseCommand(ApiResponseBase ApiResponse) : IRequest;
+public sealed record SendApiResponseCommand(Guid ApiRequestId, ApiResponse ApiResponse) : IRequest;
 
 public sealed class SendApiResponseCommandHandler : IRequestHandler<SendApiResponseCommand>
 {
@@ -17,6 +17,6 @@ public sealed class SendApiResponseCommandHandler : IRequestHandler<SendApiRespo
 
     public async Task Handle(SendApiResponseCommand request, CancellationToken cancellationToken)
     {
-        await _contpaqiComercialApiService.SendResponseAsync(request.ApiResponse, cancellationToken);
+        await _contpaqiComercialApiService.SendResponseAsync(request.ApiRequestId, request.ApiResponse, cancellationToken);
     }
 }

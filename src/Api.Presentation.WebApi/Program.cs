@@ -35,7 +35,7 @@ builder.Services.AddSwaggerGen(c =>
 
     c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
     c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{typeof(CreateApiRequestCommand).Assembly.GetName().Name}.xml"));
-    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{typeof(ApiRequestBase).Assembly.GetName().Name}.xml"));
+    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{typeof(ApiRequest).Assembly.GetName().Name}.xml"));
 
     c.UseAllOfForInheritance();
     c.UseOneOfForPolymorphism();

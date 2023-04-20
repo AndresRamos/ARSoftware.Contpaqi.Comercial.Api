@@ -14,7 +14,7 @@ public static class AlmacenFactory
     public static CrearAlmacenRequest Crear()
     {
         var request = new CrearAlmacenRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
+        
 
         request.Model.Almacen.Codigo = Codigo;
         request.Model.Almacen.Nombre = Nombre;
@@ -26,7 +26,7 @@ public static class AlmacenFactory
     public static ActualizarAlmacenRequest Actualizar()
     {
         var request = new ActualizarAlmacenRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
+        
 
         request.Model.CodigoAlmacen = Codigo;
         request.Model.DatosAlmacen = GetDatosExtra();
@@ -37,7 +37,7 @@ public static class AlmacenFactory
     public static BuscarAlmacenesRequest BuscarPorId()
     {
         var request = new BuscarAlmacenesRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
+        
 
         request.Model.Id = 100;
 
@@ -47,7 +47,7 @@ public static class AlmacenFactory
     public static BuscarAlmacenesRequest BuscarPorCodigo()
     {
         var request = new BuscarAlmacenesRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
+        
 
         request.Model.Codigo = Codigo;
 
@@ -57,7 +57,7 @@ public static class AlmacenFactory
     public static BuscarAlmacenesRequest BuscarPorSql()
     {
         var request = new BuscarAlmacenesRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
+        
 
         request.Model.SqlQuery = "CNOMBREALMACEN = 'nombre'";
 
@@ -67,7 +67,7 @@ public static class AlmacenFactory
     public static BuscarAlmacenesRequest BuscarTodo()
     {
         var request = new BuscarAlmacenesRequest();
-        request.EmpresaRfc = Constants.EmpresaRfc;
+        
 
         return request;
     }
@@ -89,21 +89,21 @@ public static class AlmacenFactory
         Directory.CreateDirectory(directory);
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(CrearAlmacenRequest)}.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(Crear(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(Crear(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(ActualizarAlmacenRequest)}.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(Actualizar(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(Actualizar(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAlmacenesRequest)}_PorId.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(BuscarPorId(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorId(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAlmacenesRequest)}_PorCodigo.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(BuscarPorCodigo(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorCodigo(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAlmacenesRequest)}_PorSql.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(BuscarPorSql(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorSql(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAlmacenesRequest)}_Todo.json"),
-            JsonSerializer.Serialize<ApiRequestBase>(BuscarTodo(), options));
+            JsonSerializer.Serialize<IContpaqiRequest>(BuscarTodo(), options));
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Api.Core.Domain.Common;
-using Api.Core.Domain.Factories;
 using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
@@ -14,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Api.Sync.Core.Application.Documentos;
 
-public sealed class CrearDocumentoRequestHandler : IRequestHandler<CrearDocumentoRequest, ApiResponseBase>
+public sealed class CrearDocumentoRequestHandler : IRequestHandler<CrearDocumentoRequest, ApiResponse>
 {
     private readonly IDocumentoRepository _documentoRepository;
     private readonly IDocumentoService _documentoService;
@@ -23,11 +22,8 @@ public sealed class CrearDocumentoRequestHandler : IRequestHandler<CrearDocument
     private readonly IMovimientoService _movimientoService;
     private int _documentoSdkId;
 
-    public CrearDocumentoRequestHandler(IDocumentoService documentoService,
-                                        IMapper mapper,
-                                        IMovimientoService movimientoService,
-                                        ILogger<CrearDocumentoRequestHandler> logger,
-                                        IDocumentoRepository documentoRepository)
+    public CrearDocumentoRequestHandler(IDocumentoService documentoService, IMapper mapper, IMovimientoService movimientoService,
+        ILogger<CrearDocumentoRequestHandler> logger, IDocumentoRepository documentoRepository)
     {
         _documentoService = documentoService;
         _mapper = mapper;
@@ -36,7 +32,7 @@ public sealed class CrearDocumentoRequestHandler : IRequestHandler<CrearDocument
         _documentoRepository = documentoRepository;
     }
 
-    public async Task<ApiResponseBase> Handle(CrearDocumentoRequest request, CancellationToken cancellationToken)
+    public async Task<ApiResponse> Handle(CrearDocumentoRequest request, CancellationToken cancellationToken)
     {
         Documento documento = request.Model.Documento;
 
@@ -57,14 +53,14 @@ public sealed class CrearDocumentoRequestHandler : IRequestHandler<CrearDocument
 
             var datosDocumento = new Dictionary<string, string>(documento.DatosExtra);
 
-            if (!datosDocumento.ContainsKey(nameof(admDocumentos.COBSERVACIONES)))
-                datosDocumento.Add(nameof(admDocumentos.COBSERVACIONES), documento.Observaciones);
+            datosDocumento.TryAdd(nameof(admDocumentos.COBSERVACIONES), documento.Observaciones);
 
-            if (documento.FormaPago is not null && !datosDocumento.ContainsKey(nameof(admDocumentos.CMETODOPAG)))
-                datosDocumento.Add(nameof(admDocumentos.CMETODOPAG), documento.FormaPago.Clave);
+            if (documento.FormaPago is not null)
+                datosDocumento.TryAdd(nameof(admDocumentos.CMETODOPAG), documento.FormaPago.Clave);
 
-            if (documento.MetodoPago is not null && !datosDocumento.ContainsKey(nameof(admDocumentos.CCANTPARCI)))
-                datosDocumento.Add(nameof(admDocumentos.CCANTPARCI), MetodoPagoHelper.ConvertToSdkValue(documento.MetodoPago).ToString());
+            if (documento.MetodoPago is not null)
+                datosDocumento.TryAdd(nameof(admDocumentos.CCANTPARCI),
+                    MetodoPagoHelper.ConvertToSdkValue(documento.MetodoPago).ToString());
 
             _documentoService.Actualizar(_documentoSdkId, datosDocumento);
 
@@ -75,8 +71,7 @@ public sealed class CrearDocumentoRequestHandler : IRequestHandler<CrearDocument
 
                 var datosMovimiento = new Dictionary<string, string>(movimiento.DatosExtra);
 
-                if (!datosMovimiento.ContainsKey(nameof(admMovimientos.COBSERVAMOV)))
-                    datosMovimiento.Add(nameof(admMovimientos.COBSERVAMOV), movimiento.Observaciones);
+                datosMovimiento.TryAdd(nameof(admMovimientos.COBSERVAMOV), movimiento.Observaciones);
 
                 // todo: modificar porcentages e importes de impuestos y descuentos dependiendo de la configuracion del concepto
                 _movimientoService.Actualizar(movimientoSdkId, datosMovimiento);
@@ -90,13 +85,13 @@ public sealed class CrearDocumentoRequestHandler : IRequestHandler<CrearDocument
                 Documento = (await _documentoRepository.BuscarPorIdAsync(_documentoSdkId, request.Options, cancellationToken))!
             };
 
-            return ApiResponseFactory.CreateSuccessfull<CrearDocumentoResponse, CrearDocumentoResponseModel>(request.Id, responseModel);
+            return ApiResponse.CreateSuccessfull<CrearDocumentoResponse, CrearDocumentoResponseModel>(responseModel);
         }
         catch (Exception e)
         {
             _logger.LogError(e, "Error Processing {ApiRequest}", nameof(CrearDocumentoRequest));
             // Todo: Borrar documento si hay error
-            return ApiResponseFactory.CreateFailed<CrearDocumentoResponse>(request.Id, e.Message);
+            return ApiResponse.CreateFailed(e.Message);
         }
         finally
         {

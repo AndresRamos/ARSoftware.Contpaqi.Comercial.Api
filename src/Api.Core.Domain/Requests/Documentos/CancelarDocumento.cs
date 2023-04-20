@@ -5,7 +5,8 @@ namespace Api.Core.Domain.Requests;
 /// <summary>
 ///     Solicitud para cancelar un documento.
 /// </summary>
-public sealed class CancelarDocumentoRequest : ApiRequestBase, IApiRequest<CancelarDocumentoRequestModel, CancelarDocumentoRequestOptions>
+public sealed class CancelarDocumentoRequest : 
+    IContpaqiRequest<CancelarDocumentoRequestModel, CancelarDocumentoRequestOptions>
 {
     public CancelarDocumentoRequestModel Model { get; set; } = new();
     public CancelarDocumentoRequestOptions Options { get; set; } = new();
@@ -54,7 +55,7 @@ public sealed class CancelarDocumentoRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud CancelarDocumentoRequest.
 /// </summary>
-public sealed class CancelarDocumentoResponse : ApiResponseBase, IApiResponse<CancelarDocumentoResponseModel>
+public sealed class CancelarDocumentoResponse : IContpaqiResponse<CancelarDocumentoResponseModel>
 {
     public CancelarDocumentoResponseModel Model { get; set; } = new();
 }

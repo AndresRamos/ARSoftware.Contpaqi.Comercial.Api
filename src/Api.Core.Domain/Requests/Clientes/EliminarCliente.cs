@@ -3,7 +3,7 @@
 /// <summary>
 ///     Solicitud para eliminar un cliente.
 /// </summary>
-public sealed class EliminarClienteRequest : ApiRequestBase, IApiRequest<EliminarClienteRequestModel, EliminarClienteRequestOptions>
+public sealed class EliminarClienteRequest : IContpaqiRequest<EliminarClienteRequestModel, EliminarClienteRequestOptions>
 {
     public EliminarClienteRequestModel Model { get; set; } = new();
     public EliminarClienteRequestOptions Options { get; set; } = new();
@@ -30,7 +30,7 @@ public sealed class EliminarClienteRequestOptions
 /// <summary>
 ///     Respuesta de la solicitud EliminarClienteRequest.
 /// </summary>
-public sealed class EliminarClienteResponse : ApiResponseBase, IApiResponse<EliminarClienteResponseModel>
+public sealed class EliminarClienteResponse : IContpaqiResponse<EliminarClienteResponseModel>
 {
     public EliminarClienteResponseModel Model { get; set; } = new();
 }

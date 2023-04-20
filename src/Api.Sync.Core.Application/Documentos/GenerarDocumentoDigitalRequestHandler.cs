@@ -1,5 +1,4 @@
 ﻿using Api.Core.Domain.Common;
-using Api.Core.Domain.Factories;
 using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.Common.Models;
@@ -12,37 +11,31 @@ using Microsoft.Extensions.Options;
 
 namespace Api.Sync.Core.Application.Documentos;
 
-public sealed class GenerarDocumentoDigitalRequestHandler : IRequestHandler<GenerarDocumentoDigitalRequest, ApiResponseBase>
+public sealed class GenerarDocumentoDigitalRequestHandler : IRequestHandler<GenerarDocumentoDigitalRequest, ApiResponse>
 {
     private readonly ContpaqiComercialConfig _contpaqiComercialConfig;
     private readonly IDocumentoService _documentoService;
     private readonly ILogger _logger;
 
     public GenerarDocumentoDigitalRequestHandler(IDocumentoService documentoService,
-                                                 IOptions<ContpaqiComercialConfig> contpaqiComercialConfigOptions,
-                                                 ILogger<GenerarDocumentoDigitalRequest> logger)
+        IOptions<ContpaqiComercialConfig> contpaqiComercialConfigOptions, ILogger<GenerarDocumentoDigitalRequest> logger)
     {
         _documentoService = documentoService;
         _logger = logger;
         _contpaqiComercialConfig = contpaqiComercialConfigOptions.Value;
     }
 
-    public Task<ApiResponseBase> Handle(GenerarDocumentoDigitalRequest request, CancellationToken cancellationToken)
+    public Task<ApiResponse> Handle(GenerarDocumentoDigitalRequest request, CancellationToken cancellationToken)
     {
         LlaveDocumento llaveDocumento = request.Model.LlaveDocumento;
         try
         {
             string rutaPlantilla = Path.Combine(_contpaqiComercialConfig.RutaPlantillasPdf, request.Options.NombrePlantilla);
-            _documentoService.GenerarDocumentoDigital(llaveDocumento.ConceptoCodigo,
-                llaveDocumento.Serie,
-                llaveDocumento.Folio,
-                request.Options.Tipo,
-                rutaPlantilla);
+            _documentoService.GenerarDocumentoDigital(llaveDocumento.ConceptoCodigo, llaveDocumento.Serie, llaveDocumento.Folio,
+                request.Options.Tipo, rutaPlantilla);
 
             string? rutaDocumento = ArchivoDigitalHelper.GenerarRutaArchivoDigital(request.Options.Tipo,
-                _contpaqiComercialConfig.Empresa.Ruta,
-                llaveDocumento.Serie,
-                llaveDocumento.Folio.ToString());
+                _contpaqiComercialConfig.Empresa.Ruta, llaveDocumento.Serie, llaveDocumento.Folio.ToString());
 
             var responseModel = new GenerarDocumentoDigitalResponseModel
             {
@@ -54,15 +47,13 @@ public sealed class GenerarDocumentoDigitalRequestHandler : IRequestHandler<Gene
                 }
             };
 
-            return Task.FromResult<ApiResponseBase>(
-                ApiResponseFactory.CreateSuccessfull<GenerarDocumentoDigitalResponse, GenerarDocumentoDigitalResponseModel>(request.Id,
-                    responseModel));
+            return Task.FromResult(
+                ApiResponse.CreateSuccessfull<GenerarDocumentoDigitalResponse, GenerarDocumentoDigitalResponseModel>(responseModel));
         }
         catch (Exception e)
         {
             _logger.LogError(e, "Error al crear el documento digital.");
-            return Task.FromResult<ApiResponseBase>(
-                ApiResponseFactory.CreateFailed<GenerarDocumentoDigitalResponse>(request.Id, e.Message));
+            return Task.FromResult(ApiResponse.CreateFailed(e.Message));
         }
     }
 }
