@@ -82,6 +82,7 @@
                 },
                 "virtualNetworkType": "None",
                 "certificates": null,
+                "enableClientCertificate": false,
                 "disableGateway": false,
                 "apiVersionConstraint": {
                   "minApiVersion": null
@@ -101,7 +102,7 @@
                 "apiRevision": "1",
                 "description": "Use this API to create requests to be processed in CONTPAQi Comercial.",
                 "subscriptionRequired": true,
-                "serviceUrl": "https://contpaqicomercialapi.azurewebsites.net/",
+                "serviceUrl": "https://contpaqicomercialapi.azurewebsites.net",
                 "path": "comercial",
                 "protocols": [
                   "https"
