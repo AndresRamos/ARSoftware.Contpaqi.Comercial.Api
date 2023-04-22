@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using Api.Core.Domain.Common;
+using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
@@ -12,24 +13,18 @@ public static class ProductoFactory
     public const string Nombre = "Producto 1";
     public const string ClaveSat = "43231500";
 
-    public static CrearProductoRequest Crear()
+    private static CrearProductoRequest Crear()
     {
         var request = new CrearProductoRequest();
-        
 
-        request.Model.Producto.Codigo = Codigo;
-        request.Model.Producto.Nombre = Nombre;
-        request.Model.Producto.ClaveSat = ClaveSat;
-
-        request.Model.Producto.DatosExtra = GetDatosExtra();
+        request.Model.Producto = CrearProductoPrueba();
 
         return request;
     }
 
-    public static ActualizarProductoRequest Actualizar()
+    private static ActualizarProductoRequest Actualizar()
     {
         var request = new ActualizarProductoRequest();
-        
 
         request.Model.CodigoProducto = Codigo;
         request.Model.DatosProducto = GetDatosExtra();
@@ -37,48 +32,43 @@ public static class ProductoFactory
         return request;
     }
 
-    public static BuscarProductosRequest BuscarPorId()
+    private static BuscarProductosRequest BuscarPorId()
     {
         var request = new BuscarProductosRequest();
-        
 
         request.Model.Id = 100;
 
         return request;
     }
 
-    public static BuscarProductosRequest BuscarPorCodigo()
+    private static BuscarProductosRequest BuscarPorCodigo()
     {
         var request = new BuscarProductosRequest();
-        
 
         request.Model.Codigo = Codigo;
 
         return request;
     }
 
-    public static BuscarProductosRequest BuscarPorSql()
+    private static BuscarProductosRequest BuscarPorSql()
     {
         var request = new BuscarProductosRequest();
-        
 
         request.Model.SqlQuery = "CNOMBREPRODUCTO = 'nombre'";
 
         return request;
     }
 
-    public static BuscarProductosRequest BuscarTodo()
+    private static BuscarProductosRequest BuscarTodo()
     {
         var request = new BuscarProductosRequest();
-        
 
         return request;
     }
 
-    public static EliminarProductoRequest Eliminar()
+    private static EliminarProductoRequest Eliminar()
     {
         var request = new EliminarProductoRequest();
-        
 
         request.Model.CodigoProducto = Codigo;
 
@@ -96,10 +86,15 @@ public static class ProductoFactory
         };
     }
 
+    public static Producto CrearProductoPrueba()
+    {
+        var producto = new Producto { Codigo = Codigo, Nombre = Nombre, ClaveSat = ClaveSat, DatosExtra = GetDatosExtra() };
+        return producto;
+    }
+
     public static void CearJson(string directory)
     {
-        JsonSerializerOptions options = JsonExtensions.GetJsonSerializerOptions();
-        options.WriteIndented = true;
+        JsonSerializerOptions options = FactoryExtensions.GetJsonSerializerOptions();
 
         Directory.CreateDirectory(directory);
 

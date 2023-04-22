@@ -16,10 +16,9 @@ public sealed class CartaPorteFactory
 {
     public const string CodigoConcepto = "402";
 
-    public static CrearFacturaRequest Crear()
+    private static CrearFacturaRequest Crear()
     {
         var request = new CrearFacturaRequest();
-        
 
         request.Model.Documento = GetDocumento();
 
@@ -39,7 +38,7 @@ public sealed class CartaPorteFactory
         return request;
     }
 
-    public static Documento GetDocumento()
+    private static Documento GetDocumento()
     {
         var documento = new Documento();
         documento.Fecha = DateTime.Today;
@@ -66,15 +65,14 @@ public sealed class CartaPorteFactory
         return documento;
     }
 
-    public static string BuscarArchivoAdicional()
+    private static string BuscarArchivoAdicional()
     {
         return File.ReadAllText(@"C:\AR Software\Contpaqi Comercial API\CartaPorteEjemplo.ini");
     }
 
     public static void CearJson(string directory)
     {
-        JsonSerializerOptions options = JsonExtensions.GetJsonSerializerOptions();
-        options.WriteIndented = true;
+        JsonSerializerOptions options = FactoryExtensions.GetJsonSerializerOptions();
 
         Directory.CreateDirectory(directory);
 

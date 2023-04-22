@@ -6,7 +6,7 @@ namespace Api.Sdk.ConsoleApp.JsonFactories;
 
 public static class EmpresaFactory
 {
-    public static BuscarEmpresasRequest BuscarTodo()
+    private static BuscarEmpresasRequest BuscarTodo()
     {
         var request = new BuscarEmpresasRequest();
 
@@ -15,8 +15,7 @@ public static class EmpresaFactory
 
     public static void CearJson(string directory)
     {
-        JsonSerializerOptions options = JsonExtensions.GetJsonSerializerOptions();
-        options.WriteIndented = true;
+        JsonSerializerOptions options = FactoryExtensions.GetJsonSerializerOptions();
 
         Directory.CreateDirectory(directory);
 

@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using Api.Core.Domain.Common;
+using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Models.Enums;
@@ -13,34 +14,18 @@ public static class ClienteFactory
     public const string Nombre = "Cliente 1";
     public const string Rfc = "XAXX010101000";
 
-    public static CrearClienteRequest Crear()
+    private static CrearClienteRequest Crear()
     {
         var request = new CrearClienteRequest();
-        
 
-        request.Model.Cliente.Tipo = TipoCliente.ClienteProveedor;
-        request.Model.Cliente.Codigo = Codigo;
-        request.Model.Cliente.RazonSocial = Nombre;
-        request.Model.Cliente.Rfc = Rfc;
-        request.Model.Cliente.UsoCfdi = UsoCfdi.S01;
-        request.Model.Cliente.RegimenFiscal = RegimenFiscal._616;
-        request.Model.Cliente.DireccionFiscal.Calle = "Pablo Villaseñor";
-        request.Model.Cliente.DireccionFiscal.NumeroExterior = "435";
-        request.Model.Cliente.DireccionFiscal.Colonia = "Ladrón de Guevara";
-        request.Model.Cliente.DireccionFiscal.Ciudad = "Guadalajara";
-        request.Model.Cliente.DireccionFiscal.Estado = "Jalisco";
-        request.Model.Cliente.DireccionFiscal.CodigoPostal = "44600";
-        request.Model.Cliente.DireccionFiscal.Pais = "México";
-
-        request.Model.Cliente.DatosExtra = GetDatosExtra();
+        request.Model.Cliente = CrearClientePrueba();
 
         return request;
     }
 
-    public static ActualizarClienteRequest Actualizar()
+    private static ActualizarClienteRequest Actualizar()
     {
         var request = new ActualizarClienteRequest();
-        
 
         request.Model.CodigoCliente = Codigo;
         request.Model.DatosCliente = GetDatosExtra();
@@ -48,52 +33,73 @@ public static class ClienteFactory
         return request;
     }
 
-    public static BuscarClientesRequest BuscarPorId()
+    private static BuscarClientesRequest BuscarPorId()
     {
         var request = new BuscarClientesRequest();
-        
 
         request.Model.Id = 100;
 
         return request;
     }
 
-    public static BuscarClientesRequest BuscarPorCodigo()
+    private static BuscarClientesRequest BuscarPorCodigo()
     {
         var request = new BuscarClientesRequest();
-        
 
         request.Model.Codigo = Codigo;
 
         return request;
     }
 
-    public static BuscarClientesRequest BuscarPorSql()
+    private static BuscarClientesRequest BuscarPorSql()
     {
         var request = new BuscarClientesRequest();
-        
 
         request.Model.SqlQuery = "CRAZONSOCIAL = 'razonSocial'";
 
         return request;
     }
 
-    public static BuscarClientesRequest BuscarTodo()
+    private static BuscarClientesRequest BuscarTodo()
     {
         var request = new BuscarClientesRequest();
-        
 
         return request;
     }
 
-    public static EliminarClienteRequest Eliminar()
+    private static EliminarClienteRequest Eliminar()
     {
         var request = new EliminarClienteRequest();
-        
 
         request.Model.CodigoCliente = Codigo;
 
         return request;
+    }
+
+    public static Cliente CrearClientePrueba()
+    {
+        var cliente = new Cliente
+        {
+            Tipo = TipoCliente.ClienteProveedor,
+            Codigo = Codigo,
+            RazonSocial = Nombre,
+            Rfc = Rfc,
+            UsoCfdi = UsoCfdi.S01,
+            RegimenFiscal = RegimenFiscal._616,
+            DireccionFiscal =
+            {
+                Calle = "Pablo Villaseñor",
+                NumeroExterior = "435",
+                Colonia = "Ladrón de Guevara",
+                Ciudad = "Guadalajara",
+                Estado = "Jalisco",
+                CodigoPostal = "44600",
+                Pais = "México"
+            },
+            DatosExtra = GetDatosExtra()
+        };
+
+        return cliente;
     }
 
     private static Dictionary<string, string> GetDatosExtra()
@@ -109,8 +115,7 @@ public static class ClienteFactory
 
     public static void CearJson(string directory)
     {
-        JsonSerializerOptions options = JsonExtensions.GetJsonSerializerOptions();
-        options.WriteIndented = true;
+        JsonSerializerOptions options = FactoryExtensions.GetJsonSerializerOptions();
 
         Directory.CreateDirectory(directory);
 

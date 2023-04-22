@@ -24,7 +24,7 @@ public static class AgenteFactory
         return request;
     }
 
-    public static ActualizarAgenteRequest Actualizar()
+    private static ActualizarAgenteRequest Actualizar()
     {
         var request = new ActualizarAgenteRequest();
 
@@ -34,7 +34,7 @@ public static class AgenteFactory
         return request;
     }
 
-    public static BuscarAgentesRequest BuscarPorId()
+    private static BuscarAgentesRequest BuscarPorId()
     {
         var request = new BuscarAgentesRequest();
 
@@ -43,7 +43,7 @@ public static class AgenteFactory
         return request;
     }
 
-    public static BuscarAgentesRequest BuscarPorCodigo()
+    private static BuscarAgentesRequest BuscarPorCodigo()
     {
         var request = new BuscarAgentesRequest();
 
@@ -52,7 +52,7 @@ public static class AgenteFactory
         return request;
     }
 
-    public static BuscarAgentesRequest BuscarPorSql()
+    private static BuscarAgentesRequest BuscarPorSql()
     {
         var request = new BuscarAgentesRequest();
 
@@ -61,7 +61,7 @@ public static class AgenteFactory
         return request;
     }
 
-    public static BuscarAgentesRequest BuscarTodo()
+    private static BuscarAgentesRequest BuscarTodo()
     {
         var request = new BuscarAgentesRequest();
 
@@ -80,8 +80,7 @@ public static class AgenteFactory
 
     public static void CearJson(string directory)
     {
-        JsonSerializerOptions options = JsonExtensions.GetJsonSerializerOptions();
-        options.WriteIndented = true;
+        JsonSerializerOptions options = FactoryExtensions.GetJsonSerializerOptions();
 
         Directory.CreateDirectory(directory);
 

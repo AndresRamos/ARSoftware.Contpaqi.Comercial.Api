@@ -15,7 +15,7 @@ public static class DocumentoFactory
 {
     public const string CodigoConcepto = "400";
 
-    public static CrearDocumentoRequest Crear()
+    private static CrearDocumentoRequest Crear()
     {
         var request = new CrearDocumentoRequest();
 
@@ -27,7 +27,7 @@ public static class DocumentoFactory
         return request;
     }
 
-    public static CrearFacturaRequest CrearFactura()
+    private static CrearFacturaRequest CrearFactura()
     {
         var request = new CrearFacturaRequest();
 
@@ -45,7 +45,7 @@ public static class DocumentoFactory
         return request;
     }
 
-    public static ActualizarDocumentoRequest Actualizar()
+    private static ActualizarDocumentoRequest Actualizar()
     {
         var request = new ActualizarDocumentoRequest();
 
@@ -57,7 +57,7 @@ public static class DocumentoFactory
         return request;
     }
 
-    public static EliminarDocumentoRequest Eliminar()
+    private static EliminarDocumentoRequest Eliminar()
     {
         var request = new EliminarDocumentoRequest();
 
@@ -68,7 +68,7 @@ public static class DocumentoFactory
         return request;
     }
 
-    public static TimbrarDocumentoRequest Timbrar()
+    private static TimbrarDocumentoRequest Timbrar()
     {
         var request = new TimbrarDocumentoRequest();
 
@@ -80,7 +80,7 @@ public static class DocumentoFactory
         return request;
     }
 
-    public static GenerarDocumentoDigitalRequest GenerarDocumentoDigital()
+    private static GenerarDocumentoDigitalRequest GenerarDocumentoDigital()
     {
         var request = new GenerarDocumentoDigitalRequest();
 
@@ -94,7 +94,7 @@ public static class DocumentoFactory
         return request;
     }
 
-    public static SaldarDocumentoRequest Saldar()
+    private static SaldarDocumentoRequest Saldar()
     {
         var request = new SaldarDocumentoRequest();
 
@@ -112,7 +112,7 @@ public static class DocumentoFactory
         return request;
     }
 
-    public static CancelarDocumentoRequest Cancelar()
+    private static CancelarDocumentoRequest Cancelar()
     {
         var request = new CancelarDocumentoRequest();
 
@@ -135,7 +135,7 @@ public static class DocumentoFactory
         };
     }
 
-    public static BuscarDocumentosRequest BuscarPorSql()
+    private static BuscarDocumentosRequest BuscarPorSql()
     {
         var request = new BuscarDocumentosRequest();
 
@@ -144,7 +144,7 @@ public static class DocumentoFactory
         return request;
     }
 
-    public static BuscarDocumentosRequest BuscarPorRangoFecha()
+    private static BuscarDocumentosRequest BuscarPorRangoFecha()
     {
         var request = new BuscarDocumentosRequest();
 
@@ -154,7 +154,7 @@ public static class DocumentoFactory
         return request;
     }
 
-    public static BuscarDocumentosRequest BuscarPorId()
+    private static BuscarDocumentosRequest BuscarPorId()
     {
         var request = new BuscarDocumentosRequest();
 
@@ -163,7 +163,7 @@ public static class DocumentoFactory
         return request;
     }
 
-    public static BuscarDocumentosRequest BuscarPorLlave()
+    private static BuscarDocumentosRequest BuscarPorLlave()
     {
         var request = new BuscarDocumentosRequest();
 
@@ -172,7 +172,7 @@ public static class DocumentoFactory
         return request;
     }
 
-    public static BuscarDocumentosRequest BuscarPorConcepto()
+    private static BuscarDocumentosRequest BuscarPorConcepto()
     {
         var request = new BuscarDocumentosRequest();
 
@@ -181,7 +181,7 @@ public static class DocumentoFactory
         return request;
     }
 
-    public static BuscarDocumentosRequest BuscarPorCliente()
+    private static BuscarDocumentosRequest BuscarPorCliente()
     {
         var request = new BuscarDocumentosRequest();
 
@@ -195,7 +195,7 @@ public static class DocumentoFactory
         var documento = new Documento();
         documento.Fecha = DateTime.Today;
         documento.Concepto.Codigo = CodigoConcepto;
-        documento.Cliente = ClienteFactory.Crear().Model.Cliente;
+        documento.Cliente = ClienteFactory.CrearClientePrueba();
         documento.Moneda = Moneda.PesoMexicano;
         documento.TipoCambio = 1;
         documento.Referencia = "Referencia doc";
@@ -205,7 +205,7 @@ public static class DocumentoFactory
         documento.MetodoPago = MetodoPago.PPD;
         documento.Movimientos.Add(new Movimiento
         {
-            Producto = ProductoFactory.Crear().Model.Producto,
+            Producto = ProductoFactory.CrearProductoPrueba(),
             Unidades = 1,
             Precio = 100,
             Almacen = new Almacen { Codigo = "1", Nombre = "Almacen Uno" },
@@ -219,8 +219,7 @@ public static class DocumentoFactory
 
     public static void CearJson(string directory)
     {
-        JsonSerializerOptions options = JsonExtensions.GetJsonSerializerOptions();
-        options.WriteIndented = true;
+        JsonSerializerOptions options = FactoryExtensions.GetJsonSerializerOptions();
 
         Directory.CreateDirectory(directory);
 

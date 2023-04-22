@@ -11,10 +11,9 @@ public static class AlmacenFactory
     public const string Codigo = "ALM001";
     public const string Nombre = "Almacen 1";
 
-    public static CrearAlmacenRequest Crear()
+    private static CrearAlmacenRequest Crear()
     {
         var request = new CrearAlmacenRequest();
-        
 
         request.Model.Almacen.Codigo = Codigo;
         request.Model.Almacen.Nombre = Nombre;
@@ -23,10 +22,9 @@ public static class AlmacenFactory
         return request;
     }
 
-    public static ActualizarAlmacenRequest Actualizar()
+    private static ActualizarAlmacenRequest Actualizar()
     {
         var request = new ActualizarAlmacenRequest();
-        
 
         request.Model.CodigoAlmacen = Codigo;
         request.Model.DatosAlmacen = GetDatosExtra();
@@ -34,40 +32,36 @@ public static class AlmacenFactory
         return request;
     }
 
-    public static BuscarAlmacenesRequest BuscarPorId()
+    private static BuscarAlmacenesRequest BuscarPorId()
     {
         var request = new BuscarAlmacenesRequest();
-        
 
         request.Model.Id = 100;
 
         return request;
     }
 
-    public static BuscarAlmacenesRequest BuscarPorCodigo()
+    private static BuscarAlmacenesRequest BuscarPorCodigo()
     {
         var request = new BuscarAlmacenesRequest();
-        
 
         request.Model.Codigo = Codigo;
 
         return request;
     }
 
-    public static BuscarAlmacenesRequest BuscarPorSql()
+    private static BuscarAlmacenesRequest BuscarPorSql()
     {
         var request = new BuscarAlmacenesRequest();
-        
 
         request.Model.SqlQuery = "CNOMBREALMACEN = 'nombre'";
 
         return request;
     }
 
-    public static BuscarAlmacenesRequest BuscarTodo()
+    private static BuscarAlmacenesRequest BuscarTodo()
     {
         var request = new BuscarAlmacenesRequest();
-        
 
         return request;
     }
@@ -83,8 +77,7 @@ public static class AlmacenFactory
 
     public static void CearJson(string directory)
     {
-        JsonSerializerOptions options = JsonExtensions.GetJsonSerializerOptions();
-        options.WriteIndented = true;
+        JsonSerializerOptions options = FactoryExtensions.GetJsonSerializerOptions();
 
         Directory.CreateDirectory(directory);
 
