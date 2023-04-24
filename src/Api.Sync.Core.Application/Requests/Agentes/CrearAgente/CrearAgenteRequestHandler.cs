@@ -8,9 +8,9 @@ using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Api.Sync.Core.Application.Requests.Agentes;
+namespace Api.Sync.Core.Application.Requests.Agentes.CrearAgente;
 
-public class CrearAgenteRequestHandler : IRequestHandler<CrearAgenteRequest, ApiResponse>
+public sealed class CrearAgenteRequestHandler : IRequestHandler<CrearAgenteRequest, ApiResponse>
 {
     private readonly IAgenteRepository _agenteRepository;
     private readonly IAgenteService _agenteService;
