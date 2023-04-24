@@ -30,7 +30,7 @@ public sealed class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior
                 var ex = new ValidationException(failures);
                 var r = ApiResponse.CreateFailed(ex.Message);
                 //return (TResponse)Convert.ChangeType(r, typeof(TResponse));
-                return r as TResponse;
+                return (r as TResponse)!;
             }
         }
 

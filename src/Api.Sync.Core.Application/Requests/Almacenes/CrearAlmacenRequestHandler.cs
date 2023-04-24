@@ -6,7 +6,7 @@ using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Api.Sync.Core.Application.Almacenes;
+namespace Api.Sync.Core.Application.Requests.Almacenes;
 
 public sealed class CrearAlmacenRequestHandler : IRequestHandler<CrearAlmacenRequest, ApiResponse>
 {

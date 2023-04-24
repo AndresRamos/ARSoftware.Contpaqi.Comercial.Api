@@ -5,7 +5,7 @@ using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Api.Sync.Core.Application.Clientes;
+namespace Api.Sync.Core.Application.Requests.Clientes;
 
 public sealed class BuscarClientesRequestHandler : IRequestHandler<BuscarClientesRequest, ApiResponse>
 {

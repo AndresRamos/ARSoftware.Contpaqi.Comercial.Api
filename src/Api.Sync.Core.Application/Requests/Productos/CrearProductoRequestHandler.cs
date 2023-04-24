@@ -8,7 +8,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Api.Sync.Core.Application.Productos;
+namespace Api.Sync.Core.Application.Requests.Productos;
 
 public sealed class CrearProductoRequestHandler : IRequestHandler<CrearProductoRequest, ApiResponse>
 {

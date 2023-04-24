@@ -5,7 +5,7 @@ using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Api.Sync.Core.Application.Clientes;
+namespace Api.Sync.Core.Application.Requests.Clientes;
 
 public sealed class ActualizarClienteRequestHandler : IRequestHandler<ActualizarClienteRequest, ApiResponse>
 {
