@@ -19,4 +19,9 @@ public sealed class LlaveDocumento
     ///     Folio del documento.
     /// </summary>
     public int Folio { get; set; }
+
+    public override string ToString()
+    {
+        return $"Concepto = {ConceptoCodigo}, Serie = {Serie}, Folio = {Folio}";
+    }
 }
