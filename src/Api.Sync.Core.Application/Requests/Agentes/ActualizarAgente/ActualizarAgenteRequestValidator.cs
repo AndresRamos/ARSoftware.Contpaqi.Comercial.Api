@@ -10,6 +10,6 @@ public sealed class ActualizarAgenteRequestValidator : AbstractValidator<Actuali
     {
         RuleFor(m => m.Model.CodigoAgente)
             .MustAsync(async (s, token) => await agenteRepository.ExistePorCodigoAsync(s, token))
-            .WithMessage("El cliente {PropertyValue} no existe.");
+            .WithMessage("El agente {PropertyValue} no existe.");
     }
 }

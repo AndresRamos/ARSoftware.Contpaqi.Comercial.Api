@@ -6,7 +6,6 @@ namespace Api.Core.Domain.Requests;
 ///     Solicitud para crear un cliente.
 /// </summary>
 public sealed class CrearClienteRequest : IContpaqiRequest<CrearClienteRequestModel, CrearClienteRequestOptions>
-
 {
     public CrearClienteRequestModel Model { get; set; } = new();
     public CrearClienteRequestOptions Options { get; set; } = new();

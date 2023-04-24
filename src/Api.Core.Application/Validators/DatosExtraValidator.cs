@@ -8,7 +8,7 @@ public sealed class DatosExtraValidator<T> : AbstractValidator<KeyValuePair<stri
     public DatosExtraValidator()
     {
         RuleFor(m => m)
-            .Must(m => typeof(T).HasProperty(m.Key))
+            .Must(m => string.IsNullOrWhiteSpace(m.Key) == false && typeof(T).HasProperty(m.Key))
             .WithMessage(m => $"El dato [{m.Key}] no es un campo valido de la tabla {typeof(T).Name}.");
     }
 }

@@ -8,11 +8,8 @@ public sealed class ActualizarAgenteRequestValidator : AbstractValidator<Actuali
 {
     public ActualizarAgenteRequestValidator()
     {
-        RuleFor(x => x.Model.CodigoAgente).NotEmpty().WithMessage("El código del agente es requerido.");
+        RuleFor(x => x.Model.CodigoAgente).NotEmpty();
 
-        RuleFor(x => x.Model.DatosAgente)
-            .NotEmpty()
-            .WithMessage("Los datos del agente son requeridos.")
-            .ForEach(rule => { rule.SetValidator(new DatosExtraValidator<admAgentes>()); });
+        RuleFor(x => x.Model.DatosAgente).NotEmpty().ForEach(rule => { rule.SetValidator(new DatosExtraValidator<admAgentes>()); });
     }
 }

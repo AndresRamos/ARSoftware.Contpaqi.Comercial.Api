@@ -1,12 +1,13 @@
 ﻿using Api.Core.Domain.Common;
 using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
+using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Interfaces;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Api.Sync.Core.Application.Requests.Almacenes;
+namespace Api.Sync.Core.Application.Requests.Almacenes.CrearAlmacen;
 
 public sealed class CrearAlmacenRequestHandler : IRequestHandler<CrearAlmacenRequest, ApiResponse>
 {
@@ -26,11 +27,15 @@ public sealed class CrearAlmacenRequestHandler : IRequestHandler<CrearAlmacenReq
     {
         try
         {
-            int almacenId = _almacenService.Crear(new Dictionary<string, string>(request.Model.Almacen.DatosExtra)
-            {
-                { nameof(admAlmacenes.CCODIGOALMACEN), request.Model.Almacen.Codigo },
-                { nameof(admAlmacenes.CNOMBREALMACEN), request.Model.Almacen.Nombre }
-            });
+            var datosAlmacen = new Dictionary<string, string>(request.Model.Almacen.DatosExtra);
+
+            datosAlmacen.TryAdd(nameof(admAlmacenes.CCODIGOALMACEN), request.Model.Almacen.Codigo);
+
+            datosAlmacen.TryAdd(nameof(admAlmacenes.CNOMBREALMACEN), request.Model.Almacen.Nombre);
+
+            datosAlmacen.TryAdd(nameof(admAlmacenes.CFECHAALTAALMACEN), DateTime.Today.ToSdkFecha());
+
+            int almacenId = _almacenService.Crear(datosAlmacen);
 
             return ApiResponse.CreateSuccessfull<CrearAlmacenResponse, CrearAlmacenResponseModel>(new CrearAlmacenResponseModel
             {

@@ -10,6 +10,6 @@ public sealed class CrearAgenteRequestValidator : AbstractValidator<CrearAgenteR
     {
         RuleFor(m => m.Model.Agente.Codigo)
             .MustAsync(async (s, token) => await agenteRepository.ExistePorCodigoAsync(s, token) == false)
-            .WithMessage("El cliente {PropertyValue} ya existe.");
+            .WithMessage("El agente {PropertyValue} ya existe.");
     }
 }

@@ -11,7 +11,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Api.Sync.Core.Application.Requests.Clientes;
+namespace Api.Sync.Core.Application.Requests.Clientes.CrearCliente;
 
 public sealed class CrearClienteRequestHandler : IRequestHandler<CrearClienteRequest, ApiResponse>
 {

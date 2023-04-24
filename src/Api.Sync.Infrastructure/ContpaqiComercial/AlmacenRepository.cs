@@ -23,9 +23,8 @@ public sealed class AlmacenRepository : IAlmacenRepository
         _mapper = mapper;
     }
 
-    public async Task<Almacen?> BuscarPorIdAsync(int id,
-                                                 ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                 CancellationToken cancellationToken)
+    public async Task<Almacen?> BuscarPorIdAsync(int id, ILoadRelatedDataOptions loadRelatedDataOptions,
+        CancellationToken cancellationToken)
     {
         AlmacenSql? almacenSql = await _context.admAlmacenes.Where(m => m.CIDALMACEN == id)
             .ProjectTo<AlmacenSql>(_mapper.ConfigurationProvider)
@@ -41,9 +40,8 @@ public sealed class AlmacenRepository : IAlmacenRepository
         return almacen;
     }
 
-    public async Task<Almacen?> BuscarPorCodigoAsync(string codigo,
-                                                     ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                     CancellationToken cancellationToken)
+    public async Task<Almacen?> BuscarPorCodigoAsync(string codigo, ILoadRelatedDataOptions loadRelatedDataOptions,
+        CancellationToken cancellationToken)
     {
         AlmacenSql? almacenSql = await _context.admAlmacenes.Where(m => m.CCODIGOALMACEN == codigo)
             .ProjectTo<AlmacenSql>(_mapper.ConfigurationProvider)
@@ -59,8 +57,13 @@ public sealed class AlmacenRepository : IAlmacenRepository
         return almacen;
     }
 
+    public async Task<bool> ExistePorCodigoAsync(string codigo, CancellationToken cancellationToken)
+    {
+        return await _context.admAlmacenes.AnyAsync(m => m.CCODIGOALMACEN == codigo, cancellationToken);
+    }
+
     public async Task<IEnumerable<Almacen>> BuscarTodoAsync(ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                            CancellationToken cancellationToken)
+        CancellationToken cancellationToken)
     {
         var almacenesList = new List<Almacen>();
 
@@ -81,8 +84,7 @@ public sealed class AlmacenRepository : IAlmacenRepository
     }
 
     public async Task<IEnumerable<Almacen>> BuscarPorRequestModelAsync(BuscarAlmacenesRequestModel requestModel,
-                                                                       ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                                       CancellationToken cancellationToken)
+        ILoadRelatedDataOptions loadRelatedDataOptions, CancellationToken cancellationToken)
     {
         var almacenesList = new List<Almacen>();
 
@@ -112,10 +114,8 @@ public sealed class AlmacenRepository : IAlmacenRepository
         return almacenesList;
     }
 
-    private async Task CargarDatosRelacionadosAsync(Almacen almacen,
-                                                    AlmacenSql almacenSql,
-                                                    ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                    CancellationToken cancellationToken)
+    private async Task CargarDatosRelacionadosAsync(Almacen almacen, AlmacenSql almacenSql, ILoadRelatedDataOptions loadRelatedDataOptions,
+        CancellationToken cancellationToken)
     {
         if (loadRelatedDataOptions.CargarDatosExtra)
             almacen.DatosExtra = (await _context.admAlmacenes.FirstAsync(m => m.CIDALMACEN == almacenSql.CIDALMACEN, cancellationToken))
