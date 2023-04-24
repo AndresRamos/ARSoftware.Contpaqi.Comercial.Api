@@ -53,9 +53,9 @@ public sealed class ApiRequest
     /// <summary>
     ///     Estatus de la solicitud.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
     [JsonInclude]
-    public RequestStatus Status { get; private set; } = RequestStatus.Pending;
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public RequestStatus Status { get; set; } = RequestStatus.Pending;
 
     /// <summary>
     ///     Respuesta de la solicitud.

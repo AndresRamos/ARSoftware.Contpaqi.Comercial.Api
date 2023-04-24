@@ -1,8 +1,10 @@
 using System.Reflection;
+using System.Text.Json.Serialization;
 using Api.Core.Application;
 using Api.Core.Application.Requests.Commands.CreateApiRequest;
 using Api.Core.Domain.Common;
 using Api.Infrastructure;
+using Api.Infrastructure.Persistence;
 using Api.Presentation.WebApi.Authentication;
 using Microsoft.OpenApi.Models;
 
@@ -14,7 +16,11 @@ builder.Services.AddControllers(options =>
         options.ReturnHttpNotAcceptable = true;
         //options.Filters.Add<ApiKeyAuthFilter>();
     })
-    .AddJsonOptions(options => options.JsonSerializerOptions.TypeInfoResolver = new PolymorphicTypeResolver());
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.TypeInfoResolver = new PolymorphicTypeResolver();
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 builder.Services.AddApplicationServices().AddInfrastructureServices(builder.Configuration);
 //builder.Services.ConfigureHttpJsonOptions(options => { options.SerializerOptions.TypeInfoResolver = new PolymorphicTypeResolver(); });
 
@@ -39,16 +45,37 @@ builder.Services.AddSwaggerGen(c =>
 
     c.UseAllOfForInheritance();
     c.UseOneOfForPolymorphism();
+
+    c.SelectSubTypesUsing(baseType =>
+    {
+        if (baseType == typeof(IContpaqiRequest))
+            return typeof(ApiRequest).Assembly.GetTypes()
+                .Where(type => typeof(IContpaqiRequest).IsAssignableFrom(type) && type != typeof(IContpaqiRequest) && !type.IsAbstract)
+                .ToArray();
+
+        if (baseType == typeof(IContpaqiResponse))
+            return typeof(ApiRequest).Assembly.GetTypes()
+                .Where(type => typeof(IContpaqiResponse).IsAssignableFrom(type) && type != typeof(IContpaqiResponse) && !type.IsAbstract)
+                .ToArray();
+
+        return Enumerable.Empty<Type>();
+    });
 });
 
 WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
+if (app.Environment.IsDevelopment())
+    //app.UseDeveloperExceptionPage();
+    // Initialise and seed database
+    using (IServiceScope scope = app.Services.CreateScope())
+    {
+        var initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitialiser>();
+        await initialiser.InitialiseAsync();
+    }
+
 app.UseSwagger();
 app.UseSwaggerUI();
-//}
 
 app.UseHttpsRedirection();
 

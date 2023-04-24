@@ -48,7 +48,7 @@ public sealed class CartaPorteFactory
         documento.TipoCambio = 1;
         documento.Referencia = "Referencia doc";
         documento.Observaciones = "Observaciones del documento.";
-        documento.Agente = AgenteFactory.Crear().Model.Agente;
+        documento.Agente = AgenteFactory.CrearAgentePrueba();
         documento.FormaPago = FormaPago._03;
         documento.MetodoPago = MetodoPago.PPD;
         documento.Movimientos.Add(new Movimiento

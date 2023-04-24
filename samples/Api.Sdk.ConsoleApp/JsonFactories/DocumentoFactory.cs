@@ -200,7 +200,7 @@ public static class DocumentoFactory
         documento.TipoCambio = 1;
         documento.Referencia = "Referencia doc";
         documento.Observaciones = "Observaciones del documento.";
-        documento.Agente = AgenteFactory.Crear().Model.Agente;
+        documento.Agente = AgenteFactory.CrearAgenteDatosMinimos();
         documento.FormaPago = FormaPago._01;
         documento.MetodoPago = MetodoPago.PPD;
         documento.Movimientos.Add(new Movimiento

@@ -1,10 +1,12 @@
-﻿using FluentValidation;
+﻿using Api.Core.Domain.Common;
+using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 
 namespace Api.Sync.Core.Application.Common.Behaviours;
 
-public sealed class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
+public sealed class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    where TRequest : IRequest<TResponse>, IContpaqiRequest where TResponse : class
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;
 
@@ -24,7 +26,12 @@ public sealed class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior
             List<ValidationFailure> failures = validationResults.Where(r => r.Errors.Any()).SelectMany(r => r.Errors).ToList();
 
             if (failures.Any())
-                throw new ValidationException(failures);
+            {
+                var ex = new ValidationException(failures);
+                var r = ApiResponse.CreateFailed(ex.Message);
+                //return (TResponse)Convert.ChangeType(r, typeof(TResponse));
+                return r as TResponse;
+            }
         }
 
         return await next();
