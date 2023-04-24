@@ -27,4 +27,9 @@
     <ProjectReference Include="..\Api.Core.Domain\Api.Core.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Validators\Documentos\" />
+    <Folder Include="Validators\Productos\" />
+  </ItemGroup>
+
 </Project>

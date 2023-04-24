@@ -11,7 +11,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Api.Sync.Core.Application.Requests.Documentos;
+namespace Api.Sync.Core.Application.Requests.Documentos.CrearDocumento;
 
 public sealed class CrearDocumentoRequestHandler : IRequestHandler<CrearDocumentoRequest, ApiResponse>
 {

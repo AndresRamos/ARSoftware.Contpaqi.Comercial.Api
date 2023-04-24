@@ -33,9 +33,8 @@ public sealed class DocumentoRepository : IDocumentoRepository
         _agenteRepository = new AgenteRepository(context, mapper);
     }
 
-    public async Task<Documento?> BuscarPorIdAsync(int id,
-                                                   ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                   CancellationToken cancellationToken)
+    public async Task<Documento?> BuscarPorIdAsync(int id, ILoadRelatedDataOptions loadRelatedDataOptions,
+        CancellationToken cancellationToken)
     {
         DocumentoSql? documentoSql = await _context.admDocumentos.Where(c => c.CIDDOCUMENTO == id)
             .ProjectTo<DocumentoSql>(_mapper.ConfigurationProvider)
@@ -51,18 +50,19 @@ public sealed class DocumentoRepository : IDocumentoRepository
         return documento;
     }
 
-    public async Task<Documento?> BuscarPorLlaveAsync(LlaveDocumento llaveDocumento,
-                                                      ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                      CancellationToken cancellationToken)
+    public async Task<Documento?> BuscarPorLlaveAsync(LlaveDocumento llaveDocumento, ILoadRelatedDataOptions loadRelatedDataOptions,
+        CancellationToken cancellationToken)
     {
         ConceptoSql? conceptoSql = await _context.admConceptos.Where(c => c.CCODIGOCONCEPTO == llaveDocumento.ConceptoCodigo)
             .ProjectTo<ConceptoSql>(_mapper.ConfigurationProvider)
-            .FirstAsync(cancellationToken);
+            .FirstOrDefaultAsync(cancellationToken);
+
+        if (conceptoSql is null)
+            return null;
 
         // ReSharper disable once CompareOfFloatsByEqualityOperator
         DocumentoSql? documentoSql = await _context.admDocumentos
-            .Where(c => c.CIDCONCEPTODOCUMENTO == conceptoSql.CIDCONCEPTODOCUMENTO &&
-                        c.CSERIEDOCUMENTO == llaveDocumento.Serie &&
+            .Where(c => c.CIDCONCEPTODOCUMENTO == conceptoSql.CIDCONCEPTODOCUMENTO && c.CSERIEDOCUMENTO == llaveDocumento.Serie &&
                         c.CFOLIO == llaveDocumento.Folio)
             .ProjectTo<DocumentoSql>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(cancellationToken);
@@ -77,9 +77,23 @@ public sealed class DocumentoRepository : IDocumentoRepository
         return documento;
     }
 
+    public async Task<bool> ExistePorLlaveAsync(LlaveDocumento llaveDocumento, CancellationToken cancellationToken)
+    {
+        ConceptoSql? conceptoSql = await _context.admConceptos.Where(c => c.CCODIGOCONCEPTO == llaveDocumento.ConceptoCodigo)
+            .ProjectTo<ConceptoSql>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        if (conceptoSql is null)
+            return false;
+
+        // ReSharper disable once CompareOfFloatsByEqualityOperator
+        return await _context.admDocumentos.AnyAsync(
+            c => c.CIDCONCEPTODOCUMENTO == conceptoSql.CIDCONCEPTODOCUMENTO && c.CSERIEDOCUMENTO == llaveDocumento.Serie &&
+                 c.CFOLIO == llaveDocumento.Folio, cancellationToken);
+    }
+
     public async Task<IEnumerable<Documento>> BuscarPorRequestModelAsync(BuscarDocumentosRequestModel requestModel,
-                                                                         ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                                         CancellationToken cancellationToken)
+        ILoadRelatedDataOptions loadRelatedDataOptions, CancellationToken cancellationToken)
     {
         var documentosList = new List<Documento>();
 
@@ -98,8 +112,7 @@ public sealed class DocumentoRepository : IDocumentoRepository
 
             // ReSharper disable once CompareOfFloatsByEqualityOperator
             documentosQuery = documentosQuery.Where(d =>
-                d.CIDCONCEPTODOCUMENTO == conceptoId &&
-                d.CSERIEDOCUMENTO == requestModel.Llave.Serie &&
+                d.CIDCONCEPTODOCUMENTO == conceptoId && d.CSERIEDOCUMENTO == requestModel.Llave.Serie &&
                 d.CFOLIO == requestModel.Llave.Folio);
         }
 
@@ -148,27 +161,22 @@ public sealed class DocumentoRepository : IDocumentoRepository
         return documentosList;
     }
 
-    public async Task<int> BusarIdPorLlaveAsync(LlaveDocumento llaveDocumento,
-                                                ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                CancellationToken cancellationToken)
+    public async Task<int> BusarIdPorLlaveAsync(LlaveDocumento llaveDocumento, ILoadRelatedDataOptions loadRelatedDataOptions,
+        CancellationToken cancellationToken)
     {
         admConceptos conceptoSql = await _context.admConceptos.FirstAsync(c => c.CCODIGOCONCEPTO == llaveDocumento.ConceptoCodigo,
             cancellationToken);
 
         admDocumentos documentoSql = await _context.admDocumentos.FirstAsync(c =>
-                c.CIDCONCEPTODOCUMENTO == conceptoSql.CIDCONCEPTODOCUMENTO &&
-                c.CSERIEDOCUMENTO == llaveDocumento.Serie &&
-                // ReSharper disable once CompareOfFloatsByEqualityOperator
-                c.CFOLIO == llaveDocumento.Folio,
-            cancellationToken);
+            c.CIDCONCEPTODOCUMENTO == conceptoSql.CIDCONCEPTODOCUMENTO && c.CSERIEDOCUMENTO == llaveDocumento.Serie &&
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            c.CFOLIO == llaveDocumento.Folio, cancellationToken);
 
         return documentoSql.CIDDOCUMENTO;
     }
 
-    private async Task CargarObjectosRelacionadosAsync(Documento documento,
-                                                       DocumentoSql documentoSql,
-                                                       ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                       CancellationToken cancellationToken)
+    private async Task CargarObjectosRelacionadosAsync(Documento documento, DocumentoSql documentoSql,
+        ILoadRelatedDataOptions loadRelatedDataOptions, CancellationToken cancellationToken)
     {
         documento.Concepto =
             await _conceptoRepository.BuscarPorIdAsync(documentoSql.CIDCONCEPTODOCUMENTO, loadRelatedDataOptions, cancellationToken) ??
@@ -184,9 +192,7 @@ public sealed class DocumentoRepository : IDocumentoRepository
             .ToList();
 
         documento.FolioDigital = await _folioDigitalRepository.BuscarPorDocumentoIdAsync(documentoSql.CIDCONCEPTODOCUMENTO,
-            documentoSql.CIDDOCUMENTO,
-            loadRelatedDataOptions,
-            cancellationToken);
+            documentoSql.CIDDOCUMENTO, loadRelatedDataOptions, cancellationToken);
 
         if (loadRelatedDataOptions.CargarDatosExtra)
             documento.DatosExtra =

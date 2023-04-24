@@ -5,7 +5,7 @@ using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Api.Sync.Core.Application.Requests.Documentos;
+namespace Api.Sync.Core.Application.Requests.Documentos.BuscarDocumentos;
 
 public sealed record BuscarDocumentosRequestHandler : IRequestHandler<BuscarDocumentosRequest, ApiResponse>
 {

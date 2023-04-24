@@ -23,9 +23,8 @@ public sealed class ProductoRepository : IProductoRepository
         _mapper = mapper;
     }
 
-    public async Task<Producto?> BuscarPorIdAsync(int id,
-                                                  ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                  CancellationToken cancellationToken)
+    public async Task<Producto?> BuscarPorIdAsync(int id, ILoadRelatedDataOptions loadRelatedDataOptions,
+        CancellationToken cancellationToken)
     {
         ProductoSql? productoSql = await _context.admProductos.Where(m => m.CIDPRODUCTO == id)
             .ProjectTo<ProductoSql>(_mapper.ConfigurationProvider)
@@ -41,9 +40,8 @@ public sealed class ProductoRepository : IProductoRepository
         return producto;
     }
 
-    public async Task<Producto?> BuscarPorCodigoAsync(string codigo,
-                                                      ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                      CancellationToken cancellationToken)
+    public async Task<Producto?> BuscarPorCodigoAsync(string codigo, ILoadRelatedDataOptions loadRelatedDataOptions,
+        CancellationToken cancellationToken)
     {
         ProductoSql? productoSql = await _context.admProductos.Where(m => m.CCODIGOPRODUCTO == codigo)
             .ProjectTo<ProductoSql>(_mapper.ConfigurationProvider)
@@ -59,30 +57,13 @@ public sealed class ProductoRepository : IProductoRepository
         return producto;
     }
 
-    public async Task<IEnumerable<Producto>> BuscarTodoAsync(ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                             CancellationToken cancellationToken)
+    public async Task<bool> ExistePorCodigoAsync(string codigo, CancellationToken cancellationToken)
     {
-        var productosList = new List<Producto>();
-
-        List<ProductoSql> productosSql = await _context.admProductos.OrderBy(c => c.CNOMBREPRODUCTO)
-            .ProjectTo<ProductoSql>(_mapper.ConfigurationProvider)
-            .ToListAsync(cancellationToken);
-
-        foreach (ProductoSql productoSql in productosSql)
-        {
-            var producto = _mapper.Map<Producto>(productoSql);
-
-            await CargarDatosRelacionadosAsync(producto, productoSql, loadRelatedDataOptions, cancellationToken);
-
-            productosList.Add(producto);
-        }
-
-        return productosList;
+        return await _context.admProductos.AnyAsync(m => m.CCODIGOPRODUCTO == codigo, cancellationToken);
     }
 
     public async Task<IEnumerable<Producto>> BuscarPorRequestModel(BuscarProductosRequestModel requestModel,
-                                                                   ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                                   CancellationToken cancellationToken)
+        ILoadRelatedDataOptions loadRelatedDataOptions, CancellationToken cancellationToken)
     {
         var productosList = new List<Producto>();
 
@@ -112,10 +93,8 @@ public sealed class ProductoRepository : IProductoRepository
         return productosList;
     }
 
-    private async Task CargarDatosRelacionadosAsync(Producto producto,
-                                                    ProductoSql productoSql,
-                                                    ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                    CancellationToken cancellationToken)
+    private async Task CargarDatosRelacionadosAsync(Producto producto, ProductoSql productoSql,
+        ILoadRelatedDataOptions loadRelatedDataOptions, CancellationToken cancellationToken)
     {
         if (loadRelatedDataOptions.CargarDatosExtra)
             producto.DatosExtra = (await _context.admProductos.FirstAsync(m => m.CIDPRODUCTO == productoSql.CIDPRODUCTO, cancellationToken))

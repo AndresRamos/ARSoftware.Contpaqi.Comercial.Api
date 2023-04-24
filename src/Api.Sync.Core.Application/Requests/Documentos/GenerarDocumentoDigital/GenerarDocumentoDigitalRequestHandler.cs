@@ -9,7 +9,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Api.Sync.Core.Application.Requests.Documentos;
+namespace Api.Sync.Core.Application.Requests.Documentos.GenerarDocumentoDigital;
 
 public sealed class GenerarDocumentoDigitalRequestHandler : IRequestHandler<GenerarDocumentoDigitalRequest, ApiResponse>
 {
