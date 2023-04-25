@@ -67,13 +67,13 @@ public sealed class CrearDocumentoRequestHandler : IRequestHandler<CrearDocument
             foreach (Movimiento movimiento in documento.Movimientos)
             {
                 var movimientoSdk = _mapper.Map<tMovimiento>(movimiento);
+                // Todo: Validar el tipo de movimiento para saber si es nomal, de descuento, o de series/capas/pedimentos
                 int movimientoSdkId = _movimientoService.Crear(_documentoSdkId, movimientoSdk);
 
                 var datosMovimiento = new Dictionary<string, string>(movimiento.DatosExtra);
 
                 datosMovimiento.TryAdd(nameof(admMovimientos.COBSERVAMOV), movimiento.Observaciones);
 
-                // todo: modificar porcentages e importes de impuestos y descuentos dependiendo de la configuracion del concepto
                 _movimientoService.Actualizar(movimientoSdkId, datosMovimiento);
 
                 foreach (SeriesCapas movimientoSeriesCapas in movimiento.SeriesCapas)
