@@ -81,7 +81,8 @@ public sealed class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
                     new JsonDerivedType(typeof(EliminarProductoResponse), nameof(EliminarProductoResponse)),
                     new JsonDerivedType(typeof(GenerarDocumentoDigitalResponse), nameof(GenerarDocumentoDigitalResponse)),
                     new JsonDerivedType(typeof(SaldarDocumentoResponse), nameof(SaldarDocumentoResponse)),
-                    new JsonDerivedType(typeof(TimbrarDocumentoResponse), nameof(TimbrarDocumentoResponse))
+                    new JsonDerivedType(typeof(TimbrarDocumentoResponse), nameof(TimbrarDocumentoResponse)),
+                    new JsonDerivedType(typeof(EmptyContpaqiResponse), nameof(EmptyContpaqiResponse))
                 }
             };
 

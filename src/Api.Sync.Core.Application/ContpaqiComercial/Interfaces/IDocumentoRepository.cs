@@ -8,15 +8,14 @@ public interface IDocumentoRepository
 {
     Task<Documento?> BuscarPorIdAsync(int id, ILoadRelatedDataOptions loadRelatedDataOptions, CancellationToken cancellationToken);
 
-    Task<Documento?> BuscarPorLlaveAsync(LlaveDocumento llaveDocumento,
-                                         ILoadRelatedDataOptions loadRelatedDataOptions,
-                                         CancellationToken cancellationToken);
+    Task<Documento?> BuscarPorLlaveAsync(LlaveDocumento llaveDocumento, ILoadRelatedDataOptions loadRelatedDataOptions,
+        CancellationToken cancellationToken);
+
+    Task<bool> ExistePorLlaveAsync(LlaveDocumento llaveDocumento, CancellationToken cancellationToken);
 
     Task<IEnumerable<Documento>> BuscarPorRequestModelAsync(BuscarDocumentosRequestModel requestModel,
-                                                            ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                            CancellationToken cancellationToken);
+        ILoadRelatedDataOptions loadRelatedDataOptions, CancellationToken cancellationToken);
 
-    Task<int> BusarIdPorLlaveAsync(LlaveDocumento llaveDocumento,
-                                   ILoadRelatedDataOptions loadRelatedDataOptions,
-                                   CancellationToken cancellationToken);
+    Task<int> BusarIdPorLlaveAsync(LlaveDocumento llaveDocumento, ILoadRelatedDataOptions loadRelatedDataOptions,
+        CancellationToken cancellationToken);
 }

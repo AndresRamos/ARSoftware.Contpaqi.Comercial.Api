@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using Api.Core.Domain.Common;
+using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
-using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Models.Enums;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
 
@@ -12,7 +12,7 @@ public static class AgenteFactory
     public const string Codigo = "AGE001";
     public const string Nombre = "Agente 1";
 
-    public static CrearAgenteRequest Crear()
+    private static CrearAgenteRequest Crear()
     {
         var request = new CrearAgenteRequest();
 
@@ -72,10 +72,18 @@ public static class AgenteFactory
     {
         return new Dictionary<string, string>
         {
-            { nameof(admAgentes.CFECHAALTAAGENTE), DateTime.Today.ToSdkFecha() },
-            { nameof(admAgentes.CCOMISIONVENTAAGENTE), 5.ToString() },
-            { nameof(admAgentes.CCOMISIONCOBROAGENTE), 10.ToString() }
+            { nameof(admAgentes.CCOMISIONVENTAAGENTE), 5.ToString() }, { nameof(admAgentes.CCOMISIONCOBROAGENTE), 10.ToString() }
         };
+    }
+
+    public static Agente CrearAgentePrueba()
+    {
+        return new Agente { Codigo = Codigo, Nombre = Nombre, Tipo = TipoAgente.VentasCobro, DatosExtra = GetDatosExtra() };
+    }
+
+    public static Agente CrearAgenteDatosMinimos()
+    {
+        return new Agente { Codigo = Codigo };
     }
 
     public static void CearJson(string directory)
