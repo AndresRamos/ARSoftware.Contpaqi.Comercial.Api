@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
-using Api.Core.Domain.Common;
 using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Models;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Models.Enums;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
@@ -17,7 +17,7 @@ public static class DocumentoFactory
 
     private static CrearDocumentoRequest Crear()
     {
-        var request = new CrearDocumentoRequest();
+        var request = new CrearDocumentoRequest(new CrearDocumentoRequestModel(), new CrearDocumentoRequestOptions());
 
         request.Model.Documento = GetDocumento();
         request.Options.UsarFechaDelDia = true;
@@ -29,7 +29,7 @@ public static class DocumentoFactory
 
     private static CrearFacturaRequest CrearFactura()
     {
-        var request = new CrearFacturaRequest();
+        var request = new CrearFacturaRequest(new CrearFacturaRequestModel(), new CrearFacturaRequestOptions());
 
         request.Model.Documento = GetDocumento();
 
@@ -47,7 +47,7 @@ public static class DocumentoFactory
 
     private static ActualizarDocumentoRequest Actualizar()
     {
-        var request = new ActualizarDocumentoRequest();
+        var request = new ActualizarDocumentoRequest(new ActualizarDocumentoRequestModel(), new ActualizarDocumentoRequestOptions());
 
         request.Model.LlaveDocumento.ConceptoCodigo = CodigoConcepto;
         request.Model.LlaveDocumento.Serie = "FE";
@@ -59,7 +59,7 @@ public static class DocumentoFactory
 
     private static EliminarDocumentoRequest Eliminar()
     {
-        var request = new EliminarDocumentoRequest();
+        var request = new EliminarDocumentoRequest(new EliminarDocumentoRequestModel(), new EliminarDocumentoRequestOptions());
 
         request.Model.LlaveDocumento.ConceptoCodigo = CodigoConcepto;
         request.Model.LlaveDocumento.Serie = "FE";
@@ -70,7 +70,7 @@ public static class DocumentoFactory
 
     private static TimbrarDocumentoRequest Timbrar()
     {
-        var request = new TimbrarDocumentoRequest();
+        var request = new TimbrarDocumentoRequest(new TimbrarDocumentoRequestModel(), new TimbrarDocumentoRequestOptions());
 
         request.Model.LlaveDocumento.ConceptoCodigo = CodigoConcepto;
         request.Model.LlaveDocumento.Serie = "FE";
@@ -82,7 +82,8 @@ public static class DocumentoFactory
 
     private static GenerarDocumentoDigitalRequest GenerarDocumentoDigital()
     {
-        var request = new GenerarDocumentoDigitalRequest();
+        var request = new GenerarDocumentoDigitalRequest(new GenerarDocumentoDigitalRequestModel(),
+            new GenerarDocumentoDigitalRequestOptions());
 
         request.Model.LlaveDocumento.ConceptoCodigo = CodigoConcepto;
         request.Model.LlaveDocumento.Serie = "FE";
@@ -96,7 +97,7 @@ public static class DocumentoFactory
 
     private static SaldarDocumentoRequest Saldar()
     {
-        var request = new SaldarDocumentoRequest();
+        var request = new SaldarDocumentoRequest(new SaldarDocumentoRequestModel(), new SaldarDocumentoRequestOptions());
 
         request.Model.DocumentoAPagar.ConceptoCodigo = CodigoConcepto;
         request.Model.DocumentoAPagar.Serie = "FE";
@@ -114,7 +115,7 @@ public static class DocumentoFactory
 
     private static CancelarDocumentoRequest Cancelar()
     {
-        var request = new CancelarDocumentoRequest();
+        var request = new CancelarDocumentoRequest(new CancelarDocumentoRequestModel(), new CancelarDocumentoRequestOptions());
 
         request.Model.LlaveDocumento.ConceptoCodigo = CodigoConcepto;
         request.Model.LlaveDocumento.Serie = "FE";
@@ -137,7 +138,7 @@ public static class DocumentoFactory
 
     private static BuscarDocumentosRequest BuscarPorSql()
     {
-        var request = new BuscarDocumentosRequest();
+        var request = new BuscarDocumentosRequest(new BuscarDocumentosRequestModel(), new BuscarDocumentosRequestOptions());
 
         request.Model.SqlQuery = @"CPENDIENTE > 0.00";
 
@@ -146,7 +147,7 @@ public static class DocumentoFactory
 
     private static BuscarDocumentosRequest BuscarPorRangoFecha()
     {
-        var request = new BuscarDocumentosRequest();
+        var request = new BuscarDocumentosRequest(new BuscarDocumentosRequestModel(), new BuscarDocumentosRequestOptions());
 
         request.Model.FechaInicio = DateOnly.FromDateTime(DateTime.Today);
         request.Model.FechaFin = DateOnly.FromDateTime(DateTime.Today);
@@ -156,7 +157,7 @@ public static class DocumentoFactory
 
     private static BuscarDocumentosRequest BuscarPorId()
     {
-        var request = new BuscarDocumentosRequest();
+        var request = new BuscarDocumentosRequest(new BuscarDocumentosRequestModel(), new BuscarDocumentosRequestOptions());
 
         request.Model.Id = 1;
 
@@ -165,7 +166,7 @@ public static class DocumentoFactory
 
     private static BuscarDocumentosRequest BuscarPorLlave()
     {
-        var request = new BuscarDocumentosRequest();
+        var request = new BuscarDocumentosRequest(new BuscarDocumentosRequestModel(), new BuscarDocumentosRequestOptions());
 
         request.Model.Llave = new LlaveDocumento { ConceptoCodigo = "400", Serie = "FACT", Folio = 1 };
 
@@ -174,7 +175,7 @@ public static class DocumentoFactory
 
     private static BuscarDocumentosRequest BuscarPorConcepto()
     {
-        var request = new BuscarDocumentosRequest();
+        var request = new BuscarDocumentosRequest(new BuscarDocumentosRequestModel(), new BuscarDocumentosRequestOptions());
 
         request.Model.ConceptoCodigo = "400";
 
@@ -183,7 +184,7 @@ public static class DocumentoFactory
 
     private static BuscarDocumentosRequest BuscarPorCliente()
     {
-        var request = new BuscarDocumentosRequest();
+        var request = new BuscarDocumentosRequest(new BuscarDocumentosRequestModel(), new BuscarDocumentosRequestOptions());
 
         request.Model.ClienteCodigo = "CTE001";
 
@@ -224,45 +225,45 @@ public static class DocumentoFactory
         Directory.CreateDirectory(directory);
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(CrearDocumentoRequest)}.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(Crear(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(Crear(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(CrearFacturaRequest)}.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(CrearFactura(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(CrearFactura(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(ActualizarDocumentoRequest)}.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(Actualizar(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(Actualizar(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(EliminarDocumentoRequest)}.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(Eliminar(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(Eliminar(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(TimbrarDocumentoRequest)}.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(Timbrar(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(Timbrar(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(GenerarDocumentoDigitalRequest)}.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(GenerarDocumentoDigital(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(GenerarDocumentoDigital(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(SaldarDocumentoRequest)}.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(Saldar(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(Saldar(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(CancelarDocumentoRequest)}.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(Cancelar(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(Cancelar(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarDocumentosRequest)}_PorId.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorId(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorId(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarDocumentosRequest)}_PorLlave.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorLlave(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorLlave(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarDocumentosRequest)}_PorConcepto.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorConcepto(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorConcepto(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarDocumentosRequest)}_PorCliente.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorCliente(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorCliente(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarDocumentosRequest)}_PorRangoFecha.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorRangoFecha(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorRangoFecha(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarDocumentosRequest)}_PorSql.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorSql(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorSql(), options));
     }
 }

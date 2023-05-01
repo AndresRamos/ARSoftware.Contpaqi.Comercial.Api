@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
-using Api.Core.Domain.Common;
 using Api.Core.Domain.Requests;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Sdk.ConsoleApp.JsonFactories;
 
@@ -8,7 +8,7 @@ public static class EmpresaFactory
 {
     private static BuscarEmpresasRequest BuscarTodo()
     {
-        var request = new BuscarEmpresasRequest();
+        var request = new BuscarEmpresasRequest(new BuscarEmpresasRequestModel(), new BuscarEmpresasRequestOptions());
 
         return request;
     }
@@ -20,6 +20,6 @@ public static class EmpresaFactory
         Directory.CreateDirectory(directory);
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarEmpresasRequest)}_Todo.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(BuscarTodo(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(BuscarTodo(), options));
     }
 }

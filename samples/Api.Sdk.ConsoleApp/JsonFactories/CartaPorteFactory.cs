@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
-using Api.Core.Domain.Common;
 using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Models;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Models.Enums;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
@@ -18,7 +18,7 @@ public sealed class CartaPorteFactory
 
     private static CrearFacturaRequest Crear()
     {
-        var request = new CrearFacturaRequest();
+        var request = new CrearFacturaRequest(new CrearFacturaRequestModel(), new CrearFacturaRequestOptions());
 
         request.Model.Documento = GetDocumento();
 
@@ -77,6 +77,6 @@ public sealed class CartaPorteFactory
         Directory.CreateDirectory(directory);
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(CrearDocumentoRequest)}.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(Crear(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(Crear(), options));
     }
 }

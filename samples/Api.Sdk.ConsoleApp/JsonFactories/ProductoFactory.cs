@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
-using Api.Core.Domain.Common;
 using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
 
@@ -15,7 +15,7 @@ public static class ProductoFactory
 
     private static CrearProductoRequest Crear()
     {
-        var request = new CrearProductoRequest();
+        var request = new CrearProductoRequest(new CrearProductoRequestModel(), new CrearProductoRequestOptions());
 
         request.Model.Producto = CrearProductoPrueba();
 
@@ -24,7 +24,7 @@ public static class ProductoFactory
 
     private static ActualizarProductoRequest Actualizar()
     {
-        var request = new ActualizarProductoRequest();
+        var request = new ActualizarProductoRequest(new ActualizarProductoRequestModel(), new ActualizarProductoRequestOptions());
 
         request.Model.CodigoProducto = Codigo;
         request.Model.DatosProducto = GetDatosExtra();
@@ -34,7 +34,7 @@ public static class ProductoFactory
 
     private static BuscarProductosRequest BuscarPorId()
     {
-        var request = new BuscarProductosRequest();
+        var request = new BuscarProductosRequest(new BuscarProductosRequestModel(), new BuscarProductosRequestOptions());
 
         request.Model.Id = 100;
 
@@ -43,7 +43,7 @@ public static class ProductoFactory
 
     private static BuscarProductosRequest BuscarPorCodigo()
     {
-        var request = new BuscarProductosRequest();
+        var request = new BuscarProductosRequest(new BuscarProductosRequestModel(), new BuscarProductosRequestOptions());
 
         request.Model.Codigo = Codigo;
 
@@ -52,7 +52,7 @@ public static class ProductoFactory
 
     private static BuscarProductosRequest BuscarPorSql()
     {
-        var request = new BuscarProductosRequest();
+        var request = new BuscarProductosRequest(new BuscarProductosRequestModel(), new BuscarProductosRequestOptions());
 
         request.Model.SqlQuery = "CNOMBREPRODUCTO = 'nombre'";
 
@@ -61,14 +61,14 @@ public static class ProductoFactory
 
     private static BuscarProductosRequest BuscarTodo()
     {
-        var request = new BuscarProductosRequest();
+        var request = new BuscarProductosRequest(new BuscarProductosRequestModel(), new BuscarProductosRequestOptions());
 
         return request;
     }
 
     private static EliminarProductoRequest Eliminar()
     {
-        var request = new EliminarProductoRequest();
+        var request = new EliminarProductoRequest(new EliminarProductoRequestModel(), new EliminarProductoRequestOptions());
 
         request.Model.CodigoProducto = Codigo;
 
@@ -99,24 +99,24 @@ public static class ProductoFactory
         Directory.CreateDirectory(directory);
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(CrearProductoRequest)}.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(Crear(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(Crear(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(ActualizarProductoRequest)}.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(Actualizar(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(Actualizar(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarProductosRequest)}_PorId.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorId(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorId(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarProductosRequest)}_PorCodigo.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorCodigo(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorCodigo(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarProductosRequest)}_PorSql.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorSql(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorSql(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarProductosRequest)}_Todo.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(BuscarTodo(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(BuscarTodo(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(EliminarProductoRequest)}.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(Eliminar(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(Eliminar(), options));
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
-using Api.Core.Domain.Common;
 using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Models.Enums;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
@@ -16,7 +16,7 @@ public static class ClienteFactory
 
     private static CrearClienteRequest Crear()
     {
-        var request = new CrearClienteRequest();
+        var request = new CrearClienteRequest(new CrearClienteRequestModel(), new CrearClienteRequestOptions());
 
         request.Model.Cliente = CrearClientePrueba();
 
@@ -25,7 +25,7 @@ public static class ClienteFactory
 
     private static ActualizarClienteRequest Actualizar()
     {
-        var request = new ActualizarClienteRequest();
+        var request = new ActualizarClienteRequest(new ActualizarClienteRequestModel(), new ActualizarClienteRequestOptions());
 
         request.Model.CodigoCliente = Codigo;
         request.Model.DatosCliente = GetDatosExtra();
@@ -35,7 +35,7 @@ public static class ClienteFactory
 
     private static BuscarClientesRequest BuscarPorId()
     {
-        var request = new BuscarClientesRequest();
+        var request = new BuscarClientesRequest(new BuscarClientesRequestModel(), new BuscarClientesRequestOptions());
 
         request.Model.Id = 100;
 
@@ -44,7 +44,7 @@ public static class ClienteFactory
 
     private static BuscarClientesRequest BuscarPorCodigo()
     {
-        var request = new BuscarClientesRequest();
+        var request = new BuscarClientesRequest(new BuscarClientesRequestModel(), new BuscarClientesRequestOptions());
 
         request.Model.Codigo = Codigo;
 
@@ -53,7 +53,7 @@ public static class ClienteFactory
 
     private static BuscarClientesRequest BuscarPorSql()
     {
-        var request = new BuscarClientesRequest();
+        var request = new BuscarClientesRequest(new BuscarClientesRequestModel(), new BuscarClientesRequestOptions());
 
         request.Model.SqlQuery = "CRAZONSOCIAL = 'razonSocial'";
 
@@ -62,14 +62,14 @@ public static class ClienteFactory
 
     private static BuscarClientesRequest BuscarTodo()
     {
-        var request = new BuscarClientesRequest();
+        var request = new BuscarClientesRequest(new BuscarClientesRequestModel(), new BuscarClientesRequestOptions());
 
         return request;
     }
 
     private static EliminarClienteRequest Eliminar()
     {
-        var request = new EliminarClienteRequest();
+        var request = new EliminarClienteRequest(new EliminarClienteRequestModel(), new EliminarClienteRequestOptions());
 
         request.Model.CodigoCliente = Codigo;
 
@@ -120,24 +120,24 @@ public static class ClienteFactory
         Directory.CreateDirectory(directory);
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(CrearClienteRequest)}.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(Crear(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(Crear(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(ActualizarClienteRequest)}.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(Actualizar(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(Actualizar(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarClientesRequest)}_PorId.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorId(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorId(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarClientesRequest)}_PorCodigo.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorCodigo(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorCodigo(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarClientesRequest)}_PorSql.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorSql(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorSql(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarClientesRequest)}_Todo.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(BuscarTodo(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(BuscarTodo(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(EliminarClienteRequest)}.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(Eliminar(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(Eliminar(), options));
     }
 }
