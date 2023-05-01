@@ -1,14 +1,17 @@
 ﻿using Api.Core.Domain.Models;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Core.Domain.Requests;
 
 /// <summary>
 ///     Solicitud para buscar productos.
 /// </summary>
-public sealed class BuscarProductosRequest : IContpaqiRequest<BuscarProductosRequestModel, BuscarProductosRequestOptions>
+public sealed class
+    BuscarProductosRequest : ContpaqiRequest<BuscarProductosRequestModel, BuscarProductosRequestOptions, BuscarProductosResponse>
 {
-    public BuscarProductosRequestModel Model { get; set; } = new();
-    public BuscarProductosRequestOptions Options { get; set; } = new();
+    public BuscarProductosRequest(BuscarProductosRequestModel model, BuscarProductosRequestOptions options) : base(model, options)
+    {
+    }
 }
 
 /// <summary>
@@ -50,17 +53,29 @@ public sealed class BuscarProductosRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud BuscarProductosRequest.
 /// </summary>
-public sealed class BuscarProductosResponse : IContpaqiResponse<BuscarProductosResponseModel>
+public sealed class BuscarProductosResponse : ContpaqiResponse<BuscarProductosResponseModel>
 {
-    public BuscarProductosResponseModel Model { get; set; } = new();
+    public BuscarProductosResponse(BuscarProductosResponseModel model) : base(model)
+    {
+    }
+
+    public static BuscarProductosResponse CreateInstance(List<Producto> productos)
+    {
+        return new BuscarProductosResponse(new BuscarProductosResponseModel(productos));
+    }
 }
 
 public sealed class BuscarProductosResponseModel
 {
+    public BuscarProductosResponseModel(List<Producto> productos)
+    {
+        Productos = productos;
+    }
+
     public int NumeroRegistros => Productos.Count;
 
     /// <summary>
     ///     Lista de productos encontrados.
     /// </summary>
-    public List<Producto> Productos { get; set; } = new();
+    public List<Producto> Productos { get; set; }
 }

@@ -1,15 +1,17 @@
 ﻿using Api.Core.Domain.Models;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Core.Domain.Requests;
 
 /// <summary>
 ///     Solicitud para buscar documentos.
 /// </summary>
-public sealed class BuscarDocumentosRequest : IContpaqiRequest<BuscarDocumentosRequestModel, BuscarDocumentosRequestOptions>
+public sealed class
+    BuscarDocumentosRequest : ContpaqiRequest<BuscarDocumentosRequestModel, BuscarDocumentosRequestOptions, BuscarDocumentosResponse>
 {
-    public BuscarDocumentosRequestModel Model { get; set; } = new();
-
-    public BuscarDocumentosRequestOptions Options { get; set; } = new();
+    public BuscarDocumentosRequest(BuscarDocumentosRequestModel model, BuscarDocumentosRequestOptions options) : base(model, options)
+    {
+    }
 }
 
 /// <summary>
@@ -71,9 +73,16 @@ public sealed class BuscarDocumentosRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud BuscarDocumentosRequest.
 /// </summary>
-public sealed class BuscarDocumentosResponse : IContpaqiResponse<BuscarDocumentosResponseModel>
+public sealed class BuscarDocumentosResponse : ContpaqiResponse<BuscarDocumentosResponseModel>
 {
-    public BuscarDocumentosResponseModel Model { get; set; } = new();
+    public BuscarDocumentosResponse(BuscarDocumentosResponseModel model) : base(model)
+    {
+    }
+
+    public static BuscarDocumentosResponse CreateInstance(List<Documento> documentos)
+    {
+        return new BuscarDocumentosResponse(new BuscarDocumentosResponseModel(documentos));
+    }
 }
 
 /// <summary>
@@ -81,10 +90,15 @@ public sealed class BuscarDocumentosResponse : IContpaqiResponse<BuscarDocumento
 /// </summary>
 public sealed class BuscarDocumentosResponseModel
 {
+    public BuscarDocumentosResponseModel(List<Documento> documentos)
+    {
+        Documentos = documentos;
+    }
+
     public int NumeroRegistros => Documentos.Count;
 
     /// <summary>
     ///     Lista de documentos encontrados.
     /// </summary>
-    public List<Documento> Documentos { get; set; } = new();
+    public List<Documento> Documentos { get; set; }
 }

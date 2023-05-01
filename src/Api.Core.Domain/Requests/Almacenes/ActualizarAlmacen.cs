@@ -1,15 +1,17 @@
 ﻿using Api.Core.Domain.Models;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Core.Domain.Requests;
 
 /// <summary>
 ///     Solicitud para actualizar un almacen.
 /// </summary>
-public sealed class ActualizarAlmacenRequest : 
-    IContpaqiRequest<ActualizarAlmacenRequestModel, ActualizarAlmacenRequestOptions>
+public sealed class ActualizarAlmacenRequest :
+    ContpaqiRequest<ActualizarAlmacenRequestModel, ActualizarAlmacenRequestOptions, ActualizarAlmacenResponse>
 {
-    public ActualizarAlmacenRequestModel Model { get; set; } = new();
-    public ActualizarAlmacenRequestOptions Options { get; set; } = new();
+    public ActualizarAlmacenRequest(ActualizarAlmacenRequestModel model, ActualizarAlmacenRequestOptions options) : base(model, options)
+    {
+    }
 }
 
 /// <summary>
@@ -40,9 +42,16 @@ public sealed class ActualizarAlmacenRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud ActualizarAlmacenRequest.
 /// </summary>
-public sealed class ActualizarAlmacenResponse : IContpaqiResponse<ActualizarAlmacenResponseModel>
+public sealed class ActualizarAlmacenResponse : ContpaqiResponse<ActualizarAlmacenResponseModel>
 {
-    public ActualizarAlmacenResponseModel Model { get; set; } = new();
+    public ActualizarAlmacenResponse(ActualizarAlmacenResponseModel model) : base(model)
+    {
+    }
+
+    public static ActualizarAlmacenResponse CreateInstance(Almacen almacen)
+    {
+        return new ActualizarAlmacenResponse(new ActualizarAlmacenResponseModel(almacen));
+    }
 }
 
 /// <summary>
@@ -50,5 +59,10 @@ public sealed class ActualizarAlmacenResponse : IContpaqiResponse<ActualizarAlma
 /// </summary>
 public sealed class ActualizarAlmacenResponseModel
 {
-    public Almacen Almacen { get; set; } = new();
+    public ActualizarAlmacenResponseModel(Almacen almacen)
+    {
+        Almacen = almacen;
+    }
+
+    public Almacen Almacen { get; set; }
 }

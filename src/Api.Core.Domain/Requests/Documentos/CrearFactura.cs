@@ -1,14 +1,16 @@
 ﻿using Api.Core.Domain.Models;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Core.Domain.Requests;
 
 /// <summary>
 ///     Solicitud para crear una factura.
 /// </summary>
-public sealed class CrearFacturaRequest : IContpaqiRequest<CrearFacturaRequestModel, CrearFacturaRequestOptions>
+public sealed class CrearFacturaRequest : ContpaqiRequest<CrearFacturaRequestModel, CrearFacturaRequestOptions, CrearFacturaResponse>
 {
-    public CrearFacturaRequestModel Model { get; set; } = new();
-    public CrearFacturaRequestOptions Options { get; set; } = new();
+    public CrearFacturaRequest(CrearFacturaRequestModel model, CrearFacturaRequestOptions options) : base(model, options)
+    {
+    }
 }
 
 /// <summary>
@@ -54,9 +56,16 @@ public sealed class CrearFacturaRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud CrearFacturaRequest.
 /// </summary>
-public sealed class CrearFacturaResponse : IContpaqiResponse<CrearFacturaResponseModel>
+public sealed class CrearFacturaResponse : ContpaqiResponse<CrearFacturaResponseModel>
 {
-    public CrearFacturaResponseModel Model { get; set; } = new();
+    public CrearFacturaResponse(CrearFacturaResponseModel model) : base(model)
+    {
+    }
+
+    public static CrearFacturaResponse CreateInstance(Documento documento, DocumentoDigital xml, DocumentoDigital pdf)
+    {
+        return new CrearFacturaResponse(new CrearFacturaResponseModel(documento, xml, pdf));
+    }
 }
 
 /// <summary>
@@ -64,7 +73,14 @@ public sealed class CrearFacturaResponse : IContpaqiResponse<CrearFacturaRespons
 /// </summary>
 public sealed class CrearFacturaResponseModel
 {
-    public Documento Documento { get; set; } = new();
-    public DocumentoDigital Xml { get; set; } = new();
-    public DocumentoDigital Pdf { get; set; } = new();
+    public CrearFacturaResponseModel(Documento documento, DocumentoDigital xml, DocumentoDigital pdf)
+    {
+        Documento = documento;
+        Xml = xml;
+        Pdf = pdf;
+    }
+
+    public Documento Documento { get; set; }
+    public DocumentoDigital Xml { get; set; }
+    public DocumentoDigital Pdf { get; set; }
 }

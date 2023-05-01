@@ -2,6 +2,8 @@
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 using Api.Core.Domain.Requests;
+using ARSoftware.Contpaqi.Api.Common.Domain;
+using ARSoftware.Contpaqi.Api.Common.Responses;
 
 namespace Api.Core.Domain.Common;
 
@@ -11,7 +13,7 @@ public sealed class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
     {
         JsonTypeInfo jsonTypeInfo = base.GetTypeInfo(type, options);
 
-        Type apiRequestBaseType = typeof(IContpaqiRequest);
+        Type apiRequestBaseType = typeof(ContpaqiRequest);
         if (jsonTypeInfo.Type == apiRequestBaseType)
             jsonTypeInfo.PolymorphismOptions = new JsonPolymorphismOptions
             {
@@ -48,7 +50,7 @@ public sealed class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
                 }
             };
 
-        Type apiResponseBaseType = typeof(IContpaqiResponse);
+        Type apiResponseBaseType = typeof(ContpaqiResponse);
         if (jsonTypeInfo.Type == apiResponseBaseType)
             jsonTypeInfo.PolymorphismOptions = new JsonPolymorphismOptions
             {
@@ -82,7 +84,8 @@ public sealed class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
                     new JsonDerivedType(typeof(GenerarDocumentoDigitalResponse), nameof(GenerarDocumentoDigitalResponse)),
                     new JsonDerivedType(typeof(SaldarDocumentoResponse), nameof(SaldarDocumentoResponse)),
                     new JsonDerivedType(typeof(TimbrarDocumentoResponse), nameof(TimbrarDocumentoResponse)),
-                    new JsonDerivedType(typeof(EmptyContpaqiResponse), nameof(EmptyContpaqiResponse))
+                    new JsonDerivedType(typeof(EmptyContpaqiResponse), nameof(EmptyContpaqiResponse)),
+                    new JsonDerivedType(typeof(ErrorContpaqiResponse), nameof(ErrorContpaqiResponse))
                 }
             };
 

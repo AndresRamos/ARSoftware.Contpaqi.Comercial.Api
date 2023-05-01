@@ -1,15 +1,17 @@
 ﻿using Api.Core.Domain.Models;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Core.Domain.Requests;
 
 /// <summary>
 ///     Solicitud para eliminar un documento.
 /// </summary>
-public sealed class EliminarDocumentoRequest : 
-    IContpaqiRequest<EliminarDocumentoRequestModel, EliminarDocumentoRequestOptions>
+public sealed class EliminarDocumentoRequest :
+    ContpaqiRequest<EliminarDocumentoRequestModel, EliminarDocumentoRequestOptions, EliminarDocumentoResponse>
 {
-    public EliminarDocumentoRequestModel Model { get; set; } = new();
-    public EliminarDocumentoRequestOptions Options { get; set; } = new();
+    public EliminarDocumentoRequest(EliminarDocumentoRequestModel model, EliminarDocumentoRequestOptions options) : base(model, options)
+    {
+    }
 }
 
 /// <summary>
@@ -30,9 +32,16 @@ public sealed class EliminarDocumentoRequestOptions
 /// <summary>
 ///     Respuesta de la solicitud EliminarDocumentoRequest.
 /// </summary>
-public sealed class EliminarDocumentoResponse : IContpaqiResponse<EliminarDocumentoResponseModel>
+public sealed class EliminarDocumentoResponse : ContpaqiResponse<EliminarDocumentoResponseModel>
 {
-    public EliminarDocumentoResponseModel Model { get; set; } = new();
+    public EliminarDocumentoResponse(EliminarDocumentoResponseModel model) : base(model)
+    {
+    }
+
+    public static EliminarDocumentoResponse CreateInstance()
+    {
+        return new EliminarDocumentoResponse(new EliminarDocumentoResponseModel());
+    }
 }
 
 /// <summary>

@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using Api.Core.Domain.Models;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Models.Enums;
 
 namespace Api.Core.Domain.Requests;
@@ -7,11 +8,13 @@ namespace Api.Core.Domain.Requests;
 /// <summary>
 ///     Solicitud para generar el XML o PDF del documento.
 /// </summary>
-public sealed class GenerarDocumentoDigitalRequest : 
-    IContpaqiRequest<GenerarDocumentoDigitalRequestModel, GenerarDocumentoDigitalRequestOptions>
+public sealed class GenerarDocumentoDigitalRequest : ContpaqiRequest<GenerarDocumentoDigitalRequestModel,
+    GenerarDocumentoDigitalRequestOptions, GenerarDocumentoDigitalResponse>
 {
-    public GenerarDocumentoDigitalRequestModel Model { get; set; } = new();
-    public GenerarDocumentoDigitalRequestOptions Options { get; set; } = new();
+    public GenerarDocumentoDigitalRequest(GenerarDocumentoDigitalRequestModel model, GenerarDocumentoDigitalRequestOptions options) :
+        base(model, options)
+    {
+    }
 }
 
 /// <summary>
@@ -42,9 +45,16 @@ public sealed class GenerarDocumentoDigitalRequestOptions
 /// <summary>
 ///     Respuesta de la solicitud GenerarDocumentoDigitalRequest.
 /// </summary>
-public sealed class GenerarDocumentoDigitalResponse : IContpaqiResponse<GenerarDocumentoDigitalResponseModel>
+public sealed class GenerarDocumentoDigitalResponse : ContpaqiResponse<GenerarDocumentoDigitalResponseModel>
 {
-    public GenerarDocumentoDigitalResponseModel Model { get; set; } = new();
+    public GenerarDocumentoDigitalResponse(GenerarDocumentoDigitalResponseModel model) : base(model)
+    {
+    }
+
+    public static GenerarDocumentoDigitalResponse CreateInstance(DocumentoDigital documentoDigital)
+    {
+        return new GenerarDocumentoDigitalResponse(new GenerarDocumentoDigitalResponseModel(documentoDigital));
+    }
 }
 
 /// <summary>
@@ -52,5 +62,10 @@ public sealed class GenerarDocumentoDigitalResponse : IContpaqiResponse<GenerarD
 /// </summary>
 public sealed class GenerarDocumentoDigitalResponseModel
 {
-    public DocumentoDigital DocumentoDigital { get; set; } = new();
+    public GenerarDocumentoDigitalResponseModel(DocumentoDigital documentoDigital)
+    {
+        DocumentoDigital = documentoDigital;
+    }
+
+    public DocumentoDigital DocumentoDigital { get; set; }
 }
