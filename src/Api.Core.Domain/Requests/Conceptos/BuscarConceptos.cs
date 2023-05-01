@@ -1,14 +1,17 @@
 ﻿using Api.Core.Domain.Models;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Core.Domain.Requests;
 
 /// <summary>
 ///     Solicitud para buscar conceptos.
 /// </summary>
-public sealed class BuscarConceptosRequest : IContpaqiRequest<BuscarConceptosRequestModel, BuscarConceptosRequestOptions>
+public sealed class
+    BuscarConceptosRequest : ContpaqiRequest<BuscarConceptosRequestModel, BuscarConceptosRequestOptions, BuscarConceptosResponse>
 {
-    public BuscarConceptosRequestModel Model { get; set; } = new();
-    public BuscarConceptosRequestOptions Options { get; set; } = new();
+    public BuscarConceptosRequest(BuscarConceptosRequestModel model, BuscarConceptosRequestOptions options) : base(model, options)
+    {
+    }
 }
 
 /// <summary>
@@ -50,9 +53,16 @@ public sealed class BuscarConceptosRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud BuscarConceptosRequest.
 /// </summary>
-public sealed class BuscarConceptosResponse : IContpaqiResponse<BuscarConceptosResponseModel>
+public sealed class BuscarConceptosResponse : ContpaqiResponse<BuscarConceptosResponseModel>
 {
-    public BuscarConceptosResponseModel Model { get; set; } = new();
+    public BuscarConceptosResponse(BuscarConceptosResponseModel model) : base(model)
+    {
+    }
+
+    public static BuscarConceptosResponse CreateInstance(List<Concepto> conceptos)
+    {
+        return new BuscarConceptosResponse(new BuscarConceptosResponseModel(conceptos));
+    }
 }
 
 /// <summary>
@@ -60,10 +70,15 @@ public sealed class BuscarConceptosResponse : IContpaqiResponse<BuscarConceptosR
 /// </summary>
 public sealed class BuscarConceptosResponseModel
 {
+    public BuscarConceptosResponseModel(List<Concepto> conceptos)
+    {
+        Conceptos = conceptos;
+    }
+
     public int NumeroRegistros => Conceptos.Count;
 
     /// <summary>
     ///     Lista de conceptos encontrados.
     /// </summary>
-    public List<Concepto> Conceptos { get; set; } = new();
+    public List<Concepto> Conceptos { get; set; }
 }

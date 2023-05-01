@@ -1,14 +1,16 @@
 ﻿using Api.Core.Domain.Models;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Core.Domain.Requests;
 
 /// <summary>
 ///     Solicitud para crear un agente.
 /// </summary>
-public sealed class CrearAgenteRequest : IContpaqiRequest<CrearAgenteRequestModel, CrearAgenteRequestOptions>
+public sealed class CrearAgenteRequest : ContpaqiRequest<CrearAgenteRequestModel, CrearAgenteRequestOptions, CrearAgenteResponse>
 {
-    public CrearAgenteRequestModel Model { get; set; } = new();
-    public CrearAgenteRequestOptions Options { get; set; } = new();
+    public CrearAgenteRequest(CrearAgenteRequestModel model, CrearAgenteRequestOptions options) : base(model, options)
+    {
+    }
 }
 
 /// <summary>
@@ -31,9 +33,16 @@ public sealed class CrearAgenteRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud CrearAgenteRequest.
 /// </summary>
-public sealed class CrearAgenteResponse : IContpaqiResponse<CrearAgenteResponseModel>
+public sealed class CrearAgenteResponse : ContpaqiResponse<CrearAgenteResponseModel>
 {
-    public CrearAgenteResponseModel Model { get; set; } = new();
+    public CrearAgenteResponse(CrearAgenteResponseModel model) : base(model)
+    {
+    }
+
+    public static CrearAgenteResponse CreateInstance(Agente agente)
+    {
+        return new CrearAgenteResponse(new CrearAgenteResponseModel(agente));
+    }
 }
 
 /// <summary>
@@ -41,5 +50,10 @@ public sealed class CrearAgenteResponse : IContpaqiResponse<CrearAgenteResponseM
 /// </summary>
 public sealed class CrearAgenteResponseModel
 {
-    public Agente Agente { get; set; } = new();
+    public CrearAgenteResponseModel(Agente agente)
+    {
+        Agente = agente;
+    }
+
+    public Agente Agente { get; set; }
 }

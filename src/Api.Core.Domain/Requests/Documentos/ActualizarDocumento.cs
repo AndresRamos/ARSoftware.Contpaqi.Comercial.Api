@@ -1,14 +1,18 @@
 ﻿using Api.Core.Domain.Models;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Core.Domain.Requests;
 
 /// <summary>
 ///     Solicitud para actualizar un documento.
 /// </summary>
-public sealed class ActualizarDocumentoRequest : IContpaqiRequest<ActualizarDocumentoRequestModel, ActualizarDocumentoRequestOptions>
+public sealed class ActualizarDocumentoRequest : ContpaqiRequest<ActualizarDocumentoRequestModel, ActualizarDocumentoRequestOptions,
+    ActualizarDocumentoResponse>
 {
-    public ActualizarDocumentoRequestModel Model { get; set; } = new();
-    public ActualizarDocumentoRequestOptions Options { get; set; } = new();
+    public ActualizarDocumentoRequest(ActualizarDocumentoRequestModel model, ActualizarDocumentoRequestOptions options) : base(model,
+        options)
+    {
+    }
 }
 
 /// <summary>
@@ -39,9 +43,16 @@ public sealed class ActualizarDocumentoRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud ActualizarDocumentoRequest.
 /// </summary>
-public sealed class ActualizarDocumentoResponse : IContpaqiResponse<ActualizarDocumentoResponseModel>
+public sealed class ActualizarDocumentoResponse : ContpaqiResponse<ActualizarDocumentoResponseModel>
 {
-    public ActualizarDocumentoResponseModel Model { get; set; } = new();
+    public ActualizarDocumentoResponse(ActualizarDocumentoResponseModel model) : base(model)
+    {
+    }
+
+    public static ActualizarDocumentoResponse CreateInstance(Documento documento)
+    {
+        return new ActualizarDocumentoResponse(new ActualizarDocumentoResponseModel(documento));
+    }
 }
 
 /// <summary>
@@ -49,5 +60,10 @@ public sealed class ActualizarDocumentoResponse : IContpaqiResponse<ActualizarDo
 /// </summary>
 public sealed class ActualizarDocumentoResponseModel
 {
-    public Documento Documento { get; set; } = new();
+    public ActualizarDocumentoResponseModel(Documento documento)
+    {
+        Documento = documento;
+    }
+
+    public Documento Documento { get; set; }
 }

@@ -1,14 +1,17 @@
 ﻿using Api.Core.Domain.Models;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Core.Domain.Requests;
 
 /// <summary>
 ///     Solicitud para crear un documento.
 /// </summary>
-public sealed class CrearDocumentoRequest : IContpaqiRequest<CrearDocumentoRequestModel, CrearDocumentoRequestOptions>
+public sealed class
+    CrearDocumentoRequest : ContpaqiRequest<CrearDocumentoRequestModel, CrearDocumentoRequestOptions, CrearDocumentoResponse>
 {
-    public CrearDocumentoRequestModel Model { get; set; } = new();
-    public CrearDocumentoRequestOptions Options { get; set; } = new();
+    public CrearDocumentoRequest(CrearDocumentoRequestModel model, CrearDocumentoRequestOptions options) : base(model, options)
+    {
+    }
 }
 
 /// <summary>
@@ -46,9 +49,16 @@ public sealed class CrearDocumentoRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud CrearDocumentoRequest.
 /// </summary>
-public sealed class CrearDocumentoResponse : IContpaqiResponse<CrearDocumentoResponseModel>
+public sealed class CrearDocumentoResponse : ContpaqiResponse<CrearDocumentoResponseModel>
 {
-    public CrearDocumentoResponseModel Model { get; set; } = new();
+    public CrearDocumentoResponse(CrearDocumentoResponseModel model) : base(model)
+    {
+    }
+
+    public static CrearDocumentoResponse CreateInstance(Documento documento)
+    {
+        return new CrearDocumentoResponse(new CrearDocumentoResponseModel(documento));
+    }
 }
 
 /// <summary>
@@ -56,5 +66,10 @@ public sealed class CrearDocumentoResponse : IContpaqiResponse<CrearDocumentoRes
 /// </summary>
 public sealed class CrearDocumentoResponseModel
 {
-    public Documento Documento { get; set; } = new();
+    public CrearDocumentoResponseModel(Documento documento)
+    {
+        Documento = documento;
+    }
+
+    public Documento Documento { get; set; }
 }

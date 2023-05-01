@@ -1,4 +1,4 @@
-﻿using Api.Core.Domain.Common;
+﻿using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Sync.Core.Application.Api.Interfaces;
 

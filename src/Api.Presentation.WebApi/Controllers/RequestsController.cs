@@ -2,10 +2,10 @@
 using Api.Core.Application.Requests.Queries.GetApiRequestById;
 using Api.Core.Application.Requests.Queries.GetApiRequests;
 using Api.Core.Application.Requests.Queries.GetPendingApiRequests;
-using Api.Core.Domain.Common;
 using Api.Core.Domain.Requests;
 using Api.Presentation.WebApi.Authentication;
 using Api.Presentation.WebApi.Filters;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -114,7 +114,7 @@ public class RequestsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<Guid>> Post(IContpaqiRequest apiRequest)
+    public async Task<ActionResult<Guid>> Post(ContpaqiRequest apiRequest)
     {
         Guid requestId = await _mediator.Send(new CreateApiRequestCommand(apiRequest, ApimSubscriptionKey, EmpresaRfc));
 
@@ -134,7 +134,7 @@ public class RequestsController : ControllerBase
     [HttpGet("JsonModel")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesDefaultResponseType]
-    public ActionResult<IContpaqiRequest> JsonModel(string requestName)
+    public ActionResult<ContpaqiRequest> JsonModel(string requestName)
     {
         Type requestType = typeof(CrearFacturaRequest);
 
@@ -145,7 +145,7 @@ public class RequestsController : ControllerBase
         if (type is null)
             throw new InvalidOperationException($"Couldn't find type for request with name {requestFullName}.");
 
-        if (Activator.CreateInstance(type) is not IContpaqiRequest instance)
+        if (Activator.CreateInstance(type) is not ContpaqiRequest instance)
             throw new InvalidOperationException($"Couldn't create instance for type {type}.");
 
         return Ok(instance);

@@ -3,9 +3,11 @@ using System.Text.Json.Serialization;
 using Api.Core.Application;
 using Api.Core.Application.Requests.Commands.CreateApiRequest;
 using Api.Core.Domain.Common;
+using Api.Core.Domain.Requests;
 using Api.Infrastructure;
 using Api.Infrastructure.Persistence;
 using Api.Presentation.WebApi.Authentication;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 using Microsoft.OpenApi.Models;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -41,21 +43,21 @@ builder.Services.AddSwaggerGen(c =>
 
     c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
     c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{typeof(CreateApiRequestCommand).Assembly.GetName().Name}.xml"));
-    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{typeof(ApiRequest).Assembly.GetName().Name}.xml"));
+    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{typeof(BuscarEmpresasRequest).Assembly.GetName().Name}.xml"));
 
     c.UseAllOfForInheritance();
     c.UseOneOfForPolymorphism();
 
     c.SelectSubTypesUsing(baseType =>
     {
-        if (baseType == typeof(IContpaqiRequest))
-            return typeof(ApiRequest).Assembly.GetTypes()
-                .Where(type => typeof(IContpaqiRequest).IsAssignableFrom(type) && type != typeof(IContpaqiRequest) && !type.IsAbstract)
+        if (baseType == typeof(ContpaqiRequest))
+            return typeof(BuscarEmpresasRequest).Assembly.GetTypes()
+                .Where(type => typeof(ContpaqiRequest).IsAssignableFrom(type) && type != typeof(ContpaqiRequest) && !type.IsAbstract)
                 .ToArray();
 
-        if (baseType == typeof(IContpaqiResponse))
-            return typeof(ApiRequest).Assembly.GetTypes()
-                .Where(type => typeof(IContpaqiResponse).IsAssignableFrom(type) && type != typeof(IContpaqiResponse) && !type.IsAbstract)
+        if (baseType == typeof(ContpaqiResponse))
+            return typeof(BuscarEmpresasRequest).Assembly.GetTypes()
+                .Where(type => typeof(ContpaqiResponse).IsAssignableFrom(type) && type != typeof(ContpaqiResponse) && !type.IsAbstract)
                 .ToArray();
 
         return Enumerable.Empty<Type>();

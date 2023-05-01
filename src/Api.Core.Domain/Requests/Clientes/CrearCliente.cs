@@ -1,14 +1,16 @@
 ﻿using Api.Core.Domain.Models;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Core.Domain.Requests;
 
 /// <summary>
 ///     Solicitud para crear un cliente.
 /// </summary>
-public sealed class CrearClienteRequest : IContpaqiRequest<CrearClienteRequestModel, CrearClienteRequestOptions>
+public sealed class CrearClienteRequest : ContpaqiRequest<CrearClienteRequestModel, CrearClienteRequestOptions, CrearClienteResponse>
 {
-    public CrearClienteRequestModel Model { get; set; } = new();
-    public CrearClienteRequestOptions Options { get; set; } = new();
+    public CrearClienteRequest(CrearClienteRequestModel model, CrearClienteRequestOptions options) : base(model, options)
+    {
+    }
 }
 
 /// <summary>
@@ -31,9 +33,16 @@ public sealed class CrearClienteRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud CrearClienteRequest.
 /// </summary>
-public sealed class CrearClienteResponse : IContpaqiResponse<CrearClienteResponseModel>
+public sealed class CrearClienteResponse : ContpaqiResponse<CrearClienteResponseModel>
 {
-    public CrearClienteResponseModel Model { get; set; } = new();
+    public CrearClienteResponse(CrearClienteResponseModel model) : base(model)
+    {
+    }
+
+    public static CrearClienteResponse CreateInstance(Cliente cliente)
+    {
+        return new CrearClienteResponse(new CrearClienteResponseModel(cliente));
+    }
 }
 
 /// <summary>
@@ -41,5 +50,10 @@ public sealed class CrearClienteResponse : IContpaqiResponse<CrearClienteRespons
 /// </summary>
 public sealed class CrearClienteResponseModel
 {
-    public Cliente Cliente { get; set; } = new();
+    public CrearClienteResponseModel(Cliente cliente)
+    {
+        Cliente = cliente;
+    }
+
+    public Cliente Cliente { get; set; }
 }

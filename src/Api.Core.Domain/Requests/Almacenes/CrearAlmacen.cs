@@ -1,14 +1,16 @@
 ﻿using Api.Core.Domain.Models;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Core.Domain.Requests;
 
 /// <summary>
 ///     Solicitud para crear un almacen.
 /// </summary>
-public sealed class CrearAlmacenRequest : IContpaqiRequest<CrearAlmacenRequestModel, CrearAlmacenRequestOptions>
+public sealed class CrearAlmacenRequest : ContpaqiRequest<CrearAlmacenRequestModel, CrearAlmacenRequestOptions, CrearAlmacenResponse>
 {
-    public CrearAlmacenRequestModel Model { get; set; } = new();
-    public CrearAlmacenRequestOptions Options { get; set; } = new();
+    public CrearAlmacenRequest(CrearAlmacenRequestModel model, CrearAlmacenRequestOptions options) : base(model, options)
+    {
+    }
 }
 
 /// <summary>
@@ -31,9 +33,16 @@ public sealed class CrearAlmacenRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud CrearAlmacenRequest.
 /// </summary>
-public sealed class CrearAlmacenResponse : IContpaqiResponse<CrearAlmacenResponseModel>
+public sealed class CrearAlmacenResponse : ContpaqiResponse<CrearAlmacenResponseModel>
 {
-    public CrearAlmacenResponseModel Model { get; set; } = new();
+    public CrearAlmacenResponse(CrearAlmacenResponseModel model) : base(model)
+    {
+    }
+
+    public static CrearAlmacenResponse CreateInstance(Almacen almacen)
+    {
+        return new CrearAlmacenResponse(new CrearAlmacenResponseModel(almacen));
+    }
 }
 
 /// <summary>
@@ -41,5 +50,10 @@ public sealed class CrearAlmacenResponse : IContpaqiResponse<CrearAlmacenRespons
 /// </summary>
 public sealed class CrearAlmacenResponseModel
 {
-    public Almacen Almacen { get; set; } = new();
+    public CrearAlmacenResponseModel(Almacen almacen)
+    {
+        Almacen = almacen;
+    }
+
+    public Almacen Almacen { get; set; }
 }

@@ -1,14 +1,16 @@
 ﻿using Api.Core.Domain.Models;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Core.Domain.Requests;
 
 /// <summary>
 ///     Solicitud para buscar agentes.
 /// </summary>
-public sealed class BuscarAgentesRequest : IContpaqiRequest<BuscarAgentesRequestModel, BuscarAgentesRequestOptions>
+public sealed class BuscarAgentesRequest : ContpaqiRequest<BuscarAgentesRequestModel, BuscarAgentesRequestOptions, BuscarAgentesResponse>
 {
-    public BuscarAgentesRequestModel Model { get; set; } = new();
-    public BuscarAgentesRequestOptions Options { get; set; } = new();
+    public BuscarAgentesRequest(BuscarAgentesRequestModel model, BuscarAgentesRequestOptions options) : base(model, options)
+    {
+    }
 }
 
 /// <summary>
@@ -50,9 +52,16 @@ public sealed class BuscarAgentesRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud BuscarAgentesRequest.
 /// </summary>
-public sealed class BuscarAgentesResponse : IContpaqiResponse<BuscarAgentesResponseModel>
+public sealed class BuscarAgentesResponse : ContpaqiResponse<BuscarAgentesResponseModel>
 {
-    public BuscarAgentesResponseModel Model { get; set; } = new();
+    public BuscarAgentesResponse(BuscarAgentesResponseModel model) : base(model)
+    {
+    }
+
+    public static BuscarAgentesResponse CreateInstance(List<Agente> agentes)
+    {
+        return new BuscarAgentesResponse(new BuscarAgentesResponseModel(agentes));
+    }
 }
 
 /// <summary>
@@ -60,6 +69,11 @@ public sealed class BuscarAgentesResponse : IContpaqiResponse<BuscarAgentesRespo
 /// </summary>
 public sealed class BuscarAgentesResponseModel
 {
+    public BuscarAgentesResponseModel(List<Agente> agentes)
+    {
+        Agentes = agentes;
+    }
+
     public int NumeroRegistros => Agentes.Count;
-    public List<Agente> Agentes { get; set; } = new();
+    public List<Agente> Agentes { get; set; }
 }

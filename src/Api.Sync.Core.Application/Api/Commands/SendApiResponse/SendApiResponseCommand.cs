@@ -1,5 +1,5 @@
-﻿using Api.Core.Domain.Common;
-using Api.Sync.Core.Application.Api.Interfaces;
+﻿using Api.Sync.Core.Application.Api.Interfaces;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 using MediatR;
 
 namespace Api.Sync.Core.Application.Api.Commands.SendApiResponse;

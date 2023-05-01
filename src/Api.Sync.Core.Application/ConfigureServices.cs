@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
-using Api.Core.Domain.Common;
 using Api.Sync.Core.Application.Common.Behaviours;
 using Api.Sync.Core.Application.Common.Models;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras;
 using FluentValidation;
 using Microsoft.Extensions.Configuration;

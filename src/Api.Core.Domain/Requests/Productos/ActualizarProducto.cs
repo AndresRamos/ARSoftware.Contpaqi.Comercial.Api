@@ -1,15 +1,17 @@
 ﻿using Api.Core.Domain.Models;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Core.Domain.Requests;
 
 /// <summary>
 ///     Solicitud para actualizar un producto.
 /// </summary>
-public sealed class ActualizarProductoRequest : 
-    IContpaqiRequest<ActualizarProductoRequestModel, ActualizarProductoRequestOptions>
+public sealed class ActualizarProductoRequest : ContpaqiRequest<ActualizarProductoRequestModel, ActualizarProductoRequestOptions,
+    ActualizarProductoResponse>
 {
-    public ActualizarProductoRequestModel Model { get; set; } = new();
-    public ActualizarProductoRequestOptions Options { get; set; } = new();
+    public ActualizarProductoRequest(ActualizarProductoRequestModel model, ActualizarProductoRequestOptions options) : base(model, options)
+    {
+    }
 }
 
 /// <summary>
@@ -40,9 +42,16 @@ public sealed class ActualizarProductoRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud ActualizarProductoRequest.
 /// </summary>
-public sealed class ActualizarProductoResponse : IContpaqiResponse<ActualizarProductoResponseModel>
+public sealed class ActualizarProductoResponse : ContpaqiResponse<ActualizarProductoResponseModel>
 {
-    public ActualizarProductoResponseModel Model { get; set; } = new();
+    public ActualizarProductoResponse(ActualizarProductoResponseModel model) : base(model)
+    {
+    }
+
+    public static ActualizarProductoResponse CreateInstance(Producto producto)
+    {
+        return new ActualizarProductoResponse(new ActualizarProductoResponseModel(producto));
+    }
 }
 
 /// <summary>
@@ -50,5 +59,10 @@ public sealed class ActualizarProductoResponse : IContpaqiResponse<ActualizarPro
 /// </summary>
 public sealed class ActualizarProductoResponseModel
 {
-    public Producto Producto { get; set; } = new();
+    public ActualizarProductoResponseModel(Producto producto)
+    {
+        Producto = producto;
+    }
+
+    public Producto Producto { get; set; }
 }

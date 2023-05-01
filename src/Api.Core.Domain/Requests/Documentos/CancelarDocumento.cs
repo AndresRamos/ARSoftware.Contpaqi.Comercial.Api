@@ -1,15 +1,17 @@
 ﻿using Api.Core.Domain.Models;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Core.Domain.Requests;
 
 /// <summary>
 ///     Solicitud para cancelar un documento.
 /// </summary>
-public sealed class CancelarDocumentoRequest : 
-    IContpaqiRequest<CancelarDocumentoRequestModel, CancelarDocumentoRequestOptions>
+public sealed class CancelarDocumentoRequest :
+    ContpaqiRequest<CancelarDocumentoRequestModel, CancelarDocumentoRequestOptions, CancelarDocumentoResponse>
 {
-    public CancelarDocumentoRequestModel Model { get; set; } = new();
-    public CancelarDocumentoRequestOptions Options { get; set; } = new();
+    public CancelarDocumentoRequest(CancelarDocumentoRequestModel model, CancelarDocumentoRequestOptions options) : base(model, options)
+    {
+    }
 }
 
 /// <summary>
@@ -55,9 +57,16 @@ public sealed class CancelarDocumentoRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud CancelarDocumentoRequest.
 /// </summary>
-public sealed class CancelarDocumentoResponse : IContpaqiResponse<CancelarDocumentoResponseModel>
+public sealed class CancelarDocumentoResponse : ContpaqiResponse<CancelarDocumentoResponseModel>
 {
-    public CancelarDocumentoResponseModel Model { get; set; } = new();
+    public CancelarDocumentoResponse(CancelarDocumentoResponseModel model) : base(model)
+    {
+    }
+
+    public static CancelarDocumentoResponse CreateInstance(Documento documento)
+    {
+        return new CancelarDocumentoResponse(new CancelarDocumentoResponseModel(documento));
+    }
 }
 
 /// <summary>
@@ -65,5 +74,10 @@ public sealed class CancelarDocumentoResponse : IContpaqiResponse<CancelarDocume
 /// </summary>
 public sealed class CancelarDocumentoResponseModel
 {
-    public Documento Documento { get; set; } = new();
+    public CancelarDocumentoResponseModel(Documento documento)
+    {
+        Documento = documento;
+    }
+
+    public Documento Documento { get; set; }
 }

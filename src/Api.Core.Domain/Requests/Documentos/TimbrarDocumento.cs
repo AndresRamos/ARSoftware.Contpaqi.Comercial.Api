@@ -1,14 +1,17 @@
 ﻿using Api.Core.Domain.Models;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Core.Domain.Requests;
 
 /// <summary>
 ///     Solicitud para timbrar un documento.
 /// </summary>
-public sealed class TimbrarDocumentoRequest : IContpaqiRequest<TimbrarDocumentoRequestModel, TimbrarDocumentoRequestOptions>
+public sealed class
+    TimbrarDocumentoRequest : ContpaqiRequest<TimbrarDocumentoRequestModel, TimbrarDocumentoRequestOptions, TimbrarDocumentoResponse>
 {
-    public TimbrarDocumentoRequestModel Model { get; set; } = new();
-    public TimbrarDocumentoRequestOptions Options { get; set; } = new();
+    public TimbrarDocumentoRequest(TimbrarDocumentoRequestModel model, TimbrarDocumentoRequestOptions options) : base(model, options)
+    {
+    }
 }
 
 /// <summary>
@@ -51,9 +54,16 @@ public sealed class TimbrarDocumentoRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud TimbrarDocumentoRequest.
 /// </summary>
-public sealed class TimbrarDocumentoResponse : IContpaqiResponse<TimbrarDocumentoResponseModel>
+public sealed class TimbrarDocumentoResponse : ContpaqiResponse<TimbrarDocumentoResponseModel>
 {
-    public TimbrarDocumentoResponseModel Model { get; set; } = new();
+    public TimbrarDocumentoResponse(TimbrarDocumentoResponseModel model) : base(model)
+    {
+    }
+
+    public static TimbrarDocumentoResponse CreateInstance(Documento documento)
+    {
+        return new TimbrarDocumentoResponse(new TimbrarDocumentoResponseModel(documento));
+    }
 }
 
 /// <summary>
@@ -61,5 +71,10 @@ public sealed class TimbrarDocumentoResponse : IContpaqiResponse<TimbrarDocument
 /// </summary>
 public sealed class TimbrarDocumentoResponseModel
 {
-    public Documento Documento { get; set; } = new();
+    public TimbrarDocumentoResponseModel(Documento documento)
+    {
+        Documento = documento;
+    }
+
+    public Documento Documento { get; set; }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using Api.Core.Application.Common.Interfaces;
 using Api.Core.Domain.Common;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Infrastructure.Persistence;
@@ -24,12 +25,12 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
         modelBuilder.Entity<ApiRequest>()
             .Property(e => e.ContpaqiRequest)
             .HasConversion(v => JsonSerializer.Serialize(v, JsonExtensions.GetJsonSerializerOptions()),
-                v => JsonSerializer.Deserialize<IContpaqiRequest>(v, JsonExtensions.GetJsonSerializerOptions())!);
+                v => JsonSerializer.Deserialize<ContpaqiRequest>(v, JsonExtensions.GetJsonSerializerOptions())!);
 
         modelBuilder.Entity<ApiResponse>()
             .Property(e => e.ContpaqiResponse)
             .HasConversion(v => JsonSerializer.Serialize(v, JsonExtensions.GetJsonSerializerOptions()),
-                v => JsonSerializer.Deserialize<IContpaqiResponse>(v, JsonExtensions.GetJsonSerializerOptions())!);
+                v => JsonSerializer.Deserialize<ContpaqiResponse>(v, JsonExtensions.GetJsonSerializerOptions())!);
 
         base.OnModelCreating(modelBuilder);
     }

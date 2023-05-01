@@ -1,9 +1,9 @@
 ﻿using Api.Core.Application.Requests.Commands.CreateApiResponse;
 using Api.Core.Application.Requests.Queries.GetApiRequestById;
-using Api.Core.Domain.Common;
 using Api.Core.Domain.Requests;
 using Api.Presentation.WebApi.Authentication;
 using Api.Presentation.WebApi.Filters;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -73,7 +73,7 @@ public class ResponsesController : ControllerBase
     [HttpGet("JsonModel")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesDefaultResponseType]
-    public ActionResult<IContpaqiResponse> JsonModel(string responseName)
+    public ActionResult<ContpaqiResponse> JsonModel(string responseName)
     {
         Type responseType = typeof(CrearDocumentoResponse);
 
@@ -84,7 +84,7 @@ public class ResponsesController : ControllerBase
         if (type is null)
             throw new InvalidOperationException($"Couldn't find type for response with name {responseFullName}.");
 
-        if (Activator.CreateInstance(type) is not IContpaqiResponse instance)
+        if (Activator.CreateInstance(type) is not ContpaqiResponse instance)
             throw new InvalidOperationException($"Couldn't create instance for type {type}.");
 
         return Ok(instance);

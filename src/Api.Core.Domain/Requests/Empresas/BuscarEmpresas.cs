@@ -1,14 +1,17 @@
 ﻿using Api.Core.Domain.Models;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Core.Domain.Requests;
 
 /// <summary>
 ///     Solicitud para buscar empresas.
 /// </summary>
-public sealed class BuscarEmpresasRequest : IContpaqiRequest<BuscarEmpresasRequestModel, BuscarEmpresasRequestOptions>
+public sealed class
+    BuscarEmpresasRequest : ContpaqiRequest<BuscarEmpresasRequestModel, BuscarEmpresasRequestOptions, BuscarEmpresasResponse>
 {
-    public BuscarEmpresasRequestModel Model { get; set; } = new();
-    public BuscarEmpresasRequestOptions Options { get; set; } = new();
+    public BuscarEmpresasRequest(BuscarEmpresasRequestModel model, BuscarEmpresasRequestOptions options) : base(model, options)
+    {
+    }
 }
 
 /// <summary>
@@ -30,9 +33,16 @@ public sealed class BuscarEmpresasRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud BuscarEmpresasRequest.
 /// </summary>
-public sealed class BuscarEmpresasResponse : IContpaqiResponse<BuscarEmpresasResponseModel>
+public sealed class BuscarEmpresasResponse : ContpaqiResponse<BuscarEmpresasResponseModel>
 {
-    public BuscarEmpresasResponseModel Model { get; set; } = new();
+    public BuscarEmpresasResponse(BuscarEmpresasResponseModel model) : base(model)
+    {
+    }
+
+    public static BuscarEmpresasResponse CreateInstance(List<Empresa> empresas)
+    {
+        return new BuscarEmpresasResponse(new BuscarEmpresasResponseModel(empresas));
+    }
 }
 
 /// <summary>
@@ -40,10 +50,15 @@ public sealed class BuscarEmpresasResponse : IContpaqiResponse<BuscarEmpresasRes
 /// </summary>
 public sealed class BuscarEmpresasResponseModel
 {
+    public BuscarEmpresasResponseModel(List<Empresa> empresas)
+    {
+        Empresas = empresas;
+    }
+
     public int NumeroRegistros => Empresas.Count;
 
     /// <summary>
     ///     Lista de empresas encontradas.
     /// </summary>
-    public List<Empresa> Empresas { get; set; } = new();
+    public List<Empresa> Empresas { get; set; }
 }

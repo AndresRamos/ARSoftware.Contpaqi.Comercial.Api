@@ -1,12 +1,16 @@
-﻿namespace Api.Core.Domain.Requests;
+﻿using ARSoftware.Contpaqi.Api.Common.Domain;
+
+namespace Api.Core.Domain.Requests;
 
 /// <summary>
 ///     Solicitud para eliminar un producto.
 /// </summary>
-public sealed class EliminarProductoRequest : IContpaqiRequest<EliminarProductoRequestModel, EliminarProductoRequestOptions>
+public sealed class
+    EliminarProductoRequest : ContpaqiRequest<EliminarProductoRequestModel, EliminarProductoRequestOptions, EliminarProductoResponse>
 {
-    public EliminarProductoRequestModel Model { get; set; } = new();
-    public EliminarProductoRequestOptions Options { get; set; } = new();
+    public EliminarProductoRequest(EliminarProductoRequestModel model, EliminarProductoRequestOptions options) : base(model, options)
+    {
+    }
 }
 
 /// <summary>
@@ -30,9 +34,16 @@ public sealed class EliminarProductoRequestOptions
 /// <summary>
 ///     Respuesta de la solicitud EliminarProductoRequest.
 /// </summary>
-public sealed class EliminarProductoResponse : IContpaqiResponse<EliminarProductoResponseModel>
+public sealed class EliminarProductoResponse : ContpaqiResponse<EliminarProductoResponseModel>
 {
-    public EliminarProductoResponseModel Model { get; set; } = new();
+    public EliminarProductoResponse(EliminarProductoResponseModel model) : base(model)
+    {
+    }
+
+    public static EliminarProductoResponse CreateInstance()
+    {
+        return new EliminarProductoResponse(new EliminarProductoResponseModel());
+    }
 }
 
 /// <summary>

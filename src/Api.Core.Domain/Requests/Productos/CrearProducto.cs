@@ -1,14 +1,16 @@
 ﻿using Api.Core.Domain.Models;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Core.Domain.Requests;
 
 /// <summary>
 ///     Solicitud para crear un producto.
 /// </summary>
-public sealed class CrearProductoRequest : IContpaqiRequest<CrearProductoRequestModel, CrearProductoRequestOptions>
+public sealed class CrearProductoRequest : ContpaqiRequest<CrearProductoRequestModel, CrearProductoRequestOptions, CrearProductoResponse>
 {
-    public CrearProductoRequestModel Model { get; set; } = new();
-    public CrearProductoRequestOptions Options { get; set; } = new();
+    public CrearProductoRequest(CrearProductoRequestModel model, CrearProductoRequestOptions options) : base(model, options)
+    {
+    }
 }
 
 /// <summary>
@@ -31,9 +33,16 @@ public sealed class CrearProductoRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud CrearProductoRequest.
 /// </summary>
-public sealed class CrearProductoResponse : IContpaqiResponse<CrearProductoResponseModel>
+public sealed class CrearProductoResponse : ContpaqiResponse<CrearProductoResponseModel>
 {
-    public CrearProductoResponseModel Model { get; set; } = new();
+    public CrearProductoResponse(CrearProductoResponseModel model) : base(model)
+    {
+    }
+
+    public static CrearProductoResponse CreateInstance(Producto producto)
+    {
+        return new CrearProductoResponse(new CrearProductoResponseModel(producto));
+    }
 }
 
 /// <summary>
@@ -41,5 +50,10 @@ public sealed class CrearProductoResponse : IContpaqiResponse<CrearProductoRespo
 /// </summary>
 public sealed class CrearProductoResponseModel
 {
-    public Producto Producto { get; set; } = new();
+    public CrearProductoResponseModel(Producto producto)
+    {
+        Producto = producto;
+    }
+
+    public Producto Producto { get; set; }
 }

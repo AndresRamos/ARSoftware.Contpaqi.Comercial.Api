@@ -1,15 +1,17 @@
 ﻿using Api.Core.Domain.Models;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Core.Domain.Requests;
 
 /// <summary>
 ///     Solicitud para actualizar un agente.
 /// </summary>
-public sealed class ActualizarAgenteRequest : IContpaqiRequest<ActualizarAgenteRequestModel, ActualizarAgenteRequestOptions>
+public sealed class
+    ActualizarAgenteRequest : ContpaqiRequest<ActualizarAgenteRequestModel, ActualizarAgenteRequestOptions, ActualizarAgenteResponse>
 {
-    public ActualizarAgenteRequestModel Model { get; set; } = new();
-
-    public ActualizarAgenteRequestOptions Options { get; set; } = new();
+    public ActualizarAgenteRequest(ActualizarAgenteRequestModel model, ActualizarAgenteRequestOptions options) : base(model, options)
+    {
+    }
 }
 
 /// <summary>
@@ -40,9 +42,16 @@ public sealed class ActualizarAgenteRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud ActualizarAgenteRequest.
 /// </summary>
-public sealed class ActualizarAgenteResponse : IContpaqiResponse<ActualizarAgenteResponseModel>
+public sealed class ActualizarAgenteResponse : ContpaqiResponse<ActualizarAgenteResponseModel>
 {
-    public ActualizarAgenteResponseModel Model { get; set; } = new();
+    public ActualizarAgenteResponse(ActualizarAgenteResponseModel model) : base(model)
+    {
+    }
+
+    public static ActualizarAgenteResponse CreateInstance(Agente agente)
+    {
+        return new ActualizarAgenteResponse(new ActualizarAgenteResponseModel(agente));
+    }
 }
 
 /// <summary>
@@ -50,5 +59,10 @@ public sealed class ActualizarAgenteResponse : IContpaqiResponse<ActualizarAgent
 /// </summary>
 public sealed class ActualizarAgenteResponseModel
 {
-    public Agente Agente { get; set; } = new();
+    public ActualizarAgenteResponseModel(Agente agente)
+    {
+        Agente = agente;
+    }
+
+    public Agente Agente { get; set; }
 }

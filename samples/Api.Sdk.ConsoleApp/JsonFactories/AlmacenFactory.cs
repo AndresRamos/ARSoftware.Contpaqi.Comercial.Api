@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
-using Api.Core.Domain.Common;
 using Api.Core.Domain.Requests;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
 
@@ -13,7 +13,7 @@ public static class AlmacenFactory
 
     private static CrearAlmacenRequest Crear()
     {
-        var request = new CrearAlmacenRequest();
+        var request = new CrearAlmacenRequest(new CrearAlmacenRequestModel(), new CrearAlmacenRequestOptions());
 
         request.Model.Almacen.Codigo = Codigo;
         request.Model.Almacen.Nombre = Nombre;
@@ -24,7 +24,7 @@ public static class AlmacenFactory
 
     private static ActualizarAlmacenRequest Actualizar()
     {
-        var request = new ActualizarAlmacenRequest();
+        var request = new ActualizarAlmacenRequest(new ActualizarAlmacenRequestModel(), new ActualizarAlmacenRequestOptions());
 
         request.Model.CodigoAlmacen = Codigo;
         request.Model.DatosAlmacen = GetDatosExtra();
@@ -34,7 +34,7 @@ public static class AlmacenFactory
 
     private static BuscarAlmacenesRequest BuscarPorId()
     {
-        var request = new BuscarAlmacenesRequest();
+        var request = new BuscarAlmacenesRequest(new BuscarAlmacenesRequestModel(), new BuscarAlmacenesRequestOptions());
 
         request.Model.Id = 100;
 
@@ -43,7 +43,7 @@ public static class AlmacenFactory
 
     private static BuscarAlmacenesRequest BuscarPorCodigo()
     {
-        var request = new BuscarAlmacenesRequest();
+        var request = new BuscarAlmacenesRequest(new BuscarAlmacenesRequestModel(), new BuscarAlmacenesRequestOptions());
 
         request.Model.Codigo = Codigo;
 
@@ -52,7 +52,7 @@ public static class AlmacenFactory
 
     private static BuscarAlmacenesRequest BuscarPorSql()
     {
-        var request = new BuscarAlmacenesRequest();
+        var request = new BuscarAlmacenesRequest(new BuscarAlmacenesRequestModel(), new BuscarAlmacenesRequestOptions());
 
         request.Model.SqlQuery = "CNOMBREALMACEN = 'nombre'";
 
@@ -61,7 +61,7 @@ public static class AlmacenFactory
 
     private static BuscarAlmacenesRequest BuscarTodo()
     {
-        var request = new BuscarAlmacenesRequest();
+        var request = new BuscarAlmacenesRequest(new BuscarAlmacenesRequestModel(), new BuscarAlmacenesRequestOptions());
 
         return request;
     }
@@ -82,21 +82,21 @@ public static class AlmacenFactory
         Directory.CreateDirectory(directory);
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(CrearAlmacenRequest)}.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(Crear(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(Crear(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(ActualizarAlmacenRequest)}.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(Actualizar(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(Actualizar(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAlmacenesRequest)}_PorId.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorId(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorId(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAlmacenesRequest)}_PorCodigo.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorCodigo(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorCodigo(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAlmacenesRequest)}_PorSql.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorSql(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorSql(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAlmacenesRequest)}_Todo.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(BuscarTodo(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(BuscarTodo(), options));
     }
 }

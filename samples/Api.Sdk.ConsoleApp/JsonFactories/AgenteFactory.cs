@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
-using Api.Core.Domain.Common;
 using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Models.Enums;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
 
@@ -14,7 +14,7 @@ public static class AgenteFactory
 
     private static CrearAgenteRequest Crear()
     {
-        var request = new CrearAgenteRequest();
+        var request = new CrearAgenteRequest(new CrearAgenteRequestModel(), new CrearAgenteRequestOptions());
 
         request.Model.Agente.Codigo = Codigo;
         request.Model.Agente.Nombre = Nombre;
@@ -26,7 +26,7 @@ public static class AgenteFactory
 
     private static ActualizarAgenteRequest Actualizar()
     {
-        var request = new ActualizarAgenteRequest();
+        var request = new ActualizarAgenteRequest(new ActualizarAgenteRequestModel(), new ActualizarAgenteRequestOptions());
 
         request.Model.CodigoAgente = Codigo;
         request.Model.DatosAgente = GetDatosExtra();
@@ -36,7 +36,7 @@ public static class AgenteFactory
 
     private static BuscarAgentesRequest BuscarPorId()
     {
-        var request = new BuscarAgentesRequest();
+        var request = new BuscarAgentesRequest(new BuscarAgentesRequestModel(), new BuscarAgentesRequestOptions());
 
         request.Model.Id = 100;
 
@@ -45,7 +45,7 @@ public static class AgenteFactory
 
     private static BuscarAgentesRequest BuscarPorCodigo()
     {
-        var request = new BuscarAgentesRequest();
+        var request = new BuscarAgentesRequest(new BuscarAgentesRequestModel(), new BuscarAgentesRequestOptions());
 
         request.Model.Codigo = Codigo;
 
@@ -54,7 +54,7 @@ public static class AgenteFactory
 
     private static BuscarAgentesRequest BuscarPorSql()
     {
-        var request = new BuscarAgentesRequest();
+        var request = new BuscarAgentesRequest(new BuscarAgentesRequestModel(), new BuscarAgentesRequestOptions());
 
         request.Model.SqlQuery = "CTIPOAGENTE = 1";
 
@@ -63,7 +63,7 @@ public static class AgenteFactory
 
     private static BuscarAgentesRequest BuscarTodo()
     {
-        var request = new BuscarAgentesRequest();
+        var request = new BuscarAgentesRequest(new BuscarAgentesRequestModel(), new BuscarAgentesRequestOptions());
 
         return request;
     }
@@ -93,21 +93,21 @@ public static class AgenteFactory
         Directory.CreateDirectory(directory);
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(CrearAgenteRequest)}.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(Crear(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(Crear(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(ActualizarAgenteRequest)}.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(Actualizar(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(Actualizar(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAgentesRequest)}_PorId.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorId(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorId(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAgentesRequest)}_PorCodigo.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorCodigo(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorCodigo(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAgentesRequest)}_Sql.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(BuscarPorSql(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorSql(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAgentesRequest)}_Todo.json"),
-            JsonSerializer.Serialize<IContpaqiRequest>(BuscarTodo(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(BuscarTodo(), options));
     }
 }

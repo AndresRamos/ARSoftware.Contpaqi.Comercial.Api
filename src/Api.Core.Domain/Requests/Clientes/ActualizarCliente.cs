@@ -1,14 +1,17 @@
 ﻿using Api.Core.Domain.Models;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Core.Domain.Requests;
 
 /// <summary>
 ///     Solicitud para actualizar un cliente.
 /// </summary>
-public sealed class ActualizarClienteRequest : IContpaqiRequest<ActualizarClienteRequestModel, ActualizarClienteRequestOptions>
+public sealed class
+    ActualizarClienteRequest : ContpaqiRequest<ActualizarClienteRequestModel, ActualizarClienteRequestOptions, ActualizarClienteResponse>
 {
-    public ActualizarClienteRequestModel Model { get; set; } = new();
-    public ActualizarClienteRequestOptions Options { get; set; } = new();
+    public ActualizarClienteRequest(ActualizarClienteRequestModel model, ActualizarClienteRequestOptions options) : base(model, options)
+    {
+    }
 }
 
 /// <summary>
@@ -39,9 +42,16 @@ public sealed class ActualizarClienteRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud ActualizarClienteRequest.
 /// </summary>
-public sealed class ActualizarClienteResponse : IContpaqiResponse<ActualizarClienteResponseModel>
+public sealed class ActualizarClienteResponse : ContpaqiResponse<ActualizarClienteResponseModel>
 {
-    public ActualizarClienteResponseModel Model { get; set; } = new();
+    public ActualizarClienteResponse(ActualizarClienteResponseModel model) : base(model)
+    {
+    }
+
+    public static ActualizarClienteResponse CreateInstance(Cliente cliente)
+    {
+        return new ActualizarClienteResponse(new ActualizarClienteResponseModel(cliente));
+    }
 }
 
 /// <summary>
@@ -49,5 +59,10 @@ public sealed class ActualizarClienteResponse : IContpaqiResponse<ActualizarClie
 /// </summary>
 public sealed class ActualizarClienteResponseModel
 {
-    public Cliente Cliente { get; set; } = new();
+    public ActualizarClienteResponseModel(Cliente cliente)
+    {
+        Cliente = cliente;
+    }
+
+    public Cliente Cliente { get; set; }
 }

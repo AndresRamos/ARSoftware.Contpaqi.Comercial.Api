@@ -1,38 +1,24 @@
-﻿using Api.Core.Domain.Common;
-using Api.Core.Domain.Models;
+﻿using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace Api.Sync.Core.Application.Requests.Documentos.BuscarDocumentos;
 
-public sealed record BuscarDocumentosRequestHandler : IRequestHandler<BuscarDocumentosRequest, ApiResponse>
+public sealed record BuscarDocumentosRequestHandler : IRequestHandler<BuscarDocumentosRequest, BuscarDocumentosResponse>
 {
     private readonly IDocumentoRepository _documentoRepository;
-    private readonly ILogger _logger;
 
-    public BuscarDocumentosRequestHandler(IDocumentoRepository documentoRepository, ILogger<BuscarDocumentosRequestHandler> logger)
+    public BuscarDocumentosRequestHandler(IDocumentoRepository documentoRepository)
     {
         _documentoRepository = documentoRepository;
-        _logger = logger;
     }
 
-    public async Task<ApiResponse> Handle(BuscarDocumentosRequest request, CancellationToken cancellationToken)
+    public async Task<BuscarDocumentosResponse> Handle(BuscarDocumentosRequest request, CancellationToken cancellationToken)
     {
-        try
-        {
-            var documentos = new List<Documento>();
+        List<Documento> documentos =
+            (await _documentoRepository.BuscarPorRequestModelAsync(request.Model, request.Options, cancellationToken)).ToList();
 
-            documentos.AddRange(await _documentoRepository.BuscarPorRequestModelAsync(request.Model, request.Options, cancellationToken));
-
-            return ApiResponse.CreateSuccessfull<BuscarDocumentosResponse, BuscarDocumentosResponseModel>(
-                new BuscarDocumentosResponseModel { Documentos = documentos });
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, "Error al buscar los conceptos.");
-            return ApiResponse.CreateFailed(e.Message);
-        }
+        return BuscarDocumentosResponse.CreateInstance(documentos);
     }
 }

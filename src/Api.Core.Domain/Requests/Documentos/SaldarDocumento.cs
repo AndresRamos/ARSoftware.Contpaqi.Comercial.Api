@@ -1,14 +1,17 @@
 ﻿using Api.Core.Domain.Models;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Core.Domain.Requests;
 
 /// <summary>
 ///     Solicitud para saldar un documento.
 /// </summary>
-public sealed class SaldarDocumentoRequest : IContpaqiRequest<SaldarDocumentoRequestModel, SaldarDocumentoRequestOptions>
+public sealed class
+    SaldarDocumentoRequest : ContpaqiRequest<SaldarDocumentoRequestModel, SaldarDocumentoRequestOptions, SaldarDocumentoResponse>
 {
-    public SaldarDocumentoRequestModel Model { get; set; } = new();
-    public SaldarDocumentoRequestOptions Options { get; set; } = new();
+    public SaldarDocumentoRequest(SaldarDocumentoRequestModel model, SaldarDocumentoRequestOptions options) : base(model, options)
+    {
+    }
 }
 
 /// <summary>
@@ -42,9 +45,16 @@ public sealed class SaldarDocumentoRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud SaldarDocumentoRequest.
 /// </summary>
-public sealed class SaldarDocumentoResponse : IContpaqiResponse<SaldarDocumentoResponseModel>
+public sealed class SaldarDocumentoResponse : ContpaqiResponse<SaldarDocumentoResponseModel>
 {
-    public SaldarDocumentoResponseModel Model { get; set; } = new();
+    public SaldarDocumentoResponse(SaldarDocumentoResponseModel model) : base(model)
+    {
+    }
+
+    public static SaldarDocumentoResponse CreateInstance(Documento documentoPago, Documento documentoPagar)
+    {
+        return new SaldarDocumentoResponse(new SaldarDocumentoResponseModel(documentoPago, documentoPagar));
+    }
 }
 
 /// <summary>
@@ -52,6 +62,12 @@ public sealed class SaldarDocumentoResponse : IContpaqiResponse<SaldarDocumentoR
 /// </summary>
 public sealed class SaldarDocumentoResponseModel
 {
-    public Documento DocumentoPago { get; set; } = new();
-    public Documento DocumentoPagar { get; set; } = new();
+    public SaldarDocumentoResponseModel(Documento documentoPago, Documento documentoPagar)
+    {
+        DocumentoPago = documentoPago;
+        DocumentoPagar = documentoPagar;
+    }
+
+    public Documento DocumentoPago { get; set; }
+    public Documento DocumentoPagar { get; set; }
 }

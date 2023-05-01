@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.Json;
 using Api.Core.Domain.Common;
 using Api.Sync.Core.Application.Api.Interfaces;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 using Microsoft.Extensions.Logging;
 
 namespace Api.Sync.Infrastructure.ContpaqiComercialApi;

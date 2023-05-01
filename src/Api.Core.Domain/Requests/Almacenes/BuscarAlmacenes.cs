@@ -1,14 +1,17 @@
 ﻿using Api.Core.Domain.Models;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Core.Domain.Requests;
 
 /// <summary>
 ///     Solicitud para buscar almacenes.
 /// </summary>
-public sealed class BuscarAlmacenesRequest : IContpaqiRequest<BuscarAlmacenesRequestModel, BuscarAlmacenesRequestOptions>
+public sealed class
+    BuscarAlmacenesRequest : ContpaqiRequest<BuscarAlmacenesRequestModel, BuscarAlmacenesRequestOptions, BuscarAlmacenesResponse>
 {
-    public BuscarAlmacenesRequestModel Model { get; set; } = new();
-    public BuscarAlmacenesRequestOptions Options { get; set; } = new();
+    public BuscarAlmacenesRequest(BuscarAlmacenesRequestModel model, BuscarAlmacenesRequestOptions options) : base(model, options)
+    {
+    }
 }
 
 /// <summary>
@@ -50,9 +53,16 @@ public sealed class BuscarAlmacenesRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud BuscarAlmacenesRequest.
 /// </summary>
-public sealed class BuscarAlmacenesResponse : IContpaqiResponse<BuscarAlmacenesResponseModel>
+public sealed class BuscarAlmacenesResponse : ContpaqiResponse<BuscarAlmacenesResponseModel>
 {
-    public BuscarAlmacenesResponseModel Model { get; set; } = new();
+    public BuscarAlmacenesResponse(BuscarAlmacenesResponseModel model) : base(model)
+    {
+    }
+
+    public static BuscarAlmacenesResponse CreateInstance(List<Almacen> almacenes)
+    {
+        return new BuscarAlmacenesResponse(new BuscarAlmacenesResponseModel(almacenes));
+    }
 }
 
 /// <summary>
@@ -60,10 +70,15 @@ public sealed class BuscarAlmacenesResponse : IContpaqiResponse<BuscarAlmacenesR
 /// </summary>
 public sealed class BuscarAlmacenesResponseModel
 {
+    public BuscarAlmacenesResponseModel(List<Almacen> almacenes)
+    {
+        Almacenes = almacenes;
+    }
+
     public int NumeroRegistros => Almacenes.Count;
 
     /// <summary>
     ///     Lista de almacenes encontrados.
     /// </summary>
-    public List<Almacen> Almacenes { get; set; } = new();
+    public List<Almacen> Almacenes { get; set; }
 }

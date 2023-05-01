@@ -1,4 +1,4 @@
-﻿using Api.Core.Domain.Common;
+﻿using ARSoftware.Contpaqi.Api.Common.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Core.Application.Common.Interfaces;
