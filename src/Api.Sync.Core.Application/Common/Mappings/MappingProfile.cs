@@ -6,9 +6,9 @@ using AutoMapper;
 
 namespace Api.Sync.Core.Application.Common.Mappings;
 
-public sealed class MappingsProfile : Profile
+public sealed class MappingProfile : Profile
 {
-    public MappingsProfile()
+    public MappingProfile()
     {
         CreateMap<Documento, tDocumento>()
             .ForMember(dest => dest.aCodConcepto, opt => opt.MapFrom(src => src.Concepto.Codigo))
