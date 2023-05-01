@@ -1,5 +1,5 @@
 ﻿using Api.Core.Application.Common.Interfaces;
-using Api.Core.Domain.Common;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
