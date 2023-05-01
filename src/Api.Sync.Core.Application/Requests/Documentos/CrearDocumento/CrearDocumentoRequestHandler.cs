@@ -1,5 +1,4 @@
-﻿using Api.Core.Domain.Common;
-using Api.Core.Domain.Models;
+﻿using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
 using ARSoftware.Contpaqi.Comercial.Sdk.DatosAbstractos;
@@ -9,30 +8,27 @@ using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Interfaces;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
 using AutoMapper;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace Api.Sync.Core.Application.Requests.Documentos.CrearDocumento;
 
-public sealed class CrearDocumentoRequestHandler : IRequestHandler<CrearDocumentoRequest, ApiResponse>
+public sealed class CrearDocumentoRequestHandler : IRequestHandler<CrearDocumentoRequest, CrearDocumentoResponse>
 {
     private readonly IDocumentoRepository _documentoRepository;
     private readonly IDocumentoService _documentoService;
-    private readonly ILogger _logger;
     private readonly IMapper _mapper;
     private readonly IMovimientoService _movimientoService;
     private int _documentoSdkId;
 
     public CrearDocumentoRequestHandler(IDocumentoService documentoService, IMapper mapper, IMovimientoService movimientoService,
-        ILogger<CrearDocumentoRequestHandler> logger, IDocumentoRepository documentoRepository)
+        IDocumentoRepository documentoRepository)
     {
         _documentoService = documentoService;
         _mapper = mapper;
         _movimientoService = movimientoService;
-        _logger = logger;
         _documentoRepository = documentoRepository;
     }
 
-    public async Task<ApiResponse> Handle(CrearDocumentoRequest request, CancellationToken cancellationToken)
+    public async Task<CrearDocumentoResponse> Handle(CrearDocumentoRequest request, CancellationToken cancellationToken)
     {
         Documento documento = request.Model.Documento;
 
@@ -80,18 +76,10 @@ public sealed class CrearDocumentoRequestHandler : IRequestHandler<CrearDocument
                     _movimientoService.CrearSeriesCapas(movimientoSdkId, _mapper.Map<tSeriesCapas>(movimientoSeriesCapas));
             }
 
-            var responseModel = new CrearDocumentoResponseModel
-            {
-                Documento = (await _documentoRepository.BuscarPorIdAsync(_documentoSdkId, request.Options, cancellationToken))!
-            };
+            Documento documentoCreado = await _documentoRepository.BuscarPorIdAsync(_documentoSdkId, request.Options, cancellationToken) ??
+                                        throw new InvalidOperationException();
 
-            return ApiResponse.CreateSuccessfull<CrearDocumentoResponse, CrearDocumentoResponseModel>(responseModel);
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, "Error Processing {ApiRequest}", nameof(CrearDocumentoRequest));
-            // Todo: Borrar documento si hay error
-            return ApiResponse.CreateFailed(e.Message);
+            return CrearDocumentoResponse.CreateInstance(documentoCreado);
         }
         finally
         {

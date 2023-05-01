@@ -1,4 +1,4 @@
-﻿using Api.Core.Domain.Common;
+﻿using ARSoftware.Contpaqi.Api.Common.Domain;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
@@ -6,7 +6,7 @@ using MediatR;
 namespace Api.Sync.Core.Application.Common.Behaviours;
 
 public sealed class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : IRequest<TResponse>, IContpaqiRequest where TResponse : class
+    where TRequest : ContpaqiRequest, IRequest<TResponse> where TResponse : class
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;
 

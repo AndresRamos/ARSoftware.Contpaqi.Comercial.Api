@@ -1,11 +1,11 @@
 using System.Collections.Immutable;
-using Api.Core.Domain.Common;
 using Api.Core.Domain.Models;
 using Api.Sync.Core.Application.Api.Commands.ProcessApiRequest;
 using Api.Sync.Core.Application.Api.Queries.GetPendingApiRequests;
 using Api.Sync.Core.Application.Common.Models;
 using Api.Sync.Core.Application.ContpaqiComercial.Commands.AbrirEmpresa;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
+using ARSoftware.Contpaqi.Api.Common.Domain;
 using MediatR;
 using Microsoft.Extensions.Options;
 

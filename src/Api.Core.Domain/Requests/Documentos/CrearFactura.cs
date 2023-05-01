@@ -62,7 +62,7 @@ public sealed class CrearFacturaResponse : ContpaqiResponse<CrearFacturaResponse
     {
     }
 
-    public static CrearFacturaResponse CreateInstance(Documento documento, DocumentoDigital xml, DocumentoDigital pdf)
+    public static CrearFacturaResponse CreateInstance(Documento documento, DocumentoDigital? xml, DocumentoDigital? pdf)
     {
         return new CrearFacturaResponse(new CrearFacturaResponseModel(documento, xml, pdf));
     }
@@ -73,7 +73,7 @@ public sealed class CrearFacturaResponse : ContpaqiResponse<CrearFacturaResponse
 /// </summary>
 public sealed class CrearFacturaResponseModel
 {
-    public CrearFacturaResponseModel(Documento documento, DocumentoDigital xml, DocumentoDigital pdf)
+    public CrearFacturaResponseModel(Documento documento, DocumentoDigital? xml, DocumentoDigital? pdf)
     {
         Documento = documento;
         Xml = xml;
@@ -81,6 +81,6 @@ public sealed class CrearFacturaResponseModel
     }
 
     public Documento Documento { get; set; }
-    public DocumentoDigital Xml { get; set; }
-    public DocumentoDigital Pdf { get; set; }
+    public DocumentoDigital? Xml { get; set; }
+    public DocumentoDigital? Pdf { get; set; }
 }

@@ -63,9 +63,9 @@ public sealed class CancelarDocumentoResponse : ContpaqiResponse<CancelarDocumen
     {
     }
 
-    public static CancelarDocumentoResponse CreateInstance()
+    public static CancelarDocumentoResponse CreateInstance(Documento documento)
     {
-        return new CancelarDocumentoResponse(new CancelarDocumentoResponseModel(new Documento()));
+        return new CancelarDocumentoResponse(new CancelarDocumentoResponseModel(documento));
     }
 }
 
