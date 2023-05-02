@@ -5,7 +5,7 @@
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<Version>2.1.0</Version>
+		<Version>2.2.0</Version>
 		<Authors>AR Software</Authors>
 		<Company>AR Software</Company>
 		<Description>API para generar solicitudes para ser procesadas en CONTPAQi Comercial.</Description>
