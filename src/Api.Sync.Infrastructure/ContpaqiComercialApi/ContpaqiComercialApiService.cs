@@ -22,7 +22,7 @@ public sealed class ContpaqiComercialApiService : IContpaqiComercialApiService
 
     public async Task<IEnumerable<ApiRequest>> GetPendingRequestsAsync(CancellationToken cancellationToken)
     {
-        HttpResponseMessage message = await _httpClient.GetAsync("api/Requests/Pending", cancellationToken);
+        HttpResponseMessage message = await _httpClient.GetAsync("/api/Requests/Pending", cancellationToken);
 
         message.EnsureSuccessStatusCode();
 
@@ -47,7 +47,7 @@ public sealed class ContpaqiComercialApiService : IContpaqiComercialApiService
         var data = new StringContent(json, Encoding.UTF8, "application/json");
 
         HttpResponseMessage httpResponseMessage =
-            await _httpClient.PostAsync($"api/requests/{apiRequestId}/response", data, cancellationToken);
+            await _httpClient.PostAsync($"/api/requests/{apiRequestId}/response", data, cancellationToken);
 
         httpResponseMessage.EnsureSuccessStatusCode();
     }
