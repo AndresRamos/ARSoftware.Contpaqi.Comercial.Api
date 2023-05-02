@@ -1,0 +1,1449 @@
+{
+	"info": {
+		"_postman_id": "c24d30d0-7ff4-4c4e-9fda-84454f24be9d",
+		"name": "CONTPAQi Comercial API",
+		"description": "Esta coleccion expone las diferentes solicitudes que se pueden enviar a la API.\n\nTe recomiendo que revises la documentacion constantemente para actualizaciones ya que es muy probable que aya varios cambios los primeros meses.\n\nSi tienes dudas o preguntas puedes hacermelas saber en una discusion. O si quieres reportar un error puedes levantar un issue.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16633069",
+		"_collection_link": "https://grey-astronaut-557995.postman.co/workspace/CONTPAQi-APIs~a18e8e21-875e-45fe-9561-f544437d2aa6/collection/16633069-c24d30d0-7ff4-4c4e-9fda-84454f24be9d?action=share&creator=16633069&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Agentes",
+			"item": [
+				{
+					"name": "Crear Agente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"CrearAgenteRequest\",\r\n    \"model\": {\r\n        \"agente\": {\r\n            \"codigo\": \"AGE001\",\r\n            \"nombre\": \"Agente 1\",\r\n            \"tipo\": \"VentasCobro\",\r\n            \"datosExtra\": {\r\n                \"CCOMISIONVENTAAGENTE\": \"5\",\r\n                \"CCOMISIONCOBROAGENTE\": \"10\"\r\n            }\r\n        }\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Agente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"ActualizarAgenteRequest\",\r\n    \"model\": {\r\n        \"codigoAgente\": \"AGE001\",\r\n        \"datosAgente\": {\r\n            \"CFECHAALTAAGENTE\": \"04/22/2023\",\r\n            \"CCOMISIONVENTAAGENTE\": \"5\",\r\n            \"CCOMISIONCOBROAGENTE\": \"10\"\r\n        }\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Agentes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarAgentesRequest\",\r\n    \"model\": {},\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Agente Por Id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarAgentesRequest\",\r\n    \"model\": {\r\n        \"id\": 100\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Agente Por Codigo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarAgentesRequest\",\r\n    \"model\": {\r\n        \"codigo\": \"AGE001\"\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Agente Por Sql",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarAgentesRequest\",\r\n    \"model\": {\r\n        \"sqlQuery\": \"CTIPOAGENTE = 1\"\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Almacenes",
+			"item": [
+				{
+					"name": "Crear Almacen",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"CrearAlmacenRequest\",\r\n    \"model\": {\r\n        \"almacen\": {\r\n            \"codigo\": \"ALM001\",\r\n            \"nombre\": \"Almacen 1\",\r\n            \"datosExtra\": {\r\n                \"CFECHAALTAALMACEN\": \"04/22/2023\",\r\n                \"CTEXTOEXTRA1\": \"Texto Extra\"\r\n            }\r\n        }\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Almacen",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"ActualizarAlmacenRequest\",\r\n    \"model\": {\r\n        \"codigoAlmacen\": \"ALM001\",\r\n        \"datosAlmacen\": {\r\n            \"CFECHAALTAALMACEN\": \"04/22/2023\",\r\n            \"CTEXTOEXTRA1\": \"Texto Extra\"\r\n        }\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Almacenes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarAlmacenesRequest\",\r\n    \"model\": {},\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Almacen Por Id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarAlmacenesRequest\",\r\n    \"model\": {\r\n        \"id\": 100\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Almacen Por Codigo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarAlmacenesRequest\",\r\n    \"model\": {\r\n        \"codigo\": \"ALM001\"\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Almacen Por Sql",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarAlmacenesRequest\",\r\n    \"model\": {\r\n        \"sqlQuery\": \"CNOMBREALMACEN = \\u0027nombre\\u0027\"\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Clientes",
+			"item": [
+				{
+					"name": "Crear Cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"CrearClienteRequest\",\r\n    \"model\": {\r\n        \"cliente\": {\r\n            \"tipo\": \"ClienteProveedor\",\r\n            \"codigo\": \"CTE001\",\r\n            \"razonSocial\": \"Cliente 1\",\r\n            \"rfc\": \"XAXX010101000\",\r\n            \"usoCfdi\": \"S01\",\r\n            \"regimenFiscal\": \"616\",\r\n            \"direccionFiscal\": {\r\n                \"calle\": \"Pablo Villase\\u00F1or\",\r\n                \"numeroExterior\": \"435\",\r\n                \"numeroInterior\": \"\",\r\n                \"colonia\": \"Ladr\\u00F3n de Guevara\",\r\n                \"ciudad\": \"Guadalajara\",\r\n                \"estado\": \"Jalisco\",\r\n                \"codigoPostal\": \"44600\",\r\n                \"pais\": \"M\\u00E9xico\"\r\n            },\r\n            \"datosExtra\": {\r\n                \"CFECHAALTA\": \"04/22/2023\",\r\n                \"CRAZONSOCIAL\": \"Cliente 1\",\r\n                \"CRFC\": \"XAXX010101000\",\r\n                \"CTEXTOEXTRA1\": \"Texto Extra\"\r\n            }\r\n        }\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"ActualizarClienteRequest\",\r\n    \"model\": {\r\n        \"codigoCliente\": \"CTE001\",\r\n        \"datosCliente\": {\r\n            \"CFECHAALTA\": \"04/22/2023\",\r\n            \"CRAZONSOCIAL\": \"Cliente 1\",\r\n            \"CRFC\": \"XAXX010101000\",\r\n            \"CTEXTOEXTRA1\": \"Texto Extra\"\r\n        }\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"EliminarClienteRequest\",\r\n    \"model\": {\r\n        \"codigoCliente\": \"CTE001\"\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Clientes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarClientesRequest\",\r\n    \"model\": {},\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Cliente Por Id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarClientesRequest\",\r\n    \"model\": {\r\n        \"id\": 100\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Cliente Por Codigo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarClientesRequest\",\r\n    \"model\": {\r\n        \"codigo\": \"CTE001\"\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Cliente Por Sql",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarClientesRequest\",\r\n    \"model\": {\r\n        \"sqlQuery\": \"CRAZONSOCIAL = \\u0027razonSocial\\u0027\"\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Conceptos",
+			"item": [
+				{
+					"name": "Buscar Conceptos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarConceptosRequest\",\r\n    \"model\": {},\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Conceptos Por Id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarConceptosRequest\",\r\n    \"model\": {\r\n        \"id\": 100\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Conceptos Por Codigo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarConceptosRequest\",\r\n    \"model\": {\r\n        \"codigo\": \"400\"\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Conceptos Por Sql",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarConceptosRequest\",\r\n    \"model\": {\r\n        \"sqlQuery\": \"CNOMBRECONCEPTO = \\u0027nombre\\u0027\"\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Documentos",
+			"item": [
+				{
+					"name": "Crear Documento",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"CrearDocumentoRequest\",\r\n    \"model\": {\r\n        \"documento\": {\r\n            \"fecha\": \"2023-04-22T00:00:00-05:00\",\r\n            \"concepto\": {\r\n                \"codigo\": \"400\"\r\n            },\r\n            \"serie\": \"\",\r\n            \"cliente\": {\r\n                \"tipo\": \"ClienteProveedor\",\r\n                \"codigo\": \"CTE001\",\r\n                \"razonSocial\": \"Cliente 1\",\r\n                \"rfc\": \"XAXX010101000\",\r\n                \"usoCfdi\": \"S01\",\r\n                \"regimenFiscal\": \"616\",\r\n                \"direccionFiscal\": {\r\n                    \"calle\": \"Pablo Villase\\u00F1or\",\r\n                    \"numeroExterior\": \"435\",\r\n                    \"numeroInterior\": \"\",\r\n                    \"colonia\": \"Ladr\\u00F3n de Guevara\",\r\n                    \"ciudad\": \"Guadalajara\",\r\n                    \"estado\": \"Jalisco\",\r\n                    \"codigoPostal\": \"44600\",\r\n                    \"pais\": \"M\\u00E9xico\"\r\n                },\r\n                \"datosExtra\": {\r\n                    \"CFECHAALTA\": \"04/22/2023\",\r\n                    \"CRAZONSOCIAL\": \"Cliente 1\",\r\n                    \"CRFC\": \"XAXX010101000\",\r\n                    \"CTEXTOEXTRA1\": \"Texto Extra\"\r\n                }\r\n            },\r\n            \"moneda\": {\r\n                \"id\": 1,\r\n                \"nombre\": \"Peso Mexicano\"\r\n            },\r\n            \"tipoCambio\": 1,\r\n            \"referencia\": \"Referencia doc\",\r\n            \"observaciones\": \"Observaciones del documento.\",\r\n            \"agente\": {\r\n                \"codigo\": \"AGE001\",\r\n                \"nombre\": \"Agente 1\",\r\n                \"tipo\": \"VentasCobro\",\r\n                \"datosExtra\": {\r\n                    \"CFECHAALTAAGENTE\": \"04/22/2023\",\r\n                    \"CCOMISIONVENTAAGENTE\": \"5\",\r\n                    \"CCOMISIONCOBROAGENTE\": \"10\"\r\n                }\r\n            },\r\n            \"direccionFiscal\": {\r\n                \"calle\": \"\",\r\n                \"numeroExterior\": \"\",\r\n                \"numeroInterior\": \"\",\r\n                \"colonia\": \"\",\r\n                \"ciudad\": \"\",\r\n                \"estado\": \"\",\r\n                \"codigoPostal\": \"\",\r\n                \"pais\": \"\"\r\n            },\r\n            \"formaPago\": \"01\",\r\n            \"metodoPago\": \"PPD\",\r\n            \"movimientos\": [\r\n                {\r\n                    \"producto\": {\r\n                        \"tipo\": \"Producto\",\r\n                        \"codigo\": \"PROD001\",\r\n                        \"nombre\": \"Producto 1\",\r\n                        \"claveSat\": \"43231500\",\r\n                        \"datosExtra\": {\r\n                            \"CFECHAALTAPRODUCTO\": \"04/22/2023\",\r\n                            \"CNOMBREPRODUCTO\": \"Producto 1\",\r\n                            \"CCLAVESAT\": \"43231500\",\r\n                            \"CTEXTOEXTRA1\": \"Texto Extra\"\r\n                        }\r\n                    },\r\n                    \"unidades\": 1,\r\n                    \"precio\": 100,\r\n                    \"almacen\": {\r\n                        \"codigo\": \"1\",\r\n                        \"nombre\": \"Almacen Uno\",\r\n                        \"datosExtra\": {}\r\n                    },\r\n                    \"referencia\": \"Referencia mov\",\r\n                    \"observaciones\": \"Observaciones del movimiento\",\r\n                    \"seriesCapas\": [],\r\n                    \"datosExtra\": {}\r\n                }\r\n            ],\r\n            \"folioDigital\": {\r\n                \"uuid\": \"\",\r\n                \"datosExtra\": {}\r\n            },\r\n            \"datosExtra\": {\r\n                \"COBSERVACIONES\": \"Observaciones del documento.\",\r\n                \"CTEXTOEXTRA1\": \"Texto Extra\"\r\n            }\r\n        }\r\n    },\r\n    \"options\": {\r\n        \"usarFechaDelDia\": true,\r\n        \"buscarSiguienteFolio\": true\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Factura",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"CrearFacturaRequest\",\r\n    \"model\": {\r\n        \"documento\": {\r\n            \"fecha\": \"2023-04-22T00:00:00-05:00\",\r\n            \"concepto\": {\r\n                \"codigo\": \"400\",\r\n                \"nombre\": \"\",\r\n                \"datosExtra\": {}\r\n            },\r\n            \"serie\": \"\",\r\n            \"cliente\": {\r\n                \"tipo\": \"ClienteProveedor\",\r\n                \"codigo\": \"CTE001\",\r\n                \"razonSocial\": \"Cliente 1\",\r\n                \"rfc\": \"XAXX010101000\",\r\n                \"usoCfdi\": \"S01\",\r\n                \"regimenFiscal\": \"616\",\r\n                \"direccionFiscal\": {\r\n                    \"calle\": \"Pablo Villase\\u00F1or\",\r\n                    \"numeroExterior\": \"435\",\r\n                    \"numeroInterior\": \"\",\r\n                    \"colonia\": \"Ladr\\u00F3n de Guevara\",\r\n                    \"ciudad\": \"Guadalajara\",\r\n                    \"estado\": \"Jalisco\",\r\n                    \"codigoPostal\": \"44600\",\r\n                    \"pais\": \"M\\u00E9xico\"\r\n                },\r\n                \"datosExtra\": {\r\n                    \"CFECHAALTA\": \"04/22/2023\",\r\n                    \"CRAZONSOCIAL\": \"Cliente 1\",\r\n                    \"CRFC\": \"XAXX010101000\",\r\n                    \"CTEXTOEXTRA1\": \"Texto Extra\"\r\n                }\r\n            },\r\n            \"moneda\": {\r\n                \"id\": 1,\r\n                \"nombre\": \"Peso Mexicano\"\r\n            },\r\n            \"tipoCambio\": 1,\r\n            \"referencia\": \"Referencia doc\",\r\n            \"observaciones\": \"Observaciones del documento.\",\r\n            \"agente\": {\r\n                \"codigo\": \"AGE001\",\r\n                \"nombre\": \"Agente 1\",\r\n                \"tipo\": \"VentasCobro\",\r\n                \"datosExtra\": {\r\n                    \"CFECHAALTAAGENTE\": \"04/22/2023\",\r\n                    \"CCOMISIONVENTAAGENTE\": \"5\",\r\n                    \"CCOMISIONCOBROAGENTE\": \"10\"\r\n                }\r\n            },\r\n            \"direccionFiscal\": {\r\n                \"calle\": \"\",\r\n                \"numeroExterior\": \"\",\r\n                \"numeroInterior\": \"\",\r\n                \"colonia\": \"\",\r\n                \"ciudad\": \"\",\r\n                \"estado\": \"\",\r\n                \"codigoPostal\": \"\",\r\n                \"pais\": \"\"\r\n            },\r\n            \"formaPago\": \"01\",\r\n            \"metodoPago\": \"PPD\",\r\n            \"movimientos\": [\r\n                {\r\n                    \"producto\": {\r\n                        \"tipo\": \"Producto\",\r\n                        \"codigo\": \"PROD001\",\r\n                        \"nombre\": \"Producto 1\",\r\n                        \"claveSat\": \"43231500\",\r\n                        \"datosExtra\": {\r\n                            \"CFECHAALTAPRODUCTO\": \"04/22/2023\",\r\n                            \"CNOMBREPRODUCTO\": \"Producto 1\",\r\n                            \"CCLAVESAT\": \"43231500\",\r\n                            \"CTEXTOEXTRA1\": \"Texto Extra\"\r\n                        }\r\n                    },\r\n                    \"unidades\": 1,\r\n                    \"precio\": 100,\r\n                    \"almacen\": {\r\n                        \"codigo\": \"1\",\r\n                        \"nombre\": \"Almacen Uno\",\r\n                        \"datosExtra\": {}\r\n                    },\r\n                    \"referencia\": \"Referencia mov\",\r\n                    \"observaciones\": \"Observaciones del movimiento\",\r\n                    \"seriesCapas\": [],\r\n                    \"datosExtra\": {}\r\n                }\r\n            ],\r\n            \"folioDigital\": {\r\n                \"uuid\": \"\",\r\n                \"datosExtra\": {}\r\n            },\r\n            \"datosExtra\": {\r\n                \"COBSERVACIONES\": \"Observaciones del documento.\",\r\n                \"CTEXTOEXTRA1\": \"Texto Extra\"\r\n            }\r\n        }\r\n    },\r\n    \"options\": {\r\n        \"usarFechaDelDia\": true,\r\n        \"buscarSiguienteFolio\": true,\r\n        \"timbrar\": true,\r\n        \"contrasenaCertificado\": \"12345678a\",\r\n        \"generarDocumentosDigitales\": true,\r\n        \"generarPdf\": true,\r\n        \"nombrePlantilla\": \"Facturav40.rdl\",\r\n        \"nombreArchivo\": \"\",\r\n        \"contenidoArchivo\": \"\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Documento",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"ActualizarDocumentoRequest\",\r\n    \"model\": {\r\n        \"llaveDocumento\": {\r\n            \"conceptoCodigo\": \"400\",\r\n            \"serie\": \"FE\",\r\n            \"folio\": 123\r\n        },\r\n        \"datosDocumento\": {\r\n            \"COBSERVACIONES\": \"Observaciones del documento.\",\r\n            \"CTEXTOEXTRA1\": \"Texto Extra\"\r\n        }\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancelar Documento",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"CancelarDocumentoRequest\",\r\n    \"model\": {\r\n        \"llaveDocumento\": {\r\n            \"conceptoCodigo\": \"400\",\r\n            \"serie\": \"FE\",\r\n            \"folio\": 123\r\n        },\r\n        \"contrasenaCertificado\": \"12345678a\",\r\n        \"motivoCancelacion\": \"1\",\r\n        \"uuid\": \"76030f04-af8c-4348-b475-e69095999e43\"\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Documento",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"EliminarDocumentoRequest\",\r\n    \"model\": {\r\n        \"llaveDocumento\": {\r\n            \"conceptoCodigo\": \"400\",\r\n            \"serie\": \"FE\",\r\n            \"folio\": 123\r\n        }\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generar Documento Digital",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"GenerarDocumentoDigitalRequest\",\r\n    \"model\": {\r\n        \"llaveDocumento\": {\r\n            \"conceptoCodigo\": \"400\",\r\n            \"serie\": \"FE\",\r\n            \"folio\": 123\r\n        }\r\n    },\r\n    \"options\": {\r\n        \"tipo\": \"Pdf\",\r\n        \"nombrePlantilla\": \"Facturav40.rdl\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Saldar Documento",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"SaldarDocumentoRequest\",\r\n    \"model\": {\r\n        \"documentoAPagar\": {\r\n            \"conceptoCodigo\": \"400\",\r\n            \"serie\": \"FE\",\r\n            \"folio\": 123\r\n        },\r\n        \"documentoPago\": {\r\n            \"conceptoCodigo\": \"13\",\r\n            \"serie\": \"\",\r\n            \"folio\": 456\r\n        },\r\n        \"fecha\": \"2023-04-22T00:00:00-05:00\",\r\n        \"importe\": 116\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Timbrar Documento",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"TimbrarDocumentoRequest\",\r\n    \"model\": {\r\n        \"llaveDocumento\": {\r\n            \"conceptoCodigo\": \"400\",\r\n            \"serie\": \"FE\",\r\n            \"folio\": 123\r\n        },\r\n        \"contrasenaCertificado\": \"12345678a\"\r\n    },\r\n    \"options\": {\r\n        \"nombreArchivo\": \"\",\r\n        \"contenidoArchivo\": \"\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Documentos Por Cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarDocumentosRequest\",\r\n    \"model\": {\r\n        \"clienteCodigo\": \"CTE001\"\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Documentos Por Concepto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarDocumentosRequest\",\r\n    \"model\": {\r\n        \"conceptoCodigo\": \"400\"\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Documentos Por Id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarDocumentosRequest\",\r\n    \"model\": {\r\n        \"id\": 1\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Documentos Por Llave",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarDocumentosRequest\",\r\n    \"model\": {\r\n        \"llave\": {\r\n            \"conceptoCodigo\": \"400\",\r\n            \"serie\": \"FACT\",\r\n            \"folio\": 1\r\n        }\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Documentos Por Rango Fecha",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarDocumentosRequest\",\r\n    \"model\": {\r\n        \"fechaInicio\": \"2023-04-22\",\r\n        \"fechaFin\": \"2023-04-22\"\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Documentos Por Sql",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarDocumentosRequest\",\r\n    \"model\": {\r\n        \"sqlQuery\": \"CPENDIENTE \\u003E 0.00\"\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Empresas",
+			"item": [
+				{
+					"name": "Buscar Empresas",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarEmpresasRequest\",\r\n    \"model\": {},\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Productos",
+			"item": [
+				{
+					"name": "Crear Producto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"CrearProductoRequest\",\r\n    \"model\": {\r\n        \"producto\": {\r\n            \"tipo\": \"Producto\",\r\n            \"codigo\": \"PROD001\",\r\n            \"nombre\": \"Producto 1\",\r\n            \"claveSat\": \"43231500\",\r\n            \"datosExtra\": {\r\n                \"CFECHAALTAPRODUCTO\": \"04/22/2023\",\r\n                \"CNOMBREPRODUCTO\": \"Producto 1\",\r\n                \"CCLAVESAT\": \"43231500\",\r\n                \"CTEXTOEXTRA1\": \"Texto Extra\"\r\n            }\r\n        }\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Producto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"ActualizarProductoRequest\",\r\n    \"model\": {\r\n        \"codigoProducto\": \"PROD001\",\r\n        \"datosProducto\": {\r\n            \"CFECHAALTAPRODUCTO\": \"04/22/2023\",\r\n            \"CNOMBREPRODUCTO\": \"Producto 1\",\r\n            \"CCLAVESAT\": \"43231500\",\r\n            \"CTEXTOEXTRA1\": \"Texto Extra\"\r\n        }\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Producto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"EliminarProductoRequest\",\r\n    \"model\": {\r\n        \"codigoProducto\": \"PROD001\"\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Productos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarProductosRequest\",\r\n    \"model\": {},\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Producto Por Id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarProductosRequest\",\r\n    \"model\": {\r\n        \"id\": 100\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Producto Por Codigo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarProductosRequest\",\r\n    \"model\": {\r\n        \"codigo\": \"PROD001\"\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Producto Por Sql",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"$type\": \"BuscarProductosRequest\",\r\n    \"model\": {\r\n        \"sqlQuery\": \"CNOMBREPRODUCTO = \\u0027nombre\\u0027\"\r\n    },\r\n    \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Requests",
+			"item": [
+				{
+					"name": "Request Json Model",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/requests/jsonmodel?requestName=CrearFacturaRequest",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests",
+								"jsonmodel"
+							],
+							"query": [
+								{
+									"key": "requestName",
+									"value": "CrearFacturaRequest"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pending Requests",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYXJzb2Z0d2FyZSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiQXJTb2Z0d2FyZSIsIm5iZiI6IjE2NzU5NTQwMDciLCJleHAiOiIxNjc2MDQwNDA3In0.veGAMGLvVKgwxztgeIUyfQZveUNGnXJ9L3ayUhohrjk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/requests/pending",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests",
+								"pending"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Request By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/requests/be49bdb5-27bd-4682-8832-08db4a9f35d8",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests",
+								"be49bdb5-27bd-4682-8832-08db4a9f35d8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Requests By Date",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/requests?startDate=03/01/2023&endDate=03/01/2023",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "03/01/2023"
+								},
+								{
+									"key": "endDate",
+									"value": "03/01/2023"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"var subscriptionKeyHeader = pm.variables.get(\"subscriptionKeyHeaderName\");",
+					"var subscriptionKey = pm.variables.get(\"subscriptionKey\");",
+					"pm.request.headers.add({ key: subscriptionKeyHeader, value: subscriptionKey });",
+					"",
+					"var empresaRfcHeader = pm.variables.get(\"empresaRfcHeaderName\");",
+					"var empresaRfc = pm.variables.get(\"empresaRfc\");",
+					"pm.request.headers.add({ key: empresaRfcHeader, value: empresaRfc });",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "https://contpaqiapim.azure-api.net/comercial",
+			"type": "string"
+		},
+		{
+			"key": "subscriptionKeyHeaderName",
+			"value": "Ocp-Apim-Subscription-Key",
+			"type": "string"
+		},
+		{
+			"key": "subscriptionKey",
+			"value": "00000000000000000000000000000000",
+			"type": "string"
+		},
+		{
+			"key": "empresaRfcHeaderName",
+			"value": "x-Empresa-Rfc",
+			"type": "string"
+		},
+		{
+			"key": "empresaRfc",
+			"value": "AAA010101AAA",
+			"type": "string"
+		}
+	]
+}
