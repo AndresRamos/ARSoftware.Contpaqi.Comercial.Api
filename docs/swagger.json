@@ -1,0 +1,3419 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "AR Software - CONTPAQi Comercial API",
+    "description": "Use this API to create requests to be processed in CONTPAQi Comercial.",
+    "contact": {
+      "name": "AR Software",
+      "url": "https://www.arsoft.net",
+      "email": "andres@arsoft.net"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/api/Requests/{id}": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Busca una solicitud por id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id de la solicitud a buscar.",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Ocp-Apim-Subscription-Key",
+            "in": "header",
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-Empresa-Rfc",
+            "in": "header",
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retorna la solicitud.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiRequest"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se encontro la solicitud.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud invalida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Requests": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Busca solicitudes por rango de fecha.",
+        "parameters": [
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "Fecha inicio.",
+            "style": "form",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "Fecha fin.",
+            "style": "form",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "Ocp-Apim-Subscription-Key",
+            "in": "header",
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-Empresa-Rfc",
+            "in": "header",
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Coleccion de solicitudes dentro rango de fechas.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiRequest"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No hay solicitudes dentro del rango de fecha."
+          },
+          "400": {
+            "description": "Solicitud invalida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Crear una solicitud en la base de datos para ser procesada en CONTPAQi Comercial.",
+        "parameters": [
+          {
+            "name": "Ocp-Apim-Subscription-Key",
+            "in": "header",
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-Empresa-Rfc",
+            "in": "header",
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Solicitud a procesar.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/ActualizarAgenteRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarAgentesRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CrearAgenteRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ActualizarAlmacenRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarAlmacenesRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CrearAlmacenRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ActualizarClienteRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarClientesRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CrearClienteRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/EliminarClienteRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarConceptosRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ActualizarDocumentoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarDocumentosRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CancelarDocumentoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CrearDocumentoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CrearFacturaRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/EliminarDocumentoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/GenerarDocumentoDigitalRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/SaldarDocumentoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/TimbrarDocumentoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarEmpresasRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ActualizarProductoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarProductosRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CrearProductoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/EliminarProductoRequest"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/ActualizarAgenteRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarAgentesRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CrearAgenteRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ActualizarAlmacenRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarAlmacenesRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CrearAlmacenRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ActualizarClienteRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarClientesRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CrearClienteRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/EliminarClienteRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarConceptosRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ActualizarDocumentoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarDocumentosRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CancelarDocumentoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CrearDocumentoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CrearFacturaRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/EliminarDocumentoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/GenerarDocumentoDigitalRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/SaldarDocumentoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/TimbrarDocumentoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarEmpresasRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ActualizarProductoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarProductosRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CrearProductoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/EliminarProductoRequest"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/ActualizarAgenteRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarAgentesRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CrearAgenteRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ActualizarAlmacenRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarAlmacenesRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CrearAlmacenRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ActualizarClienteRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarClientesRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CrearClienteRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/EliminarClienteRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarConceptosRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ActualizarDocumentoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarDocumentosRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CancelarDocumentoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CrearDocumentoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CrearFacturaRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/EliminarDocumentoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/GenerarDocumentoDigitalRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/SaldarDocumentoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/TimbrarDocumentoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarEmpresasRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ActualizarProductoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarProductosRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CrearProductoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/EliminarProductoRequest"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Retorna la solicitud creada.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud invalida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Requests/Pending": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Busca las solicitudes pendientes por procesar.",
+        "parameters": [
+          {
+            "name": "Ocp-Apim-Subscription-Key",
+            "in": "header",
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-Empresa-Rfc",
+            "in": "header",
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retorna coleccion de solicitudes pendientes por procesar.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ApiRequest"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No hay solicitudes pendientes."
+          },
+          "400": {
+            "description": "Solicitud invalida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Requests/JsonModel": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Regresa la estructura de una solicitud serializada en JSON.",
+        "parameters": [
+          {
+            "name": "requestName",
+            "in": "query",
+            "description": "La solicitud a serializar.",
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Ocp-Apim-Subscription-Key",
+            "in": "header",
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-Empresa-Rfc",
+            "in": "header",
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "La estructura de una solicitud serializada en JSON.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ActualizarAgenteRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BuscarAgentesRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CrearAgenteRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ActualizarAlmacenRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BuscarAlmacenesRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CrearAlmacenRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ActualizarClienteRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BuscarClientesRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CrearClienteRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/EliminarClienteRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BuscarConceptosRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ActualizarDocumentoRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BuscarDocumentosRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CancelarDocumentoRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CrearDocumentoRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CrearFacturaRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/EliminarDocumentoRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/GenerarDocumentoDigitalRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SaldarDocumentoRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/TimbrarDocumentoRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BuscarEmpresasRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ActualizarProductoRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BuscarProductosRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CrearProductoRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/EliminarProductoRequest"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/requests/{id}/response": {
+      "get": {
+        "tags": [
+          "Responses"
+        ],
+        "summary": "Busca una respuesta por id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id de la respuesta a buscar.",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Ocp-Apim-Subscription-Key",
+            "in": "header",
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retorna la respuesta.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se encontro la respuesta.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud invalida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Responses"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Ocp-Apim-Subscription-Key",
+            "in": "header",
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiResponse"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiResponse"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiResponse"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/requests/{id}/response/JsonModel": {
+      "get": {
+        "tags": [
+          "Responses"
+        ],
+        "summary": "Regresa la estructura de una respuesta serializada en JSON.",
+        "parameters": [
+          {
+            "name": "responseName",
+            "in": "query",
+            "description": "La respuesta a serializar.",
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Ocp-Apim-Subscription-Key",
+            "in": "header",
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "La estructura de una respuesta serializada en JSON.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ActualizarAgenteResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BuscarAgentesResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CrearAgenteResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ActualizarAlmacenResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BuscarAlmacenesResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CrearAlmacenResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ActualizarClienteResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BuscarClientesResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CrearClienteResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/EliminarClienteResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BuscarConceptosResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ActualizarDocumentoResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BuscarDocumentosResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CancelarDocumentoResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CrearDocumentoResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CrearFacturaResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/EliminarDocumentoResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/GenerarDocumentoDigitalResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SaldarDocumentoResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/TimbrarDocumentoResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BuscarEmpresasResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ActualizarProductoResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BuscarProductosResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CrearProductoResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/EliminarProductoResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ActualizarAgenteRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/ActualizarAgenteRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/ActualizarAgenteRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para actualizar un agente."
+      },
+      "ActualizarAgenteRequestModel": {
+        "type": "object",
+        "properties": {
+          "codigoAgente": {
+            "type": "string",
+            "description": "Codigo del agente a actualizar",
+            "nullable": true
+          },
+          "datosAgente": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Datos a actualizar. Los nombres deben ser igual a los de la base de datos.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud ActualizarAgenteRequest."
+      },
+      "ActualizarAgenteRequestOptions": {
+        "type": "object",
+        "properties": {
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud ActualizarAgenteRequest."
+      },
+      "ActualizarAgenteResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/ActualizarAgenteResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud ActualizarAgenteRequest."
+      },
+      "ActualizarAgenteResponseModel": {
+        "type": "object",
+        "properties": {
+          "agente": {
+            "$ref": "#/components/schemas/Agente"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta ActualizarAgenteResponse."
+      },
+      "ActualizarAlmacenRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/ActualizarAlmacenRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/ActualizarAlmacenRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para actualizar un almacen."
+      },
+      "ActualizarAlmacenRequestModel": {
+        "type": "object",
+        "properties": {
+          "codigoAlmacen": {
+            "type": "string",
+            "description": "Codigo del almacen a actualizar.",
+            "nullable": true
+          },
+          "datosAlmacen": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Datos a actualizar. Los nombres deben ser igual a los de la base de datos.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud ActualizarAlmacenRequest."
+      },
+      "ActualizarAlmacenRequestOptions": {
+        "type": "object",
+        "properties": {
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud ActualizarAlmacenRequest."
+      },
+      "ActualizarAlmacenResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/ActualizarAlmacenResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud ActualizarAlmacenRequest."
+      },
+      "ActualizarAlmacenResponseModel": {
+        "type": "object",
+        "properties": {
+          "almacen": {
+            "$ref": "#/components/schemas/Almacen"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta ActualizarAlmacenResponse."
+      },
+      "ActualizarClienteRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/ActualizarClienteRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/ActualizarClienteRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para actualizar un cliente."
+      },
+      "ActualizarClienteRequestModel": {
+        "type": "object",
+        "properties": {
+          "codigoCliente": {
+            "type": "string",
+            "description": "Codigo del cliente a actualizar.",
+            "nullable": true
+          },
+          "datosCliente": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Datos a actualizar. Los nombres deben ser igual a los de la base de datos.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud ActualizarClienteRequest."
+      },
+      "ActualizarClienteRequestOptions": {
+        "type": "object",
+        "properties": {
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud ActualizarClienteRequest."
+      },
+      "ActualizarClienteResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/ActualizarClienteResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud ActualizarClienteRequest."
+      },
+      "ActualizarClienteResponseModel": {
+        "type": "object",
+        "properties": {
+          "cliente": {
+            "$ref": "#/components/schemas/Cliente"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta ActualizarClienteResponse."
+      },
+      "ActualizarDocumentoRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/ActualizarDocumentoRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/ActualizarDocumentoRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para actualizar un documento."
+      },
+      "ActualizarDocumentoRequestModel": {
+        "type": "object",
+        "properties": {
+          "llaveDocumento": {
+            "$ref": "#/components/schemas/LlaveDocumento"
+          },
+          "datosDocumento": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Datos a actualizar. Los nombres deben ser igual a los de la base de datos.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud ActualizarDocumentoRequest."
+      },
+      "ActualizarDocumentoRequestOptions": {
+        "type": "object",
+        "properties": {
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud ActualizarDocumentoRequest."
+      },
+      "ActualizarDocumentoResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/ActualizarDocumentoResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud ActualizarDocumentoRequest."
+      },
+      "ActualizarDocumentoResponseModel": {
+        "type": "object",
+        "properties": {
+          "documento": {
+            "$ref": "#/components/schemas/Documento"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta ActualizarDocumentoResponse."
+      },
+      "ActualizarProductoRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/ActualizarProductoRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/ActualizarProductoRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para actualizar un producto."
+      },
+      "ActualizarProductoRequestModel": {
+        "type": "object",
+        "properties": {
+          "codigoProducto": {
+            "type": "string",
+            "description": "Codigo del producto a actualizar.",
+            "nullable": true
+          },
+          "datosProducto": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Datos a actualizar. Los nombres deben ser igual a los de la base de datos.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud ActualizarProductoRequest."
+      },
+      "ActualizarProductoRequestOptions": {
+        "type": "object",
+        "properties": {
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud ActualizarProductoRequest."
+      },
+      "ActualizarProductoResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/ActualizarProductoResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud ActualizarProductoRequest."
+      },
+      "ActualizarProductoResponseModel": {
+        "type": "object",
+        "properties": {
+          "producto": {
+            "$ref": "#/components/schemas/Producto"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta ActualizarProductoResponse."
+      },
+      "Agente": {
+        "type": "object",
+        "properties": {
+          "codigo": {
+            "type": "string",
+            "description": "Codigo del agente.",
+            "nullable": true
+          },
+          "nombre": {
+            "type": "string",
+            "description": "Nombre del agente.",
+            "nullable": true
+          },
+          "tipo": {
+            "$ref": "#/components/schemas/TipoAgente"
+          },
+          "datosExtra": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Datos extra del agente.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Estructura de un agente."
+      },
+      "Almacen": {
+        "type": "object",
+        "properties": {
+          "codigo": {
+            "type": "string",
+            "description": "Codigo del almacen.",
+            "nullable": true
+          },
+          "nombre": {
+            "type": "string",
+            "description": "Nombre del almacen.",
+            "nullable": true
+          },
+          "datosExtra": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Datos extra del almacen.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Estructura de un almacen."
+      },
+      "ApiRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "subscriptionKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "empresaRfc": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateCreated": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "contpaqiRequestType": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "contpaqiRequest": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ActualizarAgenteRequest"
+              },
+              {
+                "$ref": "#/components/schemas/BuscarAgentesRequest"
+              },
+              {
+                "$ref": "#/components/schemas/CrearAgenteRequest"
+              },
+              {
+                "$ref": "#/components/schemas/ActualizarAlmacenRequest"
+              },
+              {
+                "$ref": "#/components/schemas/BuscarAlmacenesRequest"
+              },
+              {
+                "$ref": "#/components/schemas/CrearAlmacenRequest"
+              },
+              {
+                "$ref": "#/components/schemas/ActualizarClienteRequest"
+              },
+              {
+                "$ref": "#/components/schemas/BuscarClientesRequest"
+              },
+              {
+                "$ref": "#/components/schemas/CrearClienteRequest"
+              },
+              {
+                "$ref": "#/components/schemas/EliminarClienteRequest"
+              },
+              {
+                "$ref": "#/components/schemas/BuscarConceptosRequest"
+              },
+              {
+                "$ref": "#/components/schemas/ActualizarDocumentoRequest"
+              },
+              {
+                "$ref": "#/components/schemas/BuscarDocumentosRequest"
+              },
+              {
+                "$ref": "#/components/schemas/CancelarDocumentoRequest"
+              },
+              {
+                "$ref": "#/components/schemas/CrearDocumentoRequest"
+              },
+              {
+                "$ref": "#/components/schemas/CrearFacturaRequest"
+              },
+              {
+                "$ref": "#/components/schemas/EliminarDocumentoRequest"
+              },
+              {
+                "$ref": "#/components/schemas/GenerarDocumentoDigitalRequest"
+              },
+              {
+                "$ref": "#/components/schemas/SaldarDocumentoRequest"
+              },
+              {
+                "$ref": "#/components/schemas/TimbrarDocumentoRequest"
+              },
+              {
+                "$ref": "#/components/schemas/BuscarEmpresasRequest"
+              },
+              {
+                "$ref": "#/components/schemas/ActualizarProductoRequest"
+              },
+              {
+                "$ref": "#/components/schemas/BuscarProductosRequest"
+              },
+              {
+                "$ref": "#/components/schemas/CrearProductoRequest"
+              },
+              {
+                "$ref": "#/components/schemas/EliminarProductoRequest"
+              }
+            ],
+            "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/RequestStatus"
+          },
+          "response": {
+            "$ref": "#/components/schemas/ApiResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ApiResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "dateCreated": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean"
+          },
+          "contpaqiResponseType": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "contpaqiResponse": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ActualizarAgenteResponse"
+              },
+              {
+                "$ref": "#/components/schemas/BuscarAgentesResponse"
+              },
+              {
+                "$ref": "#/components/schemas/CrearAgenteResponse"
+              },
+              {
+                "$ref": "#/components/schemas/ActualizarAlmacenResponse"
+              },
+              {
+                "$ref": "#/components/schemas/BuscarAlmacenesResponse"
+              },
+              {
+                "$ref": "#/components/schemas/CrearAlmacenResponse"
+              },
+              {
+                "$ref": "#/components/schemas/ActualizarClienteResponse"
+              },
+              {
+                "$ref": "#/components/schemas/BuscarClientesResponse"
+              },
+              {
+                "$ref": "#/components/schemas/CrearClienteResponse"
+              },
+              {
+                "$ref": "#/components/schemas/EliminarClienteResponse"
+              },
+              {
+                "$ref": "#/components/schemas/BuscarConceptosResponse"
+              },
+              {
+                "$ref": "#/components/schemas/ActualizarDocumentoResponse"
+              },
+              {
+                "$ref": "#/components/schemas/BuscarDocumentosResponse"
+              },
+              {
+                "$ref": "#/components/schemas/CancelarDocumentoResponse"
+              },
+              {
+                "$ref": "#/components/schemas/CrearDocumentoResponse"
+              },
+              {
+                "$ref": "#/components/schemas/CrearFacturaResponse"
+              },
+              {
+                "$ref": "#/components/schemas/EliminarDocumentoResponse"
+              },
+              {
+                "$ref": "#/components/schemas/GenerarDocumentoDigitalResponse"
+              },
+              {
+                "$ref": "#/components/schemas/SaldarDocumentoResponse"
+              },
+              {
+                "$ref": "#/components/schemas/TimbrarDocumentoResponse"
+              },
+              {
+                "$ref": "#/components/schemas/BuscarEmpresasResponse"
+              },
+              {
+                "$ref": "#/components/schemas/ActualizarProductoResponse"
+              },
+              {
+                "$ref": "#/components/schemas/BuscarProductosResponse"
+              },
+              {
+                "$ref": "#/components/schemas/CrearProductoResponse"
+              },
+              {
+                "$ref": "#/components/schemas/EliminarProductoResponse"
+              }
+            ],
+            "nullable": true
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "executionTime": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BuscarAgentesRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/BuscarAgentesRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/BuscarAgentesRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para buscar agentes."
+      },
+      "BuscarAgentesRequestModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Parametro para buscar agentes por id.",
+            "format": "int32",
+            "nullable": true
+          },
+          "codigo": {
+            "type": "string",
+            "description": "Parametro para buscar agentes por codigo.",
+            "nullable": true
+          },
+          "sqlQuery": {
+            "type": "string",
+            "description": "Parametro para buscar agentes por SQL. El valor debe ser el WHERE clause y debes asegurarte de sanatizar tu SQL.\r\n<example><br>Ejemplo para buscar agentes de tipo Agente de Ventas:```SqlQuery = \"CTIPOAGENTE = 1\"```<br>se traduce a ```SELECT * FROM admAgentes WHERE CTIPOAGENTE = 1```</example>",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud BuscarAgentesRequest."
+      },
+      "BuscarAgentesRequestOptions": {
+        "type": "object",
+        "properties": {
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud BuscarAgentesRequest."
+      },
+      "BuscarAgentesResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/BuscarAgentesResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud BuscarAgentesRequest."
+      },
+      "BuscarAgentesResponseModel": {
+        "type": "object",
+        "properties": {
+          "numeroRegistros": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "agentes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Agente"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta BuscarAgentesResponse."
+      },
+      "BuscarAlmacenesRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/BuscarAlmacenesRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/BuscarAlmacenesRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para buscar almacenes."
+      },
+      "BuscarAlmacenesRequestModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Parametro para buscar almacenes por id.",
+            "format": "int32",
+            "nullable": true
+          },
+          "codigo": {
+            "type": "string",
+            "description": "Parametro para buscar almacenes por codigo.",
+            "nullable": true
+          },
+          "sqlQuery": {
+            "type": "string",
+            "description": "Parametro para buscar almacenes por SQL. El valor debe ser el WHERE clause y debes asegurarte de sanatizar tu SQL.\r\n<example><br>Ejemplo para buscar almacenes por nombre:```SqlQuery = \"CNOMBREALMACEN = 'nombre'\"```<br>se traduce a ```SELECT * FROM admAlmacenes WHERE CNOMBREALMACEN = 'nombre'```</example>",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud BuscarAlmacenesRequest."
+      },
+      "BuscarAlmacenesRequestOptions": {
+        "type": "object",
+        "properties": {
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud BuscarAlmacenesRequest."
+      },
+      "BuscarAlmacenesResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/BuscarAlmacenesResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud BuscarAlmacenesRequest."
+      },
+      "BuscarAlmacenesResponseModel": {
+        "type": "object",
+        "properties": {
+          "numeroRegistros": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "almacenes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Almacen"
+            },
+            "description": "Lista de almacenes encontrados.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta BuscarAlmacenesResponse."
+      },
+      "BuscarClientesRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/BuscarClientesRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/BuscarClientesRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para buscar clientes."
+      },
+      "BuscarClientesRequestModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Parametro para buscar clientes por id.",
+            "format": "int32",
+            "nullable": true
+          },
+          "codigo": {
+            "type": "string",
+            "description": "Parametro para buscar clientes por codigo.",
+            "nullable": true
+          },
+          "sqlQuery": {
+            "type": "string",
+            "description": "Parametro para buscar clientes por SQL. El valor debe ser el WHERE clause y debes asegurarte de sanatizar tu SQL.\r\n<example><br>Ejemplo para buscar clientes por razon social:```SqlQuery = \"CRAZONSOCIAL = 'razonSocial'\"```<br>se traduce a ```SELECT * FROM admClientes WHERE CRAZONSOCIAL = 'razonSocial'```</example>",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud BuscarClientesRequest."
+      },
+      "BuscarClientesRequestOptions": {
+        "type": "object",
+        "properties": {
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud BuscarClientesRequest."
+      },
+      "BuscarClientesResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/BuscarClientesResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud BuscarClientesRequest."
+      },
+      "BuscarClientesResponseModel": {
+        "type": "object",
+        "properties": {
+          "numeroRegistros": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "clientes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cliente"
+            },
+            "description": "Lista de clientes encontrados.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta BuscarClientesResponse."
+      },
+      "BuscarConceptosRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/BuscarConceptosRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/BuscarConceptosRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para buscar conceptos."
+      },
+      "BuscarConceptosRequestModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Parametro para buscar conceptos por id.",
+            "format": "int32",
+            "nullable": true
+          },
+          "codigo": {
+            "type": "string",
+            "description": "Parametro para buscar conceptos por codigo.",
+            "nullable": true
+          },
+          "sqlQuery": {
+            "type": "string",
+            "description": "Parametro para buscar conceptos por SQL. El valor debe ser el WHERE clause y debes asegurarte de sanatizar tu SQL.\r\n<example><br>Ejemplo para buscar conceptos por nombre:```SqlQuery = \"CNOMBRECONCEPTO = 'nombre'\"```<br>se traduce a ```SELECT * FROM admConceptos WHERE CNOMBRECONCEPTO = 'nombre'```</example>",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud BuscarConceptosRequest."
+      },
+      "BuscarConceptosRequestOptions": {
+        "type": "object",
+        "properties": {
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud BuscarConceptosRequest."
+      },
+      "BuscarConceptosResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/BuscarConceptosResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud BuscarConceptosRequest."
+      },
+      "BuscarConceptosResponseModel": {
+        "type": "object",
+        "properties": {
+          "numeroRegistros": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "conceptos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Concepto"
+            },
+            "description": "Lista de conceptos encontrados.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta BuscarConceptosRequest."
+      },
+      "BuscarDocumentosRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/BuscarDocumentosRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/BuscarDocumentosRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para buscar documentos."
+      },
+      "BuscarDocumentosRequestModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Parametro para buscar documentos por id.",
+            "format": "int32",
+            "nullable": true
+          },
+          "llave": {
+            "$ref": "#/components/schemas/LlaveDocumento"
+          },
+          "conceptoCodigo": {
+            "type": "string",
+            "description": "Parametro para buscar documentos por concepto.",
+            "nullable": true
+          },
+          "fechaInicio": {
+            "type": "string",
+            "description": "Parametro para buscar documentos por rango de fecha.",
+            "format": "date",
+            "nullable": true
+          },
+          "fechaFin": {
+            "type": "string",
+            "description": "Parametro para buscar documentos por rango de fecha.",
+            "format": "date",
+            "nullable": true
+          },
+          "clienteCodigo": {
+            "type": "string",
+            "description": "Parametro para buscar documentos por cliente.",
+            "nullable": true
+          },
+          "sqlQuery": {
+            "type": "string",
+            "description": "Parametro para buscar documentos por SQL. El valor debe ser el WHERE clause y debes asegurarte de sanatizar tu SQL.\r\n<example><br>Ejemplo para buscar documentos con saldo pendiente:```SqlQuery = \"CPENDIENTE > 0.00\"```<br>se traduce a ```SELECT * FROM admDocumentos WHERE CPENDIENTE > 0.00```</example>",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud BuscarDocumentosRequest."
+      },
+      "BuscarDocumentosRequestOptions": {
+        "type": "object",
+        "properties": {
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud BuscarDocumentosRequest."
+      },
+      "BuscarDocumentosResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/BuscarDocumentosResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud BuscarDocumentosRequest."
+      },
+      "BuscarDocumentosResponseModel": {
+        "type": "object",
+        "properties": {
+          "numeroRegistros": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "documentos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Documento"
+            },
+            "description": "Lista de documentos encontrados.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta BuscarDocumentosResponse."
+      },
+      "BuscarEmpresasRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/BuscarEmpresasRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/BuscarEmpresasRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para buscar empresas."
+      },
+      "BuscarEmpresasRequestModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud BuscarEmpresasRequest."
+      },
+      "BuscarEmpresasRequestOptions": {
+        "type": "object",
+        "properties": {
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud BuscarEmpresasRequest."
+      },
+      "BuscarEmpresasResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/BuscarEmpresasResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud BuscarEmpresasRequest."
+      },
+      "BuscarEmpresasResponseModel": {
+        "type": "object",
+        "properties": {
+          "numeroRegistros": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "empresas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Empresa"
+            },
+            "description": "Lista de empresas encontradas.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud BuscarEmpresasResponse."
+      },
+      "BuscarProductosRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/BuscarProductosRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/BuscarProductosRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para buscar productos."
+      },
+      "BuscarProductosRequestModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Parametro para buscar productos por id.",
+            "format": "int32",
+            "nullable": true
+          },
+          "codigo": {
+            "type": "string",
+            "description": "Parametro para buscar productos por codigo.",
+            "nullable": true
+          },
+          "sqlQuery": {
+            "type": "string",
+            "description": "Parametro para buscar productos por SQL. El valor debe ser el WHERE clause y debes asegurarte de sanatizar tu SQL.\r\n<example><br>Ejemplo para buscar productos por nombre:```SqlQuery = \"CNOMBREPRODUCTO = 'nombre'\"```<br>se traduce a ```SELECT * FROM admProductos WHERE CNOMBREPRODUCTO = 'nombre'```</example>",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud BuscarProductosRequest."
+      },
+      "BuscarProductosRequestOptions": {
+        "type": "object",
+        "properties": {
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud BuscarProductosRequest."
+      },
+      "BuscarProductosResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/BuscarProductosResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud BuscarProductosRequest."
+      },
+      "BuscarProductosResponseModel": {
+        "type": "object",
+        "properties": {
+          "numeroRegistros": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "productos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Producto"
+            },
+            "description": "Lista de productos encontrados.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CancelarDocumentoRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/CancelarDocumentoRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/CancelarDocumentoRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para cancelar un documento."
+      },
+      "CancelarDocumentoRequestModel": {
+        "type": "object",
+        "properties": {
+          "llaveDocumento": {
+            "$ref": "#/components/schemas/LlaveDocumento"
+          },
+          "contrasenaCertificado": {
+            "type": "string",
+            "description": "Contrasena del certificado SAT.",
+            "nullable": true
+          },
+          "motivoCancelacion": {
+            "type": "string",
+            "description": "Motivo de la cancelacion.",
+            "nullable": true
+          },
+          "uuid": {
+            "type": "string",
+            "description": "UUID relacionado.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud CancelarDocumentoRequest."
+      },
+      "CancelarDocumentoRequestOptions": {
+        "type": "object",
+        "properties": {
+          "administrativamente": {
+            "type": "boolean",
+            "description": "Cancelar solo administrativamente."
+          },
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud CancelarDocumentoRequest."
+      },
+      "CancelarDocumentoResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/CancelarDocumentoResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud CancelarDocumentoRequest."
+      },
+      "CancelarDocumentoResponseModel": {
+        "type": "object",
+        "properties": {
+          "documento": {
+            "$ref": "#/components/schemas/Documento"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta CancelarDocumentoResponse."
+      },
+      "Cliente": {
+        "type": "object",
+        "properties": {
+          "tipo": {
+            "$ref": "#/components/schemas/TipoCliente"
+          },
+          "codigo": {
+            "type": "string",
+            "description": "Codigo del cliente.",
+            "nullable": true
+          },
+          "razonSocial": {
+            "type": "string",
+            "description": "Razon social del cliente.",
+            "nullable": true
+          },
+          "rfc": {
+            "type": "string",
+            "description": "RFC del cliente.",
+            "nullable": true
+          },
+          "usoCfdi": {
+            "$ref": "#/components/schemas/UsoCfdi"
+          },
+          "regimenFiscal": {
+            "$ref": "#/components/schemas/RegimenFiscal"
+          },
+          "direccionFiscal": {
+            "$ref": "#/components/schemas/Direccion"
+          },
+          "datosExtra": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Datos extra del cliente.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Estructura de un cliente o proveedor."
+      },
+      "Concepto": {
+        "type": "object",
+        "properties": {
+          "codigo": {
+            "type": "string",
+            "description": "Codigo del concepto.",
+            "nullable": true
+          },
+          "nombre": {
+            "type": "string",
+            "description": "Nombre del concepto.",
+            "nullable": true
+          },
+          "datosExtra": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Datos extra del concepto.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Estructura de un concepto de documento"
+      },
+      "CrearAgenteRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/CrearAgenteRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/CrearAgenteRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para crear un agente."
+      },
+      "CrearAgenteRequestModel": {
+        "type": "object",
+        "properties": {
+          "agente": {
+            "$ref": "#/components/schemas/Agente"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud CrearAgenteRequest."
+      },
+      "CrearAgenteRequestOptions": {
+        "type": "object",
+        "properties": {
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud CrearAgenteRequest."
+      },
+      "CrearAgenteResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/CrearAgenteResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud CrearAgenteRequest."
+      },
+      "CrearAgenteResponseModel": {
+        "type": "object",
+        "properties": {
+          "agente": {
+            "$ref": "#/components/schemas/Agente"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta CrearAgenteResponse."
+      },
+      "CrearAlmacenRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/CrearAlmacenRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/CrearAlmacenRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para crear un almacen."
+      },
+      "CrearAlmacenRequestModel": {
+        "type": "object",
+        "properties": {
+          "almacen": {
+            "$ref": "#/components/schemas/Almacen"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud CrearAlmacenRequest."
+      },
+      "CrearAlmacenRequestOptions": {
+        "type": "object",
+        "properties": {
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud CrearAlmacenRequest."
+      },
+      "CrearAlmacenResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/CrearAlmacenResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud CrearAlmacenRequest."
+      },
+      "CrearAlmacenResponseModel": {
+        "type": "object",
+        "properties": {
+          "almacen": {
+            "$ref": "#/components/schemas/Almacen"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta CrearAlmacenResponse."
+      },
+      "CrearClienteRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/CrearClienteRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/CrearClienteRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para crear un cliente."
+      },
+      "CrearClienteRequestModel": {
+        "type": "object",
+        "properties": {
+          "cliente": {
+            "$ref": "#/components/schemas/Cliente"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud CrearClienteRequest."
+      },
+      "CrearClienteRequestOptions": {
+        "type": "object",
+        "properties": {
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud CrearClienteRequest."
+      },
+      "CrearClienteResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/CrearClienteResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud CrearClienteRequest."
+      },
+      "CrearClienteResponseModel": {
+        "type": "object",
+        "properties": {
+          "cliente": {
+            "$ref": "#/components/schemas/Cliente"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta CrearClienteResponse"
+      },
+      "CrearDocumentoRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/CrearDocumentoRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/CrearDocumentoRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para crear un documento."
+      },
+      "CrearDocumentoRequestModel": {
+        "type": "object",
+        "properties": {
+          "documento": {
+            "$ref": "#/components/schemas/Documento"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud CrearDocumentoRequest."
+      },
+      "CrearDocumentoRequestOptions": {
+        "type": "object",
+        "properties": {
+          "usarFechaDelDia": {
+            "type": "boolean",
+            "description": "Ignora la fecha del documento y usa la fecha del dia en que se crea el documento."
+          },
+          "buscarSiguienteFolio": {
+            "type": "boolean",
+            "description": "Ignora la serie y folio del documento y usa el folio consecutivo del concepto."
+          },
+          "crearCatalogos": {
+            "type": "boolean",
+            "description": "Crea los catalogos si no existen."
+          },
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud CrearDocumentoRequest."
+      },
+      "CrearDocumentoResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/CrearDocumentoResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud CrearDocumentoRequest."
+      },
+      "CrearDocumentoResponseModel": {
+        "type": "object",
+        "properties": {
+          "documento": {
+            "$ref": "#/components/schemas/Documento"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud CrearDocumentoRequest."
+      },
+      "CrearFacturaRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/CrearFacturaRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/CrearFacturaRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para crear una factura."
+      },
+      "CrearFacturaRequestModel": {
+        "type": "object",
+        "properties": {
+          "documento": {
+            "$ref": "#/components/schemas/Documento"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud CrearFacturaRequest."
+      },
+      "CrearFacturaRequestOptions": {
+        "type": "object",
+        "properties": {
+          "usarFechaDelDia": {
+            "type": "boolean",
+            "description": "Ignora la fecha del documento y usa la fecha del dia en que se crea el documento."
+          },
+          "buscarSiguienteFolio": {
+            "type": "boolean",
+            "description": "Ignora la serie y folio del documento y usa el folio consecutivo del concepto."
+          },
+          "crearCatalogos": {
+            "type": "boolean",
+            "description": "Crea los catalogos si no existen."
+          },
+          "timbrar": {
+            "type": "boolean"
+          },
+          "contrasenaCertificado": {
+            "type": "string",
+            "nullable": true
+          },
+          "generarDocumentosDigitales": {
+            "type": "boolean"
+          },
+          "generarPdf": {
+            "type": "boolean"
+          },
+          "nombrePlantilla": {
+            "type": "string",
+            "nullable": true
+          },
+          "agregarArchivo": {
+            "type": "boolean"
+          },
+          "nombreArchivo": {
+            "type": "string",
+            "nullable": true
+          },
+          "contenidoArchivo": {
+            "type": "string",
+            "nullable": true
+          },
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud CrearFacturaRequest."
+      },
+      "CrearFacturaResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/CrearFacturaResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud CrearFacturaRequest."
+      },
+      "CrearFacturaResponseModel": {
+        "type": "object",
+        "properties": {
+          "documento": {
+            "$ref": "#/components/schemas/Documento"
+          },
+          "xml": {
+            "$ref": "#/components/schemas/DocumentoDigital"
+          },
+          "pdf": {
+            "$ref": "#/components/schemas/DocumentoDigital"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta CrearFacturaRequest."
+      },
+      "CrearProductoRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/CrearProductoRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/CrearProductoRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para crear un producto."
+      },
+      "CrearProductoRequestModel": {
+        "type": "object",
+        "properties": {
+          "producto": {
+            "$ref": "#/components/schemas/Producto"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud CrearProductoRequest."
+      },
+      "CrearProductoRequestOptions": {
+        "type": "object",
+        "properties": {
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud CrearProductoRequest."
+      },
+      "CrearProductoResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/CrearProductoResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud CrearProductoRequest."
+      },
+      "CrearProductoResponseModel": {
+        "type": "object",
+        "properties": {
+          "producto": {
+            "$ref": "#/components/schemas/Producto"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta CrearProductoResponse."
+      },
+      "Direccion": {
+        "type": "object",
+        "properties": {
+          "calle": {
+            "type": "string",
+            "description": "Nombre de la calle.",
+            "nullable": true
+          },
+          "numeroExterior": {
+            "type": "string",
+            "description": "Numero exterior de la calle.",
+            "nullable": true
+          },
+          "numeroInterior": {
+            "type": "string",
+            "description": "Numero interior del edificio o local.",
+            "nullable": true
+          },
+          "colonia": {
+            "type": "string",
+            "description": "Colonia o fraccionamiento.",
+            "nullable": true
+          },
+          "ciudad": {
+            "type": "string",
+            "description": "Nombre de la ciudad.",
+            "nullable": true
+          },
+          "estado": {
+            "type": "string",
+            "description": "Nombre del estado.",
+            "nullable": true
+          },
+          "codigoPostal": {
+            "type": "string",
+            "description": "Codigo postal.",
+            "nullable": true
+          },
+          "pais": {
+            "type": "string",
+            "description": "Nombre del pais.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Estructura de una direccion."
+      },
+      "Documento": {
+        "type": "object",
+        "properties": {
+          "fecha": {
+            "type": "string",
+            "description": "Fecha del documento.",
+            "format": "date-time"
+          },
+          "concepto": {
+            "$ref": "#/components/schemas/Concepto"
+          },
+          "serie": {
+            "type": "string",
+            "description": "Serie del documento.",
+            "nullable": true
+          },
+          "folio": {
+            "type": "integer",
+            "description": "Folio del documento.",
+            "format": "int32"
+          },
+          "cliente": {
+            "$ref": "#/components/schemas/Cliente"
+          },
+          "moneda": {
+            "$ref": "#/components/schemas/Moneda"
+          },
+          "tipoCambio": {
+            "type": "number",
+            "description": "Tipo de cambio del documento.",
+            "format": "double"
+          },
+          "referencia": {
+            "type": "string",
+            "description": "Referencia del documento.",
+            "nullable": true
+          },
+          "observaciones": {
+            "type": "string",
+            "description": "Observaciones del documento.",
+            "nullable": true
+          },
+          "total": {
+            "type": "number",
+            "description": "Total del documento.",
+            "format": "double"
+          },
+          "agente": {
+            "$ref": "#/components/schemas/Agente"
+          },
+          "direccionFiscal": {
+            "$ref": "#/components/schemas/Direccion"
+          },
+          "formaPago": {
+            "$ref": "#/components/schemas/FormaPago"
+          },
+          "metodoPago": {
+            "$ref": "#/components/schemas/MetodoPago"
+          },
+          "movimientos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Movimiento"
+            },
+            "description": "Movimientos del documento.",
+            "nullable": true
+          },
+          "folioDigital": {
+            "$ref": "#/components/schemas/FolioDigital"
+          },
+          "datosExtra": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Datos extra del documento.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Estructura de un documeto."
+      },
+      "DocumentoDigital": {
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "description": "Nombre del documento.",
+            "nullable": true
+          },
+          "tipo": {
+            "type": "string",
+            "description": "Tipo de documento.",
+            "nullable": true
+          },
+          "ubicacion": {
+            "type": "string",
+            "description": "Ubicacion del documento.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "EliminarClienteRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/EliminarClienteRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/EliminarClienteRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para eliminar un cliente."
+      },
+      "EliminarClienteRequestModel": {
+        "type": "object",
+        "properties": {
+          "codigoCliente": {
+            "type": "string",
+            "description": "Codigo del cliente a eliminar.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud EliminarClienteRequest."
+      },
+      "EliminarClienteRequestOptions": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud EliminarClienteRequest."
+      },
+      "EliminarClienteResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/EliminarClienteResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud EliminarClienteRequest."
+      },
+      "EliminarClienteResponseModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta EliminarClienteResponse."
+      },
+      "EliminarDocumentoRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/EliminarDocumentoRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/EliminarDocumentoRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para eliminar un documento."
+      },
+      "EliminarDocumentoRequestModel": {
+        "type": "object",
+        "properties": {
+          "llaveDocumento": {
+            "$ref": "#/components/schemas/LlaveDocumento"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud EliminarDocumentoRequest."
+      },
+      "EliminarDocumentoRequestOptions": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud EliminarDocumentoRequest."
+      },
+      "EliminarDocumentoResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/EliminarDocumentoResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud EliminarDocumentoRequest."
+      },
+      "EliminarDocumentoResponseModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta EliminarDocumentoResponse."
+      },
+      "EliminarProductoRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/EliminarProductoRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/EliminarProductoRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para eliminar un producto."
+      },
+      "EliminarProductoRequestModel": {
+        "type": "object",
+        "properties": {
+          "codigoProducto": {
+            "type": "string",
+            "description": "Codigo del producto a eliminar.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud EliminarProductoRequest."
+      },
+      "EliminarProductoRequestOptions": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud EliminarProductoRequest."
+      },
+      "EliminarProductoResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/EliminarProductoResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud EliminarProductoRequest."
+      },
+      "EliminarProductoResponseModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta EliminarProductoResponse."
+      },
+      "Empresa": {
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "rfc": {
+            "type": "string",
+            "nullable": true
+          },
+          "ruta": {
+            "type": "string",
+            "nullable": true
+          },
+          "baseDatos": {
+            "type": "string",
+            "nullable": true
+          },
+          "guidAdd": {
+            "type": "string",
+            "nullable": true
+          },
+          "datosExtra": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FolioDigital": {
+        "type": "object",
+        "properties": {
+          "uuid": {
+            "type": "string",
+            "nullable": true
+          },
+          "datosExtra": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormaPago": {
+        "type": "object",
+        "properties": {
+          "clave": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GenerarDocumentoDigitalRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/GenerarDocumentoDigitalRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/GenerarDocumentoDigitalRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para generar el XML o PDF del documento."
+      },
+      "GenerarDocumentoDigitalRequestModel": {
+        "type": "object",
+        "properties": {
+          "llaveDocumento": {
+            "$ref": "#/components/schemas/LlaveDocumento"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud GenerarDocumentoDigitalRequest."
+      },
+      "GenerarDocumentoDigitalRequestOptions": {
+        "type": "object",
+        "properties": {
+          "tipo": {
+            "$ref": "#/components/schemas/TipoArchivoDigital"
+          },
+          "nombrePlantilla": {
+            "type": "string",
+            "description": "Nombre de la plantilla cuando se generar el PDF.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud GenerarDocumentoDigitalRequest."
+      },
+      "GenerarDocumentoDigitalResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/GenerarDocumentoDigitalResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud GenerarDocumentoDigitalRequest."
+      },
+      "GenerarDocumentoDigitalResponseModel": {
+        "type": "object",
+        "properties": {
+          "documentoDigital": {
+            "$ref": "#/components/schemas/DocumentoDigital"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta GenerarDocumentoDigitalResponse."
+      },
+      "LlaveDocumento": {
+        "type": "object",
+        "properties": {
+          "conceptoCodigo": {
+            "type": "string",
+            "description": "Codigo del concepto del documento.",
+            "nullable": true
+          },
+          "serie": {
+            "type": "string",
+            "description": "Serie del documento.",
+            "nullable": true
+          },
+          "folio": {
+            "type": "integer",
+            "description": "Folio del documento.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Estructura de una llave de documento."
+      },
+      "MetodoPago": {
+        "type": "object",
+        "properties": {
+          "clave": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Moneda": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Movimiento": {
+        "type": "object",
+        "properties": {
+          "producto": {
+            "$ref": "#/components/schemas/Producto"
+          },
+          "unidades": {
+            "type": "number",
+            "description": "Cantidad de unidad base del movimiento.",
+            "format": "double"
+          },
+          "precio": {
+            "type": "number",
+            "description": "Precio del producto",
+            "format": "double"
+          },
+          "subtotal": {
+            "type": "number",
+            "description": "Subtotal del movimiento.",
+            "format": "double"
+          },
+          "total": {
+            "type": "number",
+            "description": "Total del movimiento",
+            "format": "double"
+          },
+          "almacen": {
+            "$ref": "#/components/schemas/Almacen"
+          },
+          "referencia": {
+            "type": "string",
+            "description": "Referencia del movimiento.",
+            "nullable": true
+          },
+          "observaciones": {
+            "type": "string",
+            "description": "Observaciones del movimiento.",
+            "nullable": true
+          },
+          "seriesCapas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SeriesCapas"
+            },
+            "nullable": true
+          },
+          "datosExtra": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Datos extra del movimiento.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Estructura de un movimiento."
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": { }
+      },
+      "Producto": {
+        "type": "object",
+        "properties": {
+          "tipo": {
+            "$ref": "#/components/schemas/TipoProducto"
+          },
+          "codigo": {
+            "type": "string",
+            "description": "Codigo del producto.",
+            "nullable": true
+          },
+          "nombre": {
+            "type": "string",
+            "description": "Nombre del producto.",
+            "nullable": true
+          },
+          "claveSat": {
+            "type": "string",
+            "description": "Clave SAT del producto.",
+            "nullable": true
+          },
+          "datosExtra": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Datos extra del producto.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Estructura de un producto."
+      },
+      "RegimenFiscal": {
+        "type": "object",
+        "properties": {
+          "clave": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RequestStatus": {
+        "enum": [
+          "Pending",
+          "Processed",
+          "Canceled"
+        ],
+        "type": "string"
+      },
+      "SaldarDocumentoRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/SaldarDocumentoRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/SaldarDocumentoRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para saldar un documento."
+      },
+      "SaldarDocumentoRequestModel": {
+        "type": "object",
+        "properties": {
+          "documentoAPagar": {
+            "$ref": "#/components/schemas/LlaveDocumento"
+          },
+          "documentoPago": {
+            "$ref": "#/components/schemas/LlaveDocumento"
+          },
+          "fecha": {
+            "type": "string",
+            "description": "Fecha del documento a crear.",
+            "format": "date-time"
+          },
+          "importe": {
+            "type": "number",
+            "description": "Importe a abonar.",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud SaldarDocumentoRequest."
+      },
+      "SaldarDocumentoRequestOptions": {
+        "type": "object",
+        "properties": {
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud SaldarDocumentoRequest."
+      },
+      "SaldarDocumentoResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/SaldarDocumentoResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud SaldarDocumentoRequest."
+      },
+      "SaldarDocumentoResponseModel": {
+        "type": "object",
+        "properties": {
+          "documentoPago": {
+            "$ref": "#/components/schemas/Documento"
+          },
+          "documentoPagar": {
+            "$ref": "#/components/schemas/Documento"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta SaldarDocumentoResponse."
+      },
+      "SeriesCapas": {
+        "type": "object",
+        "properties": {
+          "unidades": {
+            "type": "number",
+            "description": "Unidades del movimiento.",
+            "format": "double"
+          },
+          "tipoCambio": {
+            "type": "number",
+            "description": "Tipo de cambio del movimiento.",
+            "format": "double"
+          },
+          "series": {
+            "type": "string",
+            "description": "Series del movimiento.",
+            "nullable": true
+          },
+          "pedimento": {
+            "type": "string",
+            "description": "Pedimento del movimiento.",
+            "nullable": true
+          },
+          "agencia": {
+            "type": "string",
+            "description": "Agencia aduanal del movimiento.",
+            "nullable": true
+          },
+          "fechaPedimento": {
+            "type": "string",
+            "description": "Fecha de pedimento del movimiento.",
+            "format": "date-time"
+          },
+          "numeroLote": {
+            "type": "string",
+            "description": "Número de lote del movimiento.",
+            "nullable": true
+          },
+          "fechaFabricacion": {
+            "type": "string",
+            "description": "Fecha de fabricación del movimiento.",
+            "format": "date-time"
+          },
+          "fechaCaducidad": {
+            "type": "string",
+            "description": "Fecha de Caducidad del movimiento.",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimbrarDocumentoRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/TimbrarDocumentoRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/TimbrarDocumentoRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para timbrar un documento."
+      },
+      "TimbrarDocumentoRequestModel": {
+        "type": "object",
+        "properties": {
+          "llaveDocumento": {
+            "$ref": "#/components/schemas/LlaveDocumento"
+          },
+          "contrasenaCertificado": {
+            "type": "string",
+            "description": "Contrasena del certificado SAT.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud TimbrarDocumentoRequest."
+      },
+      "TimbrarDocumentoRequestOptions": {
+        "type": "object",
+        "properties": {
+          "agregarArchivo": {
+            "type": "boolean",
+            "description": "Agregar archivo de complemento adicional."
+          },
+          "nombreArchivo": {
+            "type": "string",
+            "description": "Nombre del archivo adicional.",
+            "nullable": true
+          },
+          "contenidoArchivo": {
+            "type": "string",
+            "description": "Contenido del archivo adicional.",
+            "nullable": true
+          },
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud TimbrarDocumentoRequest."
+      },
+      "TimbrarDocumentoResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/TimbrarDocumentoResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud TimbrarDocumentoRequest."
+      },
+      "TimbrarDocumentoResponseModel": {
+        "type": "object",
+        "properties": {
+          "documento": {
+            "$ref": "#/components/schemas/Documento"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta TimbrarDocumentoResponse."
+      },
+      "TipoAgente": {
+        "enum": [
+          "Ventas",
+          "VentasCobro",
+          "Cobro"
+        ],
+        "type": "string"
+      },
+      "TipoArchivoDigital": {
+        "enum": [
+          "Xml",
+          "Pdf"
+        ],
+        "type": "string"
+      },
+      "TipoCliente": {
+        "enum": [
+          "Cliente",
+          "ClienteProveedor",
+          "Proveedor"
+        ],
+        "type": "string"
+      },
+      "TipoProducto": {
+        "enum": [
+          "Producto",
+          "Paquete",
+          "Servicio"
+        ],
+        "type": "string"
+      },
+      "UsoCfdi": {
+        "type": "object",
+        "properties": {
+          "descripcion": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "clave": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "regimenesFiscales": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RegimenFiscal"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
