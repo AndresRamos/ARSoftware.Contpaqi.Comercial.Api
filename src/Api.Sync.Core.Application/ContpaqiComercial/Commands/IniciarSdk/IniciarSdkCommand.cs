@@ -14,9 +14,8 @@ public sealed class IniciarSdkCommandHandler : IRequestHandler<IniciarSdkCommand
     private readonly ILogger _logger;
     private readonly IComercialSdkSesionService _sdkSesionService;
 
-    public IniciarSdkCommandHandler(IComercialSdkSesionService sdkSesionService,
-                                    IOptions<ContpaqiComercialConfig> contpaqiComercialConfig,
-                                    ILogger<IniciarSdkCommandHandler> logger)
+    public IniciarSdkCommandHandler(IComercialSdkSesionService sdkSesionService, IOptions<ContpaqiComercialConfig> contpaqiComercialConfig,
+        ILogger<IniciarSdkCommandHandler> logger)
     {
         _sdkSesionService = sdkSesionService;
         _logger = logger;

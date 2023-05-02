@@ -23,9 +23,8 @@ public sealed class ConceptoRepository : IConceptoRepository
         _mapper = mapper;
     }
 
-    public async Task<Concepto?> BuscarPorIdAsync(int id,
-                                                  ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                  CancellationToken cancellationToken)
+    public async Task<Concepto?> BuscarPorIdAsync(int id, ILoadRelatedDataOptions loadRelatedDataOptions,
+        CancellationToken cancellationToken)
     {
         ConceptoSql? conceptoSql = await _context.admConceptos.Where(m => m.CIDCONCEPTODOCUMENTO == id)
             .ProjectTo<ConceptoSql>(_mapper.ConfigurationProvider)
@@ -41,9 +40,8 @@ public sealed class ConceptoRepository : IConceptoRepository
         return concepto;
     }
 
-    public async Task<Concepto?> BuscarPorCodigoAsync(string codigo,
-                                                      ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                      CancellationToken cancellationToken)
+    public async Task<Concepto?> BuscarPorCodigoAsync(string codigo, ILoadRelatedDataOptions loadRelatedDataOptions,
+        CancellationToken cancellationToken)
     {
         ConceptoSql? conceptoSql = await _context.admConceptos.Where(m => m.CCODIGOCONCEPTO == codigo)
             .ProjectTo<ConceptoSql>(_mapper.ConfigurationProvider)
@@ -60,7 +58,7 @@ public sealed class ConceptoRepository : IConceptoRepository
     }
 
     public async Task<IEnumerable<Concepto>> BuscarTodoAsync(ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                             CancellationToken cancellationToken)
+        CancellationToken cancellationToken)
     {
         var conceptosList = new List<Concepto>();
 
@@ -81,8 +79,7 @@ public sealed class ConceptoRepository : IConceptoRepository
     }
 
     public async Task<IEnumerable<Concepto>> BuscarPorRequstModelAsync(BuscarConceptosRequestModel requestModel,
-                                                                       ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                                       CancellationToken cancellationToken)
+        ILoadRelatedDataOptions loadRelatedDataOptions, CancellationToken cancellationToken)
     {
         var conceptosList = new List<Concepto>();
 
@@ -112,10 +109,8 @@ public sealed class ConceptoRepository : IConceptoRepository
         return conceptosList;
     }
 
-    private async Task CargarDatosRelacionadosAsync(Concepto concepto,
-                                                    ConceptoSql conceptoSql,
-                                                    ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                    CancellationToken cancellationToken)
+    private async Task CargarDatosRelacionadosAsync(Concepto concepto, ConceptoSql conceptoSql,
+        ILoadRelatedDataOptions loadRelatedDataOptions, CancellationToken cancellationToken)
     {
         if (loadRelatedDataOptions.CargarDatosExtra)
             concepto.DatosExtra =

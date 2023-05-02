@@ -22,10 +22,8 @@ public sealed class FolioDigitalRepository : IFolioDigitalRepository
         _mapper = mapper;
     }
 
-    public async Task<FolioDigital?> BuscarPorDocumentoIdAsync(int conceptoId,
-                                                               int documentoId,
-                                                               ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                               CancellationToken cancellationToken)
+    public async Task<FolioDigital?> BuscarPorDocumentoIdAsync(int conceptoId, int documentoId,
+        ILoadRelatedDataOptions loadRelatedDataOptions, CancellationToken cancellationToken)
     {
         FolioDigitalSql? folioDigitalSql = await _context.admFoliosDigitales
             .Where(m => m.CIDCPTODOC == conceptoId && m.CIDDOCTO == documentoId)
@@ -42,10 +40,8 @@ public sealed class FolioDigitalRepository : IFolioDigitalRepository
         return folioDigital;
     }
 
-    private async Task CargarDatosRelacionadosAsync(FolioDigital folioDigital,
-                                                    FolioDigitalSql folioDigitalSql,
-                                                    ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                    CancellationToken cancellationToken)
+    private async Task CargarDatosRelacionadosAsync(FolioDigital folioDigital, FolioDigitalSql folioDigitalSql,
+        ILoadRelatedDataOptions loadRelatedDataOptions, CancellationToken cancellationToken)
     {
         if (loadRelatedDataOptions.CargarDatosExtra)
             folioDigital.DatosExtra =

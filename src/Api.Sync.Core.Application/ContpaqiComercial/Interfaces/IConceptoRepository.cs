@@ -8,13 +8,11 @@ public interface IConceptoRepository
 {
     Task<Concepto?> BuscarPorIdAsync(int id, ILoadRelatedDataOptions loadRelatedDataOptions, CancellationToken cancellationToken);
 
-    Task<Concepto?> BuscarPorCodigoAsync(string codigo,
-                                         ILoadRelatedDataOptions loadRelatedDataOptions,
-                                         CancellationToken cancellationToken);
+    Task<Concepto?> BuscarPorCodigoAsync(string codigo, ILoadRelatedDataOptions loadRelatedDataOptions,
+        CancellationToken cancellationToken);
 
     Task<IEnumerable<Concepto>> BuscarTodoAsync(ILoadRelatedDataOptions loadRelatedDataOptions, CancellationToken cancellationToken);
 
     Task<IEnumerable<Concepto>> BuscarPorRequstModelAsync(BuscarConceptosRequestModel requestModel,
-                                                          ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                          CancellationToken cancellationToken);
+        ILoadRelatedDataOptions loadRelatedDataOptions, CancellationToken cancellationToken);
 }

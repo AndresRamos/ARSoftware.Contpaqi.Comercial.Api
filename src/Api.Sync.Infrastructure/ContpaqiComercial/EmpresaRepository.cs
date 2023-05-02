@@ -20,10 +20,8 @@ public sealed class EmpresaRepository : IEmpresaRepository
     private readonly ContpaqiComercialGeneralesDbContext _context;
     private readonly IMapper _mapper;
 
-    public EmpresaRepository(ContpaqiComercialGeneralesDbContext context,
-                             IMapper mapper,
-                             IConfiguration configuration,
-                             ContpaqiComercialEmpresaDbContext comercialEmpresaDbContext)
+    public EmpresaRepository(ContpaqiComercialGeneralesDbContext context, IMapper mapper, IConfiguration configuration,
+        ContpaqiComercialEmpresaDbContext comercialEmpresaDbContext)
     {
         _context = context;
         _mapper = mapper;
@@ -52,14 +50,12 @@ public sealed class EmpresaRepository : IEmpresaRepository
         return empresasList;
     }
 
-    private async Task CargarDatosRelacionadosAsync(Empresa empresa,
-                                                    ILoadRelatedDataOptions relatedDataOptions,
-                                                    CancellationToken cancellationToken)
+    private async Task CargarDatosRelacionadosAsync(Empresa empresa, ILoadRelatedDataOptions relatedDataOptions,
+        CancellationToken cancellationToken)
     {
         var optionsBuilder = new DbContextOptionsBuilder<ContpaqiComercialEmpresaDbContext>();
         string empresaConnectionString = ContpaqiComercialSqlConnectionStringFactory.CreateContpaqiComercialEmpresaConnectionString(
-            _configuration.GetConnectionString("Contpaqi"),
-            empresa.BaseDatos);
+            _configuration.GetConnectionString("Contpaqi"), empresa.BaseDatos);
         optionsBuilder.UseSqlServer(empresaConnectionString);
 
         _comercialEmpresaDbContext.Database.SetConnectionString(empresaConnectionString);

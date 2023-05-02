@@ -5,8 +5,6 @@ namespace Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
 
 public interface IFolioDigitalRepository
 {
-    Task<FolioDigital?> BuscarPorDocumentoIdAsync(int conceptoId,
-                                                  int documentoId,
-                                                  ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                  CancellationToken cancellationToken);
+    Task<FolioDigital?> BuscarPorDocumentoIdAsync(int conceptoId, int documentoId, ILoadRelatedDataOptions loadRelatedDataOptions,
+        CancellationToken cancellationToken);
 }

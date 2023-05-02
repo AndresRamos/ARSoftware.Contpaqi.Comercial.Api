@@ -26,9 +26,8 @@ public sealed class MovimientoRepository : IMovimientoRepository
         _almacenRepository = new AlmacenRepository(context, mapper);
     }
 
-    public async Task<IEnumerable<Movimiento>> BuscarPorDocumentoIdAsync(int documentoId,
-                                                                         ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                                         CancellationToken cancellationToken)
+    public async Task<IEnumerable<Movimiento>> BuscarPorDocumentoIdAsync(int documentoId, ILoadRelatedDataOptions loadRelatedDataOptions,
+        CancellationToken cancellationToken)
     {
         var movimientosList = new List<Movimiento>();
 
@@ -48,10 +47,8 @@ public sealed class MovimientoRepository : IMovimientoRepository
         return movimientosList;
     }
 
-    private async Task CargarDatosRelacionadosAsync(Movimiento movimiento,
-                                                    MovimientoSql movimientoSql,
-                                                    ILoadRelatedDataOptions loadRelatedDataOptions,
-                                                    CancellationToken cancellationToken)
+    private async Task CargarDatosRelacionadosAsync(Movimiento movimiento, MovimientoSql movimientoSql,
+        ILoadRelatedDataOptions loadRelatedDataOptions, CancellationToken cancellationToken)
     {
         movimiento.Producto =
             await _productoRepository.BuscarPorIdAsync(movimientoSql.CIDPRODUCTO, loadRelatedDataOptions, cancellationToken) ??

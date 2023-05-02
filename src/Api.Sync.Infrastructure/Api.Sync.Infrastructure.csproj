@@ -1,19 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="ARSoftware.Contpaqi.Comercial.Sdk.Extras" Version="4.4.0" />
-    <PackageReference Include="ARSoftware.Contpaqi.Comercial.Sql" Version="4.4.0" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="ARSoftware.Contpaqi.Comercial.Sdk.Extras" Version="4.4.0" />
+		<PackageReference Include="ARSoftware.Contpaqi.Comercial.Sql" Version="4.4.0" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Api.Sync.Core.Application\Api.Sync.Core.Application.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Api.Sync.Core.Application\Api.Sync.Core.Application.csproj" />
+	</ItemGroup>
 
 </Project>

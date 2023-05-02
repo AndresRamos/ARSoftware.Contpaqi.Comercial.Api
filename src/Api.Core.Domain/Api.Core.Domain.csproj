@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
@@ -16,17 +16,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="ARSoftware.Contpaqi.Api.Common" Version="1.0.0" />
-	  <PackageReference Include="ARSoftware.Contpaqi.Comercial.Sdk.Extras" Version="4.4.0" />
-	  <PackageReference Include="MediatR" Version="12.0.1" />
+		<PackageReference Include="ARSoftware.Contpaqi.Api.Common" Version="1.0.0" />
+		<PackageReference Include="ARSoftware.Contpaqi.Comercial.Sdk.Extras" Version="4.4.0" />
+		<PackageReference Include="MediatR" Version="12.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Using Include="Api.Core.Domain.Common" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Requests\Empresas\" />
+		<Using Include="Api.Core.Domain.Common" />
 	</ItemGroup>
 
 </Project>

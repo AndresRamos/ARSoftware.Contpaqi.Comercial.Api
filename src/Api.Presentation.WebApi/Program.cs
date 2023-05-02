@@ -24,7 +24,6 @@ builder.Services.AddControllers(options =>
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 builder.Services.AddApplicationServices().AddInfrastructureServices(builder.Configuration);
-//builder.Services.ConfigureHttpJsonOptions(options => { options.SerializerOptions.TypeInfoResolver = new PolymorphicTypeResolver(); });
 
 builder.Services.AddScoped<ApiKeyAuthFilter>();
 
