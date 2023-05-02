@@ -1,0 +1,5 @@
+{
+  "$type": "BuscarEmpresasRequest",
+  "model": {},
+  "options": {}
+}

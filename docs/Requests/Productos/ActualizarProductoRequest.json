@@ -1,0 +1,13 @@
+{
+  "$type": "ActualizarProductoRequest",
+  "model": {
+    "codigoProducto": "PROD001",
+    "datosProducto": {
+      "CFECHAALTAPRODUCTO": "05/01/2023",
+      "CNOMBREPRODUCTO": "Producto 1",
+      "CCLAVESAT": "43231500",
+      "CTEXTOEXTRA1": "Texto Extra"
+    }
+  },
+  "options": {}
+}

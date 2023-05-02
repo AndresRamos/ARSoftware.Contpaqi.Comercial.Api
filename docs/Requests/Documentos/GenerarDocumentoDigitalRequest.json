@@ -1,0 +1,14 @@
+{
+  "$type": "GenerarDocumentoDigitalRequest",
+  "model": {
+    "llaveDocumento": {
+      "conceptoCodigo": "400",
+      "serie": "FE",
+      "folio": 123
+    }
+  },
+  "options": {
+    "tipo": "Pdf",
+    "nombrePlantilla": "Facturav40.rdl"
+  }
+}

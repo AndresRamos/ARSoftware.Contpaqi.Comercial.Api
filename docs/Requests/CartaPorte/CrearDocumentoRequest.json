@@ -1,0 +1,100 @@
+{
+  "$type": "CrearFacturaRequest",
+  "model": {
+    "documento": {
+      "fecha": "2023-05-01T00:00:00-05:00",
+      "concepto": {
+        "codigo": "402",
+        "nombre": "",
+        "datosExtra": {}
+      },
+      "serie": "",
+      "cliente": {
+        "tipo": "ClienteProveedor",
+        "codigo": "CTEPORTE01",
+        "razonSocial": "",
+        "rfc": "",
+        "direccionFiscal": {
+          "calle": "",
+          "numeroExterior": "",
+          "numeroInterior": "",
+          "colonia": "",
+          "ciudad": "",
+          "estado": "",
+          "codigoPostal": "",
+          "pais": ""
+        },
+        "datosExtra": {}
+      },
+      "moneda": {
+        "id": 1,
+        "nombre": "Peso Mexicano"
+      },
+      "tipoCambio": 1,
+      "referencia": "Referencia doc",
+      "observaciones": "Observaciones del documento.",
+      "agente": {
+        "codigo": "AGE001",
+        "nombre": "Agente 1",
+        "tipo": "VentasCobro",
+        "datosExtra": {
+          "CCOMISIONVENTAAGENTE": "5",
+          "CCOMISIONCOBROAGENTE": "10"
+        }
+      },
+      "direccionFiscal": {
+        "calle": "",
+        "numeroExterior": "",
+        "numeroInterior": "",
+        "colonia": "",
+        "ciudad": "",
+        "estado": "",
+        "codigoPostal": "",
+        "pais": ""
+      },
+      "formaPago": "03",
+      "metodoPago": "PPD",
+      "movimientos": [
+        {
+          "producto": {
+            "tipo": "Producto",
+            "codigo": "PORTE03",
+            "nombre": "",
+            "claveSat": "",
+            "datosExtra": {}
+          },
+          "unidades": 1,
+          "precio": 25000,
+          "almacen": {
+            "codigo": "1",
+            "nombre": "Almacen Uno",
+            "datosExtra": {}
+          },
+          "referencia": "Referencia mov",
+          "observaciones": "Observaciones del movimiento",
+          "seriesCapas": [],
+          "datosExtra": {
+            "CPORCENTAJERETENCION2": "4"
+          }
+        }
+      ],
+      "folioDigital": {
+        "uuid": "",
+        "datosExtra": {}
+      },
+      "datosExtra": {}
+    }
+  },
+  "options": {
+    "usarFechaDelDia": true,
+    "buscarSiguienteFolio": true,
+    "timbrar": true,
+    "contrasenaCertificado": "12345678a",
+    "generarDocumentosDigitales": true,
+    "generarPdf": true,
+    "nombrePlantilla": "Carta_Porte_CFDI_Ingreso_2.rdl",
+    "agregarArchivo": true,
+    "nombreArchivo": "CartaPorteEjemplo.ini",
+    "contenidoArchivo": "[CartaPorte2.0]\r\nTranspInternac=No\r\nTotalDistRec=100\r\n\r\n[Ubicacion1]\r\nTipoUbicacion=Origen\r\nIDUbicacion=OR000001\r\nFechaHoraSalidaLlegada=2023-03-14T10:00:00\r\nRFCRemitenteDestinatario=URE180429TM6\r\nNombreRemitenteDestinatario=UNIVERSIDAD ROBOTICA ESPANOLA SA DE CV\r\n[Ubicacion1.Domicilio]\r\nPais=MEX\r\nCodigoPostal=88630\r\nEstado=TAM\r\nMunicipio=032\r\nLocalidad=07\r\nColonia=1041\r\nCalle=PRUEBAS\r\nNumeroExterior=1234\r\n\r\n[Ubicacion2]\r\nTipoUbicacion=Destino\r\nIDUbicacion=DE000001\r\nFechaHoraSalidaLlegada=2023-03-14T11:00:00\r\nRFCRemitenteDestinatario=AAA010101AAA\r\nNombreRemitenteDestinatario=CLIENTE CARTA PROTE 1\r\nDistanciaRecorrida=100.00\r\n[Ubicacion2.Domicilio]\r\nPais=MEX\r\nCodigoPostal=84000\r\nEstado=SON\r\nMunicipio=043\r\nLocalidad=10\r\nColonia=0602\r\nCalle=Nogales Centro\r\nNumeroExterior=100\r\n\r\n[Transporte1]\r\nClave=01\r\nPermSCT=TPAF01\r\nNumPermisoSCT=JKL987654\r\nConfigVehicular=C2\r\nPlacaVM=MNC6655\r\nAnioModeloVM=2023\r\nAseguraRespCivil=GNP\r\nPolizaRespCivil=TRE123456\r\nAseguraCarga=GNP\r\nPolizaCarga=POL123456\r\nPrimaSeguro=10000\r\n[Transporte1.Remolque1]\r\nSubTipoRem=CTR002\r\nPlaca=WFG9900\r\n\r\n[Figura1]\r\nTipoFigura=01\r\nRFCFigura=LELD920228KS8\r\nNombreFigura=DIEGO LEON LOPEZ\r\nNumLicencia=1206548981\r\n[Figura1.Domicilio]\r\nPais=MEX\r\nCodigoPostal=83000\r\nEstado=SON\r\nMunicipio=030\r\nLocalidad=07\r\nColonia=3140\r\nCalle=CENTRO NORTE\r\nNumeroExterior=100\r\n\r\n[Mercancias]\r\nNumTotalMercancias=1\r\nUnidadPeso=KGM\r\nPesoBrutoTotal=1.000\r\n\r\n[Mercancia1]\r\nBienesTransp=50101700\r\nDescripcion=Frutos secos\r\nCantidad=1.000000\r\nClaveUnidad=KGM\r\nUnidad=Kilogramo\r\nMaterialPeligroso=No\r\nPesoEnKg=1.000\r\nValorMercancia=100.000000\r\nMoneda=MXN\r\n[Mercancia1.CantidadTransporta1]\r\nCantidad=1.000000\r\nIDOrigen=OR000001\r\nIDDestino=DE000001\r\n"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "$type": "EliminarProductoRequest",
+  "model": {
+    "codigoProducto": "PROD001"
+  },
+  "options": {}
+}

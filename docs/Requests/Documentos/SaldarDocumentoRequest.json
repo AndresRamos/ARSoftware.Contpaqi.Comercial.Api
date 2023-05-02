@@ -1,0 +1,18 @@
+{
+  "$type": "SaldarDocumentoRequest",
+  "model": {
+    "documentoAPagar": {
+      "conceptoCodigo": "400",
+      "serie": "FE",
+      "folio": 123
+    },
+    "documentoPago": {
+      "conceptoCodigo": "13",
+      "serie": "",
+      "folio": 456
+    },
+    "fecha": "2023-05-01T00:00:00-05:00",
+    "importe": 116
+  },
+  "options": {}
+}

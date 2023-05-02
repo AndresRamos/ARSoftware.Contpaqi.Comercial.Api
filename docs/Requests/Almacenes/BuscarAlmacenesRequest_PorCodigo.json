@@ -1,0 +1,7 @@
+{
+  "$type": "BuscarAlmacenesRequest",
+  "model": {
+    "codigo": "ALM001"
+  },
+  "options": {}
+}

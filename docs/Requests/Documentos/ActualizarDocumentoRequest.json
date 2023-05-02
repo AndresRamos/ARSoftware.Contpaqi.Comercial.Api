@@ -1,0 +1,15 @@
+{
+  "$type": "ActualizarDocumentoRequest",
+  "model": {
+    "llaveDocumento": {
+      "conceptoCodigo": "400",
+      "serie": "FE",
+      "folio": 123
+    },
+    "datosDocumento": {
+      "COBSERVACIONES": "Observaciones del documento.",
+      "CTEXTOEXTRA1": "Texto Extra"
+    }
+  },
+  "options": {}
+}

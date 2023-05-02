@@ -1,0 +1,13 @@
+{
+  "$type": "ActualizarClienteRequest",
+  "model": {
+    "codigoCliente": "CTE001",
+    "datosCliente": {
+      "CFECHAALTA": "05/01/2023",
+      "CRAZONSOCIAL": "Cliente 1",
+      "CRFC": "XAXX010101000",
+      "CTEXTOEXTRA1": "Texto Extra"
+    }
+  },
+  "options": {}
+}

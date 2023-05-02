@@ -1,0 +1,11 @@
+{
+  "$type": "ActualizarAgenteRequest",
+  "model": {
+    "codigoAgente": "AGE001",
+    "datosAgente": {
+      "CCOMISIONVENTAAGENTE": "5",
+      "CCOMISIONCOBROAGENTE": "10"
+    }
+  },
+  "options": {}
+}

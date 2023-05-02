@@ -1,0 +1,109 @@
+{
+  "$type": "CrearFacturaRequest",
+  "model": {
+    "documento": {
+      "fecha": "2023-05-01T00:00:00-05:00",
+      "concepto": {
+        "codigo": "400",
+        "nombre": "",
+        "datosExtra": {}
+      },
+      "serie": "",
+      "cliente": {
+        "tipo": "ClienteProveedor",
+        "codigo": "CTE001",
+        "razonSocial": "Cliente 1",
+        "rfc": "XAXX010101000",
+        "usoCfdi": "S01",
+        "regimenFiscal": "616",
+        "direccionFiscal": {
+          "calle": "Pablo Villase\u00F1or",
+          "numeroExterior": "435",
+          "numeroInterior": "",
+          "colonia": "Ladr\u00F3n de Guevara",
+          "ciudad": "Guadalajara",
+          "estado": "Jalisco",
+          "codigoPostal": "44600",
+          "pais": "M\u00E9xico"
+        },
+        "datosExtra": {
+          "CFECHAALTA": "05/01/2023",
+          "CRAZONSOCIAL": "Cliente 1",
+          "CRFC": "XAXX010101000",
+          "CTEXTOEXTRA1": "Texto Extra"
+        }
+      },
+      "moneda": {
+        "id": 1,
+        "nombre": "Peso Mexicano"
+      },
+      "tipoCambio": 1,
+      "referencia": "Referencia doc",
+      "observaciones": "Observaciones del documento.",
+      "agente": {
+        "codigo": "AGE001",
+        "nombre": "",
+        "tipo": "VentasCobro",
+        "datosExtra": {}
+      },
+      "direccionFiscal": {
+        "calle": "",
+        "numeroExterior": "",
+        "numeroInterior": "",
+        "colonia": "",
+        "ciudad": "",
+        "estado": "",
+        "codigoPostal": "",
+        "pais": ""
+      },
+      "formaPago": "01",
+      "metodoPago": "PPD",
+      "movimientos": [
+        {
+          "producto": {
+            "tipo": "Producto",
+            "codigo": "PROD001",
+            "nombre": "Producto 1",
+            "claveSat": "43231500",
+            "datosExtra": {
+              "CFECHAALTAPRODUCTO": "05/01/2023",
+              "CNOMBREPRODUCTO": "Producto 1",
+              "CCLAVESAT": "43231500",
+              "CTEXTOEXTRA1": "Texto Extra"
+            }
+          },
+          "unidades": 1,
+          "precio": 100,
+          "almacen": {
+            "codigo": "1",
+            "nombre": "Almacen Uno",
+            "datosExtra": {}
+          },
+          "referencia": "Referencia mov",
+          "observaciones": "Observaciones del movimiento",
+          "seriesCapas": [],
+          "datosExtra": {}
+        }
+      ],
+      "folioDigital": {
+        "uuid": "",
+        "datosExtra": {}
+      },
+      "datosExtra": {
+        "COBSERVACIONES": "Observaciones del documento.",
+        "CTEXTOEXTRA1": "Texto Extra"
+      }
+    }
+  },
+  "options": {
+    "usarFechaDelDia": true,
+    "buscarSiguienteFolio": true,
+    "timbrar": true,
+    "contrasenaCertificado": "12345678a",
+    "generarDocumentosDigitales": true,
+    "generarPdf": true,
+    "nombrePlantilla": "Facturav40.rdl",
+    "nombreArchivo": "",
+    "contenidoArchivo": ""
+  }
+}

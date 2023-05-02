@@ -1,0 +1,18 @@
+{
+  "$type": "CrearProductoRequest",
+  "model": {
+    "producto": {
+      "tipo": "Producto",
+      "codigo": "PROD001",
+      "nombre": "Producto 1",
+      "claveSat": "43231500",
+      "datosExtra": {
+        "CFECHAALTAPRODUCTO": "05/01/2023",
+        "CNOMBREPRODUCTO": "Producto 1",
+        "CCLAVESAT": "43231500",
+        "CTEXTOEXTRA1": "Texto Extra"
+      }
+    }
+  },
+  "options": {}
+}

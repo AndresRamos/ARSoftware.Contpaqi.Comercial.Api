@@ -1,0 +1,11 @@
+{
+  "$type": "BuscarDocumentosRequest",
+  "model": {
+    "llave": {
+      "conceptoCodigo": "400",
+      "serie": "FACT",
+      "folio": 1
+    }
+  },
+  "options": {}
+}

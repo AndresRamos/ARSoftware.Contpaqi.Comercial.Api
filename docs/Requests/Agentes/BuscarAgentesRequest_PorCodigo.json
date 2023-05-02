@@ -1,0 +1,7 @@
+{
+  "$type": "BuscarAgentesRequest",
+  "model": {
+    "codigo": "AGE001"
+  },
+  "options": {}
+}

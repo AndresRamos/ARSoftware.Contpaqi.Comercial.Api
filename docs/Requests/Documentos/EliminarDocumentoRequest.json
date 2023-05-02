@@ -1,0 +1,11 @@
+{
+  "$type": "EliminarDocumentoRequest",
+  "model": {
+    "llaveDocumento": {
+      "conceptoCodigo": "400",
+      "serie": "FE",
+      "folio": 123
+    }
+  },
+  "options": {}
+}

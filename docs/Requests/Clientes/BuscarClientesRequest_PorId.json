@@ -1,0 +1,7 @@
+{
+  "$type": "BuscarClientesRequest",
+  "model": {
+    "id": 100
+  },
+  "options": {}
+}

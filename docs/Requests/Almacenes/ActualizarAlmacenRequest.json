@@ -1,0 +1,11 @@
+{
+  "$type": "ActualizarAlmacenRequest",
+  "model": {
+    "codigoAlmacen": "ALM001",
+    "datosAlmacen": {
+      "CFECHAALTAALMACEN": "05/01/2023",
+      "CTEXTOEXTRA1": "Texto Extra"
+    }
+  },
+  "options": {}
+}

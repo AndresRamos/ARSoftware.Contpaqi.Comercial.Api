@@ -1,0 +1,15 @@
+{
+  "$type": "TimbrarDocumentoRequest",
+  "model": {
+    "llaveDocumento": {
+      "conceptoCodigo": "400",
+      "serie": "FE",
+      "folio": 123
+    },
+    "contrasenaCertificado": "12345678a"
+  },
+  "options": {
+    "nombreArchivo": "",
+    "contenidoArchivo": ""
+  }
+}

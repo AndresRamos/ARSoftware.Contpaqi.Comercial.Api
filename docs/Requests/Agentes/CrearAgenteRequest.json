@@ -1,0 +1,15 @@
+{
+  "$type": "CrearAgenteRequest",
+  "model": {
+    "agente": {
+      "codigo": "AGE001",
+      "nombre": "Agente 1",
+      "tipo": "VentasCobro",
+      "datosExtra": {
+        "CCOMISIONVENTAAGENTE": "5",
+        "CCOMISIONCOBROAGENTE": "10"
+      }
+    }
+  },
+  "options": {}
+}

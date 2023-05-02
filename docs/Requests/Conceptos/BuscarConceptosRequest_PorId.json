@@ -1,0 +1,7 @@
+{
+  "$type": "BuscarConceptosRequest",
+  "model": {
+    "id": 100
+  },
+  "options": {}
+}

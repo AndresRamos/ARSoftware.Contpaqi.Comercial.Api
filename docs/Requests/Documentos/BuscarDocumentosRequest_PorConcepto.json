@@ -1,0 +1,7 @@
+{
+  "$type": "BuscarDocumentosRequest",
+  "model": {
+    "conceptoCodigo": "400"
+  },
+  "options": {}
+}

@@ -1,0 +1,7 @@
+{
+  "$type": "BuscarAgentesRequest",
+  "model": {
+    "sqlQuery": "CTIPOAGENTE = 1"
+  },
+  "options": {}
+}
