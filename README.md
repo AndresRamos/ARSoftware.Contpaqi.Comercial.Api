@@ -29,4 +29,4 @@ El costo de la licencia anual es de $720 dlls por RFC.
 Para informacion de como adquirir una licencia de uso puedes contactarme en mi [pagina web](https://www.arsoft.net/).
 
 ## Dame Una Estrella
-Si esta API es de beneficio pora ti o tu organizacion me podrias ayudar dandome una estrella. Te lo agradeceria!
+Si esta API es de beneficio para ti o tu organizacion dame una estrella. Te lo agradeceria!
