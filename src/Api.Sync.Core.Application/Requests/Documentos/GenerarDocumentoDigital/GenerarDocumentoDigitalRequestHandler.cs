@@ -21,7 +21,7 @@ public sealed class GenerarDocumentoDigitalRequestHandler : IRequestHandler<Gene
         _contpaqiComercialConfig = contpaqiComercialConfigOptions.Value;
     }
 
-    public Task<GenerarDocumentoDigitalResponse> Handle(GenerarDocumentoDigitalRequest request, CancellationToken cancellationToken)
+    public async Task<GenerarDocumentoDigitalResponse> Handle(GenerarDocumentoDigitalRequest request, CancellationToken cancellationToken)
     {
         LlaveDocumento llaveDocumento = request.Model.LlaveDocumento;
 
@@ -37,9 +37,12 @@ public sealed class GenerarDocumentoDigitalRequestHandler : IRequestHandler<Gene
         {
             Ubicacion = rutaDocumento,
             Nombre = new FileInfo(rutaDocumento).Name,
-            Tipo = request.Options.Tipo == TipoArchivoDigital.Pdf ? "application/pdf" : "text/xml"
+            Tipo = request.Options.Tipo == TipoArchivoDigital.Pdf ? "application/pdf" : "text/xml",
+            Contenido = request.Options.Tipo == TipoArchivoDigital.Xml
+                ? await File.ReadAllTextAsync(rutaDocumento, cancellationToken)
+                : null
         };
 
-        return Task.FromResult(GenerarDocumentoDigitalResponse.CreateInstance(documentoDigital));
+        return GenerarDocumentoDigitalResponse.CreateInstance(documentoDigital);
     }
 }
