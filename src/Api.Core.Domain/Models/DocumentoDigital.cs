@@ -16,4 +16,9 @@ public sealed class DocumentoDigital
     ///     Ubicacion del documento.
     /// </summary>
     public string Ubicacion { get; set; } = string.Empty;
+
+    /// <summary>
+    ///     Contenido del documento. Solo aplica para los XML.
+    /// </summary>
+    public string? Contenido { get; set; }
 }
