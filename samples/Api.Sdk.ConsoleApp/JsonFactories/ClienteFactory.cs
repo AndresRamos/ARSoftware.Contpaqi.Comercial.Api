@@ -1,9 +1,10 @@
 ﻿using System.Text.Json;
-using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
 using ARSoftware.Contpaqi.Api.Common.Domain;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Enums;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Enums.CatalogosCfdi;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Models;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
-using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Models.Enums;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
 
 namespace Api.Sdk.ConsoleApp.JsonFactories;
@@ -76,17 +77,17 @@ public static class ClienteFactory
         return request;
     }
 
-    public static Cliente CrearClientePrueba()
+    public static ClienteProveedor CrearClientePrueba()
     {
-        var cliente = new Cliente
+        var cliente = new ClienteProveedor
         {
             Tipo = TipoCliente.ClienteProveedor,
             Codigo = Codigo,
             RazonSocial = Nombre,
             Rfc = Rfc,
-            UsoCfdi = UsoCfdi.S01,
-            RegimenFiscal = RegimenFiscal._616,
-            DireccionFiscal =
+            UsoCfdi = UsoCfdiEnum.S01,
+            RegimenFiscal = RegimenFiscalEnum._616,
+            DireccionFiscal = new Direccion
             {
                 Calle = "Pablo Villaseñor",
                 NumeroExterior = "435",

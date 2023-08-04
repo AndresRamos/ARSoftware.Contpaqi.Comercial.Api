@@ -1,11 +1,11 @@
 using System.Collections.Immutable;
-using Api.Core.Domain.Models;
 using Api.Sync.Core.Application.Api.Commands.ProcessApiRequest;
 using Api.Sync.Core.Application.Api.Queries.GetPendingApiRequests;
 using Api.Sync.Core.Application.Common.Models;
 using Api.Sync.Core.Application.ContpaqiComercial.Commands.AbrirEmpresa;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
 using ARSoftware.Contpaqi.Api.Common.Domain;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Models;
 using MediatR;
 using Microsoft.Extensions.Options;
 
@@ -50,18 +50,16 @@ public sealed class Worker : BackgroundService
 
                 foreach (string empresaRfc in _apiSyncConfig.Empresas)
                 {
-                    Empresa? empresa = empresas.FirstOrDefault(e => e.Rfc == empresaRfc);
+                    Empresa? empresa = empresas.FirstOrDefault(e => e.Parametros!.Rfc == empresaRfc);
 
-                    if (empresa is null)
-                        continue;
+                    if (empresa is null) continue;
 
                     _contpaqiComercialConfig.Empresa = empresa;
 
                     List<ApiRequest> apiRequests = (await _mediator.Send(new GetPendingRequestsQuery(), stoppingToken)).ToList();
                     _logger.LogInformation("{PendingRequests} solicitudes pendientes.", apiRequests.Count);
 
-                    if (!apiRequests.Any())
-                        continue;
+                    if (!apiRequests.Any()) continue;
 
                     await _mediator.Send(new AbrirEmpresaCommand(), stoppingToken);
 

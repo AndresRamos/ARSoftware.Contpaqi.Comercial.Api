@@ -1,5 +1,4 @@
-﻿using Api.Core.Domain.Models;
-using ARSoftware.Contpaqi.Api.Common.Domain;
+﻿using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Core.Domain.Requests;
 
@@ -48,7 +47,7 @@ public sealed class ActualizarClienteResponse : ContpaqiResponse<ActualizarClien
     {
     }
 
-    public static ActualizarClienteResponse CreateInstance(Cliente cliente)
+    public static ActualizarClienteResponse CreateInstance(ClienteProveedor cliente)
     {
         return new ActualizarClienteResponse(new ActualizarClienteResponseModel(cliente));
     }
@@ -59,10 +58,10 @@ public sealed class ActualizarClienteResponse : ContpaqiResponse<ActualizarClien
 /// </summary>
 public sealed class ActualizarClienteResponseModel
 {
-    public ActualizarClienteResponseModel(Cliente cliente)
+    public ActualizarClienteResponseModel(ClienteProveedor cliente)
     {
         Cliente = cliente;
     }
 
-    public Cliente Cliente { get; set; }
+    public ClienteProveedor Cliente { get; set; }
 }

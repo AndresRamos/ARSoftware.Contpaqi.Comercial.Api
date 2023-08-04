@@ -1,7 +1,6 @@
 ﻿using Api.Core.Domain.Common;
-using Api.Core.Domain.Models;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
-using Api.Sync.Infrastructure.ContpaqiComercial.Models;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Dtos;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sql.Contexts;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
@@ -31,11 +30,11 @@ public sealed class MovimientoRepository : IMovimientoRepository
     {
         var movimientosList = new List<Movimiento>();
 
-        List<MovimientoSql> movimientosSql = await _context.admMovimientos.Where(m => m.CIDDOCUMENTO == documentoId)
-            .ProjectTo<MovimientoSql>(_mapper.ConfigurationProvider)
+        List<MovimientoDto> movimientosSql = await _context.admMovimientos.Where(m => m.CIDDOCUMENTO == documentoId)
+            .ProjectTo<MovimientoDto>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 
-        foreach (MovimientoSql? movimientoSql in movimientosSql)
+        foreach (MovimientoDto? movimientoSql in movimientosSql)
         {
             var movimiento = _mapper.Map<Movimiento>(movimientoSql);
 
@@ -47,7 +46,7 @@ public sealed class MovimientoRepository : IMovimientoRepository
         return movimientosList;
     }
 
-    private async Task CargarDatosRelacionadosAsync(Movimiento movimiento, MovimientoSql movimientoSql,
+    private async Task CargarDatosRelacionadosAsync(Movimiento movimiento, MovimientoDto movimientoSql,
         ILoadRelatedDataOptions loadRelatedDataOptions, CancellationToken cancellationToken)
     {
         movimiento.Producto =
@@ -57,8 +56,10 @@ public sealed class MovimientoRepository : IMovimientoRepository
             await _almacenRepository.BuscarPorIdAsync(movimientoSql.CIDALMACEN, loadRelatedDataOptions, cancellationToken) ?? new Almacen();
 
         if (loadRelatedDataOptions.CargarDatosExtra)
+        {
             movimiento.DatosExtra =
                 (await _context.admMovimientos.FirstAsync(m => m.CIDMOVIMIENTO == movimientoSql.CIDMOVIMIENTO, cancellationToken))
                 .ToDatosDictionary<admMovimientos>();
+        }
     }
 }

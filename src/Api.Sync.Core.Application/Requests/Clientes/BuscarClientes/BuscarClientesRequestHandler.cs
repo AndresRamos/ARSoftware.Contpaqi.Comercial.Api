@@ -1,5 +1,4 @@
-﻿using Api.Core.Domain.Models;
-using Api.Core.Domain.Requests;
+﻿using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
 using MediatR;
 
@@ -16,7 +15,7 @@ public sealed class BuscarClientesRequestHandler : IRequestHandler<BuscarCliente
 
     public async Task<BuscarClientesResponse> Handle(BuscarClientesRequest request, CancellationToken cancellationToken)
     {
-        List<Cliente> clientes =
+        List<ClienteProveedor> clientes =
             (await _clienteRepository.BuscarPorRequestModel(request.Model, request.Options, cancellationToken)).ToList();
 
         return BuscarClientesResponse.CreateInstance(clientes);

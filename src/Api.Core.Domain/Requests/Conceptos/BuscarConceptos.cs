@@ -1,5 +1,4 @@
-﻿using Api.Core.Domain.Models;
-using ARSoftware.Contpaqi.Api.Common.Domain;
+﻿using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Core.Domain.Requests;
 
@@ -59,7 +58,7 @@ public sealed class BuscarConceptosResponse : ContpaqiResponse<BuscarConceptosRe
     {
     }
 
-    public static BuscarConceptosResponse CreateInstance(List<Concepto> conceptos)
+    public static BuscarConceptosResponse CreateInstance(List<ConceptoDocumento> conceptos)
     {
         return new BuscarConceptosResponse(new BuscarConceptosResponseModel(conceptos));
     }
@@ -70,7 +69,7 @@ public sealed class BuscarConceptosResponse : ContpaqiResponse<BuscarConceptosRe
 /// </summary>
 public sealed class BuscarConceptosResponseModel
 {
-    public BuscarConceptosResponseModel(List<Concepto> conceptos)
+    public BuscarConceptosResponseModel(List<ConceptoDocumento> conceptos)
     {
         Conceptos = conceptos;
     }
@@ -80,5 +79,5 @@ public sealed class BuscarConceptosResponseModel
     /// <summary>
     ///     Lista de conceptos encontrados.
     /// </summary>
-    public List<Concepto> Conceptos { get; set; }
+    public List<ConceptoDocumento> Conceptos { get; set; }
 }

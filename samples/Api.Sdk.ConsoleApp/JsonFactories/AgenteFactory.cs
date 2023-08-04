@@ -1,8 +1,8 @@
 ﻿using System.Text.Json;
-using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
 using ARSoftware.Contpaqi.Api.Common.Domain;
-using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Models.Enums;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Enums;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Models;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
 
 namespace Api.Sdk.ConsoleApp.JsonFactories;

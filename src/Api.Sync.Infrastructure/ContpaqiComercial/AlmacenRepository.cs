@@ -1,8 +1,7 @@
 ﻿using Api.Core.Domain.Common;
-using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
-using Api.Sync.Infrastructure.ContpaqiComercial.Models;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Dtos;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sql.Contexts;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
@@ -26,12 +25,11 @@ public sealed class AlmacenRepository : IAlmacenRepository
     public async Task<Almacen?> BuscarPorIdAsync(int id, ILoadRelatedDataOptions loadRelatedDataOptions,
         CancellationToken cancellationToken)
     {
-        AlmacenSql? almacenSql = await _context.admAlmacenes.Where(m => m.CIDALMACEN == id)
-            .ProjectTo<AlmacenSql>(_mapper.ConfigurationProvider)
+        AlmacenDto? almacenSql = await _context.admAlmacenes.Where(m => m.CIDALMACEN == id)
+            .ProjectTo<AlmacenDto>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(cancellationToken);
 
-        if (almacenSql is null)
-            return null;
+        if (almacenSql is null) return null;
 
         var almacen = _mapper.Map<Almacen>(almacenSql);
 
@@ -43,12 +41,11 @@ public sealed class AlmacenRepository : IAlmacenRepository
     public async Task<Almacen?> BuscarPorCodigoAsync(string codigo, ILoadRelatedDataOptions loadRelatedDataOptions,
         CancellationToken cancellationToken)
     {
-        AlmacenSql? almacenSql = await _context.admAlmacenes.Where(m => m.CCODIGOALMACEN == codigo)
-            .ProjectTo<AlmacenSql>(_mapper.ConfigurationProvider)
+        AlmacenDto? almacenSql = await _context.admAlmacenes.Where(m => m.CCODIGOALMACEN == codigo)
+            .ProjectTo<AlmacenDto>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(cancellationToken);
 
-        if (almacenSql is null)
-            return null;
+        if (almacenSql is null) return null;
 
         var almacen = _mapper.Map<Almacen>(almacenSql);
 
@@ -67,11 +64,11 @@ public sealed class AlmacenRepository : IAlmacenRepository
     {
         var almacenesList = new List<Almacen>();
 
-        List<AlmacenSql> almacenesSql = await _context.admAlmacenes.OrderBy(c => c.CNOMBREALMACEN)
-            .ProjectTo<AlmacenSql>(_mapper.ConfigurationProvider)
+        List<AlmacenDto> almacenesSql = await _context.admAlmacenes.OrderBy(c => c.CNOMBREALMACEN)
+            .ProjectTo<AlmacenDto>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 
-        foreach (AlmacenSql? almacenSql in almacenesSql)
+        foreach (AlmacenDto? almacenSql in almacenesSql)
         {
             var almacen = _mapper.Map<Almacen>(almacenSql);
 
@@ -92,17 +89,16 @@ public sealed class AlmacenRepository : IAlmacenRepository
             ? _context.admAlmacenes.FromSqlRaw($"SELECT * FROM admAlmacenes WHERE {requestModel.SqlQuery}")
             : _context.admAlmacenes.AsQueryable();
 
-        if (requestModel.Id is not null)
-            almacenesQuery = almacenesQuery.Where(a => a.CIDALMACEN == requestModel.Id);
+        if (requestModel.Id is not null) almacenesQuery = almacenesQuery.Where(a => a.CIDALMACEN == requestModel.Id);
 
         if (!string.IsNullOrWhiteSpace(requestModel.Codigo))
             almacenesQuery = almacenesQuery.Where(a => a.CCODIGOALMACEN == requestModel.Codigo);
 
-        List<AlmacenSql> almacenesSql = await almacenesQuery
-            .ProjectTo<AlmacenSql>(_mapper.ConfigurationProvider)
+        List<AlmacenDto> almacenesSql = await almacenesQuery
+            .ProjectTo<AlmacenDto>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 
-        foreach (AlmacenSql? almacenSql in almacenesSql)
+        foreach (AlmacenDto? almacenSql in almacenesSql)
         {
             var almacen = _mapper.Map<Almacen>(almacenSql);
 
@@ -114,11 +110,13 @@ public sealed class AlmacenRepository : IAlmacenRepository
         return almacenesList;
     }
 
-    private async Task CargarDatosRelacionadosAsync(Almacen almacen, AlmacenSql almacenSql, ILoadRelatedDataOptions loadRelatedDataOptions,
+    private async Task CargarDatosRelacionadosAsync(Almacen almacen, AlmacenDto almacenSql, ILoadRelatedDataOptions loadRelatedDataOptions,
         CancellationToken cancellationToken)
     {
         if (loadRelatedDataOptions.CargarDatosExtra)
+        {
             almacen.DatosExtra = (await _context.admAlmacenes.FirstAsync(m => m.CIDALMACEN == almacenSql.CIDALMACEN, cancellationToken))
                 .ToDatosDictionary<admAlmacenes>();
+        }
     }
 }

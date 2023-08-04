@@ -2,14 +2,14 @@
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>net7.0-windows</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="ARSoftware.Contpaqi.Comercial.Sdk.Extras" Version="4.4.0" />
-		<PackageReference Include="ARSoftware.Contpaqi.Comercial.Sql" Version="4.4.0" />
+		<PackageReference Include="ARSoftware.Contpaqi.Comercial.Sdk.Extras" Version="5.0.0" />
+		<PackageReference Include="ARSoftware.Contpaqi.Comercial.Sql" Version="5.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>

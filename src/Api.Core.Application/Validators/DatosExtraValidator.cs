@@ -1,4 +1,4 @@
-﻿using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
+﻿using Api.Core.Application.Common;
 using FluentValidation;
 
 namespace Api.Core.Application.Validators;

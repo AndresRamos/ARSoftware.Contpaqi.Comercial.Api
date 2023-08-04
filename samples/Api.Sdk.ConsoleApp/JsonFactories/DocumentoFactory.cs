@@ -1,13 +1,12 @@
 ﻿using System.Text.Json;
-using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
 using ARSoftware.Contpaqi.Api.Common.Domain;
-using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Models;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Enums;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Enums.CatalogosCfdi;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Models;
+using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Models.Enums;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
-using Almacen = Api.Core.Domain.Models.Almacen;
-using Documento = Api.Core.Domain.Models.Documento;
-using Movimiento = Api.Core.Domain.Models.Movimiento;
 
 namespace Api.Sdk.ConsoleApp.JsonFactories;
 
@@ -197,13 +196,13 @@ public static class DocumentoFactory
         documento.Fecha = DateTime.Today;
         documento.Concepto.Codigo = CodigoConcepto;
         documento.Cliente = ClienteFactory.CrearClientePrueba();
-        documento.Moneda = Moneda.PesoMexicano;
+        documento.Moneda = MonedaEnum.PesoMexicano.ToMoneda();
         documento.TipoCambio = 1;
         documento.Referencia = "Referencia doc";
         documento.Observaciones = "Observaciones del documento.";
         documento.Agente = AgenteFactory.CrearAgenteDatosMinimos();
-        documento.FormaPago = FormaPago._01;
-        documento.MetodoPago = MetodoPago.PPD;
+        documento.FormaPago = FormaPagoEnum._01;
+        documento.MetodoPago = MetodoPagoEnum.PPD;
         documento.Movimientos.Add(new Movimiento
         {
             Producto = ProductoFactory.CrearProductoPrueba(),

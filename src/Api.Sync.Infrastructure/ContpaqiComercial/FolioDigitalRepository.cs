@@ -1,7 +1,6 @@
 ﻿using Api.Core.Domain.Common;
-using Api.Core.Domain.Models;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
-using Api.Sync.Infrastructure.ContpaqiComercial.Models;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Dtos;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sql.Contexts;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
@@ -25,13 +24,12 @@ public sealed class FolioDigitalRepository : IFolioDigitalRepository
     public async Task<FolioDigital?> BuscarPorDocumentoIdAsync(int conceptoId, int documentoId,
         ILoadRelatedDataOptions loadRelatedDataOptions, CancellationToken cancellationToken)
     {
-        FolioDigitalSql? folioDigitalSql = await _context.admFoliosDigitales
+        FolioDigitalDto? folioDigitalSql = await _context.admFoliosDigitales
             .Where(m => m.CIDCPTODOC == conceptoId && m.CIDDOCTO == documentoId)
-            .ProjectTo<FolioDigitalSql>(_mapper.ConfigurationProvider)
+            .ProjectTo<FolioDigitalDto>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(cancellationToken);
 
-        if (folioDigitalSql is null)
-            return null;
+        if (folioDigitalSql is null) return null;
 
         var folioDigital = _mapper.Map<FolioDigital>(folioDigitalSql);
 
@@ -40,12 +38,14 @@ public sealed class FolioDigitalRepository : IFolioDigitalRepository
         return folioDigital;
     }
 
-    private async Task CargarDatosRelacionadosAsync(FolioDigital folioDigital, FolioDigitalSql folioDigitalSql,
+    private async Task CargarDatosRelacionadosAsync(FolioDigital folioDigital, FolioDigitalDto folioDigitalSql,
         ILoadRelatedDataOptions loadRelatedDataOptions, CancellationToken cancellationToken)
     {
         if (loadRelatedDataOptions.CargarDatosExtra)
+        {
             folioDigital.DatosExtra =
                 (await _context.admFoliosDigitales.FirstAsync(m => m.CIDFOLDIG == folioDigitalSql.CIDFOLDIG, cancellationToken))
                 .ToDatosDictionary<admFoliosDigitales>();
+        }
     }
 }

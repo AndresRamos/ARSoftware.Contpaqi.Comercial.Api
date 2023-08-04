@@ -4,12 +4,16 @@ using Api.Sync.Core.Application.Common.Models;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
 using Api.Sync.Infrastructure.ContpaqiComercial;
 using Api.Sync.Infrastructure.ContpaqiComercialApi;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Common.Mappings;
+using ARSoftware.Contpaqi.Comercial.Sql;
 using ARSoftware.Contpaqi.Comercial.Sql.Contexts;
 using ARSoftware.Contpaqi.Comercial.Sql.Factories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+
+// ReSharper disable UnusedMethodReturnValue.Local
 
 namespace Api.Sync.Infrastructure;
 
@@ -18,6 +22,7 @@ public static class ConfigureServices
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         serviceCollection.AddAutoMapper(Assembly.GetExecutingAssembly());
+        serviceCollection.AddAutoMapper(Assembly.GetAssembly(typeof(DtoToModelMappings)));
 
         serviceCollection.AddContpaqiComercialApiServices().AddContpaqiComercialServices(configuration);
 
@@ -32,7 +37,7 @@ public static class ConfigureServices
             ContpaqiComercialConfig contpaqiComercialConfig = serviceProvider.GetRequiredService<IOptions<ContpaqiComercialConfig>>().Value;
             httpClient.BaseAddress = new Uri(apiSyncConfig.BaseAddress);
             httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", apiSyncConfig.SubscriptionKey);
-            httpClient.DefaultRequestHeaders.Add("x-Empresa-Rfc", contpaqiComercialConfig.Empresa.Rfc);
+            httpClient.DefaultRequestHeaders.Add("x-Empresa-Rfc", contpaqiComercialConfig.Empresa.Parametros!.Rfc);
         });
 
         return serviceCollection;
@@ -44,7 +49,7 @@ public static class ConfigureServices
             builder =>
             {
                 builder.UseSqlServer(ContpaqiComercialSqlConnectionStringFactory.CreateContpaqiComercialGeneralesConnectionString(
-                        configuration.GetConnectionString("Contpaqi")))
+                        configuration.GetConnectionString("Contpaqi")!))
                     .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTrackingWithIdentityResolution);
             }, ServiceLifetime.Transient, ServiceLifetime.Transient);
 
@@ -52,9 +57,11 @@ public static class ConfigureServices
         {
             ContpaqiComercialConfig config = provider.GetRequiredService<IOptions<ContpaqiComercialConfig>>().Value;
             builder.UseSqlServer(ContpaqiComercialSqlConnectionStringFactory.CreateContpaqiComercialEmpresaConnectionString(
-                    configuration.GetConnectionString("Contpaqi"), config.Empresa.BaseDatos))
+                    configuration.GetConnectionString("Contpaqi")!, config.Empresa.BaseDatos))
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTrackingWithIdentityResolution);
         }, ServiceLifetime.Transient, ServiceLifetime.Transient);
+
+        serviceCollection.AddContpaqiComercialSqlRepositories();
 
         serviceCollection.AddTransient<IAgenteRepository, AgenteRepository>();
         serviceCollection.AddTransient<IAlmacenRepository, AlmacenRepository>();

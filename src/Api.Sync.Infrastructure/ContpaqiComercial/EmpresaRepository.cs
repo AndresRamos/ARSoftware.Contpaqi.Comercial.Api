@@ -1,7 +1,6 @@
 ﻿using Api.Core.Domain.Common;
-using Api.Core.Domain.Models;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
-using Api.Sync.Infrastructure.ContpaqiComercial.Models;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Dtos;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sql.Contexts;
 using ARSoftware.Contpaqi.Comercial.Sql.Factories;
@@ -15,30 +14,27 @@ namespace Api.Sync.Infrastructure.ContpaqiComercial;
 
 public sealed class EmpresaRepository : IEmpresaRepository
 {
-    private readonly ContpaqiComercialEmpresaDbContext _comercialEmpresaDbContext;
     private readonly IConfiguration _configuration;
     private readonly ContpaqiComercialGeneralesDbContext _context;
     private readonly IMapper _mapper;
 
-    public EmpresaRepository(ContpaqiComercialGeneralesDbContext context, IMapper mapper, IConfiguration configuration,
-        ContpaqiComercialEmpresaDbContext comercialEmpresaDbContext)
+    public EmpresaRepository(ContpaqiComercialGeneralesDbContext context, IMapper mapper, IConfiguration configuration)
     {
         _context = context;
         _mapper = mapper;
         _configuration = configuration;
-        _comercialEmpresaDbContext = comercialEmpresaDbContext;
     }
 
     public async Task<IEnumerable<Empresa>> BuscarTodoAsync(ILoadRelatedDataOptions relatedDataOptions, CancellationToken cancellationToken)
     {
         var empresasList = new List<Empresa>();
 
-        List<EmpresaSql> empresasSql = await _context.Empresas.Where(e => e.CIDEMPRESA != 1)
+        List<EmpresaDto> empresasSql = await _context.Empresas.Where(e => e.CIDEMPRESA != 1)
             .OrderBy(m => m.CNOMBREEMPRESA)
-            .ProjectTo<EmpresaSql>(_mapper.ConfigurationProvider)
+            .ProjectTo<EmpresaDto>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 
-        foreach (EmpresaSql? empresaSql in empresasSql)
+        foreach (EmpresaDto? empresaSql in empresasSql)
         {
             var empresa = _mapper.Map<Empresa>(empresaSql);
 
@@ -55,19 +51,18 @@ public sealed class EmpresaRepository : IEmpresaRepository
     {
         var optionsBuilder = new DbContextOptionsBuilder<ContpaqiComercialEmpresaDbContext>();
         string empresaConnectionString = ContpaqiComercialSqlConnectionStringFactory.CreateContpaqiComercialEmpresaConnectionString(
-            _configuration.GetConnectionString("Contpaqi"), empresa.BaseDatos);
+            _configuration.GetConnectionString("Contpaqi")!, empresa.BaseDatos);
         optionsBuilder.UseSqlServer(empresaConnectionString);
 
-        _comercialEmpresaDbContext.Database.SetConnectionString(empresaConnectionString);
+        await using ContpaqiComercialEmpresaDbContext comercialEmpresaDbContext = new(optionsBuilder.Options);
 
-        ParametrosSql parametrosSql = await _comercialEmpresaDbContext.admParametros.ProjectTo<ParametrosSql>(_mapper.ConfigurationProvider)
+        ParametrosDto parametrosSql = await comercialEmpresaDbContext.admParametros.ProjectTo<ParametrosDto>(_mapper.ConfigurationProvider)
             .FirstAsync(cancellationToken);
 
-        empresa.GuidAdd = parametrosSql.CGUIDDSL;
-        empresa.Rfc = parametrosSql.CRFCEMPRESA;
+        empresa.Parametros = _mapper.Map<Parametros>(parametrosSql);
 
         if (relatedDataOptions.CargarDatosExtra)
-            empresa.DatosExtra = (await _comercialEmpresaDbContext.admParametros.FirstAsync(cancellationToken))
+            empresa.Parametros.DatosExtra = (await comercialEmpresaDbContext.admParametros.FirstAsync(cancellationToken))
                 .ToDatosDictionary<admParametros>();
     }
 }

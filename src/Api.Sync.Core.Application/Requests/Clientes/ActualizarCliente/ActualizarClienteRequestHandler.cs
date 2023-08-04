@@ -1,5 +1,4 @@
-﻿using Api.Core.Domain.Models;
-using Api.Core.Domain.Requests;
+﻿using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Interfaces;
 using MediatR;
@@ -21,8 +20,9 @@ public sealed class ActualizarClienteRequestHandler : IRequestHandler<Actualizar
     {
         _clienteProveedorService.Actualizar(request.Model.CodigoCliente, request.Model.DatosCliente);
 
-        Cliente cliente = await _clienteRepository.BuscarPorCodigoAsync(request.Model.CodigoCliente, request.Options, cancellationToken) ??
-                          throw new InvalidOperationException();
+        ClienteProveedor cliente =
+            await _clienteRepository.BuscarPorCodigoAsync(request.Model.CodigoCliente, request.Options, cancellationToken) ??
+            throw new InvalidOperationException();
 
         return ActualizarClienteResponse.CreateInstance(cliente);
     }

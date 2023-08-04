@@ -1,6 +1,4 @@
-﻿using Api.Core.Domain.Models;
-
-namespace Api.Sync.Core.Application.Common.Models;
+﻿namespace Api.Sync.Core.Application.Common.Models;
 
 public sealed class ContpaqiComercialConfig
 {
