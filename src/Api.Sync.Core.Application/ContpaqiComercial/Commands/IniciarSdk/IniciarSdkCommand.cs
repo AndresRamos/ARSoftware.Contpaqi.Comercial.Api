@@ -25,9 +25,14 @@ public sealed class IniciarSdkCommandHandler : IRequestHandler<IniciarSdkCommand
     public Task Handle(IniciarSdkCommand request, CancellationToken cancellationToken)
     {
         if (!_sdkSesionService.IsSdkInicializado)
-            _sdkSesionService.IniciarSesionSdk(_contpaqiComercialConfig.Usuario, _contpaqiComercialConfig.Contrasena);
+        {
+            if (_contpaqiComercialConfig.HayIntefazConEmpresaContabilidad)
+                _sdkSesionService.IniciarSesionSdk(_contpaqiComercialConfig.Usuario, _contpaqiComercialConfig.Contrasena,
+                    _contpaqiComercialConfig.Usuario, _contpaqiComercialConfig.Contrasena);
+            else
+                _sdkSesionService.IniciarSesionSdk(_contpaqiComercialConfig.Usuario, _contpaqiComercialConfig.Contrasena);
+        }
 
-        // Todo: Contabilidad?
         _logger.LogDebug("SDK inicializado. {@ComercialSdkSesionService}", _sdkSesionService);
 
         return Task.CompletedTask;
