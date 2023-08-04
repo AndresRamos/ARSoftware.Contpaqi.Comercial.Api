@@ -1,102 +1,87 @@
 ﻿using System.Text.Json;
 using Api.Core.Domain.Requests;
 using ARSoftware.Contpaqi.Api.Common.Domain;
-using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Models;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
 
 namespace Api.Sdk.ConsoleApp.JsonFactories;
 
 public static class AlmacenFactory
 {
-    public const string Codigo = "ALM001";
-    public const string Nombre = "Almacen 1";
+    public const string CodigoPrueba = "ALMACENPRUEBA";
 
-    private static CrearAlmacenRequest Crear()
+    private static CrearAlmacenRequest GetCrearAlmacenRequest()
     {
-        var request = new CrearAlmacenRequest(new CrearAlmacenRequestModel(), new CrearAlmacenRequestOptions());
-
-        request.Model.Almacen.Codigo = Codigo;
-        request.Model.Almacen.Nombre = Nombre;
-        request.Model.Almacen.DatosExtra = GetDatosExtra();
-
-        return request;
+        return new CrearAlmacenRequest(new CrearAlmacenRequestModel { Almacen = GetModeloPrueba() }, new CrearAlmacenRequestOptions());
     }
 
-    private static ActualizarAlmacenRequest Actualizar()
+    private static CrearAlmacenResponse GetCrearAlmacenResponse()
     {
-        var request = new ActualizarAlmacenRequest(new ActualizarAlmacenRequestModel(), new ActualizarAlmacenRequestOptions());
-
-        request.Model.CodigoAlmacen = Codigo;
-        request.Model.DatosAlmacen = GetDatosExtra();
-
-        return request;
+        return new CrearAlmacenResponse(new CrearAlmacenResponseModel(GetModeloPrueba()));
     }
 
-    private static BuscarAlmacenesRequest BuscarPorId()
+    private static ActualizarAlmacenRequest GetActualizarAlmacenRequest()
     {
-        var request = new BuscarAlmacenesRequest(new BuscarAlmacenesRequestModel(), new BuscarAlmacenesRequestOptions());
-
-        request.Model.Id = 100;
-
-        return request;
+        return new ActualizarAlmacenRequest(
+            new ActualizarAlmacenRequestModel { CodigoAlmacen = CodigoPrueba, DatosAlmacen = GetDatosExtraPrueba() },
+            new ActualizarAlmacenRequestOptions());
     }
 
-    private static BuscarAlmacenesRequest BuscarPorCodigo()
+    private static ActualizarAlmacenResponse GetActualizarAlmacenResponse()
     {
-        var request = new BuscarAlmacenesRequest(new BuscarAlmacenesRequestModel(), new BuscarAlmacenesRequestOptions());
-
-        request.Model.Codigo = Codigo;
-
-        return request;
+        return new ActualizarAlmacenResponse(new ActualizarAlmacenResponseModel(GetModeloPrueba()));
     }
 
-    private static BuscarAlmacenesRequest BuscarPorSql()
+    private static BuscarAlmacenesRequest GetBuscarAlmacenesRequest()
     {
-        var request = new BuscarAlmacenesRequest(new BuscarAlmacenesRequestModel(), new BuscarAlmacenesRequestOptions());
-
-        request.Model.SqlQuery = "CNOMBREALMACEN = 'nombre'";
-
-        return request;
+        return new BuscarAlmacenesRequest(
+            new BuscarAlmacenesRequestModel
+            {
+                Id = 1, Codigo = CodigoPrueba, SqlQuery = $"{nameof(admAlmacenes.CNOMBREALMACEN)} = 'ALMACEN DE PRUEBAS'"
+            }, new BuscarAlmacenesRequestOptions());
     }
 
-    private static BuscarAlmacenesRequest BuscarTodo()
+    private static BuscarAlmacenesResponse GetBuscarAlmacenesResponse()
     {
-        var request = new BuscarAlmacenesRequest(new BuscarAlmacenesRequestModel(), new BuscarAlmacenesRequestOptions());
-
-        return request;
+        return new BuscarAlmacenesResponse(new BuscarAlmacenesResponseModel(new List<Almacen> { GetModeloPrueba() }));
     }
 
-    private static Dictionary<string, string> GetDatosExtra()
+    private static Almacen GetModeloPrueba()
+    {
+        return new Almacen { Codigo = CodigoPrueba, Nombre = "ALMACEN DE PRUEBAS", DatosExtra = GetDatosExtraPrueba() };
+    }
+
+    private static Dictionary<string, string> GetDatosExtraPrueba()
     {
         return new Dictionary<string, string>
         {
-            { nameof(admAlmacenes.CFECHAALTAALMACEN), DateTime.Today.ToSdkFecha() },
-            { nameof(admAlmacenes.CTEXTOEXTRA1), "Texto Extra" }
+            { nameof(admAlmacenes.CTEXTOEXTRA1), "Texto extra 1" },
+            { nameof(admAlmacenes.CTEXTOEXTRA2), "Texto extra 2" },
+            { nameof(admAlmacenes.CTEXTOEXTRA3), "Texto extra 3" }
         };
     }
 
     public static void CearJson(string directory)
     {
-        JsonSerializerOptions options = FactoryExtensions.GetJsonSerializerOptions();
-
         Directory.CreateDirectory(directory);
 
+        JsonSerializerOptions options = FactoryExtensions.GetJsonSerializerOptions();
+
+        File.WriteAllText(Path.Combine(directory, $"{nameof(Almacen)}.json"), JsonSerializer.Serialize(GetModeloPrueba(), options));
+
         File.WriteAllText(Path.Combine(directory, $"{nameof(CrearAlmacenRequest)}.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(Crear(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(GetCrearAlmacenRequest(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(CrearAlmacenResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetCrearAlmacenResponse(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(ActualizarAlmacenRequest)}.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(Actualizar(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(GetActualizarAlmacenRequest(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(ActualizarAlmacenResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetActualizarAlmacenResponse(), options));
 
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAlmacenesRequest)}_PorId.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorId(), options));
-
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAlmacenesRequest)}_PorCodigo.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorCodigo(), options));
-
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAlmacenesRequest)}_PorSql.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorSql(), options));
-
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAlmacenesRequest)}_Todo.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(BuscarTodo(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAlmacenesRequest)}.json"),
+            JsonSerializer.Serialize<ContpaqiRequest>(GetBuscarAlmacenesRequest(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAlmacenesResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetBuscarAlmacenesResponse(), options));
     }
 }

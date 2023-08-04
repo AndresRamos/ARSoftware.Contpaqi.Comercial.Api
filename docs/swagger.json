@@ -1113,7 +1113,7 @@
         "type": "object",
         "properties": {
           "cliente": {
-            "$ref": "#/components/schemas/Cliente"
+            "$ref": "#/components/schemas/ClienteProveedor"
           }
         },
         "additionalProperties": false,
@@ -1246,14 +1246,16 @@
       "Agente": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
           "codigo": {
             "type": "string",
-            "description": "Codigo del agente.",
             "nullable": true
           },
           "nombre": {
             "type": "string",
-            "description": "Nombre del agente.",
             "nullable": true
           },
           "tipo": {
@@ -1264,24 +1266,24 @@
             "additionalProperties": {
               "type": "string"
             },
-            "description": "Datos extra del agente.",
             "nullable": true
           }
         },
-        "additionalProperties": false,
-        "description": "Estructura de un agente."
+        "additionalProperties": false
       },
       "Almacen": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
           "codigo": {
             "type": "string",
-            "description": "Codigo del almacen.",
             "nullable": true
           },
           "nombre": {
             "type": "string",
-            "description": "Nombre del almacen.",
             "nullable": true
           },
           "datosExtra": {
@@ -1289,12 +1291,10 @@
             "additionalProperties": {
               "type": "string"
             },
-            "description": "Datos extra del almacen.",
             "nullable": true
           }
         },
-        "additionalProperties": false,
-        "description": "Estructura de un almacen."
+        "additionalProperties": false
       },
       "ApiRequest": {
         "type": "object",
@@ -1741,7 +1741,7 @@
           "clientes": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Cliente"
+              "$ref": "#/components/schemas/ClienteProveedor"
             },
             "description": "Lista de clientes encontrados.",
             "nullable": true
@@ -1817,7 +1817,7 @@
           "conceptos": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Concepto"
+              "$ref": "#/components/schemas/ConceptoDocumento"
             },
             "description": "Lista de conceptos encontrados.",
             "nullable": true
@@ -2127,32 +2127,33 @@
         "additionalProperties": false,
         "description": "Modelo de la respuesta CancelarDocumentoResponse."
       },
-      "Cliente": {
+      "ClienteProveedor": {
         "type": "object",
         "properties": {
-          "tipo": {
-            "$ref": "#/components/schemas/TipoCliente"
+          "id": {
+            "type": "integer",
+            "format": "int32"
           },
           "codigo": {
             "type": "string",
-            "description": "Codigo del cliente.",
             "nullable": true
           },
           "razonSocial": {
             "type": "string",
-            "description": "Razon social del cliente.",
             "nullable": true
           },
           "rfc": {
             "type": "string",
-            "description": "RFC del cliente.",
             "nullable": true
           },
+          "tipo": {
+            "$ref": "#/components/schemas/TipoCliente"
+          },
           "usoCfdi": {
-            "$ref": "#/components/schemas/UsoCfdi"
+            "$ref": "#/components/schemas/UsoCfdiEnum"
           },
           "regimenFiscal": {
-            "$ref": "#/components/schemas/RegimenFiscal"
+            "$ref": "#/components/schemas/RegimenFiscalEnum"
           },
           "direccionFiscal": {
             "$ref": "#/components/schemas/Direccion"
@@ -2162,24 +2163,24 @@
             "additionalProperties": {
               "type": "string"
             },
-            "description": "Datos extra del cliente.",
             "nullable": true
           }
         },
-        "additionalProperties": false,
-        "description": "Estructura de un cliente o proveedor."
+        "additionalProperties": false
       },
-      "Concepto": {
+      "ConceptoDocumento": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
           "codigo": {
             "type": "string",
-            "description": "Codigo del concepto.",
             "nullable": true
           },
           "nombre": {
             "type": "string",
-            "description": "Nombre del concepto.",
             "nullable": true
           },
           "datosExtra": {
@@ -2187,12 +2188,10 @@
             "additionalProperties": {
               "type": "string"
             },
-            "description": "Datos extra del concepto.",
             "nullable": true
           }
         },
-        "additionalProperties": false,
-        "description": "Estructura de un concepto de documento"
+        "additionalProperties": false
       },
       "CrearAgenteRequest": {
         "type": "object",
@@ -2317,7 +2316,7 @@
         "type": "object",
         "properties": {
           "cliente": {
-            "$ref": "#/components/schemas/Cliente"
+            "$ref": "#/components/schemas/ClienteProveedor"
           }
         },
         "additionalProperties": false,
@@ -2347,7 +2346,7 @@
         "type": "object",
         "properties": {
           "cliente": {
-            "$ref": "#/components/schemas/Cliente"
+            "$ref": "#/components/schemas/ClienteProveedor"
           }
         },
         "additionalProperties": false,
@@ -2570,119 +2569,158 @@
         "additionalProperties": false,
         "description": "Modelo de la respuesta CrearProductoResponse."
       },
+      "Descuento": {
+        "type": "object",
+        "properties": {
+          "tasa": {
+            "type": "number",
+            "format": "double"
+          },
+          "importe": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DescuentosMovimiento": {
+        "type": "object",
+        "properties": {
+          "descuento1": {
+            "$ref": "#/components/schemas/Descuento"
+          },
+          "descuento2": {
+            "$ref": "#/components/schemas/Descuento"
+          },
+          "descuento3": {
+            "$ref": "#/components/schemas/Descuento"
+          },
+          "descuento4": {
+            "$ref": "#/components/schemas/Descuento"
+          },
+          "descuento5": {
+            "$ref": "#/components/schemas/Descuento"
+          }
+        },
+        "additionalProperties": false
+      },
       "Direccion": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tipoCatalogo": {
+            "$ref": "#/components/schemas/TipoCatalogoDireccion"
+          },
+          "tipo": {
+            "$ref": "#/components/schemas/TipoDireccion"
+          },
           "calle": {
             "type": "string",
-            "description": "Nombre de la calle.",
             "nullable": true
           },
           "numeroExterior": {
             "type": "string",
-            "description": "Numero exterior de la calle.",
             "nullable": true
           },
           "numeroInterior": {
             "type": "string",
-            "description": "Numero interior del edificio o local.",
             "nullable": true
           },
           "colonia": {
             "type": "string",
-            "description": "Colonia o fraccionamiento.",
             "nullable": true
           },
           "ciudad": {
             "type": "string",
-            "description": "Nombre de la ciudad.",
             "nullable": true
           },
           "estado": {
             "type": "string",
-            "description": "Nombre del estado.",
             "nullable": true
           },
           "codigoPostal": {
             "type": "string",
-            "description": "Codigo postal.",
             "nullable": true
           },
           "pais": {
             "type": "string",
-            "description": "Nombre del pais.",
+            "nullable": true
+          },
+          "datosExtra": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
             "nullable": true
           }
         },
-        "additionalProperties": false,
-        "description": "Estructura de una direccion."
+        "additionalProperties": false
       },
       "Documento": {
         "type": "object",
         "properties": {
-          "fecha": {
-            "type": "string",
-            "description": "Fecha del documento.",
-            "format": "date-time"
+          "id": {
+            "type": "integer",
+            "format": "int32"
           },
           "concepto": {
-            "$ref": "#/components/schemas/Concepto"
+            "$ref": "#/components/schemas/ConceptoDocumento"
           },
           "serie": {
             "type": "string",
-            "description": "Serie del documento.",
             "nullable": true
           },
           "folio": {
             "type": "integer",
-            "description": "Folio del documento.",
             "format": "int32"
           },
+          "fecha": {
+            "type": "string",
+            "format": "date-time"
+          },
           "cliente": {
-            "$ref": "#/components/schemas/Cliente"
+            "$ref": "#/components/schemas/ClienteProveedor"
           },
           "moneda": {
             "$ref": "#/components/schemas/Moneda"
           },
           "tipoCambio": {
             "type": "number",
-            "description": "Tipo de cambio del documento.",
-            "format": "double"
-          },
-          "referencia": {
-            "type": "string",
-            "description": "Referencia del documento.",
-            "nullable": true
-          },
-          "observaciones": {
-            "type": "string",
-            "description": "Observaciones del documento.",
-            "nullable": true
-          },
-          "total": {
-            "type": "number",
-            "description": "Total del documento.",
             "format": "double"
           },
           "agente": {
             "$ref": "#/components/schemas/Agente"
           },
-          "direccionFiscal": {
-            "$ref": "#/components/schemas/Direccion"
+          "referencia": {
+            "type": "string",
+            "nullable": true
+          },
+          "observaciones": {
+            "type": "string",
+            "nullable": true
+          },
+          "total": {
+            "type": "number",
+            "format": "double"
           },
           "formaPago": {
-            "$ref": "#/components/schemas/FormaPago"
+            "$ref": "#/components/schemas/FormaPagoEnum"
           },
           "metodoPago": {
-            "$ref": "#/components/schemas/MetodoPago"
+            "$ref": "#/components/schemas/MetodoPagoEnum"
           },
           "movimientos": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Movimiento"
             },
-            "description": "Movimientos del documento.",
             "nullable": true
+          },
+          "direccionFiscal": {
+            "$ref": "#/components/schemas/Direccion"
           },
           "folioDigital": {
             "$ref": "#/components/schemas/FolioDigital"
@@ -2692,12 +2730,10 @@
             "additionalProperties": {
               "type": "string"
             },
-            "description": "Datos extra del documento.",
             "nullable": true
           }
         },
-        "additionalProperties": false,
-        "description": "Estructura de un documeto."
+        "additionalProperties": false
       },
       "DocumentoDigital": {
         "type": "object",
@@ -2715,6 +2751,11 @@
           "ubicacion": {
             "type": "string",
             "description": "Ubicacion del documento.",
+            "nullable": true
+          },
+          "contenido": {
+            "type": "string",
+            "description": "Contenido del documento. Solo aplica para los XML.",
             "nullable": true
           }
         },
@@ -2856,11 +2897,11 @@
       "Empresa": {
         "type": "object",
         "properties": {
-          "nombre": {
-            "type": "string",
-            "nullable": true
+          "id": {
+            "type": "integer",
+            "format": "int32"
           },
-          "rfc": {
+          "nombre": {
             "type": "string",
             "nullable": true
           },
@@ -2872,16 +2913,8 @@
             "type": "string",
             "nullable": true
           },
-          "guidAdd": {
-            "type": "string",
-            "nullable": true
-          },
-          "datosExtra": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string"
-            },
-            "nullable": true
+          "parametros": {
+            "$ref": "#/components/schemas/Parametros"
           }
         },
         "additionalProperties": false
@@ -2889,6 +2922,10 @@
       "FolioDigital": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
           "uuid": {
             "type": "string",
             "nullable": true
@@ -2903,16 +2940,18 @@
         },
         "additionalProperties": false
       },
-      "FormaPago": {
+      "FormaPagoEnum": {
         "type": "object",
         "properties": {
-          "clave": {
+          "name": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "readOnly": true
           },
-          "descripcion": {
+          "value": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "readOnly": true
           }
         },
         "additionalProperties": false
@@ -2975,38 +3014,65 @@
         "additionalProperties": false,
         "description": "Modelo de la respuesta GenerarDocumentoDigitalResponse."
       },
+      "Impuesto": {
+        "type": "object",
+        "properties": {
+          "tasa": {
+            "type": "number",
+            "format": "double"
+          },
+          "importe": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ImpuestosMovimiento": {
+        "type": "object",
+        "properties": {
+          "impuesto1": {
+            "$ref": "#/components/schemas/Impuesto"
+          },
+          "impuesto2": {
+            "$ref": "#/components/schemas/Impuesto"
+          },
+          "impuesto3": {
+            "$ref": "#/components/schemas/Impuesto"
+          }
+        },
+        "additionalProperties": false
+      },
       "LlaveDocumento": {
         "type": "object",
         "properties": {
           "conceptoCodigo": {
             "type": "string",
-            "description": "Codigo del concepto del documento.",
             "nullable": true
           },
           "serie": {
             "type": "string",
-            "description": "Serie del documento.",
             "nullable": true
           },
           "folio": {
-            "type": "integer",
-            "description": "Folio del documento.",
-            "format": "int32"
+            "type": "number",
+            "format": "double"
           }
         },
-        "additionalProperties": false,
-        "description": "Estructura de una llave de documento."
+        "additionalProperties": false
       },
-      "MetodoPago": {
+      "MetodoPagoEnum": {
         "type": "object",
         "properties": {
-          "clave": {
+          "name": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "readOnly": true
           },
-          "descripcion": {
+          "value": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "readOnly": true
           }
         },
         "additionalProperties": false
@@ -3028,40 +3094,47 @@
       "Movimiento": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
           "producto": {
             "$ref": "#/components/schemas/Producto"
-          },
-          "unidades": {
-            "type": "number",
-            "description": "Cantidad de unidad base del movimiento.",
-            "format": "double"
-          },
-          "precio": {
-            "type": "number",
-            "description": "Precio del producto",
-            "format": "double"
-          },
-          "subtotal": {
-            "type": "number",
-            "description": "Subtotal del movimiento.",
-            "format": "double"
-          },
-          "total": {
-            "type": "number",
-            "description": "Total del movimiento",
-            "format": "double"
           },
           "almacen": {
             "$ref": "#/components/schemas/Almacen"
           },
+          "unidades": {
+            "type": "number",
+            "format": "double"
+          },
+          "precio": {
+            "type": "number",
+            "format": "double"
+          },
+          "subtotal": {
+            "type": "number",
+            "format": "double"
+          },
+          "descuentos": {
+            "$ref": "#/components/schemas/DescuentosMovimiento"
+          },
+          "impuestos": {
+            "$ref": "#/components/schemas/ImpuestosMovimiento"
+          },
+          "retenciones": {
+            "$ref": "#/components/schemas/RetencionesMovimiento"
+          },
+          "total": {
+            "type": "number",
+            "format": "double"
+          },
           "referencia": {
             "type": "string",
-            "description": "Referencia del movimiento.",
             "nullable": true
           },
           "observaciones": {
             "type": "string",
-            "description": "Observaciones del movimiento.",
             "nullable": true
           },
           "seriesCapas": {
@@ -3074,14 +3147,34 @@
           "datosExtra": {
             "type": "object",
             "additionalProperties": {
-              "type": "string"
+              "type": "string",
+              "nullable": true
             },
-            "description": "Datos extra del movimiento.",
             "nullable": true
           }
         },
-        "additionalProperties": false,
-        "description": "Estructura de un movimiento."
+        "additionalProperties": false
+      },
+      "Parametros": {
+        "type": "object",
+        "properties": {
+          "rfc": {
+            "type": "string",
+            "nullable": true
+          },
+          "guidAdd": {
+            "type": "string",
+            "nullable": true
+          },
+          "datosExtra": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "ProblemDetails": {
         "type": "object",
@@ -3113,22 +3206,23 @@
       "Producto": {
         "type": "object",
         "properties": {
-          "tipo": {
-            "$ref": "#/components/schemas/TipoProducto"
+          "id": {
+            "type": "integer",
+            "format": "int32"
           },
           "codigo": {
             "type": "string",
-            "description": "Codigo del producto.",
             "nullable": true
           },
           "nombre": {
             "type": "string",
-            "description": "Nombre del producto.",
             "nullable": true
+          },
+          "tipo": {
+            "$ref": "#/components/schemas/TipoProducto"
           },
           "claveSat": {
             "type": "string",
-            "description": "Clave SAT del producto.",
             "nullable": true
           },
           "datosExtra": {
@@ -3136,22 +3230,20 @@
             "additionalProperties": {
               "type": "string"
             },
-            "description": "Datos extra del producto.",
             "nullable": true
           }
         },
-        "additionalProperties": false,
-        "description": "Estructura de un producto."
+        "additionalProperties": false
       },
-      "RegimenFiscal": {
+      "RegimenFiscalEnum": {
         "type": "object",
         "properties": {
-          "clave": {
+          "name": {
             "type": "string",
             "nullable": true,
             "readOnly": true
           },
-          "descripcion": {
+          "value": {
             "type": "string",
             "nullable": true,
             "readOnly": true
@@ -3166,6 +3258,32 @@
           "Canceled"
         ],
         "type": "string"
+      },
+      "Retencion": {
+        "type": "object",
+        "properties": {
+          "tasa": {
+            "type": "number",
+            "format": "double"
+          },
+          "importe": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RetencionesMovimiento": {
+        "type": "object",
+        "properties": {
+          "retencion1": {
+            "$ref": "#/components/schemas/Retencion"
+          },
+          "retencion2": {
+            "$ref": "#/components/schemas/Retencion"
+          }
+        },
+        "additionalProperties": false
       },
       "SaldarDocumentoRequest": {
         "type": "object",
@@ -3241,48 +3359,42 @@
         "properties": {
           "unidades": {
             "type": "number",
-            "description": "Unidades del movimiento.",
             "format": "double"
           },
           "tipoCambio": {
             "type": "number",
-            "description": "Tipo de cambio del movimiento.",
             "format": "double"
           },
           "series": {
             "type": "string",
-            "description": "Series del movimiento.",
             "nullable": true
           },
           "pedimento": {
             "type": "string",
-            "description": "Pedimento del movimiento.",
             "nullable": true
           },
           "agencia": {
             "type": "string",
-            "description": "Agencia aduanal del movimiento.",
             "nullable": true
           },
           "fechaPedimento": {
             "type": "string",
-            "description": "Fecha de pedimento del movimiento.",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "numeroLote": {
             "type": "string",
-            "description": "Número de lote del movimiento.",
             "nullable": true
           },
           "fechaFabricacion": {
             "type": "string",
-            "description": "Fecha de fabricación del movimiento.",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "fechaCaducidad": {
             "type": "string",
-            "description": "Fecha de Caducidad del movimiento.",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3363,7 +3475,9 @@
         "enum": [
           "Ventas",
           "VentasCobro",
-          "Cobro"
+          "Cobro",
+          "FiguraTransporte",
+          "MedioTransporte"
         ],
         "type": "string"
       },
@@ -3371,6 +3485,15 @@
         "enum": [
           "Xml",
           "Pdf"
+        ],
+        "type": "string"
+      },
+      "TipoCatalogoDireccion": {
+        "enum": [
+          "Clientes",
+          "Proveedores",
+          "Documentos",
+          "Empresa"
         ],
         "type": "string"
       },
@@ -3382,6 +3505,13 @@
         ],
         "type": "string"
       },
+      "TipoDireccion": {
+        "enum": [
+          "Fiscal",
+          "Envio"
+        ],
+        "type": "string"
+      },
       "TipoProducto": {
         "enum": [
           "Producto",
@@ -3390,15 +3520,15 @@
         ],
         "type": "string"
       },
-      "UsoCfdi": {
+      "UsoCfdiEnum": {
         "type": "object",
         "properties": {
-          "descripcion": {
+          "name": {
             "type": "string",
             "nullable": true,
             "readOnly": true
           },
-          "clave": {
+          "value": {
             "type": "string",
             "nullable": true,
             "readOnly": true
@@ -3406,7 +3536,7 @@
           "regimenesFiscales": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/RegimenFiscal"
+              "$ref": "#/components/schemas/RegimenFiscalEnum"
             },
             "nullable": true,
             "readOnly": true

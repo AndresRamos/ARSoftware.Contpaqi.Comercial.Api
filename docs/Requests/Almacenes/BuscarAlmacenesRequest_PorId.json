@@ -1,7 +1,0 @@
-{
-  "$type": "BuscarAlmacenesRequest",
-  "model": {
-    "id": 100
-  },
-  "options": {}
-}

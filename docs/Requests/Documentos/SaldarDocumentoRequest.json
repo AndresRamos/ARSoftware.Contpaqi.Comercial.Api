@@ -2,17 +2,19 @@
   "$type": "SaldarDocumentoRequest",
   "model": {
     "documentoAPagar": {
-      "conceptoCodigo": "400",
-      "serie": "FE",
-      "folio": 123
+      "conceptoCodigo": "FACTURAPRUEBA",
+      "serie": "FP",
+      "folio": 1
     },
     "documentoPago": {
       "conceptoCodigo": "13",
-      "serie": "",
+      "serie": "FE",
       "folio": 456
     },
-    "fecha": "2023-05-01T00:00:00-05:00",
+    "fecha": "2023-08-04T00:00:00-05:00",
     "importe": 116
   },
-  "options": {}
+  "options": {
+    "cargarDatosExtra": false
+  }
 }

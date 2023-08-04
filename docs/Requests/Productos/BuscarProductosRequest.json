@@ -1,0 +1,11 @@
+{
+  "$type": "BuscarProductosRequest",
+  "model": {
+    "id": 1,
+    "codigo": "PROD001",
+    "sqlQuery": "CNOMBREPRODUCTO = \u0027PRODUCTO DE PRUEBAS"
+  },
+  "options": {
+    "cargarDatosExtra": false
+  }
+}

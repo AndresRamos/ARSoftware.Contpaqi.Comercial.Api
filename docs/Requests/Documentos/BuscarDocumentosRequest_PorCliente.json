@@ -1,7 +1,0 @@
-{
-  "$type": "BuscarDocumentosRequest",
-  "model": {
-    "clienteCodigo": "CTE001"
-  },
-  "options": {}
-}

@@ -1,8 +1,0 @@
-{
-  "$type": "BuscarDocumentosRequest",
-  "model": {
-    "fechaInicio": "2023-05-01",
-    "fechaFin": "2023-05-01"
-  },
-  "options": {}
-}

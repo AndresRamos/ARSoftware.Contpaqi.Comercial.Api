@@ -1,0 +1,7 @@
+{
+  "$type": "BuscarEmpresasRequest",
+  "model": {},
+  "options": {
+    "cargarDatosExtra": false
+  }
+}

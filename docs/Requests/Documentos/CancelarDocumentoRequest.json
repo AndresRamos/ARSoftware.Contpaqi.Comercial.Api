@@ -2,13 +2,16 @@
   "$type": "CancelarDocumentoRequest",
   "model": {
     "llaveDocumento": {
-      "conceptoCodigo": "400",
-      "serie": "FE",
-      "folio": 123
+      "conceptoCodigo": "FACTURAPRUEBA",
+      "serie": "FP",
+      "folio": 1
     },
     "contrasenaCertificado": "12345678a",
     "motivoCancelacion": "1",
-    "uuid": "6fa46cfb-690a-43b0-b737-b501a8d5ec0a"
+    "uuid": "81e3202b-0315-41c9-8cfd-f6d3121974e9"
   },
-  "options": {}
+  "options": {
+    "administrativamente": false,
+    "cargarDatosExtra": false
+  }
 }

@@ -1,9 +1,11 @@
 ﻿using System.Text.Json;
+using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
 using ARSoftware.Contpaqi.Api.Common.Domain;
 using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Enums;
 using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Enums.CatalogosCfdi;
 using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Models;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.ValueObjects;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Models.Enums;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
@@ -12,257 +14,231 @@ namespace Api.Sdk.ConsoleApp.JsonFactories;
 
 public static class DocumentoFactory
 {
-    public const string CodigoConcepto = "400";
+    private static readonly LlaveDocumento LlaveFacturaPrueba = new("FACTURAPRUEBA", "FP", 1);
 
-    private static CrearDocumentoRequest Crear()
+    private static CrearDocumentoRequest GetCrearDocumentoRequest()
     {
-        var request = new CrearDocumentoRequest(new CrearDocumentoRequestModel(), new CrearDocumentoRequestOptions());
-
-        request.Model.Documento = GetDocumento();
-        request.Options.UsarFechaDelDia = true;
-        request.Options.BuscarSiguienteFolio = true;
-        request.Options.CrearCatalogos = false;
-
-        return request;
+        return new CrearDocumentoRequest(new CrearDocumentoRequestModel { Documento = GetModeloPrueba() },
+            new CrearDocumentoRequestOptions { UsarFechaDelDia = true, BuscarSiguienteFolio = true, CrearCatalogos = false });
     }
 
-    private static CrearFacturaRequest CrearFactura()
+    private static CrearDocumentoResponse GetCrearDocumentoResponse()
     {
-        var request = new CrearFacturaRequest(new CrearFacturaRequestModel(), new CrearFacturaRequestOptions());
-
-        request.Model.Documento = GetDocumento();
-
-        request.Options.UsarFechaDelDia = true;
-        request.Options.BuscarSiguienteFolio = true;
-        request.Options.CrearCatalogos = false;
-        request.Options.Timbrar = true;
-        request.Options.ContrasenaCertificado = "12345678a";
-        request.Options.GenerarDocumentosDigitales = true;
-        request.Options.GenerarPdf = true;
-        request.Options.NombrePlantilla = "Facturav40.rdl";
-
-        return request;
+        return new CrearDocumentoResponse(new CrearDocumentoResponseModel(GetModeloPrueba()));
     }
 
-    private static ActualizarDocumentoRequest Actualizar()
+    private static CrearFacturaRequest GetCrearFacturaRequest()
     {
-        var request = new ActualizarDocumentoRequest(new ActualizarDocumentoRequestModel(), new ActualizarDocumentoRequestOptions());
-
-        request.Model.LlaveDocumento.ConceptoCodigo = CodigoConcepto;
-        request.Model.LlaveDocumento.Serie = "FE";
-        request.Model.LlaveDocumento.Folio = 123;
-        request.Model.DatosDocumento = GetDatosExtra();
-
-        return request;
+        return new CrearFacturaRequest(new CrearFacturaRequestModel { Documento = GetModeloPrueba() },
+            new CrearFacturaRequestOptions
+            {
+                UsarFechaDelDia = true,
+                BuscarSiguienteFolio = true,
+                CrearCatalogos = false,
+                Timbrar = true,
+                ContrasenaCertificado = "12345678a",
+                GenerarDocumentosDigitales = true,
+                GenerarPdf = true,
+                NombrePlantilla = "Facturav40.rdl"
+            });
     }
 
-    private static EliminarDocumentoRequest Eliminar()
+    private static CrearFacturaResponse GetCrearFacturaResponse()
     {
-        var request = new EliminarDocumentoRequest(new EliminarDocumentoRequestModel(), new EliminarDocumentoRequestOptions());
-
-        request.Model.LlaveDocumento.ConceptoCodigo = CodigoConcepto;
-        request.Model.LlaveDocumento.Serie = "FE";
-        request.Model.LlaveDocumento.Folio = 123;
-
-        return request;
+        return new CrearFacturaResponse(new CrearFacturaResponseModel(GetModeloPrueba(), new DocumentoDigital(), new DocumentoDigital()));
     }
 
-    private static TimbrarDocumentoRequest Timbrar()
+    private static ActualizarDocumentoRequest GetActualizarDocumentoRequest()
     {
-        var request = new TimbrarDocumentoRequest(new TimbrarDocumentoRequestModel(), new TimbrarDocumentoRequestOptions());
-
-        request.Model.LlaveDocumento.ConceptoCodigo = CodigoConcepto;
-        request.Model.LlaveDocumento.Serie = "FE";
-        request.Model.LlaveDocumento.Folio = 123;
-        request.Model.ContrasenaCertificado = "12345678a";
-
-        return request;
+        return new ActualizarDocumentoRequest(
+            new ActualizarDocumentoRequestModel { LlaveDocumento = LlaveFacturaPrueba, DatosDocumento = GetDatosExtraPrueba() },
+            new ActualizarDocumentoRequestOptions());
     }
 
-    private static GenerarDocumentoDigitalRequest GenerarDocumentoDigital()
+    private static ActualizarDocumentoResponse GetActualizarDocumentoResponse()
     {
-        var request = new GenerarDocumentoDigitalRequest(new GenerarDocumentoDigitalRequestModel(),
-            new GenerarDocumentoDigitalRequestOptions());
-
-        request.Model.LlaveDocumento.ConceptoCodigo = CodigoConcepto;
-        request.Model.LlaveDocumento.Serie = "FE";
-        request.Model.LlaveDocumento.Folio = 123;
-
-        request.Options.Tipo = TipoArchivoDigital.Pdf;
-        request.Options.NombrePlantilla = "Facturav40.rdl";
-
-        return request;
+        return new ActualizarDocumentoResponse(new ActualizarDocumentoResponseModel(GetModeloPrueba()));
     }
 
-    private static SaldarDocumentoRequest Saldar()
+    private static EliminarDocumentoRequest GetEliminarDocumentoRequest()
     {
-        var request = new SaldarDocumentoRequest(new SaldarDocumentoRequestModel(), new SaldarDocumentoRequestOptions());
-
-        request.Model.DocumentoAPagar.ConceptoCodigo = CodigoConcepto;
-        request.Model.DocumentoAPagar.Serie = "FE";
-        request.Model.DocumentoAPagar.Folio = 123;
-
-        request.Model.DocumentoPago.ConceptoCodigo = "13";
-        request.Model.DocumentoPago.Serie = "";
-        request.Model.DocumentoPago.Folio = 456;
-
-        request.Model.Fecha = DateTime.Today;
-        request.Model.Importe = 116;
-
-        return request;
+        return new EliminarDocumentoRequest(new EliminarDocumentoRequestModel { LlaveDocumento = LlaveFacturaPrueba },
+            new EliminarDocumentoRequestOptions());
     }
 
-    private static CancelarDocumentoRequest Cancelar()
+    private static EliminarDocumentoResponse GetEliminarDocumentoResponse()
     {
-        var request = new CancelarDocumentoRequest(new CancelarDocumentoRequestModel(), new CancelarDocumentoRequestOptions());
-
-        request.Model.LlaveDocumento.ConceptoCodigo = CodigoConcepto;
-        request.Model.LlaveDocumento.Serie = "FE";
-        request.Model.LlaveDocumento.Folio = 123;
-        request.Model.ContrasenaCertificado = "12345678a";
-        request.Model.MotivoCancelacion = "1";
-        request.Model.Uuid = Guid.NewGuid().ToString();
-
-        return request;
+        return new EliminarDocumentoResponse(new EliminarDocumentoResponseModel());
     }
 
-    private static Dictionary<string, string> GetDatosExtra()
+    private static TimbrarDocumentoRequest GetTimbrarDocumentoRequest()
     {
-        return new Dictionary<string, string>
-        {
-            { nameof(admDocumentos.COBSERVACIONES), "Observaciones del documento." },
-            { nameof(admDocumentos.CTEXTOEXTRA1), "Texto Extra" }
-        };
+        return new TimbrarDocumentoRequest(
+            new TimbrarDocumentoRequestModel { LlaveDocumento = LlaveFacturaPrueba, ContrasenaCertificado = "12345678a" },
+            new TimbrarDocumentoRequestOptions());
     }
 
-    private static BuscarDocumentosRequest BuscarPorSql()
+    private static TimbrarDocumentoResponse GetTimbrarDocumentoResponse()
     {
-        var request = new BuscarDocumentosRequest(new BuscarDocumentosRequestModel(), new BuscarDocumentosRequestOptions());
-
-        request.Model.SqlQuery = @"CPENDIENTE > 0.00";
-
-        return request;
+        return new TimbrarDocumentoResponse(new TimbrarDocumentoResponseModel(GetModeloPrueba()));
     }
 
-    private static BuscarDocumentosRequest BuscarPorRangoFecha()
+    private static GenerarDocumentoDigitalRequest GetGenerarDocumentoDigitalRequest()
     {
-        var request = new BuscarDocumentosRequest(new BuscarDocumentosRequestModel(), new BuscarDocumentosRequestOptions());
-
-        request.Model.FechaInicio = DateOnly.FromDateTime(DateTime.Today);
-        request.Model.FechaFin = DateOnly.FromDateTime(DateTime.Today);
-
-        return request;
+        return new GenerarDocumentoDigitalRequest(new GenerarDocumentoDigitalRequestModel { LlaveDocumento = LlaveFacturaPrueba },
+            new GenerarDocumentoDigitalRequestOptions { Tipo = TipoArchivoDigital.Pdf, NombrePlantilla = "Facturav40.rdl" });
     }
 
-    private static BuscarDocumentosRequest BuscarPorId()
+    private static GenerarDocumentoDigitalResponse GetGenerarDocumentoDigitalResponse()
     {
-        var request = new BuscarDocumentosRequest(new BuscarDocumentosRequestModel(), new BuscarDocumentosRequestOptions());
-
-        request.Model.Id = 1;
-
-        return request;
+        return new GenerarDocumentoDigitalResponse(new GenerarDocumentoDigitalResponseModel(new DocumentoDigital()));
     }
 
-    private static BuscarDocumentosRequest BuscarPorLlave()
+    private static SaldarDocumentoRequest GetSaldarDocumentoRequest()
     {
-        var request = new BuscarDocumentosRequest(new BuscarDocumentosRequestModel(), new BuscarDocumentosRequestOptions());
-
-        request.Model.Llave = new LlaveDocumento { ConceptoCodigo = "400", Serie = "FACT", Folio = 1 };
-
-        return request;
+        return new SaldarDocumentoRequest(
+            new SaldarDocumentoRequestModel
+            {
+                DocumentoAPagar = LlaveFacturaPrueba,
+                DocumentoPago = new LlaveDocumento { ConceptoCodigo = "13", Serie = "FE", Folio = 456 },
+                Fecha = DateTime.Today,
+                Importe = 116
+            }, new SaldarDocumentoRequestOptions());
     }
 
-    private static BuscarDocumentosRequest BuscarPorConcepto()
+    private static SaldarDocumentoResponse GetSaldarDocumentoResponse()
     {
-        var request = new BuscarDocumentosRequest(new BuscarDocumentosRequestModel(), new BuscarDocumentosRequestOptions());
-
-        request.Model.ConceptoCodigo = "400";
-
-        return request;
+        return new SaldarDocumentoResponse(new SaldarDocumentoResponseModel(new Documento(), new Documento()));
     }
 
-    private static BuscarDocumentosRequest BuscarPorCliente()
+    private static CancelarDocumentoRequest GetCancelarDocumentoRequest()
     {
-        var request = new BuscarDocumentosRequest(new BuscarDocumentosRequestModel(), new BuscarDocumentosRequestOptions());
-
-        request.Model.ClienteCodigo = "CTE001";
-
-        return request;
+        return new CancelarDocumentoRequest(
+            new CancelarDocumentoRequestModel
+            {
+                LlaveDocumento = LlaveFacturaPrueba,
+                ContrasenaCertificado = "12345678a",
+                MotivoCancelacion = "1",
+                Uuid = Guid.NewGuid().ToString()
+            }, new CancelarDocumentoRequestOptions());
     }
 
-    private static Documento GetDocumento()
+    private static CancelarDocumentoResponse GetCancelarDocumentoResponse()
+    {
+        return new CancelarDocumentoResponse(new CancelarDocumentoResponseModel(GetModeloPrueba()));
+    }
+
+    private static BuscarDocumentosRequest GetBuscarDocumentosRequest()
+    {
+        return new BuscarDocumentosRequest(
+            new BuscarDocumentosRequestModel
+            {
+                Id = 1,
+                Llave = new LlaveDocumento("PRUEBA", "SERIE", 1),
+                ConceptoCodigo = "PRUEBA",
+                ClienteCodigo = "PRUEBA",
+                FechaInicio = DateOnly.FromDateTime(DateTime.Today),
+                FechaFin = DateOnly.FromDateTime(DateTime.Today),
+                SqlQuery = $"{nameof(admDocumentos.CPENDIENTE)} > 0"
+            }, new BuscarDocumentosRequestOptions());
+    }
+
+    private static BuscarDocumentosResponse GetBuscarDocumentosResponse()
+    {
+        return new BuscarDocumentosResponse(new BuscarDocumentosResponseModel(new List<Documento> { GetModeloPrueba() }));
+    }
+
+    private static Documento GetModeloPrueba()
     {
         var documento = new Documento();
         documento.Fecha = DateTime.Today;
-        documento.Concepto.Codigo = CodigoConcepto;
-        documento.Cliente = ClienteFactory.CrearClientePrueba();
+        documento.Concepto = new ConceptoDocumento { Codigo = ConceptoFactory.CodigoPrueba };
+        documento.Cliente = new ClienteProveedor { Codigo = ClienteFactory.CodigoPrueba };
         documento.Moneda = MonedaEnum.PesoMexicano.ToMoneda();
         documento.TipoCambio = 1;
         documento.Referencia = "Referencia doc";
         documento.Observaciones = "Observaciones del documento.";
-        documento.Agente = AgenteFactory.CrearAgenteDatosMinimos();
+        documento.Agente = new Agente { Codigo = AgenteFactory.CodigoPrueba };
         documento.FormaPago = FormaPagoEnum._01;
         documento.MetodoPago = MetodoPagoEnum.PPD;
         documento.Movimientos.Add(new Movimiento
         {
-            Producto = ProductoFactory.CrearProductoPrueba(),
+            Producto = new Producto { Codigo = ProductoFactory.CodigoPrueba },
+            Almacen = new Almacen { Codigo = AlmacenFactory.CodigoPrueba },
             Unidades = 1,
             Precio = 100,
-            Almacen = new Almacen { Codigo = "1", Nombre = "Almacen Uno" },
+            Impuestos = new ImpuestosMovimiento { Impuesto1 = new Impuesto { Tasa = 16 } },
+            Descuentos = new DescuentosMovimiento { Descuento1 = new Descuento { Tasa = 10 } },
             Referencia = "Referencia mov",
             Observaciones = "Observaciones del movimiento"
         });
-        documento.DatosExtra = GetDatosExtra();
+        documento.DatosExtra = GetDatosExtraPrueba();
 
         return documento;
     }
 
+    private static Dictionary<string, string> GetDatosExtraPrueba()
+    {
+        return new Dictionary<string, string>
+        {
+            { nameof(admDocumentos.COBSERVACIONES), "Observaciones del documento." },
+            { nameof(admDocumentos.CTEXTOEXTRA1), "Texto extra 1" },
+            { nameof(admDocumentos.CTEXTOEXTRA2), "Texto extra 2" },
+            { nameof(admDocumentos.CTEXTOEXTRA3), "Texto extra 3" }
+        };
+    }
+
     public static void CearJson(string directory)
     {
-        JsonSerializerOptions options = FactoryExtensions.GetJsonSerializerOptions();
-
         Directory.CreateDirectory(directory);
 
+        JsonSerializerOptions options = FactoryExtensions.GetJsonSerializerOptions();
+
+        File.WriteAllText(Path.Combine(directory, $"{nameof(Documento)}.json"), JsonSerializer.Serialize(GetModeloPrueba(), options));
+
         File.WriteAllText(Path.Combine(directory, $"{nameof(CrearDocumentoRequest)}.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(Crear(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(GetCrearDocumentoRequest(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(CrearDocumentoResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetCrearDocumentoResponse(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(CrearFacturaRequest)}.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(CrearFactura(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(GetCrearFacturaRequest(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(CrearFacturaResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetCrearFacturaResponse(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(ActualizarDocumentoRequest)}.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(Actualizar(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(GetActualizarDocumentoRequest(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(ActualizarDocumentoResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetActualizarDocumentoResponse(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(EliminarDocumentoRequest)}.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(Eliminar(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(GetEliminarDocumentoRequest(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(EliminarDocumentoResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetEliminarDocumentoResponse(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(TimbrarDocumentoRequest)}.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(Timbrar(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(GetTimbrarDocumentoRequest(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(TimbrarDocumentoResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetTimbrarDocumentoResponse(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(GenerarDocumentoDigitalRequest)}.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(GenerarDocumentoDigital(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(GetGenerarDocumentoDigitalRequest(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(GenerarDocumentoDigitalResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetGenerarDocumentoDigitalResponse(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(SaldarDocumentoRequest)}.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(Saldar(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(GetSaldarDocumentoRequest(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(SaldarDocumentoResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetSaldarDocumentoResponse(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(CancelarDocumentoRequest)}.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(Cancelar(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(GetCancelarDocumentoRequest(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(CancelarDocumentoResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetCancelarDocumentoResponse(), options));
 
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarDocumentosRequest)}_PorId.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorId(), options));
-
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarDocumentosRequest)}_PorLlave.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorLlave(), options));
-
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarDocumentosRequest)}_PorConcepto.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorConcepto(), options));
-
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarDocumentosRequest)}_PorCliente.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorCliente(), options));
-
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarDocumentosRequest)}_PorRangoFecha.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorRangoFecha(), options));
-
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarDocumentosRequest)}_PorSql.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorSql(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarDocumentosRequest)}.json"),
+            JsonSerializer.Serialize<ContpaqiRequest>(GetBuscarDocumentosRequest(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarDocumentosResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetBuscarDocumentosResponse(), options));
     }
 }

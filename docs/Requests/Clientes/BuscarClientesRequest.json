@@ -1,0 +1,11 @@
+{
+  "$type": "BuscarClientesRequest",
+  "model": {
+    "id": 1,
+    "codigo": "CLIENTEPRUEBA",
+    "sqlQuery": "CRAZONSOCIAL = \u0027CLIENTE DE PRUEBAS\u0027"
+  },
+  "options": {
+    "cargarDatosExtra": false
+  }
+}

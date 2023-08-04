@@ -9,105 +9,85 @@ namespace Api.Sdk.ConsoleApp.JsonFactories;
 
 public static class AgenteFactory
 {
-    public const string Codigo = "AGE001";
-    public const string Nombre = "Agente 1";
+    public const string CodigoPrueba = "AGENTEPRUEBA";
 
-    private static CrearAgenteRequest Crear()
+    private static CrearAgenteRequest GetCrearAgenteRequest()
     {
-        var request = new CrearAgenteRequest(new CrearAgenteRequestModel(), new CrearAgenteRequestOptions());
-
-        request.Model.Agente.Codigo = Codigo;
-        request.Model.Agente.Nombre = Nombre;
-        request.Model.Agente.Tipo = TipoAgente.VentasCobro;
-        request.Model.Agente.DatosExtra = GetDatosExtra();
-
-        return request;
+        return new CrearAgenteRequest(new CrearAgenteRequestModel { Agente = GetModeloPrueba() }, new CrearAgenteRequestOptions());
     }
 
-    private static ActualizarAgenteRequest Actualizar()
+    private static CrearAgenteResponse GetCrearAgenteResponse()
     {
-        var request = new ActualizarAgenteRequest(new ActualizarAgenteRequestModel(), new ActualizarAgenteRequestOptions());
-
-        request.Model.CodigoAgente = Codigo;
-        request.Model.DatosAgente = GetDatosExtra();
-
-        return request;
+        return new CrearAgenteResponse(new CrearAgenteResponseModel(GetModeloPrueba()));
     }
 
-    private static BuscarAgentesRequest BuscarPorId()
+    private static ActualizarAgenteRequest GetActualizarAgenteRequest()
     {
-        var request = new BuscarAgentesRequest(new BuscarAgentesRequestModel(), new BuscarAgentesRequestOptions());
-
-        request.Model.Id = 100;
-
-        return request;
+        return new ActualizarAgenteRequest(
+            new ActualizarAgenteRequestModel { CodigoAgente = CodigoPrueba, DatosAgente = GetDatosExtraPrueba() },
+            new ActualizarAgenteRequestOptions());
     }
 
-    private static BuscarAgentesRequest BuscarPorCodigo()
+    private static ActualizarAgenteResponse GetActualizarAgenteResponse()
     {
-        var request = new BuscarAgentesRequest(new BuscarAgentesRequestModel(), new BuscarAgentesRequestOptions());
-
-        request.Model.Codigo = Codigo;
-
-        return request;
+        return new ActualizarAgenteResponse(new ActualizarAgenteResponseModel(GetModeloPrueba()));
     }
 
-    private static BuscarAgentesRequest BuscarPorSql()
+    private static BuscarAgentesRequest GetBuscarAgentesRequest()
     {
-        var request = new BuscarAgentesRequest(new BuscarAgentesRequestModel(), new BuscarAgentesRequestOptions());
-
-        request.Model.SqlQuery = "CTIPOAGENTE = 1";
-
-        return request;
+        return new BuscarAgentesRequest(
+            new BuscarAgentesRequestModel
+            {
+                Id = 1, Codigo = CodigoPrueba, SqlQuery = $"{nameof(admAgentes.CNOMBREAGENTE)} = 'AGENTE DE PRUEBAS'"
+            }, new BuscarAgentesRequestOptions());
     }
 
-    private static BuscarAgentesRequest BuscarTodo()
+    private static BuscarAgentesResponse GetBuscarAgentesResponse()
     {
-        var request = new BuscarAgentesRequest(new BuscarAgentesRequestModel(), new BuscarAgentesRequestOptions());
-
-        return request;
+        return new BuscarAgentesResponse(new BuscarAgentesResponseModel(new List<Agente> { GetModeloPrueba() }));
     }
 
-    private static Dictionary<string, string> GetDatosExtra()
+    private static Agente GetModeloPrueba()
     {
-        return new Dictionary<string, string>
+        return new Agente
         {
-            { nameof(admAgentes.CCOMISIONVENTAAGENTE), 5.ToString() }, { nameof(admAgentes.CCOMISIONCOBROAGENTE), 10.ToString() }
+            Codigo = CodigoPrueba, Nombre = "AGENTE DE PRUEBAS", Tipo = TipoAgente.VentasCobro, DatosExtra = GetDatosExtraPrueba()
         };
     }
 
-    public static Agente CrearAgentePrueba()
+    private static Dictionary<string, string> GetDatosExtraPrueba()
     {
-        return new Agente { Codigo = Codigo, Nombre = Nombre, Tipo = TipoAgente.VentasCobro, DatosExtra = GetDatosExtra() };
-    }
-
-    public static Agente CrearAgenteDatosMinimos()
-    {
-        return new Agente { Codigo = Codigo };
+        return new Dictionary<string, string>
+        {
+            { nameof(admAgentes.CCOMISIONVENTAAGENTE), "5" },
+            { nameof(admAgentes.CCOMISIONCOBROAGENTE), "10" },
+            { nameof(admAgentes.CTEXTOEXTRA1), "Texto extra 1" },
+            { nameof(admAgentes.CTEXTOEXTRA2), "Texto extra 2" },
+            { nameof(admAgentes.CTEXTOEXTRA3), "Texto extra 3" }
+        };
     }
 
     public static void CearJson(string directory)
     {
-        JsonSerializerOptions options = FactoryExtensions.GetJsonSerializerOptions();
-
         Directory.CreateDirectory(directory);
 
+        JsonSerializerOptions options = FactoryExtensions.GetJsonSerializerOptions();
+
+        File.WriteAllText(Path.Combine(directory, $"{nameof(Agente)}.json"), JsonSerializer.Serialize(GetModeloPrueba(), options));
+
         File.WriteAllText(Path.Combine(directory, $"{nameof(CrearAgenteRequest)}.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(Crear(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(GetCrearAgenteRequest(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(CrearAgenteResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetCrearAgenteResponse(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(ActualizarAgenteRequest)}.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(Actualizar(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(GetActualizarAgenteRequest(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(ActualizarAgenteResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetActualizarAgenteResponse(), options));
 
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAgentesRequest)}_PorId.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorId(), options));
-
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAgentesRequest)}_PorCodigo.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorCodigo(), options));
-
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAgentesRequest)}_Sql.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorSql(), options));
-
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAgentesRequest)}_Todo.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(BuscarTodo(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAgentesRequest)}.json"),
+            JsonSerializer.Serialize<ContpaqiRequest>(GetBuscarAgentesRequest(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarAgentesResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetBuscarAgentesResponse(), options));
     }
 }

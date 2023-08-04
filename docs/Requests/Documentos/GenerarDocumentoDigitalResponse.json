@@ -1,0 +1,11 @@
+{
+  "$type": "GenerarDocumentoDigitalResponse",
+  "model": {
+    "documentoDigital": {
+      "nombre": "",
+      "tipo": "",
+      "ubicacion": "",
+      "contenido": null
+    }
+  }
+}

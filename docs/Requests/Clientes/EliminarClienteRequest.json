@@ -1,7 +1,7 @@
 {
   "$type": "EliminarClienteRequest",
   "model": {
-    "codigoCliente": "CTE001"
+    "codigoCliente": "CLIENTEPRUEBA"
   },
   "options": {}
 }

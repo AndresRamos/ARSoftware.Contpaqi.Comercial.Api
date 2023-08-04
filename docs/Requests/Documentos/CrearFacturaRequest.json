@@ -2,51 +2,112 @@
   "$type": "CrearFacturaRequest",
   "model": {
     "documento": {
-      "fecha": "2023-05-01T00:00:00-05:00",
+      "id": 0,
       "concepto": {
-        "codigo": "400",
+        "id": 0,
+        "codigo": "FACTURAPRUEBA",
         "nombre": "",
         "datosExtra": {}
       },
       "serie": "",
+      "folio": 0,
+      "fecha": "2023-08-04T00:00:00-05:00",
       "cliente": {
-        "tipo": "ClienteProveedor",
-        "codigo": "CTE001",
-        "razonSocial": "Cliente 1",
-        "rfc": "XAXX010101000",
-        "usoCfdi": "S01",
-        "regimenFiscal": "616",
-        "direccionFiscal": {
-          "calle": "Pablo Villase\u00F1or",
-          "numeroExterior": "435",
-          "numeroInterior": "",
-          "colonia": "Ladr\u00F3n de Guevara",
-          "ciudad": "Guadalajara",
-          "estado": "Jalisco",
-          "codigoPostal": "44600",
-          "pais": "M\u00E9xico"
-        },
-        "datosExtra": {
-          "CFECHAALTA": "05/01/2023",
-          "CRAZONSOCIAL": "Cliente 1",
-          "CRFC": "XAXX010101000",
-          "CTEXTOEXTRA1": "Texto Extra"
-        }
+        "id": 0,
+        "codigo": "CLIENTEPRUEBA",
+        "razonSocial": "",
+        "rfc": "",
+        "tipo": 0,
+        "usoCfdi": null,
+        "regimenFiscal": null,
+        "direccionFiscal": null,
+        "datosExtra": {}
       },
       "moneda": {
         "id": 1,
         "nombre": "Peso Mexicano"
       },
       "tipoCambio": 1,
-      "referencia": "Referencia doc",
-      "observaciones": "Observaciones del documento.",
       "agente": {
-        "codigo": "AGE001",
+        "id": 0,
+        "codigo": "AGENTEPRUEBA",
         "nombre": "",
         "tipo": "VentasCobro",
         "datosExtra": {}
       },
+      "referencia": "Referencia doc",
+      "observaciones": "Observaciones del documento.",
+      "total": 0,
+      "formaPago": "01",
+      "metodoPago": "PPD",
+      "movimientos": [
+        {
+          "id": 0,
+          "producto": {
+            "id": 0,
+            "codigo": "PROD001",
+            "nombre": "",
+            "tipo": "Producto",
+            "claveSat": "",
+            "datosExtra": {}
+          },
+          "almacen": {
+            "id": 0,
+            "codigo": "ALMACENPRUEBA",
+            "nombre": "",
+            "datosExtra": {}
+          },
+          "unidades": 1,
+          "precio": 100,
+          "subtotal": 0,
+          "descuentos": {
+            "descuento1": {
+              "tasa": 10,
+              "importe": 0
+            },
+            "descuento2": {
+              "tasa": 0,
+              "importe": 0
+            },
+            "descuento3": {
+              "tasa": 0,
+              "importe": 0
+            },
+            "descuento4": {
+              "tasa": 0,
+              "importe": 0
+            },
+            "descuento5": {
+              "tasa": 0,
+              "importe": 0
+            }
+          },
+          "impuestos": {
+            "impuesto1": {
+              "tasa": 16,
+              "importe": 0
+            },
+            "impuesto2": {
+              "tasa": 0,
+              "importe": 0
+            },
+            "impuesto3": {
+              "tasa": 0,
+              "importe": 0
+            }
+          },
+          "retenciones": null,
+          "total": 0,
+          "referencia": "Referencia mov",
+          "observaciones": "Observaciones del movimiento",
+          "seriesCapas": [],
+          "datosExtra": {}
+        }
+      ],
       "direccionFiscal": {
+        "id": 0,
+        "tipoCatalogo": 0,
+        "tipo": "Fiscal",
         "calle": "",
         "numeroExterior": "",
         "numeroInterior": "",
@@ -54,56 +115,34 @@
         "ciudad": "",
         "estado": "",
         "codigoPostal": "",
-        "pais": ""
+        "pais": "",
+        "datosExtra": {}
       },
-      "formaPago": "01",
-      "metodoPago": "PPD",
-      "movimientos": [
-        {
-          "producto": {
-            "tipo": "Producto",
-            "codigo": "PROD001",
-            "nombre": "Producto 1",
-            "claveSat": "43231500",
-            "datosExtra": {
-              "CFECHAALTAPRODUCTO": "05/01/2023",
-              "CNOMBREPRODUCTO": "Producto 1",
-              "CCLAVESAT": "43231500",
-              "CTEXTOEXTRA1": "Texto Extra"
-            }
-          },
-          "unidades": 1,
-          "precio": 100,
-          "almacen": {
-            "codigo": "1",
-            "nombre": "Almacen Uno",
-            "datosExtra": {}
-          },
-          "referencia": "Referencia mov",
-          "observaciones": "Observaciones del movimiento",
-          "seriesCapas": [],
-          "datosExtra": {}
-        }
-      ],
       "folioDigital": {
+        "id": 0,
         "uuid": "",
         "datosExtra": {}
       },
       "datosExtra": {
         "COBSERVACIONES": "Observaciones del documento.",
-        "CTEXTOEXTRA1": "Texto Extra"
+        "CTEXTOEXTRA1": "Texto extra 1",
+        "CTEXTOEXTRA2": "Texto extra 2",
+        "CTEXTOEXTRA3": "Texto extra 3"
       }
     }
   },
   "options": {
     "usarFechaDelDia": true,
     "buscarSiguienteFolio": true,
+    "crearCatalogos": false,
     "timbrar": true,
     "contrasenaCertificado": "12345678a",
     "generarDocumentosDigitales": true,
     "generarPdf": true,
     "nombrePlantilla": "Facturav40.rdl",
+    "agregarArchivo": false,
     "nombreArchivo": "",
-    "contenidoArchivo": ""
+    "contenidoArchivo": "",
+    "cargarDatosExtra": false
   }
 }

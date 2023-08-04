@@ -1,61 +1,56 @@
 ﻿using System.Text.Json;
 using Api.Core.Domain.Requests;
 using ARSoftware.Contpaqi.Api.Common.Domain;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Models;
+using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
 
 namespace Api.Sdk.ConsoleApp.JsonFactories;
 
 public static class ConceptoFactory
 {
-    private static BuscarConceptosRequest BuscarPorId()
+    public const string CodigoPrueba = "FACTURAPRUEBA";
+
+    private static BuscarConceptosRequest GetBuscarConceptosRequest()
     {
-        var request = new BuscarConceptosRequest(new BuscarConceptosRequestModel(), new BuscarConceptosRequestOptions());
-
-        request.Model.Id = 100;
-
-        return request;
+        return new BuscarConceptosRequest(
+            new BuscarConceptosRequestModel
+            {
+                Id = 1, Codigo = CodigoPrueba, SqlQuery = $"{nameof(admConceptos.CCODIGOCONCEPTO)} = 'PRUEBAFACTURA'"
+            }, new BuscarConceptosRequestOptions());
     }
 
-    private static BuscarConceptosRequest BuscarPorCodigo()
+    private static BuscarConceptosResponse GetBuscarConceptosResponse()
     {
-        var request = new BuscarConceptosRequest(new BuscarConceptosRequestModel(), new BuscarConceptosRequestOptions());
-
-        request.Model.Codigo = "400";
-
-        return request;
+        return new BuscarConceptosResponse(new BuscarConceptosResponseModel(new List<ConceptoDocumento> { GetModeloPrueba() }));
     }
 
-    private static BuscarConceptosRequest BuscarPorSql()
+    private static ConceptoDocumento GetModeloPrueba()
     {
-        var request = new BuscarConceptosRequest(new BuscarConceptosRequestModel(), new BuscarConceptosRequestOptions());
-
-        request.Model.SqlQuery = "CNOMBRECONCEPTO = 'nombre'";
-
-        return request;
+        return new ConceptoDocumento { Id = 1, Codigo = CodigoPrueba, Nombre = "FACTURA DE PRUEBAS", DatosExtra = GetDatosExtraPrueba() };
     }
 
-    private static BuscarConceptosRequest BuscarTodo()
+    private static Dictionary<string, string> GetDatosExtraPrueba()
     {
-        var request = new BuscarConceptosRequest(new BuscarConceptosRequestModel(), new BuscarConceptosRequestOptions());
-
-        return request;
+        return new Dictionary<string, string>
+        {
+            { nameof(admConceptos.CIDCONCEPTODOCUMENTO), "1" },
+            { nameof(admConceptos.CCODIGOCONCEPTO), CodigoPrueba },
+            { nameof(admConceptos.CNOMBRECONCEPTO), "FACTURA DE PRUEBAS" }
+        };
     }
 
     public static void CearJson(string directory)
     {
-        JsonSerializerOptions options = FactoryExtensions.GetJsonSerializerOptions();
-
         Directory.CreateDirectory(directory);
 
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarConceptosRequest)}_PorId.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorId(), options));
+        JsonSerializerOptions options = FactoryExtensions.GetJsonSerializerOptions();
 
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarConceptosRequest)}_PorCodigo.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorCodigo(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(ConceptoDocumento)}.json"),
+            JsonSerializer.Serialize(GetModeloPrueba(), options));
 
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarConceptosRequest)}_PorSql.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorSql(), options));
-
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarConceptosRequest)}_Todo.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(BuscarTodo(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarConceptosRequest)}.json"),
+            JsonSerializer.Serialize<ContpaqiRequest>(GetBuscarConceptosRequest(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarConceptosResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetBuscarConceptosResponse(), options));
     }
 }

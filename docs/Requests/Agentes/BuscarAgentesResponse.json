@@ -1,0 +1,21 @@
+{
+  "$type": "BuscarAgentesResponse",
+  "model": {
+    "numeroRegistros": 1,
+    "agentes": [
+      {
+        "id": 0,
+        "codigo": "AGENTEPRUEBA",
+        "nombre": "AGENTE DE PRUEBAS",
+        "tipo": "VentasCobro",
+        "datosExtra": {
+          "CCOMISIONVENTAAGENTE": "5",
+          "CCOMISIONCOBROAGENTE": "10",
+          "CTEXTOEXTRA1": "Texto extra 1",
+          "CTEXTOEXTRA2": "Texto extra 2",
+          "CTEXTOEXTRA3": "Texto extra 3"
+        }
+      }
+    ]
+  }
+}

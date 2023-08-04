@@ -1,7 +1,0 @@
-{
-  "$type": "BuscarClientesRequest",
-  "model": {
-    "codigo": "CTE001"
-  },
-  "options": {}
-}

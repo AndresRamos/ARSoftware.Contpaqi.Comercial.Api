@@ -2,14 +2,18 @@
   "$type": "ActualizarDocumentoRequest",
   "model": {
     "llaveDocumento": {
-      "conceptoCodigo": "400",
-      "serie": "FE",
-      "folio": 123
+      "conceptoCodigo": "FACTURAPRUEBA",
+      "serie": "FP",
+      "folio": 1
     },
     "datosDocumento": {
       "COBSERVACIONES": "Observaciones del documento.",
-      "CTEXTOEXTRA1": "Texto Extra"
+      "CTEXTOEXTRA1": "Texto extra 1",
+      "CTEXTOEXTRA2": "Texto extra 2",
+      "CTEXTOEXTRA3": "Texto extra 3"
     }
   },
-  "options": {}
+  "options": {
+    "cargarDatosExtra": false
+  }
 }

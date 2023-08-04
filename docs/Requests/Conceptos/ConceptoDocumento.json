@@ -1,0 +1,10 @@
+{
+  "id": 1,
+  "codigo": "FACTURAPRUEBA",
+  "nombre": "FACTURA DE PRUEBAS",
+  "datosExtra": {
+    "CIDCONCEPTODOCUMENTO": "1",
+    "CCODIGOCONCEPTO": "FACTURAPRUEBA",
+    "CNOMBRECONCEPTO": "FACTURA DE PRUEBAS"
+  }
+}

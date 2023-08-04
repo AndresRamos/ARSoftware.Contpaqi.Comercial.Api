@@ -4,87 +4,69 @@ using ARSoftware.Contpaqi.Api.Common.Domain;
 using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Enums;
 using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Enums.CatalogosCfdi;
 using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Models;
-using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
 
 namespace Api.Sdk.ConsoleApp.JsonFactories;
 
 public static class ClienteFactory
 {
-    public const string Codigo = "CTE001";
-    public const string Nombre = "Cliente 1";
-    public const string Rfc = "XAXX010101000";
+    public const string CodigoPrueba = "CLIENTEPRUEBA";
 
-    private static CrearClienteRequest Crear()
+    private static CrearClienteRequest GetCrearClienteRequest()
     {
-        var request = new CrearClienteRequest(new CrearClienteRequestModel(), new CrearClienteRequestOptions());
-
-        request.Model.Cliente = CrearClientePrueba();
-
-        return request;
+        return new CrearClienteRequest(new CrearClienteRequestModel { Cliente = GetModeloPrueba() }, new CrearClienteRequestOptions());
     }
 
-    private static ActualizarClienteRequest Actualizar()
+    private static CrearClienteResponse GetCrearClienteResponse()
     {
-        var request = new ActualizarClienteRequest(new ActualizarClienteRequestModel(), new ActualizarClienteRequestOptions());
-
-        request.Model.CodigoCliente = Codigo;
-        request.Model.DatosCliente = GetDatosExtra();
-
-        return request;
+        return new CrearClienteResponse(new CrearClienteResponseModel(GetModeloPrueba()));
     }
 
-    private static BuscarClientesRequest BuscarPorId()
+    private static ActualizarClienteRequest GetActualizarClienteRequest()
     {
-        var request = new BuscarClientesRequest(new BuscarClientesRequestModel(), new BuscarClientesRequestOptions());
-
-        request.Model.Id = 100;
-
-        return request;
+        return new ActualizarClienteRequest(
+            new ActualizarClienteRequestModel { CodigoCliente = CodigoPrueba, DatosCliente = GetDatosExtraPrueba() },
+            new ActualizarClienteRequestOptions());
     }
 
-    private static BuscarClientesRequest BuscarPorCodigo()
+    private static ActualizarClienteResponse GetActualizarClienteResponse()
     {
-        var request = new BuscarClientesRequest(new BuscarClientesRequestModel(), new BuscarClientesRequestOptions());
-
-        request.Model.Codigo = Codigo;
-
-        return request;
+        return new ActualizarClienteResponse(new ActualizarClienteResponseModel(GetModeloPrueba()));
     }
 
-    private static BuscarClientesRequest BuscarPorSql()
+    private static BuscarClientesRequest GetBuscarClientesRequest()
     {
-        var request = new BuscarClientesRequest(new BuscarClientesRequestModel(), new BuscarClientesRequestOptions());
-
-        request.Model.SqlQuery = "CRAZONSOCIAL = 'razonSocial'";
-
-        return request;
+        return new BuscarClientesRequest(
+            new BuscarClientesRequestModel
+            {
+                Id = 1, Codigo = CodigoPrueba, SqlQuery = $"{nameof(admClientes.CRAZONSOCIAL)} = 'CLIENTE DE PRUEBAS'"
+            }, new BuscarClientesRequestOptions());
     }
 
-    private static BuscarClientesRequest BuscarTodo()
+    private static BuscarClientesResponse GetBuscarClientesResponse()
     {
-        var request = new BuscarClientesRequest(new BuscarClientesRequestModel(), new BuscarClientesRequestOptions());
-
-        return request;
+        return new BuscarClientesResponse(new BuscarClientesResponseModel(new List<ClienteProveedor> { GetModeloPrueba() }));
     }
 
-    private static EliminarClienteRequest Eliminar()
+    private static EliminarClienteRequest GetEliminarClienteRequest()
     {
-        var request = new EliminarClienteRequest(new EliminarClienteRequestModel(), new EliminarClienteRequestOptions());
-
-        request.Model.CodigoCliente = Codigo;
-
-        return request;
+        return new EliminarClienteRequest(new EliminarClienteRequestModel { CodigoCliente = CodigoPrueba },
+            new EliminarClienteRequestOptions());
     }
 
-    public static ClienteProveedor CrearClientePrueba()
+    private static EliminarClienteResponse GetEliminarClienteResponse()
     {
-        var cliente = new ClienteProveedor
+        return new EliminarClienteResponse(new EliminarClienteResponseModel());
+    }
+
+    private static ClienteProveedor GetModeloPrueba()
+    {
+        return new ClienteProveedor
         {
+            Codigo = CodigoPrueba,
+            RazonSocial = "CLIENTE DE PRUEBAS",
+            Rfc = "XAXX010101000",
             Tipo = TipoCliente.ClienteProveedor,
-            Codigo = Codigo,
-            RazonSocial = Nombre,
-            Rfc = Rfc,
             UsoCfdi = UsoCfdiEnum.S01,
             RegimenFiscal = RegimenFiscalEnum._616,
             DireccionFiscal = new Direccion
@@ -97,48 +79,52 @@ public static class ClienteFactory
                 CodigoPostal = "44600",
                 Pais = "México"
             },
-            DatosExtra = GetDatosExtra()
+            DatosExtra = GetDatosExtraPrueba()
         };
-
-        return cliente;
     }
 
-    private static Dictionary<string, string> GetDatosExtra()
+    private static Dictionary<string, string> GetDatosExtraPrueba()
     {
         return new Dictionary<string, string>
         {
-            { nameof(admClientes.CFECHAALTA), DateTime.Today.ToSdkFecha() },
-            { nameof(admClientes.CRAZONSOCIAL), Nombre },
-            { nameof(admClientes.CRFC), Rfc },
-            { nameof(admClientes.CTEXTOEXTRA1), "Texto Extra" }
+            { nameof(admClientes.CEMAIL1), "email@cliente.com" },
+            { nameof(admClientes.CTEXTOEXTRA1), "Texto Extra 1" },
+            { nameof(admClientes.CTEXTOEXTRA2), "Texto Extra 2" },
+            { nameof(admClientes.CTEXTOEXTRA3), "Texto Extra 3" }
         };
     }
 
     public static void CearJson(string directory)
     {
-        JsonSerializerOptions options = FactoryExtensions.GetJsonSerializerOptions();
-
         Directory.CreateDirectory(directory);
 
+        JsonSerializerOptions options = FactoryExtensions.GetJsonSerializerOptions();
+
+        File.WriteAllText(Path.Combine(directory, $"{nameof(ClienteProveedor)}.json"),
+            JsonSerializer.Serialize(GetModeloPrueba(), options));
+
         File.WriteAllText(Path.Combine(directory, $"{nameof(CrearClienteRequest)}.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(Crear(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(GetCrearClienteRequest(), options));
+
+        File.WriteAllText(Path.Combine(directory, $"{nameof(CrearClienteResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetCrearClienteResponse(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(ActualizarClienteRequest)}.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(Actualizar(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(GetActualizarClienteRequest(), options));
 
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarClientesRequest)}_PorId.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorId(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(ActualizarClienteResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetActualizarClienteResponse(), options));
 
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarClientesRequest)}_PorCodigo.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorCodigo(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarClientesRequest)}.json"),
+            JsonSerializer.Serialize<ContpaqiRequest>(GetBuscarClientesRequest(), options));
 
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarClientesRequest)}_PorSql.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorSql(), options));
-
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarClientesRequest)}_Todo.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(BuscarTodo(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarClientesResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetBuscarClientesResponse(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(EliminarClienteRequest)}.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(Eliminar(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(GetEliminarClienteRequest(), options));
+
+        File.WriteAllText(Path.Combine(directory, $"{nameof(EliminarClienteResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetEliminarClienteResponse(), options));
     }
 }

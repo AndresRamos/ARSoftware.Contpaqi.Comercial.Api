@@ -1,13 +1,15 @@
 {
   "$type": "ActualizarClienteRequest",
   "model": {
-    "codigoCliente": "CTE001",
+    "codigoCliente": "CLIENTEPRUEBA",
     "datosCliente": {
-      "CFECHAALTA": "05/01/2023",
-      "CRAZONSOCIAL": "Cliente 1",
-      "CRFC": "XAXX010101000",
-      "CTEXTOEXTRA1": "Texto Extra"
+      "CEMAIL1": "email@cliente.com",
+      "CTEXTOEXTRA1": "Texto Extra 1",
+      "CTEXTOEXTRA2": "Texto Extra 2",
+      "CTEXTOEXTRA3": "Texto Extra 3"
     }
   },
-  "options": {}
+  "options": {
+    "cargarDatosExtra": false
+  }
 }

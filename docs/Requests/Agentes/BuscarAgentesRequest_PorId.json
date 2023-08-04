@@ -1,7 +1,0 @@
-{
-  "$type": "BuscarAgentesRequest",
-  "model": {
-    "id": 100
-  },
-  "options": {}
-}

@@ -2,13 +2,17 @@
   "$type": "CrearClienteRequest",
   "model": {
     "cliente": {
-      "tipo": "ClienteProveedor",
-      "codigo": "CTE001",
-      "razonSocial": "Cliente 1",
+      "id": 0,
+      "codigo": "CLIENTEPRUEBA",
+      "razonSocial": "CLIENTE DE PRUEBAS",
       "rfc": "XAXX010101000",
+      "tipo": "ClienteProveedor",
       "usoCfdi": "S01",
       "regimenFiscal": "616",
       "direccionFiscal": {
+        "id": 0,
+        "tipoCatalogo": 0,
+        "tipo": "Fiscal",
         "calle": "Pablo Villase\u00F1or",
         "numeroExterior": "435",
         "numeroInterior": "",
@@ -16,15 +20,18 @@
         "ciudad": "Guadalajara",
         "estado": "Jalisco",
         "codigoPostal": "44600",
-        "pais": "M\u00E9xico"
+        "pais": "M\u00E9xico",
+        "datosExtra": {}
       },
       "datosExtra": {
-        "CFECHAALTA": "05/01/2023",
-        "CRAZONSOCIAL": "Cliente 1",
-        "CRFC": "XAXX010101000",
-        "CTEXTOEXTRA1": "Texto Extra"
+        "CEMAIL1": "email@cliente.com",
+        "CTEXTOEXTRA1": "Texto Extra 1",
+        "CTEXTOEXTRA2": "Texto Extra 2",
+        "CTEXTOEXTRA3": "Texto Extra 3"
       }
     }
   },
-  "options": {}
+  "options": {
+    "cargarDatosExtra": false
+  }
 }
