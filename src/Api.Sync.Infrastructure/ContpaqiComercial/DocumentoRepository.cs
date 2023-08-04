@@ -1,8 +1,7 @@
 ﻿using Api.Core.Domain.Common;
-using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
-using Api.Sync.Infrastructure.ContpaqiComercial.Models;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Dtos;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sql.Contexts;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
@@ -36,12 +35,11 @@ public sealed class DocumentoRepository : IDocumentoRepository
     public async Task<Documento?> BuscarPorIdAsync(int id, ILoadRelatedDataOptions loadRelatedDataOptions,
         CancellationToken cancellationToken)
     {
-        DocumentoSql? documentoSql = await _context.admDocumentos.Where(c => c.CIDDOCUMENTO == id)
-            .ProjectTo<DocumentoSql>(_mapper.ConfigurationProvider)
+        DocumentoDto? documentoSql = await _context.admDocumentos.Where(c => c.CIDDOCUMENTO == id)
+            .ProjectTo<DocumentoDto>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(cancellationToken);
 
-        if (documentoSql is null)
-            return null;
+        if (documentoSql is null) return null;
 
         var documento = _mapper.Map<Documento>(documentoSql);
 
@@ -53,22 +51,20 @@ public sealed class DocumentoRepository : IDocumentoRepository
     public async Task<Documento?> BuscarPorLlaveAsync(LlaveDocumento llaveDocumento, ILoadRelatedDataOptions loadRelatedDataOptions,
         CancellationToken cancellationToken)
     {
-        ConceptoSql? conceptoSql = await _context.admConceptos.Where(c => c.CCODIGOCONCEPTO == llaveDocumento.ConceptoCodigo)
-            .ProjectTo<ConceptoSql>(_mapper.ConfigurationProvider)
+        ConceptoDocumentoDto? conceptoSql = await _context.admConceptos.Where(c => c.CCODIGOCONCEPTO == llaveDocumento.ConceptoCodigo)
+            .ProjectTo<ConceptoDocumentoDto>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(cancellationToken);
 
-        if (conceptoSql is null)
-            return null;
+        if (conceptoSql is null) return null;
 
         // ReSharper disable once CompareOfFloatsByEqualityOperator
-        DocumentoSql? documentoSql = await _context.admDocumentos
+        DocumentoDto? documentoSql = await _context.admDocumentos
             .Where(c => c.CIDCONCEPTODOCUMENTO == conceptoSql.CIDCONCEPTODOCUMENTO && c.CSERIEDOCUMENTO == llaveDocumento.Serie &&
                         c.CFOLIO == llaveDocumento.Folio)
-            .ProjectTo<DocumentoSql>(_mapper.ConfigurationProvider)
+            .ProjectTo<DocumentoDto>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(cancellationToken);
 
-        if (documentoSql is null)
-            return null;
+        if (documentoSql is null) return null;
 
         var documento = _mapper.Map<Documento>(documentoSql);
 
@@ -79,12 +75,11 @@ public sealed class DocumentoRepository : IDocumentoRepository
 
     public async Task<bool> ExistePorLlaveAsync(LlaveDocumento llaveDocumento, CancellationToken cancellationToken)
     {
-        ConceptoSql? conceptoSql = await _context.admConceptos.Where(c => c.CCODIGOCONCEPTO == llaveDocumento.ConceptoCodigo)
-            .ProjectTo<ConceptoSql>(_mapper.ConfigurationProvider)
+        ConceptoDocumentoDto? conceptoSql = await _context.admConceptos.Where(c => c.CCODIGOCONCEPTO == llaveDocumento.ConceptoCodigo)
+            .ProjectTo<ConceptoDocumentoDto>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(cancellationToken);
 
-        if (conceptoSql is null)
-            return false;
+        if (conceptoSql is null) return false;
 
         // ReSharper disable once CompareOfFloatsByEqualityOperator
         return await _context.admDocumentos.AnyAsync(
@@ -101,8 +96,7 @@ public sealed class DocumentoRepository : IDocumentoRepository
             ? _context.admDocumentos.FromSqlRaw($"SELECT * FROM admDocumentos WHERE {requestModel.SqlQuery}")
             : _context.admDocumentos.AsQueryable();
 
-        if (requestModel.Id.HasValue)
-            documentosQuery = documentosQuery.Where(d => d.CIDDOCUMENTO == requestModel.Id.Value);
+        if (requestModel.Id.HasValue) documentosQuery = documentosQuery.Where(d => d.CIDDOCUMENTO == requestModel.Id.Value);
 
         if (requestModel.Llave is not null)
         {
@@ -146,10 +140,10 @@ public sealed class DocumentoRepository : IDocumentoRepository
             documentosQuery = documentosQuery.Where(d => d.CFECHA <= fechaFin);
         }
 
-        List<DocumentoSql> documentosSql = await documentosQuery.ProjectTo<DocumentoSql>(_mapper.ConfigurationProvider)
+        List<DocumentoDto> documentosSql = await documentosQuery.ProjectTo<DocumentoDto>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 
-        foreach (DocumentoSql documentoSql in documentosSql)
+        foreach (DocumentoDto documentoSql in documentosSql)
         {
             var documento = _mapper.Map<Documento>(documentoSql);
 
@@ -175,12 +169,12 @@ public sealed class DocumentoRepository : IDocumentoRepository
         return documentoSql.CIDDOCUMENTO;
     }
 
-    private async Task CargarObjectosRelacionadosAsync(Documento documento, DocumentoSql documentoSql,
+    private async Task CargarObjectosRelacionadosAsync(Documento documento, DocumentoDto documentoSql,
         ILoadRelatedDataOptions loadRelatedDataOptions, CancellationToken cancellationToken)
     {
         documento.Concepto =
             await _conceptoRepository.BuscarPorIdAsync(documentoSql.CIDCONCEPTODOCUMENTO, loadRelatedDataOptions, cancellationToken) ??
-            new Concepto();
+            new ConceptoDocumento();
 
         documento.Cliente =
             await _clienteRepository.BuscarPorIdAsync(documentoSql.CIDCLIENTEPROVEEDOR, loadRelatedDataOptions, cancellationToken);

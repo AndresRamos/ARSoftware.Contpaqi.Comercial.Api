@@ -1,5 +1,4 @@
-﻿using Api.Core.Domain.Models;
-using Api.Core.Domain.Requests;
+﻿using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
 using MediatR;
 

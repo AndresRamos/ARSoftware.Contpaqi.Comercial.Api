@@ -1,5 +1,4 @@
-﻿using Api.Core.Domain.Models;
-using Api.Core.Domain.Requests;
+﻿using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
 using MediatR;
 
@@ -16,8 +15,8 @@ public sealed class BuscarConceptosRequestHandler : IRequestHandler<BuscarConcep
 
     public async Task<BuscarConceptosResponse> Handle(BuscarConceptosRequest request, CancellationToken cancellationToken)
     {
-        List<Concepto> conceptos = (await _conceptoRepository.BuscarPorRequstModelAsync(request.Model, request.Options, cancellationToken))
-            .ToList();
+        List<ConceptoDocumento> conceptos =
+            (await _conceptoRepository.BuscarPorRequstModelAsync(request.Model, request.Options, cancellationToken)).ToList();
 
         return BuscarConceptosResponse.CreateInstance(conceptos);
     }

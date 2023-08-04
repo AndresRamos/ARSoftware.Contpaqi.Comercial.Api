@@ -1,5 +1,4 @@
-﻿using Api.Core.Domain.Models;
-using ARSoftware.Contpaqi.Api.Common.Domain;
+﻿using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Core.Domain.Requests;
 
@@ -59,7 +58,7 @@ public sealed class BuscarClientesResponse : ContpaqiResponse<BuscarClientesResp
     {
     }
 
-    public static BuscarClientesResponse CreateInstance(List<Cliente> clientes)
+    public static BuscarClientesResponse CreateInstance(List<ClienteProveedor> clientes)
     {
         return new BuscarClientesResponse(new BuscarClientesResponseModel(clientes));
     }
@@ -70,7 +69,7 @@ public sealed class BuscarClientesResponse : ContpaqiResponse<BuscarClientesResp
 /// </summary>
 public sealed class BuscarClientesResponseModel
 {
-    public BuscarClientesResponseModel(List<Cliente> clientes)
+    public BuscarClientesResponseModel(List<ClienteProveedor> clientes)
     {
         Clientes = clientes;
     }
@@ -80,5 +79,5 @@ public sealed class BuscarClientesResponseModel
     /// <summary>
     ///     Lista de clientes encontrados.
     /// </summary>
-    public List<Cliente> Clientes { get; set; }
+    public List<ClienteProveedor> Clientes { get; set; }
 }

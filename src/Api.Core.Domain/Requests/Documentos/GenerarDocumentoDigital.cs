@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using Api.Core.Domain.Models;
 using ARSoftware.Contpaqi.Api.Common.Domain;
-using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Models.Enums;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Enums;
 
 namespace Api.Core.Domain.Requests;
 

@@ -15,6 +15,7 @@ public sealed class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
 
         Type apiRequestBaseType = typeof(ContpaqiRequest);
         if (jsonTypeInfo.Type == apiRequestBaseType)
+        {
             jsonTypeInfo.PolymorphismOptions = new JsonPolymorphismOptions
             {
                 TypeDiscriminatorPropertyName = "$type",
@@ -49,9 +50,11 @@ public sealed class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
                     new JsonDerivedType(typeof(TimbrarDocumentoRequest), nameof(TimbrarDocumentoRequest))
                 }
             };
+        }
 
         Type apiResponseBaseType = typeof(ContpaqiResponse);
         if (jsonTypeInfo.Type == apiResponseBaseType)
+        {
             jsonTypeInfo.PolymorphismOptions = new JsonPolymorphismOptions
             {
                 TypeDiscriminatorPropertyName = "$type",
@@ -88,6 +91,7 @@ public sealed class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
                     new JsonDerivedType(typeof(ErrorContpaqiResponse), nameof(ErrorContpaqiResponse))
                 }
             };
+        }
 
         return jsonTypeInfo;
     }
