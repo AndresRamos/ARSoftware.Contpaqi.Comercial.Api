@@ -39,9 +39,7 @@ public sealed class GenerarDocumentoDigitalRequestHandler : IRequestHandler<Gene
             Ubicacion = rutaDocumento,
             Nombre = new FileInfo(rutaDocumento).Name,
             Tipo = request.Options.Tipo == TipoArchivoDigital.Pdf ? "application/pdf" : "text/xml",
-            Contenido = request.Options.Tipo == TipoArchivoDigital.Xml
-                ? await File.ReadAllTextAsync(rutaDocumento, cancellationToken)
-                : null
+            Contenido = await File.ReadAllBytesAsync(rutaDocumento, cancellationToken)
         };
 
         return GenerarDocumentoDigitalResponse.CreateInstance(documentoDigital);

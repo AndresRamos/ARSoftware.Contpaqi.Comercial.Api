@@ -45,7 +45,21 @@ public static class DocumentoFactory
 
     private static CrearFacturaResponse GetCrearFacturaResponse()
     {
-        return new CrearFacturaResponse(new CrearFacturaResponseModel(GetModeloPrueba(), new DocumentoDigital(), new DocumentoDigital()));
+        return new CrearFacturaResponse(new CrearFacturaResponseModel(GetModeloPrueba(),
+            new DocumentoDigital
+            {
+                Nombre = "FACTURA100.xml",
+                Tipo = "text/xml",
+                Ubicacion = "C:\\Compac\\Empresas\\adUNIVERSIDAD_ROBOTICA\\XML_SDK\\FACTURA100.xml",
+                Contenido = GetBytesPrueba()
+            },
+            new DocumentoDigital
+            {
+                Nombre = "FACTURA100.pdf",
+                Tipo = "application/pdf",
+                Ubicacion = "C:\\Compac\\Empresas\\adUNIVERSIDAD_ROBOTICA\\XML_SDK\\FACTURA100.pdf",
+                Contenido = GetBytesPrueba()
+            }));
     }
 
     private static ActualizarDocumentoRequest GetActualizarDocumentoRequest()
@@ -91,7 +105,13 @@ public static class DocumentoFactory
 
     private static GenerarDocumentoDigitalResponse GetGenerarDocumentoDigitalResponse()
     {
-        return new GenerarDocumentoDigitalResponse(new GenerarDocumentoDigitalResponseModel(new DocumentoDigital()));
+        return new GenerarDocumentoDigitalResponse(new GenerarDocumentoDigitalResponseModel(new DocumentoDigital
+        {
+            Nombre = "FACTURA100.pdf",
+            Tipo = "application/pdf",
+            Ubicacion = "C:\\Compac\\Empresas\\adUNIVERSIDAD_ROBOTICA\\XML_SDK\\FACTURA100.pdf",
+            Contenido = GetBytesPrueba()
+        }));
     }
 
     private static SaldarDocumentoRequest GetSaldarDocumentoRequest()
@@ -186,6 +206,13 @@ public static class DocumentoFactory
             { nameof(admDocumentos.CTEXTOEXTRA2), "Texto extra 2" },
             { nameof(admDocumentos.CTEXTOEXTRA3), "Texto extra 3" }
         };
+    }
+
+    private static byte[] GetBytesPrueba()
+    {
+        var b = new byte[70];
+        new Random().NextBytes(b);
+        return b;
     }
 
     public static void CearJson(string directory)
