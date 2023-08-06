@@ -7,6 +7,7 @@ using Api.Core.Domain.Requests;
 using Api.Infrastructure;
 using Api.Infrastructure.Persistence;
 using Api.Presentation.WebApi.Authentication;
+using Api.Presentation.WebApi.Hubs;
 using ARSoftware.Contpaqi.Api.Common.Domain;
 using Microsoft.OpenApi.Models;
 
@@ -24,6 +25,8 @@ builder.Services.AddControllers(options =>
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 builder.Services.AddApplicationServices().AddInfrastructureServices(builder.Configuration);
+
+builder.Services.AddSignalR();
 
 builder.Services.AddScoped<ApiKeyAuthFilter>();
 
@@ -81,6 +84,8 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.MapHub<ApiRequestHub>("/hubs/apiRequestHub");
 
 app.MapControllers();
 

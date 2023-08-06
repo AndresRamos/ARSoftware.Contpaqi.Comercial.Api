@@ -2,12 +2,15 @@
 using Api.Core.Application.Requests.Queries.GetApiRequestById;
 using Api.Core.Application.Requests.Queries.GetApiRequests;
 using Api.Core.Application.Requests.Queries.GetPendingApiRequests;
+using Api.Core.Domain.Common;
 using Api.Core.Domain.Requests;
 using Api.Presentation.WebApi.Authentication;
 using Api.Presentation.WebApi.Filters;
+using Api.Presentation.WebApi.Hubs;
 using ARSoftware.Contpaqi.Api.Common.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Api.Presentation.WebApi.Controllers;
 
@@ -18,13 +21,15 @@ namespace Api.Presentation.WebApi.Controllers;
 [ApiExceptionFilter]
 public class RequestsController : ControllerBase
 {
+    private readonly IHubContext<ApiRequestHub, IApiRequestHubClient> _hubContext;
     private readonly LinkGenerator _linkGenerator;
     private readonly IMediator _mediator;
 
-    public RequestsController(IMediator mediator, LinkGenerator linkGenerator)
+    public RequestsController(IMediator mediator, LinkGenerator linkGenerator, IHubContext<ApiRequestHub, IApiRequestHubClient> hubContext)
     {
         _mediator = mediator;
         _linkGenerator = linkGenerator;
+        _hubContext = hubContext;
     }
 
     [FromHeader(Name = "Ocp-Apim-Subscription-Key")]
@@ -118,6 +123,9 @@ public class RequestsController : ControllerBase
         Task waitTimeTask = Task.Delay(TimeSpan.FromSeconds(25));
 
         Guid requestId = await _mediator.Send(new CreateApiRequestCommand(apiRequest, ApimSubscriptionKey, EmpresaRfc));
+
+        await _hubContext.Clients.Group(ApimSubscriptionKey)
+            .GetPendingRequests(new GetPendingRequestsMessage(ApimSubscriptionKey, EmpresaRfc));
 
         ApiRequest? request = await _mediator.Send(new GetApiRequestByIdQuery(requestId, ApimSubscriptionKey));
 
