@@ -7,6 +7,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Common\**" />
+	  <EmbeddedResource Remove="Common\**" />
+	  <None Remove="Common\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="ARSoftware.Contpaqi.Comercial.Sql" Version="5.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
 	</ItemGroup>
@@ -17,10 +23,6 @@
 
 	<ItemGroup>
 	  <Using Include="ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Models" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Common\Mappings\" />
 	</ItemGroup>
 
 </Project>

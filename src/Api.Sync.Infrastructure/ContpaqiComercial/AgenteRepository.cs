@@ -110,9 +110,7 @@ public sealed class AgenteRepository : IAgenteRepository
         CancellationToken cancellationToken)
     {
         if (loadRelatedDataOptions.CargarDatosExtra)
-        {
             agente.DatosExtra = (await _context.admAgentes.FirstAsync(m => m.CIDAGENTE == agenteSql.CIDAGENTE, cancellationToken))
                 .ToDatosDictionary<admAgentes>();
-        }
     }
 }

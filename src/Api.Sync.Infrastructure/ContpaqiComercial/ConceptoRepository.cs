@@ -108,10 +108,8 @@ public sealed class ConceptoRepository : IConceptoRepository
         ILoadRelatedDataOptions loadRelatedDataOptions, CancellationToken cancellationToken)
     {
         if (loadRelatedDataOptions.CargarDatosExtra)
-        {
             concepto.DatosExtra =
                 (await _context.admConceptos.FirstAsync(c => c.CIDCONCEPTODOCUMENTO == conceptoSql.CIDCONCEPTODOCUMENTO, cancellationToken))
                 .ToDatosDictionary<admConceptos>();
-        }
     }
 }

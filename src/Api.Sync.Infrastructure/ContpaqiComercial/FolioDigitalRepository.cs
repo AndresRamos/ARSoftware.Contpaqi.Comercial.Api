@@ -42,10 +42,8 @@ public sealed class FolioDigitalRepository : IFolioDigitalRepository
         ILoadRelatedDataOptions loadRelatedDataOptions, CancellationToken cancellationToken)
     {
         if (loadRelatedDataOptions.CargarDatosExtra)
-        {
             folioDigital.DatosExtra =
                 (await _context.admFoliosDigitales.FirstAsync(m => m.CIDFOLDIG == folioDigitalSql.CIDFOLDIG, cancellationToken))
                 .ToDatosDictionary<admFoliosDigitales>();
-        }
     }
 }

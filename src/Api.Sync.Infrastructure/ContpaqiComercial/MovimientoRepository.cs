@@ -52,14 +52,12 @@ public sealed class MovimientoRepository : IMovimientoRepository
         movimiento.Producto =
             await _productoRepository.BuscarPorIdAsync(movimientoSql.CIDPRODUCTO, loadRelatedDataOptions, cancellationToken) ??
             new Producto();
-        movimiento.Almacen =
-            await _almacenRepository.BuscarPorIdAsync(movimientoSql.CIDALMACEN, loadRelatedDataOptions, cancellationToken) ?? new Almacen();
+
+        movimiento.Almacen = await _almacenRepository.BuscarPorIdAsync(movimientoSql.CIDALMACEN, loadRelatedDataOptions, cancellationToken);
 
         if (loadRelatedDataOptions.CargarDatosExtra)
-        {
             movimiento.DatosExtra =
                 (await _context.admMovimientos.FirstAsync(m => m.CIDMOVIMIENTO == movimientoSql.CIDMOVIMIENTO, cancellationToken))
                 .ToDatosDictionary<admMovimientos>();
-        }
     }
 }

@@ -2,6 +2,7 @@
 using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
 using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Dtos;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Enums;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sql.Contexts;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
@@ -91,10 +92,10 @@ public sealed class ClienteRepository : IClienteRepository
 
     public async Task<bool> ExisteDireccionFiscalDelClienteAsync(string codigo, CancellationToken cancellationToken)
     {
-        // Todo: cambiar  d.CTIPODIRECCION == (int)TipoDireccion.Fiscal y d.CTIPOCATALOGO == (int)TipoCatalogoDireccion.Clientes
         admClientes cliente = await _context.admClientes.FirstAsync(c => c.CCODIGOCLIENTE == codigo, cancellationToken);
         return await _context.admDomicilios.AnyAsync(
-            d => d.CIDCATALOGO == cliente.CIDCLIENTEPROVEEDOR && d.CTIPODIRECCION == 0 && d.CTIPOCATALOGO == 1, cancellationToken);
+            d => d.CIDCATALOGO == cliente.CIDCLIENTEPROVEEDOR && d.CTIPODIRECCION == (int)TipoDireccion.Fiscal &&
+                 d.CTIPOCATALOGO == (int)TipoCatalogoDireccion.Clientes, cancellationToken);
     }
 
     private async Task CargarDatosRelacionadosAsync(ClienteProveedor cliente, ClienteProveedorDto clienteSql,
@@ -111,7 +112,8 @@ public sealed class ClienteRepository : IClienteRepository
     private async Task<Direccion?> BuscarDireccionFiscalAsync(int clienteId, CancellationToken cancellationToken)
     {
         DireccionDto? admDomicilio = await _context.admDomicilios
-            .Where(d => d.CIDCATALOGO == clienteId && d.CTIPODIRECCION == 0 && d.CTIPOCATALOGO == 1)
+            .Where(d => d.CIDCATALOGO == clienteId && d.CTIPODIRECCION == (int)TipoDireccion.Fiscal &&
+                        d.CTIPOCATALOGO == (int)TipoCatalogoDireccion.Clientes)
             .ProjectTo<DireccionDto>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(cancellationToken);
 

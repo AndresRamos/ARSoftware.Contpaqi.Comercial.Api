@@ -93,9 +93,7 @@ public sealed class ProductoRepository : IProductoRepository
         ILoadRelatedDataOptions loadRelatedDataOptions, CancellationToken cancellationToken)
     {
         if (loadRelatedDataOptions.CargarDatosExtra)
-        {
             producto.DatosExtra = (await _context.admProductos.FirstAsync(m => m.CIDPRODUCTO == productoSql.CIDPRODUCTO, cancellationToken))
                 .ToDatosDictionary<admProductos>();
-        }
     }
 }

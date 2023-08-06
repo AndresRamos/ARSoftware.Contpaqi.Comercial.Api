@@ -114,9 +114,7 @@ public sealed class AlmacenRepository : IAlmacenRepository
         CancellationToken cancellationToken)
     {
         if (loadRelatedDataOptions.CargarDatosExtra)
-        {
             almacen.DatosExtra = (await _context.admAlmacenes.FirstAsync(m => m.CIDALMACEN == almacenSql.CIDALMACEN, cancellationToken))
                 .ToDatosDictionary<admAlmacenes>();
-        }
     }
 }
