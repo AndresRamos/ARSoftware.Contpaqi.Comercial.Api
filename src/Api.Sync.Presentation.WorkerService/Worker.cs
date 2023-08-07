@@ -27,7 +27,7 @@ public sealed class Worker : BackgroundService
 
     public Worker(ILogger<Worker> logger, IMediator mediator, IHostApplicationLifetime hostApplicationLifetime,
         IOptions<ApiSyncConfig> apiSyncConfigOptions, IOptions<ContpaqiComercialConfig> contpaqiComercialConfigOptions,
-        IEmpresaRepository empresaRepository)
+        IEmpresaRepository empresaRepository, ApiRequestHubClientFactory apiRequestHubClientFactory)
     {
         _logger = logger;
         _mediator = mediator;
@@ -36,7 +36,7 @@ public sealed class Worker : BackgroundService
         _apiSyncConfig = apiSyncConfigOptions.Value;
         _contpaqiComercialConfig = contpaqiComercialConfigOptions.Value;
 
-        _connection = ApiRequestHubClientFactory.BuildConnection(_apiSyncConfig);
+        _connection = apiRequestHubClientFactory.BuildConnection();
         _connection.On<GetPendingRequestsMessage>("GetPendingRequests", getPendingRequestMessage =>
         {
             _logger.LogInformation("Get pending requests notification received: {GetPendingRequestsMessage}", getPendingRequestMessage);
@@ -57,6 +57,7 @@ public sealed class Worker : BackgroundService
     {
         try
         {
+            _logger.LogInformation("Iniciando conexión con SignalR.");
             await _connection.StartAsync(stoppingToken);
 
             ImmutableList<Empresa> empresas = (await _empresaRepository.BuscarTodoAsync(LoadRelatedDataOptions.Default, stoppingToken))
@@ -66,7 +67,7 @@ public sealed class Worker : BackgroundService
             {
                 if (_pendingRequestQueue.IsEmpty)
                 {
-                    _logger.LogDebug("Esperando la siguiente iteración.");
+                    _logger.LogDebug("Esperando solicitudes nuevas.");
                     await Task.Delay(1000, stoppingToken);
                     continue;
                 }

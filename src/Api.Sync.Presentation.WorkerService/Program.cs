@@ -12,6 +12,7 @@ IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((hostContext, services) =>
     {
         services.AddHostedService<Worker>();
+        services.AddTransient<ApiRequestHubClientFactory>();
         services.AddApplicationServices(hostContext.Configuration).AddInfrastructureServices(hostContext.Configuration);
     })
     .UseSerilog((hostingContext, loggerConfiguration) =>
