@@ -1,0 +1,15 @@
+{
+  "$type": "CrearAlmacenResponse",
+  "model": {
+    "almacen": {
+      "id": 0,
+      "codigo": "ALMACENPRUEBA",
+      "nombre": "ALMACEN DE PRUEBAS",
+      "datosExtra": {
+        "CTEXTOEXTRA1": "Texto extra 1",
+        "CTEXTOEXTRA2": "Texto extra 2",
+        "CTEXTOEXTRA3": "Texto extra 3"
+      }
+    }
+  }
+}

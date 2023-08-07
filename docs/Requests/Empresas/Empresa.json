@@ -1,0 +1,16 @@
+{
+  "id": 0,
+  "nombre": "Empresa de prueba",
+  "ruta": "C:\\Compac\\Empresas\\adPRUEBAS_COMERCIAL",
+  "baseDatos": "adPRUEBAS_COMERCIAL",
+  "parametros": {
+    "rfc": "XAXX010101000",
+    "guidAdd": "7e07b968-c30d-4809-b059-e809e4ef64e1",
+    "datosExtra": {
+      "CIDEMPRESA": "1",
+      "CNOMBREEMPRESA": "Empresa de prueba",
+      "CRFCEMPRESA": "XAXX010101000",
+      "CGUIDDSL": "7e07b968-c30d-4809-b059-e809e4ef64e1"
+    }
+  }
+}

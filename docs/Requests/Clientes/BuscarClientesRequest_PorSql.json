@@ -1,7 +1,0 @@
-{
-  "$type": "BuscarClientesRequest",
-  "model": {
-    "sqlQuery": "CRAZONSOCIAL = \u0027razonSocial\u0027"
-  },
-  "options": {}
-}

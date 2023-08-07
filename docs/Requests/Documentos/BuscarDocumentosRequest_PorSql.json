@@ -1,7 +1,0 @@
-{
-  "$type": "BuscarDocumentosRequest",
-  "model": {
-    "sqlQuery": "CPENDIENTE \u003E 0.00"
-  },
-  "options": {}
-}

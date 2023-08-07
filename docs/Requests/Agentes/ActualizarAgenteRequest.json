@@ -1,11 +1,16 @@
 {
   "$type": "ActualizarAgenteRequest",
   "model": {
-    "codigoAgente": "AGE001",
+    "codigoAgente": "AGENTEPRUEBA",
     "datosAgente": {
       "CCOMISIONVENTAAGENTE": "5",
-      "CCOMISIONCOBROAGENTE": "10"
+      "CCOMISIONCOBROAGENTE": "10",
+      "CTEXTOEXTRA1": "Texto extra 1",
+      "CTEXTOEXTRA2": "Texto extra 2",
+      "CTEXTOEXTRA3": "Texto extra 3"
     }
   },
-  "options": {}
+  "options": {
+    "cargarDatosExtra": false
+  }
 }

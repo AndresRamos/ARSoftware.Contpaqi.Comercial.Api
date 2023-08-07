@@ -1,0 +1,11 @@
+{
+  "$type": "BuscarAgentesRequest",
+  "model": {
+    "id": 1,
+    "codigo": "AGENTEPRUEBA",
+    "sqlQuery": "CNOMBREAGENTE = \u0027AGENTE DE PRUEBAS\u0027"
+  },
+  "options": {
+    "cargarDatosExtra": false
+  }
+}

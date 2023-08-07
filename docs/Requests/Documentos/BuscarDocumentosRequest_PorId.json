@@ -1,7 +1,0 @@
-{
-  "$type": "BuscarDocumentosRequest",
-  "model": {
-    "id": 1
-  },
-  "options": {}
-}

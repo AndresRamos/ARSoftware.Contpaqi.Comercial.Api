@@ -1,7 +1,0 @@
-{
-  "$type": "BuscarAlmacenesRequest",
-  "model": {
-    "sqlQuery": "CNOMBREALMACEN = \u0027nombre\u0027"
-  },
-  "options": {}
-}

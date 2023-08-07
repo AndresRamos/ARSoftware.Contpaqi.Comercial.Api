@@ -1,0 +1,18 @@
+{
+  "$type": "CrearProductoResponse",
+  "model": {
+    "producto": {
+      "id": 0,
+      "codigo": "PROD001",
+      "nombre": "PRODUCTO DE PRUEBAS",
+      "tipo": "Producto",
+      "claveSat": "43231500",
+      "datosExtra": {
+        "CCLAVESAT": "43231500",
+        "CTEXTOEXTRA1": "Texto extra 1",
+        "CTEXTOEXTRA2": "Texto extra 2",
+        "CTEXTOEXTRA3": "Texto extra 3"
+      }
+    }
+  }
+}

@@ -1,122 +1,107 @@
 ﻿using System.Text.Json;
-using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
 using ARSoftware.Contpaqi.Api.Common.Domain;
-using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Models;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
 
 namespace Api.Sdk.ConsoleApp.JsonFactories;
 
 public static class ProductoFactory
 {
-    public const string Codigo = "PROD001";
-    public const string Nombre = "Producto 1";
-    public const string ClaveSat = "43231500";
+    public const string CodigoPrueba = "PROD001";
 
-    private static CrearProductoRequest Crear()
+    private static CrearProductoRequest GetCrearProductoRequest()
     {
-        var request = new CrearProductoRequest(new CrearProductoRequestModel(), new CrearProductoRequestOptions());
-
-        request.Model.Producto = CrearProductoPrueba();
-
-        return request;
+        return new CrearProductoRequest(new CrearProductoRequestModel { Producto = GetModeloPrueba() }, new CrearProductoRequestOptions());
     }
 
-    private static ActualizarProductoRequest Actualizar()
+    private static CrearProductoResponse GetCrearProductoResponse()
     {
-        var request = new ActualizarProductoRequest(new ActualizarProductoRequestModel(), new ActualizarProductoRequestOptions());
-
-        request.Model.CodigoProducto = Codigo;
-        request.Model.DatosProducto = GetDatosExtra();
-
-        return request;
+        return new CrearProductoResponse(new CrearProductoResponseModel(GetModeloPrueba()));
     }
 
-    private static BuscarProductosRequest BuscarPorId()
+    private static ActualizarProductoRequest GetActualizarProductoRequest()
     {
-        var request = new BuscarProductosRequest(new BuscarProductosRequestModel(), new BuscarProductosRequestOptions());
-
-        request.Model.Id = 100;
-
-        return request;
+        return new ActualizarProductoRequest(
+            new ActualizarProductoRequestModel { CodigoProducto = CodigoPrueba, DatosProducto = GetDatosExtraPrueba() },
+            new ActualizarProductoRequestOptions());
     }
 
-    private static BuscarProductosRequest BuscarPorCodigo()
+    private static ActualizarProductoResponse GetActualizarProductoResponse()
     {
-        var request = new BuscarProductosRequest(new BuscarProductosRequestModel(), new BuscarProductosRequestOptions());
-
-        request.Model.Codigo = Codigo;
-
-        return request;
+        return new ActualizarProductoResponse(new ActualizarProductoResponseModel(GetModeloPrueba()));
     }
 
-    private static BuscarProductosRequest BuscarPorSql()
+    private static BuscarProductosRequest GetBuscarProductosRequest()
     {
-        var request = new BuscarProductosRequest(new BuscarProductosRequestModel(), new BuscarProductosRequestOptions());
-
-        request.Model.SqlQuery = "CNOMBREPRODUCTO = 'nombre'";
-
-        return request;
+        return new BuscarProductosRequest(
+            new BuscarProductosRequestModel
+            {
+                Id = 1, Codigo = CodigoPrueba, SqlQuery = $"{nameof(admProductos.CNOMBREPRODUCTO)} = 'PRODUCTO DE PRUEBAS"
+            }, new BuscarProductosRequestOptions());
     }
 
-    private static BuscarProductosRequest BuscarTodo()
+    private static BuscarProductosResponse GetBuscarProductosResponse()
     {
-        var request = new BuscarProductosRequest(new BuscarProductosRequestModel(), new BuscarProductosRequestOptions());
-
-        return request;
+        return new BuscarProductosResponse(new BuscarProductosResponseModel(new List<Producto> { GetModeloPrueba() }));
     }
 
-    private static EliminarProductoRequest Eliminar()
+    private static EliminarProductoRequest GetEliminarProductoRequest()
     {
-        var request = new EliminarProductoRequest(new EliminarProductoRequestModel(), new EliminarProductoRequestOptions());
-
-        request.Model.CodigoProducto = Codigo;
-
-        return request;
+        return new EliminarProductoRequest(new EliminarProductoRequestModel { CodigoProducto = CodigoPrueba },
+            new EliminarProductoRequestOptions());
     }
 
-    private static Dictionary<string, string> GetDatosExtra()
+    private static EliminarProductoResponse GetEliminarProductoResponse()
     {
-        return new Dictionary<string, string>
+        return new EliminarProductoResponse(new EliminarProductoResponseModel());
+    }
+
+    private static Producto GetModeloPrueba()
+    {
+        return new Producto
         {
-            { nameof(admProductos.CFECHAALTAPRODUCTO), DateTime.Today.ToSdkFecha() },
-            { nameof(admProductos.CNOMBREPRODUCTO), Nombre },
-            { nameof(admProductos.CCLAVESAT), ClaveSat },
-            { nameof(admProductos.CTEXTOEXTRA1), "Texto Extra" }
+            Codigo = CodigoPrueba, Nombre = "PRODUCTO DE PRUEBAS", ClaveSat = "43231500", DatosExtra = GetDatosExtraPrueba()
         };
     }
 
-    public static Producto CrearProductoPrueba()
+    private static Dictionary<string, string> GetDatosExtraPrueba()
     {
-        var producto = new Producto { Codigo = Codigo, Nombre = Nombre, ClaveSat = ClaveSat, DatosExtra = GetDatosExtra() };
-        return producto;
+        return new Dictionary<string, string>
+        {
+            { nameof(admProductos.CCLAVESAT), "43231500" },
+            { nameof(admProductos.CTEXTOEXTRA1), "Texto extra 1" },
+            { nameof(admProductos.CTEXTOEXTRA2), "Texto extra 2" },
+            { nameof(admProductos.CTEXTOEXTRA3), "Texto extra 3" }
+        };
     }
 
     public static void CearJson(string directory)
     {
-        JsonSerializerOptions options = FactoryExtensions.GetJsonSerializerOptions();
-
         Directory.CreateDirectory(directory);
 
+        JsonSerializerOptions options = FactoryExtensions.GetJsonSerializerOptions();
+
+        File.WriteAllText(Path.Combine(directory, $"{nameof(Producto)}.json"), JsonSerializer.Serialize(GetModeloPrueba(), options));
+
         File.WriteAllText(Path.Combine(directory, $"{nameof(CrearProductoRequest)}.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(Crear(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(GetCrearProductoRequest(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(CrearProductoResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetCrearProductoResponse(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(ActualizarProductoRequest)}.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(Actualizar(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(GetActualizarProductoRequest(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(ActualizarProductoResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetActualizarProductoResponse(), options));
 
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarProductosRequest)}_PorId.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorId(), options));
-
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarProductosRequest)}_PorCodigo.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorCodigo(), options));
-
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarProductosRequest)}_PorSql.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(BuscarPorSql(), options));
-
-        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarProductosRequest)}_Todo.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(BuscarTodo(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarProductosRequest)}.json"),
+            JsonSerializer.Serialize<ContpaqiRequest>(GetBuscarProductosRequest(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarProductosResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetBuscarProductosResponse(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(EliminarProductoRequest)}.json"),
-            JsonSerializer.Serialize<ContpaqiRequest>(Eliminar(), options));
+            JsonSerializer.Serialize<ContpaqiRequest>(GetEliminarProductoRequest(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(EliminarProductoResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetEliminarProductoResponse(), options));
     }
 }

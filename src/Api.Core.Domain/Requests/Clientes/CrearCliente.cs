@@ -1,5 +1,4 @@
-﻿using Api.Core.Domain.Models;
-using ARSoftware.Contpaqi.Api.Common.Domain;
+﻿using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Core.Domain.Requests;
 
@@ -18,7 +17,7 @@ public sealed class CrearClienteRequest : ContpaqiRequest<CrearClienteRequestMod
 /// </summary>
 public sealed class CrearClienteRequestModel
 {
-    public Cliente Cliente { get; set; } = new();
+    public ClienteProveedor Cliente { get; set; } = new();
 }
 
 /// <summary>
@@ -39,7 +38,7 @@ public sealed class CrearClienteResponse : ContpaqiResponse<CrearClienteResponse
     {
     }
 
-    public static CrearClienteResponse CreateInstance(Cliente cliente)
+    public static CrearClienteResponse CreateInstance(ClienteProveedor cliente)
     {
         return new CrearClienteResponse(new CrearClienteResponseModel(cliente));
     }
@@ -50,10 +49,10 @@ public sealed class CrearClienteResponse : ContpaqiResponse<CrearClienteResponse
 /// </summary>
 public sealed class CrearClienteResponseModel
 {
-    public CrearClienteResponseModel(Cliente cliente)
+    public CrearClienteResponseModel(ClienteProveedor cliente)
     {
         Cliente = cliente;
     }
 
-    public Cliente Cliente { get; set; }
+    public ClienteProveedor Cliente { get; set; }
 }

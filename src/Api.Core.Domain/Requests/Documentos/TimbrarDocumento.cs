@@ -1,5 +1,4 @@
-﻿using Api.Core.Domain.Models;
-using ARSoftware.Contpaqi.Api.Common.Domain;
+﻿using ARSoftware.Contpaqi.Api.Common.Domain;
 
 namespace Api.Core.Domain.Requests;
 

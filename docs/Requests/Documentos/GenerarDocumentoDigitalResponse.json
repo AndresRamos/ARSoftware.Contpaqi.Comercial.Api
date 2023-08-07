@@ -1,0 +1,11 @@
+{
+  "$type": "GenerarDocumentoDigitalResponse",
+  "model": {
+    "documentoDigital": {
+      "nombre": "FACTURA100.pdf",
+      "tipo": "application/pdf",
+      "ubicacion": "C:\\Compac\\Empresas\\adUNIVERSIDAD_ROBOTICA\\XML_SDK\\FACTURA100.pdf",
+      "contenido": "A+ZNw3o3ZQkvHQGH686cc9HmazumuuixPiRbs6p2bNcmXXX0ATCvig977aL4ZWX7JWUEdkZm8DgePGn3utzAQ/oolo8bsQ=="
+    }
+  }
+}

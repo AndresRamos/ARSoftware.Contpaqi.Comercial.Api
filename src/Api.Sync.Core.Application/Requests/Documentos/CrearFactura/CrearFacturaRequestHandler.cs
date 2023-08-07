@@ -1,10 +1,10 @@
 ﻿using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Enums;
 using ARSoftware.Contpaqi.Comercial.Sdk.DatosAbstractos;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Interfaces;
-using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Models.Enums;
 using AutoMapper;
 using MediatR;
 
@@ -82,7 +82,7 @@ public class CrearFacturaRequestHandler : IRequestHandler<CrearFacturaRequest, C
                         new GenerarDocumentoDigitalRequestModel { LlaveDocumento = _llaveDocumento },
                         new GenerarDocumentoDigitalRequestOptions
                         {
-                            Tipo = TipoArchivoDigital.Xml, NombrePlantilla = request.Options.NombrePlantilla
+                            Tipo = TipoArchivoDigital.Pdf, NombrePlantilla = request.Options.NombrePlantilla
                         });
                     GenerarDocumentoDigitalResponse generarPdfResponse = await _mediator.Send(generarPdfRequest, cancellationToken);
                     pdf = generarPdfResponse.Model.DocumentoDigital;

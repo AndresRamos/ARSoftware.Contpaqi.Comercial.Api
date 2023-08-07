@@ -2,14 +2,16 @@
   "$type": "TimbrarDocumentoRequest",
   "model": {
     "llaveDocumento": {
-      "conceptoCodigo": "400",
-      "serie": "FE",
-      "folio": 123
+      "conceptoCodigo": "FACTURAPRUEBA",
+      "serie": "FP",
+      "folio": 1
     },
     "contrasenaCertificado": "12345678a"
   },
   "options": {
+    "agregarArchivo": false,
     "nombreArchivo": "",
-    "contenidoArchivo": ""
+    "contenidoArchivo": "",
+    "cargarDatosExtra": false
   }
 }

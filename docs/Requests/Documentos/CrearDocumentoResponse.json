@@ -1,0 +1,134 @@
+{
+  "$type": "CrearDocumentoResponse",
+  "model": {
+    "documento": {
+      "id": 0,
+      "concepto": {
+        "id": 0,
+        "codigo": "FACTURAPRUEBA",
+        "nombre": "",
+        "datosExtra": {}
+      },
+      "serie": "",
+      "folio": 0,
+      "fecha": "2023-08-04T00:00:00-05:00",
+      "cliente": {
+        "id": 0,
+        "codigo": "CLIENTEPRUEBA",
+        "razonSocial": "",
+        "rfc": "",
+        "tipo": 0,
+        "usoCfdi": null,
+        "regimenFiscal": null,
+        "direccionFiscal": null,
+        "datosExtra": {}
+      },
+      "moneda": {
+        "id": 1,
+        "nombre": "Peso Mexicano"
+      },
+      "tipoCambio": 1,
+      "agente": {
+        "id": 0,
+        "codigo": "AGENTEPRUEBA",
+        "nombre": "",
+        "tipo": "VentasCobro",
+        "datosExtra": {}
+      },
+      "referencia": "Referencia doc",
+      "observaciones": "Observaciones del documento.",
+      "total": 0,
+      "formaPago": "01",
+      "metodoPago": "PPD",
+      "movimientos": [
+        {
+          "id": 0,
+          "producto": {
+            "id": 0,
+            "codigo": "PROD001",
+            "nombre": "",
+            "tipo": "Producto",
+            "claveSat": "",
+            "datosExtra": {}
+          },
+          "almacen": {
+            "id": 0,
+            "codigo": "ALMACENPRUEBA",
+            "nombre": "",
+            "datosExtra": {}
+          },
+          "unidades": 1,
+          "precio": 100,
+          "subtotal": 0,
+          "descuentos": {
+            "descuento1": {
+              "tasa": 10,
+              "importe": 0
+            },
+            "descuento2": {
+              "tasa": 0,
+              "importe": 0
+            },
+            "descuento3": {
+              "tasa": 0,
+              "importe": 0
+            },
+            "descuento4": {
+              "tasa": 0,
+              "importe": 0
+            },
+            "descuento5": {
+              "tasa": 0,
+              "importe": 0
+            }
+          },
+          "impuestos": {
+            "impuesto1": {
+              "tasa": 16,
+              "importe": 0
+            },
+            "impuesto2": {
+              "tasa": 0,
+              "importe": 0
+            },
+            "impuesto3": {
+              "tasa": 0,
+              "importe": 0
+            }
+          },
+          "retenciones": null,
+          "total": 0,
+          "referencia": "Referencia mov",
+          "observaciones": "Observaciones del movimiento",
+          "seriesCapas": [],
+          "datosExtra": {}
+        }
+      ],
+      "direccionFiscal": {
+        "id": 0,
+        "tipoCatalogo": 0,
+        "tipo": "Fiscal",
+        "calle": "",
+        "numeroExterior": "",
+        "numeroInterior": "",
+        "colonia": "",
+        "ciudad": "",
+        "estado": "",
+        "codigoPostal": "",
+        "pais": "",
+        "datosExtra": {}
+      },
+      "folioDigital": {
+        "id": 0,
+        "uuid": "",
+        "datosExtra": {}
+      },
+      "datosExtra": {
+        "COBSERVACIONES": "Observaciones del documento.",
+        "CTEXTOEXTRA1": "Texto extra 1",
+        "CTEXTOEXTRA2": "Texto extra 2",
+        "CTEXTOEXTRA3": "Texto extra 3"
+      }
+    }
+  }
+}

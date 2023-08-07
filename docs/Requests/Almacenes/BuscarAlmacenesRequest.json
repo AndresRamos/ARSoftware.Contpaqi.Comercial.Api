@@ -1,0 +1,11 @@
+{
+  "$type": "BuscarAlmacenesRequest",
+  "model": {
+    "id": 1,
+    "codigo": "ALMACENPRUEBA",
+    "sqlQuery": "CNOMBREALMACEN = \u0027ALMACEN DE PRUEBAS\u0027"
+  },
+  "options": {
+    "cargarDatosExtra": false
+  }
+}

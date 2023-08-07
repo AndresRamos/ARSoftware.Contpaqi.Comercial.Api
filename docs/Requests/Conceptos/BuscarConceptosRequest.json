@@ -1,0 +1,11 @@
+{
+  "$type": "BuscarConceptosRequest",
+  "model": {
+    "id": 1,
+    "codigo": "FACTURAPRUEBA",
+    "sqlQuery": "CCODIGOCONCEPTO = \u0027PRUEBAFACTURA\u0027"
+  },
+  "options": {
+    "cargarDatosExtra": false
+  }
+}

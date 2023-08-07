@@ -1,7 +1,0 @@
-{
-  "$type": "BuscarProductosRequest",
-  "model": {
-    "sqlQuery": "CNOMBREPRODUCTO = \u0027nombre\u0027"
-  },
-  "options": {}
-}

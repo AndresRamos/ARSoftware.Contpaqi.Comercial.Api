@@ -1,0 +1,19 @@
+{
+  "$type": "BuscarDocumentosRequest",
+  "model": {
+    "id": 1,
+    "llave": {
+      "conceptoCodigo": "PRUEBA",
+      "serie": "SERIE",
+      "folio": 1
+    },
+    "conceptoCodigo": "PRUEBA",
+    "fechaInicio": "2023-08-04",
+    "fechaFin": "2023-08-04",
+    "clienteCodigo": "PRUEBA",
+    "sqlQuery": "CPENDIENTE \u003E 0"
+  },
+  "options": {
+    "cargarDatosExtra": false
+  }
+}

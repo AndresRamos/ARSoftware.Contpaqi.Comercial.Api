@@ -2,12 +2,15 @@
 using Api.Core.Application.Requests.Queries.GetApiRequestById;
 using Api.Core.Application.Requests.Queries.GetApiRequests;
 using Api.Core.Application.Requests.Queries.GetPendingApiRequests;
+using Api.Core.Domain.Common;
 using Api.Core.Domain.Requests;
 using Api.Presentation.WebApi.Authentication;
 using Api.Presentation.WebApi.Filters;
+using Api.Presentation.WebApi.Hubs;
 using ARSoftware.Contpaqi.Api.Common.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Api.Presentation.WebApi.Controllers;
 
@@ -18,20 +21,24 @@ namespace Api.Presentation.WebApi.Controllers;
 [ApiExceptionFilter]
 public class RequestsController : ControllerBase
 {
+    private readonly IHubContext<ApiRequestHub, IApiRequestHubClient> _hubContext;
     private readonly LinkGenerator _linkGenerator;
     private readonly IMediator _mediator;
 
-    public RequestsController(IMediator mediator, LinkGenerator linkGenerator)
+    public RequestsController(IMediator mediator, LinkGenerator linkGenerator, IHubContext<ApiRequestHub, IApiRequestHubClient> hubContext)
     {
         _mediator = mediator;
         _linkGenerator = linkGenerator;
+        _hubContext = hubContext;
     }
 
     [FromHeader(Name = "Ocp-Apim-Subscription-Key")]
     public string ApimSubscriptionKey { get; set; } = string.Empty;
 
-    [FromHeader(Name = "x-Empresa-Rfc")]
-    public string EmpresaRfc { get; set; } = string.Empty;
+    [FromHeader(Name = "x-Empresa-Rfc")] public string EmpresaRfc { get; set; } = string.Empty;
+
+    [FromHeader(Name = "x-Esperar-Respuesta")]
+    public bool? EsperarRespuesta { get; set; }
 
     /// <summary>
     ///     Busca una solicitud por id.
@@ -50,8 +57,7 @@ public class RequestsController : ControllerBase
     {
         ApiRequest? request = await _mediator.Send(new GetApiRequestByIdQuery(id, ApimSubscriptionKey));
 
-        if (request is null)
-            return NotFound();
+        if (request is null) return NotFound();
 
         return Ok(request);
     }
@@ -74,8 +80,7 @@ public class RequestsController : ControllerBase
     {
         IEnumerable<ApiRequest> apiRequests = await _mediator.Send(new GetApiRequestsQuery(startDate, endDate, ApimSubscriptionKey));
 
-        if (!apiRequests.Any())
-            return NoContent();
+        if (!apiRequests.Any()) return NoContent();
 
         return Ok(apiRequests);
     }
@@ -97,8 +102,7 @@ public class RequestsController : ControllerBase
     {
         IEnumerable<ApiRequest> apiRequests = await _mediator.Send(new GetPendingApiRequestsQuery(EmpresaRfc, ApimSubscriptionKey));
 
-        if (!apiRequests.Any())
-            return NoContent();
+        if (!apiRequests.Any()) return NoContent();
 
         return Ok(apiRequests);
     }
@@ -116,9 +120,21 @@ public class RequestsController : ControllerBase
     [ProducesDefaultResponseType]
     public async Task<ActionResult<Guid>> Post(ContpaqiRequest apiRequest)
     {
+        Task waitTimeTask = Task.Delay(TimeSpan.FromSeconds(25));
+
         Guid requestId = await _mediator.Send(new CreateApiRequestCommand(apiRequest, ApimSubscriptionKey, EmpresaRfc));
 
+        await _hubContext.Clients.Group(ApimSubscriptionKey)
+            .GetPendingRequests(new GetPendingRequestsMessage(ApimSubscriptionKey, EmpresaRfc));
+
         ApiRequest? request = await _mediator.Send(new GetApiRequestByIdQuery(requestId, ApimSubscriptionKey));
+
+        if (EsperarRespuesta == true)
+            while (!waitTimeTask.IsCompleted && request!.Status == RequestStatus.Pending)
+            {
+                await Task.Delay(1000);
+                request = await _mediator.Send(new GetApiRequestByIdQuery(requestId, ApimSubscriptionKey));
+            }
 
         string? pathByAction = _linkGenerator.GetPathByAction("Get", "Requests", new { id = requestId });
 
@@ -142,8 +158,7 @@ public class RequestsController : ControllerBase
 
         Type? type = requestType.Assembly.GetType(requestFullName);
 
-        if (type is null)
-            throw new InvalidOperationException($"Couldn't find type for request with name {requestFullName}.");
+        if (type is null) throw new InvalidOperationException($"Couldn't find type for request with name {requestFullName}.");
 
         if (Activator.CreateInstance(type) is not ContpaqiRequest instance)
             throw new InvalidOperationException($"Couldn't create instance for type {type}.");

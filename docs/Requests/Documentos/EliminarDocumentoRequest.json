@@ -2,9 +2,9 @@
   "$type": "EliminarDocumentoRequest",
   "model": {
     "llaveDocumento": {
-      "conceptoCodigo": "400",
-      "serie": "FE",
-      "folio": 123
+      "conceptoCodigo": "FACTURAPRUEBA",
+      "serie": "FP",
+      "folio": 1
     }
   },
   "options": {}

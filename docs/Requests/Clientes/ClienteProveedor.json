@@ -1,0 +1,29 @@
+{
+  "id": 0,
+  "codigo": "CLIENTEPRUEBA",
+  "razonSocial": "CLIENTE DE PRUEBAS",
+  "rfc": "XAXX010101000",
+  "tipo": "ClienteProveedor",
+  "usoCfdi": "S01",
+  "regimenFiscal": "616",
+  "direccionFiscal": {
+    "id": 0,
+    "tipoCatalogo": 0,
+    "tipo": "Fiscal",
+    "calle": "Pablo Villase\u00F1or",
+    "numeroExterior": "435",
+    "numeroInterior": "",
+    "colonia": "Ladr\u00F3n de Guevara",
+    "ciudad": "Guadalajara",
+    "estado": "Jalisco",
+    "codigoPostal": "44600",
+    "pais": "M\u00E9xico",
+    "datosExtra": {}
+  },
+  "datosExtra": {
+    "CEMAIL1": "email@cliente.com",
+    "CTEXTOEXTRA1": "Texto Extra 1",
+    "CTEXTOEXTRA2": "Texto Extra 2",
+    "CTEXTOEXTRA3": "Texto Extra 3"
+  }
+}

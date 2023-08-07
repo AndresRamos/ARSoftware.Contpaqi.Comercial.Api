@@ -13,7 +13,12 @@ public sealed class DocumentoDigital
     public string Tipo { get; set; } = string.Empty;
 
     /// <summary>
-    ///     Ubicacion del documento.
+    ///     Ubicación del documento.
     /// </summary>
     public string Ubicacion { get; set; } = string.Empty;
+
+    /// <summary>
+    ///     Contenido del documento. Cuando se serializa a JSON, se convierte a Base64.
+    /// </summary>
+    public byte[]? Contenido { get; set; }
 }

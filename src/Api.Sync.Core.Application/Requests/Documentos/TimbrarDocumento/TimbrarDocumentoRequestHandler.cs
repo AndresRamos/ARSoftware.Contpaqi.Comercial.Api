@@ -1,5 +1,4 @@
-﻿using Api.Core.Domain.Models;
-using Api.Core.Domain.Requests;
+﻿using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
 using ARSoftware.Contpaqi.Comercial.Sdk.DatosAbstractos;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Interfaces;
@@ -36,8 +35,7 @@ public sealed class TimbrarDocumentoRequestHandler : IRequestHandler<TimbrarDocu
 
     private async Task<string> GetRutaArchivoAdicionalAsync(TimbrarDocumentoRequest request, CancellationToken cancellationToken)
     {
-        if (!request.Options.AgregarArchivo)
-            return string.Empty;
+        if (!request.Options.AgregarArchivo) return string.Empty;
 
         string rutaArchivoAdicional = Path.Combine(Path.GetTempPath(), request.Options.NombreArchivo);
         await File.WriteAllTextAsync(rutaArchivoAdicional, request.Options.ContenidoArchivo, cancellationToken);

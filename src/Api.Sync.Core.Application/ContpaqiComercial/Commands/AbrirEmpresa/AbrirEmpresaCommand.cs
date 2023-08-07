@@ -25,19 +25,22 @@ public sealed class AbrirEmpresaCommandHandler : IRequestHandler<AbrirEmpresaCom
 
     public Task Handle(AbrirEmpresaCommand request, CancellationToken cancellationToken)
     {
-        if (_sdkSesionService.IsEmpresaAbierta && _empresaRfc != _contpaqiComercialConfig.Empresa.Rfc)
+        if (_contpaqiComercialConfig.Empresa.Parametros is null)
+            throw new ArgumentNullException(nameof(_contpaqiComercialConfig.Empresa.Parametros), "Los parametros de la epresa esta nulos.");
+
+        if (_sdkSesionService.IsEmpresaAbierta && _empresaRfc != _contpaqiComercialConfig.Empresa.Parametros.Rfc)
         {
             _logger.LogDebug("Ceranndo empresa {EmpresaRfc}", _empresaRfc);
             _sdkSesionService.CerrarEmpresa();
         }
 
         _logger.LogInformation("Abriendo empresa. {0} - {1}", _contpaqiComercialConfig.Empresa.Nombre,
-            _contpaqiComercialConfig.Empresa.Rfc);
+            _contpaqiComercialConfig.Empresa.Parametros.Rfc);
 
         if (!_sdkSesionService.IsEmpresaAbierta)
         {
             _sdkSesionService.AbrirEmpresa(_contpaqiComercialConfig.Empresa.Ruta);
-            _empresaRfc = _contpaqiComercialConfig.Empresa.Rfc;
+            _empresaRfc = _contpaqiComercialConfig.Empresa.Parametros.Rfc;
             _logger.LogDebug("Empresa abierta. {@ComercialSdkSesionService}", _sdkSesionService);
         }
 

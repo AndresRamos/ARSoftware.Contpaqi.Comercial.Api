@@ -1,9 +1,10 @@
-﻿using Api.Core.Domain.Models;
+﻿using System.Globalization;
+using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.Common.Models;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Enums;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Helpers;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Interfaces;
-using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Models.Enums;
 using MediatR;
 using Microsoft.Extensions.Options;
 
@@ -21,7 +22,7 @@ public sealed class GenerarDocumentoDigitalRequestHandler : IRequestHandler<Gene
         _contpaqiComercialConfig = contpaqiComercialConfigOptions.Value;
     }
 
-    public Task<GenerarDocumentoDigitalResponse> Handle(GenerarDocumentoDigitalRequest request, CancellationToken cancellationToken)
+    public async Task<GenerarDocumentoDigitalResponse> Handle(GenerarDocumentoDigitalRequest request, CancellationToken cancellationToken)
     {
         LlaveDocumento llaveDocumento = request.Model.LlaveDocumento;
 
@@ -31,15 +32,16 @@ public sealed class GenerarDocumentoDigitalRequestHandler : IRequestHandler<Gene
             request.Options.Tipo, rutaPlantilla);
 
         string rutaDocumento = ArchivoDigitalHelper.GenerarRutaArchivoDigital(request.Options.Tipo, _contpaqiComercialConfig.Empresa.Ruta,
-            llaveDocumento.Serie, llaveDocumento.Folio.ToString());
+            llaveDocumento.Serie, llaveDocumento.Folio.ToString(CultureInfo.InvariantCulture));
 
         var documentoDigital = new DocumentoDigital
         {
             Ubicacion = rutaDocumento,
             Nombre = new FileInfo(rutaDocumento).Name,
-            Tipo = request.Options.Tipo == TipoArchivoDigital.Pdf ? "application/pdf" : "text/xml"
+            Tipo = request.Options.Tipo == TipoArchivoDigital.Pdf ? "application/pdf" : "text/xml",
+            Contenido = await File.ReadAllBytesAsync(rutaDocumento, cancellationToken)
         };
 
-        return Task.FromResult(GenerarDocumentoDigitalResponse.CreateInstance(documentoDigital));
+        return GenerarDocumentoDigitalResponse.CreateInstance(documentoDigital);
     }
 }

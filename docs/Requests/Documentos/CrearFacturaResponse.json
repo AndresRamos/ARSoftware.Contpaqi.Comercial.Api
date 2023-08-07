@@ -1,0 +1,146 @@
+{
+  "$type": "CrearFacturaResponse",
+  "model": {
+    "documento": {
+      "id": 0,
+      "concepto": {
+        "id": 0,
+        "codigo": "FACTURAPRUEBA",
+        "nombre": "",
+        "datosExtra": {}
+      },
+      "serie": "",
+      "folio": 0,
+      "fecha": "2023-08-05T00:00:00-05:00",
+      "cliente": {
+        "id": 0,
+        "codigo": "CLIENTEPRUEBA",
+        "razonSocial": "",
+        "rfc": "",
+        "tipo": 0,
+        "usoCfdi": null,
+        "regimenFiscal": null,
+        "direccionFiscal": null,
+        "datosExtra": {}
+      },
+      "moneda": {
+        "id": 1,
+        "nombre": "Peso Mexicano"
+      },
+      "tipoCambio": 1,
+      "agente": {
+        "id": 0,
+        "codigo": "AGENTEPRUEBA",
+        "nombre": "",
+        "tipo": "VentasCobro",
+        "datosExtra": {}
+      },
+      "referencia": "Referencia doc",
+      "observaciones": "Observaciones del documento.",
+      "total": 0,
+      "formaPago": "01",
+      "metodoPago": "PPD",
+      "movimientos": [
+        {
+          "id": 0,
+          "producto": {
+            "id": 0,
+            "codigo": "PROD001",
+            "nombre": "",
+            "tipo": "Producto",
+            "claveSat": "",
+            "datosExtra": {}
+          },
+          "almacen": {
+            "id": 0,
+            "codigo": "ALMACENPRUEBA",
+            "nombre": "",
+            "datosExtra": {}
+          },
+          "unidades": 1,
+          "precio": 100,
+          "subtotal": 0,
+          "descuentos": {
+            "descuento1": {
+              "tasa": 10,
+              "importe": 0
+            },
+            "descuento2": {
+              "tasa": 0,
+              "importe": 0
+            },
+            "descuento3": {
+              "tasa": 0,
+              "importe": 0
+            },
+            "descuento4": {
+              "tasa": 0,
+              "importe": 0
+            },
+            "descuento5": {
+              "tasa": 0,
+              "importe": 0
+            }
+          },
+          "impuestos": {
+            "impuesto1": {
+              "tasa": 16,
+              "importe": 0
+            },
+            "impuesto2": {
+              "tasa": 0,
+              "importe": 0
+            },
+            "impuesto3": {
+              "tasa": 0,
+              "importe": 0
+            }
+          },
+          "retenciones": null,
+          "total": 0,
+          "referencia": "Referencia mov",
+          "observaciones": "Observaciones del movimiento",
+          "seriesCapas": [],
+          "datosExtra": {}
+        }
+      ],
+      "direccionFiscal": {
+        "id": 0,
+        "tipoCatalogo": 0,
+        "tipo": "Fiscal",
+        "calle": "",
+        "numeroExterior": "",
+        "numeroInterior": "",
+        "colonia": "",
+        "ciudad": "",
+        "estado": "",
+        "codigoPostal": "",
+        "pais": "",
+        "datosExtra": {}
+      },
+      "folioDigital": {
+        "id": 0,
+        "uuid": "",
+        "datosExtra": {}
+      },
+      "datosExtra": {
+        "COBSERVACIONES": "Observaciones del documento.",
+        "CTEXTOEXTRA1": "Texto extra 1",
+        "CTEXTOEXTRA2": "Texto extra 2",
+        "CTEXTOEXTRA3": "Texto extra 3"
+      }
+    },
+    "xml": {
+      "nombre": "FACTURA100.xml",
+      "tipo": "text/xml",
+      "ubicacion": "C:\\Compac\\Empresas\\adUNIVERSIDAD_ROBOTICA\\XML_SDK\\FACTURA100.xml",
+      "contenido": "HuXrFGV/AfJp4N5GQKtgnW/xG+EfCvoY2dyPBhYOYkBCMiQ1DHX9vwflU/wxdsTcMo0Ca8VSXZOBEX1nPcn9vLaahzjSNg=="
+    },
+    "pdf": {
+      "nombre": "FACTURA100.pdf",
+      "tipo": "application/pdf",
+      "ubicacion": "C:\\Compac\\Empresas\\adUNIVERSIDAD_ROBOTICA\\XML_SDK\\FACTURA100.pdf",
+      "contenido": "D0GUpoBKmvO0FW8cgre4WCngeE2hPNEQgxUbEOM7Pco0k+Mnl6hJ3FfTvKogD8/q3Eh1UL3uo8GnGFPw2HNQpdSRmuosaw=="
+    }
+  }
+}

@@ -1,9 +1,8 @@
-﻿using Api.Core.Domain.Models;
-using Api.Core.Domain.Requests;
+﻿using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Enums.CatalogosCfdi;
 using ARSoftware.Contpaqi.Comercial.Sdk.DatosAbstractos;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Interfaces;
-using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Models.Enums;
 using AutoMapper;
 using MediatR;
 
@@ -29,8 +28,10 @@ public sealed class CancelarDocumentoRequestHandler : IRequestHandler<CancelarDo
         if (request.Options.Administrativamente)
             _documentoService.CancelarAdministrativamente(llaveDoc);
         else
+        {
             _documentoService.Cancelar(llaveDoc, request.Model.ContrasenaCertificado,
-                MotivoCancelacion.FromClave(request.Model.MotivoCancelacion), request.Model.Uuid);
+                MotivoCancelacionEnum.FromValue(request.Model.MotivoCancelacion), request.Model.Uuid);
+        }
 
         Documento documento =
             await _documentoRepository.BuscarPorLlaveAsync(request.Model.LlaveDocumento, request.Options, cancellationToken) ??

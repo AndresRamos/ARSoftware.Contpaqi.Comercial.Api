@@ -1,14 +1,11 @@
 ﻿using System.Text.Json;
-using Api.Core.Domain.Models;
 using Api.Core.Domain.Requests;
 using ARSoftware.Contpaqi.Api.Common.Domain;
-using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Models;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Enums.CatalogosCfdi;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Models;
+using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Models.Enums;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
-using Almacen = Api.Core.Domain.Models.Almacen;
-using Documento = Api.Core.Domain.Models.Documento;
-using Movimiento = Api.Core.Domain.Models.Movimiento;
-using Producto = Api.Core.Domain.Models.Producto;
 
 namespace Api.Sdk.ConsoleApp.JsonFactories;
 
@@ -43,14 +40,14 @@ public sealed class CartaPorteFactory
         var documento = new Documento();
         documento.Fecha = DateTime.Today;
         documento.Concepto.Codigo = CodigoConcepto;
-        documento.Cliente = new Cliente { Codigo = "CTEPORTE01" };
-        documento.Moneda = Moneda.PesoMexicano;
+        documento.Cliente = new ClienteProveedor { Codigo = "CTEPORTE01" };
+        documento.Moneda = MonedaEnum.PesoMexicano.ToMoneda();
         documento.TipoCambio = 1;
         documento.Referencia = "Referencia doc";
         documento.Observaciones = "Observaciones del documento.";
-        documento.Agente = AgenteFactory.CrearAgentePrueba();
-        documento.FormaPago = FormaPago._03;
-        documento.MetodoPago = MetodoPago.PPD;
+        documento.Agente = new Agente { Codigo = AgenteFactory.CodigoPrueba };
+        documento.FormaPago = FormaPagoEnum._03;
+        documento.MetodoPago = MetodoPagoEnum.PPD;
         documento.Movimientos.Add(new Movimiento
         {
             Producto = new Producto { Codigo = "PORTE03" },

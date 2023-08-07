@@ -1,0 +1,107 @@
+{
+  "$type": "SaldarDocumentoResponse",
+  "model": {
+    "documentoPago": {
+      "id": 0,
+      "concepto": {
+        "id": 0,
+        "codigo": "",
+        "nombre": "",
+        "datosExtra": {}
+      },
+      "serie": "",
+      "folio": 0,
+      "fecha": "0001-01-01T00:00:00",
+      "cliente": null,
+      "moneda": {
+        "id": 0,
+        "nombre": ""
+      },
+      "tipoCambio": 1,
+      "agente": {
+        "id": 0,
+        "codigo": "",
+        "nombre": "",
+        "tipo": "VentasCobro",
+        "datosExtra": {}
+      },
+      "referencia": "",
+      "observaciones": "",
+      "total": 0,
+      "formaPago": null,
+      "metodoPago": null,
+      "movimientos": [],
+      "direccionFiscal": {
+        "id": 0,
+        "tipoCatalogo": 0,
+        "tipo": "Fiscal",
+        "calle": "",
+        "numeroExterior": "",
+        "numeroInterior": "",
+        "colonia": "",
+        "ciudad": "",
+        "estado": "",
+        "codigoPostal": "",
+        "pais": "",
+        "datosExtra": {}
+      },
+      "folioDigital": {
+        "id": 0,
+        "uuid": "",
+        "datosExtra": {}
+      },
+      "datosExtra": {}
+    },
+    "documentoPagar": {
+      "id": 0,
+      "concepto": {
+        "id": 0,
+        "codigo": "",
+        "nombre": "",
+        "datosExtra": {}
+      },
+      "serie": "",
+      "folio": 0,
+      "fecha": "0001-01-01T00:00:00",
+      "cliente": null,
+      "moneda": {
+        "id": 0,
+        "nombre": ""
+      },
+      "tipoCambio": 1,
+      "agente": {
+        "id": 0,
+        "codigo": "",
+        "nombre": "",
+        "tipo": "VentasCobro",
+        "datosExtra": {}
+      },
+      "referencia": "",
+      "observaciones": "",
+      "total": 0,
+      "formaPago": null,
+      "metodoPago": null,
+      "movimientos": [],
+      "direccionFiscal": {
+        "id": 0,
+        "tipoCatalogo": 0,
+        "tipo": "Fiscal",
+        "calle": "",
+        "numeroExterior": "",
+        "numeroInterior": "",
+        "colonia": "",
+        "ciudad": "",
+        "estado": "",
+        "codigoPostal": "",
+        "pais": "",
+        "datosExtra": {}
+      },
+      "folioDigital": {
+        "id": 0,
+        "uuid": "",
+        "datosExtra": {}
+      },
+      "datosExtra": {}
+    }
+  }
+}
