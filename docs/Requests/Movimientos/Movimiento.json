@@ -1,0 +1,87 @@
+{
+  "id": 0,
+  "producto": {
+    "id": 0,
+    "codigo": "PROD001",
+    "nombre": "",
+    "tipo": "Producto",
+    "claveSat": "",
+    "datosExtra": {}
+  },
+  "almacen": {
+    "id": 0,
+    "codigo": "ALMACENPRUEBA",
+    "nombre": "",
+    "datosExtra": {}
+  },
+  "unidades": 1,
+  "precio": 100,
+  "subtotal": 0,
+  "descuentos": {
+    "descuento1": {
+      "tasa": 10,
+      "importe": 0
+    },
+    "descuento2": {
+      "tasa": 0,
+      "importe": 0
+    },
+    "descuento3": {
+      "tasa": 0,
+      "importe": 0
+    },
+    "descuento4": {
+      "tasa": 0,
+      "importe": 0
+    },
+    "descuento5": {
+      "tasa": 0,
+      "importe": 0
+    }
+  },
+  "impuestos": {
+    "impuesto1": {
+      "tasa": 16,
+      "importe": 0
+    },
+    "impuesto2": {
+      "tasa": 0,
+      "importe": 0
+    },
+    "impuesto3": {
+      "tasa": 0,
+      "importe": 0
+    }
+  },
+  "retenciones": {
+    "retencion1": {
+      "tasa": 0,
+      "importe": 0
+    },
+    "retencion2": {
+      "tasa": 0,
+      "importe": 0
+    }
+  },
+  "total": 0,
+  "referencia": "Referencia mov",
+  "observaciones": "Observaciones del movimiento",
+  "seriesCapas": [
+    {
+      "unidades": 0,
+      "tipoCambio": 0,
+      "series": "",
+      "pedimento": "",
+      "agencia": "",
+      "fechaPedimento": null,
+      "numeroLote": "",
+      "fechaFabricacion": null,
+      "fechaCaducidad": null
+    }
+  ],
+  "datosExtra": {
+    "CTEXTOEXTRA1": "Texto extra 1",
+    "CTEXTOEXTRA2": "Texto extra 2",
+    "CTEXTOEXTRA3": "Texto extra 3"
+  }
+}

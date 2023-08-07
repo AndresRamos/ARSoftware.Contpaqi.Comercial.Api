@@ -82,7 +82,7 @@ public class CrearFacturaRequestHandler : IRequestHandler<CrearFacturaRequest, C
                         new GenerarDocumentoDigitalRequestModel { LlaveDocumento = _llaveDocumento },
                         new GenerarDocumentoDigitalRequestOptions
                         {
-                            Tipo = TipoArchivoDigital.Xml, NombrePlantilla = request.Options.NombrePlantilla
+                            Tipo = TipoArchivoDigital.Pdf, NombrePlantilla = request.Options.NombrePlantilla
                         });
                     GenerarDocumentoDigitalResponse generarPdfResponse = await _mediator.Send(generarPdfRequest, cancellationToken);
                     pdf = generarPdfResponse.Model.DocumentoDigital;

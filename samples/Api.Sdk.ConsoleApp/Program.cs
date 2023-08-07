@@ -13,6 +13,7 @@ ConceptoFactory.CearJson(Path.Combine(baseDirectory, "Conceptos"));
 EmpresaFactory.CearJson(Path.Combine(baseDirectory, "Empresas"));
 ProductoFactory.CearJson(Path.Combine(baseDirectory, "Productos"));
 DocumentoFactory.CearJson(Path.Combine(baseDirectory, "Documentos"));
-//CartaPorteFactory.CearJson(Path.Combine(baseDirectory, "CartaPorte"));
+CartaPorteFactory.CearJson(Path.Combine(baseDirectory, "CartaPorte"));
+MovimientoFactory.CearJson(Path.Combine(baseDirectory, "Movimientos"));
 
 Console.WriteLine("Programa Fin");
