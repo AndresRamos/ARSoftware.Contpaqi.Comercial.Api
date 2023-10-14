@@ -16,14 +16,17 @@ public sealed class GetApiRequestsQueryHandler : IRequestHandler<GetApiRequestsQ
         _applicationDbContext = applicationDbContext;
     }
 
-    public async Task<IEnumerable<ApiRequest>> Handle(GetApiRequestsQuery request, CancellationToken cancellationToken)
+    public Task<IEnumerable<ApiRequest>> Handle(GetApiRequestsQuery request, CancellationToken cancellationToken)
     {
-        return await _applicationDbContext.Requests.AsNoTracking()
+        // Hay un error o bug que afecta el rendimiento de la consulta se hace utilizando los metodos asincronos
+        // Leer: https://github.com/dotnet/efcore/issues/18221 y https://github.com/dotnet/SqlClient/issues/245 y https://github.com/dotnet/SqlClient/issues/593
+        // Todo: Convertir a async cuando EF Core libere una una version que corrija el rendimiento
+        return Task.FromResult<IEnumerable<ApiRequest>>(_applicationDbContext.Requests.AsNoTracking()
             .Include(m => m.Response)
             .Where(m => EF.Functions.DateDiffDay(m.DateCreated, request.StartDate.ToDateTime(TimeOnly.MinValue)) >= 0 &&
                         EF.Functions.DateDiffDay(m.DateCreated, request.EndDate.ToDateTime(TimeOnly.MaxValue)) <= 0 &&
                         m.SubscriptionKey == request.SubscriptionKey)
             .OrderBy(m => m.DateCreated)
-            .ToListAsync(cancellationToken);
+            .ToList());
     }
 }
