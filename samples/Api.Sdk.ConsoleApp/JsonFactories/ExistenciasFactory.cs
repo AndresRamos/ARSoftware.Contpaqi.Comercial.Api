@@ -23,6 +23,20 @@ public sealed class ExistenciasFactory
         return new BuscarExistenciasProductoResponse(new BuscarExistenciasProductoResponseModel(1));
     }
 
+    private static BuscarExistenciasProductoConCapasRequest GetBuscarExistenciasProductoConCapasRequest()
+    {
+        return new BuscarExistenciasProductoConCapasRequest(
+            new BuscarExistenciasProductoConCapasRequestModel
+            {
+                CodigoAlmacen = CodigoAlmacenPrueba, CodigoProducto = CodigoProductoPrueba, Pedimento = "123456789", Lote = "123456789"
+            }, new BuscarExistenciasProductoConCapasRequestOptions());
+    }
+
+    private static BuscarExistenciasProductoConCapasResponse GetBuscarExistenciasProductoConCapasResponse()
+    {
+        return new BuscarExistenciasProductoConCapasResponse(new BuscarExistenciasProductoConCapasResponseModel(1));
+    }
+
     private static BuscarExistenciasProductoConCaracteristicasRequest GetBuscarExistenciasProductoConCaracteristicasRequest()
     {
         return new BuscarExistenciasProductoConCaracteristicasRequest(
@@ -52,6 +66,11 @@ public sealed class ExistenciasFactory
             JsonSerializer.Serialize<ContpaqiRequest>(GetBuscarExistenciasProductoRequest(), options));
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarExistenciasProductoResponse)}.json"),
             JsonSerializer.Serialize<ContpaqiResponse>(GetBuscarExistenciasProductoResponse(), options));
+
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarExistenciasProductoConCapasRequest)}.json"),
+            JsonSerializer.Serialize<ContpaqiRequest>(GetBuscarExistenciasProductoConCapasRequest(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarExistenciasProductoConCapasResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetBuscarExistenciasProductoConCapasResponse(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarExistenciasProductoConCaracteristicasRequest)}.json"),
             JsonSerializer.Serialize<ContpaqiRequest>(GetBuscarExistenciasProductoConCaracteristicasRequest(), options));

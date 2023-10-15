@@ -4,11 +4,11 @@ namespace Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
 
 public interface IExistenciasProductoRepository
 {
-    Task<double> BuscaExistenciasAsync(BuscarExistenciasProductoRequest request, CancellationToken cancellationToken);
+    Task<double> BuscaExistenciasAsync(BuscarExistenciasProductoRequestModel requestModel, CancellationToken cancellationToken);
 
-    Task<double> BuscaExistenciasConCaracteristicasAsync(BuscarExistenciasProductoConCaracteristicasRequest request,
+    Task<double> BuscaExistenciasConCapasAsync(BuscarExistenciasProductoConCapasRequestModel requestModel,
         CancellationToken cancellationToken);
 
-    Task<double> BuscaExistenciasConCapasAsync(string codigoProducto, string codigoAlmacen, string pedimento, string lote,
+    Task<double> BuscaExistenciasConCaracteristicasAsync(BuscarExistenciasProductoConCaracteristicasRequestModel requestModel,
         CancellationToken cancellationToken);
 }

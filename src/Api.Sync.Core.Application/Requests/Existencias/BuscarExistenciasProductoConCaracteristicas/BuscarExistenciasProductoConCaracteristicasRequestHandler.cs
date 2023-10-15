@@ -18,7 +18,7 @@ public sealed class BuscarExistenciasProductoConCaracteristicasRequestHandler : 
         BuscarExistenciasProductoConCaracteristicasRequest request, CancellationToken cancellationToken)
     {
         double existenciasProducto =
-            await _existenciasProductoRepository.BuscaExistenciasConCaracteristicasAsync(request, cancellationToken);
+            await _existenciasProductoRepository.BuscaExistenciasConCaracteristicasAsync(request.Model, cancellationToken);
 
         return BuscarExistenciasProductoConCaracteristicasResponse.CreateInstance(existenciasProducto);
     }

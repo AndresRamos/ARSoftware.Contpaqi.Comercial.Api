@@ -13,24 +13,24 @@ public sealed class ExistenciasProductoRepository : IExistenciasProductoReposito
         _existenciasSqlRepository = existenciasSqlRepository;
     }
 
-    public async Task<double> BuscaExistenciasAsync(BuscarExistenciasProductoRequest request, CancellationToken cancellationToken)
+    public async Task<double> BuscaExistenciasAsync(BuscarExistenciasProductoRequestModel requestModel, CancellationToken cancellationToken)
     {
-        return await _existenciasSqlRepository.BuscaExistenciasAsync(request.Model.CodigoProducto, request.Model.CodigoAlmacen,
-            DateOnly.FromDateTime(request.Model.Fecha), cancellationToken);
+        return await _existenciasSqlRepository.BuscaExistenciasAsync(requestModel.CodigoProducto, requestModel.CodigoAlmacen,
+            DateOnly.FromDateTime(requestModel.Fecha), cancellationToken);
     }
 
-    public async Task<double> BuscaExistenciasConCapasAsync(string codigoProducto, string codigoAlmacen, string pedimento, string lote,
+    public async Task<double> BuscaExistenciasConCapasAsync(BuscarExistenciasProductoConCapasRequestModel requestModel,
         CancellationToken cancellationToken)
     {
-        return await _existenciasSqlRepository.BuscaExistenciasConCapasAsync(codigoProducto, codigoAlmacen, pedimento, lote,
-            cancellationToken);
+        return await _existenciasSqlRepository.BuscaExistenciasConCapasAsync(requestModel.CodigoProducto, requestModel.CodigoAlmacen,
+            requestModel.Pedimento, requestModel.Lote, cancellationToken);
     }
 
-    public async Task<double> BuscaExistenciasConCaracteristicasAsync(BuscarExistenciasProductoConCaracteristicasRequest request,
+    public async Task<double> BuscaExistenciasConCaracteristicasAsync(BuscarExistenciasProductoConCaracteristicasRequestModel requestModel,
         CancellationToken cancellationToken)
     {
-        return await _existenciasSqlRepository.BuscaExistenciasConCaracteristicasAsync(request.Model.CodigoProducto,
-            request.Model.CodigoAlmacen, DateOnly.FromDateTime(request.Model.Fecha), request.Model.AbreviaturaValorCaracteristica1,
-            request.Model.AbreviaturaValorCaracteristica2, request.Model.AbreviaturaValorCaracteristica3, cancellationToken);
+        return await _existenciasSqlRepository.BuscaExistenciasConCaracteristicasAsync(requestModel.CodigoProducto,
+            requestModel.CodigoAlmacen, DateOnly.FromDateTime(requestModel.Fecha), requestModel.AbreviaturaValorCaracteristica1,
+            requestModel.AbreviaturaValorCaracteristica2, requestModel.AbreviaturaValorCaracteristica3, cancellationToken);
     }
 }
