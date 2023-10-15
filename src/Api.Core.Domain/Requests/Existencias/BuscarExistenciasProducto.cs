@@ -22,17 +22,17 @@ public sealed class BuscarExistenciasProductoRequestModel
     /// <summary>
     ///     Código del producto.
     /// </summary>
-    public string CodigoProducto { get; set; }
+    public string CodigoProducto { get; set; } = string.Empty;
 
     /// <summary>
     ///     Código del almacén.
     /// </summary>
-    public string CodigoAlmacen { get; set; }
+    public string CodigoAlmacen { get; set; } = string.Empty;
 
     /// <summary>
     ///     Fecha.
     /// </summary>
-    public DateTime Fecha { get; set; }
+    public DateTime Fecha { get; set; } = DateTime.Today;
 }
 
 /// <summary>

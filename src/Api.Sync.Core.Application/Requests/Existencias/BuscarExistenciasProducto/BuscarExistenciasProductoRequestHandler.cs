@@ -17,8 +17,7 @@ public sealed class
     public async Task<BuscarExistenciasProductoResponse> Handle(BuscarExistenciasProductoRequest request,
         CancellationToken cancellationToken)
     {
-        double existencias = await _existenciasProductoRepository.BuscaExistenciasAsync(request.Model.CodigoProducto,
-            request.Model.CodigoAlmacen, DateOnly.FromDateTime(request.Model.Fecha), cancellationToken);
+        double existencias = await _existenciasProductoRepository.BuscaExistenciasAsync(request, cancellationToken);
 
         return BuscarExistenciasProductoResponse.CreateInstance(existencias);
     }
