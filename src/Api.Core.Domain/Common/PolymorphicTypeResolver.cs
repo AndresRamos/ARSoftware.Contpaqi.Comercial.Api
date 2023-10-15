@@ -15,7 +15,6 @@ public sealed class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
 
         Type apiRequestBaseType = typeof(ContpaqiRequest);
         if (jsonTypeInfo.Type == apiRequestBaseType)
-        {
             jsonTypeInfo.PolymorphismOptions = new JsonPolymorphismOptions
             {
                 TypeDiscriminatorPropertyName = "$type",
@@ -34,6 +33,11 @@ public sealed class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
                     new JsonDerivedType(typeof(BuscarConceptosRequest), nameof(BuscarConceptosRequest)),
                     new JsonDerivedType(typeof(BuscarDocumentosRequest), nameof(BuscarDocumentosRequest)),
                     new JsonDerivedType(typeof(BuscarEmpresasRequest), nameof(BuscarEmpresasRequest)),
+                    new JsonDerivedType(typeof(BuscarExistenciasProductoRequest), nameof(BuscarExistenciasProductoRequest)),
+                    new JsonDerivedType(typeof(BuscarExistenciasProductoConCapasRequest),
+                        nameof(BuscarExistenciasProductoConCapasRequest)),
+                    new JsonDerivedType(typeof(BuscarExistenciasProductoConCaracteristicasRequest),
+                        nameof(BuscarExistenciasProductoConCaracteristicasRequest)),
                     new JsonDerivedType(typeof(BuscarProductosRequest), nameof(BuscarProductosRequest)),
                     new JsonDerivedType(typeof(CancelarDocumentoRequest), nameof(CancelarDocumentoRequest)),
                     new JsonDerivedType(typeof(CrearAgenteRequest), nameof(CrearAgenteRequest)),
@@ -50,11 +54,9 @@ public sealed class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
                     new JsonDerivedType(typeof(TimbrarDocumentoRequest), nameof(TimbrarDocumentoRequest))
                 }
             };
-        }
 
         Type apiResponseBaseType = typeof(ContpaqiResponse);
         if (jsonTypeInfo.Type == apiResponseBaseType)
-        {
             jsonTypeInfo.PolymorphismOptions = new JsonPolymorphismOptions
             {
                 TypeDiscriminatorPropertyName = "$type",
@@ -73,6 +75,11 @@ public sealed class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
                     new JsonDerivedType(typeof(BuscarConceptosResponse), nameof(BuscarConceptosResponse)),
                     new JsonDerivedType(typeof(BuscarDocumentosResponse), nameof(BuscarDocumentosResponse)),
                     new JsonDerivedType(typeof(BuscarEmpresasResponse), nameof(BuscarEmpresasResponse)),
+                    new JsonDerivedType(typeof(BuscarExistenciasProductoResponse), nameof(BuscarExistenciasProductoResponse)),
+                    new JsonDerivedType(typeof(BuscarExistenciasProductoConCapasResponse),
+                        nameof(BuscarExistenciasProductoConCapasResponse)),
+                    new JsonDerivedType(typeof(BuscarExistenciasProductoConCaracteristicasResponse),
+                        nameof(BuscarExistenciasProductoConCaracteristicasResponse)),
                     new JsonDerivedType(typeof(BuscarProductosResponse), nameof(BuscarProductosResponse)),
                     new JsonDerivedType(typeof(CancelarDocumentoResponse), nameof(CancelarDocumentoResponse)),
                     new JsonDerivedType(typeof(CrearAgenteResponse), nameof(CrearAgenteResponse)),
@@ -84,14 +91,13 @@ public sealed class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
                     new JsonDerivedType(typeof(EliminarClienteResponse), nameof(EliminarClienteResponse)),
                     new JsonDerivedType(typeof(EliminarDocumentoResponse), nameof(EliminarDocumentoResponse)),
                     new JsonDerivedType(typeof(EliminarProductoResponse), nameof(EliminarProductoResponse)),
+                    new JsonDerivedType(typeof(EmptyContpaqiResponse), nameof(EmptyContpaqiResponse)),
+                    new JsonDerivedType(typeof(ErrorContpaqiResponse), nameof(ErrorContpaqiResponse)),
                     new JsonDerivedType(typeof(GenerarDocumentoDigitalResponse), nameof(GenerarDocumentoDigitalResponse)),
                     new JsonDerivedType(typeof(SaldarDocumentoResponse), nameof(SaldarDocumentoResponse)),
-                    new JsonDerivedType(typeof(TimbrarDocumentoResponse), nameof(TimbrarDocumentoResponse)),
-                    new JsonDerivedType(typeof(EmptyContpaqiResponse), nameof(EmptyContpaqiResponse)),
-                    new JsonDerivedType(typeof(ErrorContpaqiResponse), nameof(ErrorContpaqiResponse))
+                    new JsonDerivedType(typeof(TimbrarDocumentoResponse), nameof(TimbrarDocumentoResponse))
                 }
             };
-        }
 
         return jsonTypeInfo;
     }
