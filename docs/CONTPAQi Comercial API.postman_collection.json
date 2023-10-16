@@ -5,7 +5,7 @@
 		"description": "Esta coleccion expone las diferentes solicitudes que se pueden enviar a la API.\n\nTe recomiendo que revises la documentacion constantemente para actualizaciones ya que es muy probable que aya varios cambios los primeros meses.\n\nSi tienes dudas o preguntas puedes hacermelas saber en una discusion. O si quieres reportar un error puedes levantar un issue.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "16633069",
-		"_collection_link": "https://grey-astronaut-557995.postman.co/workspace/CONTPAQi-APIs~a18e8e21-875e-45fe-9561-f544437d2aa6/collection/16633069-c24d30d0-7ff4-4c4e-9fda-84454f24be9d?action=share&creator=16633069&source=collection_link"
+		"_collection_link": "https://grey-astronaut-557995.postman.co/workspace/CONTPAQi-APIs~a18e8e21-875e-45fe-9561-f544437d2aa6/collection/16633069-c24d30d0-7ff4-4c4e-9fda-84454f24be9d?action=share&source=collection_link&creator=16633069"
 	},
 	"item": [
 		{
@@ -606,6 +606,92 @@
 			]
 		},
 		{
+			"name": "Existencias",
+			"item": [
+				{
+					"name": "Buscar Existencias",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"$type\": \"BuscarExistenciasProductoRequest\",\r\n  \"model\": {\r\n    \"codigoProducto\": \"PRODUCTOPRUEBA\",\r\n    \"codigoAlmacen\": \"ALMACENPRUEBA\",\r\n    \"fecha\": \"2023-10-16T00:00:00-06:00\"\r\n  },\r\n  \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Existencias Con Caracteristicas",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"$type\": \"BuscarExistenciasProductoConCaracteristicasRequest\",\r\n  \"model\": {\r\n    \"codigoProducto\": \"PRODUCTOPRUEBA\",\r\n    \"codigoAlmacen\": \"ALMACENPRUEBA\",\r\n    \"fecha\": \"2023-10-16T00:00:00-06:00\",\r\n    \"abreviaturaValorCaracteristica1\": \"AB1\",\r\n    \"abreviaturaValorCaracteristica2\": \"AB2\",\r\n    \"abreviaturaValorCaracteristica3\": \"AB3\"\r\n  },\r\n  \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Existencias Con Capas Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"$type\": \"BuscarExistenciasProductoConCapasRequest\",\r\n  \"model\": {\r\n    \"codigoProducto\": \"PRODUCTOPRUEBA\",\r\n    \"codigoAlmacen\": \"ALMACENPRUEBA\",\r\n    \"pedimento\": \"123456789\",\r\n    \"lote\": \"123456789\"\r\n  },\r\n  \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Productos",
 			"item": [
 				{
@@ -821,39 +907,28 @@
 						}
 					},
 					"response": []
-				},
+				}
+			]
+		},
+		{
+			"name": "Worker",
+			"item": [
 				{
-					"name": "Create Request",
+					"name": "Is Active",
 					"request": {
-						"method": "POST",
+						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{url}}/api/requests",
+							"raw": "{{url}}/api/Worker/IsActive",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
-								"requests"
+								"Worker",
+								"IsActive"
 							]
 						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Response By Id",
-					"request": {
-						"method": "GET",
-						"header": []
 					},
 					"response": []
 				}
@@ -873,7 +948,8 @@
 					"var empresaRfcHeader = pm.variables.get(\"empresaRfcHeaderName\");",
 					"var empresaRfc = pm.variables.get(\"empresaRfc\");",
 					"pm.request.headers.add({ key: empresaRfcHeader, value: empresaRfc });",
-					""
+					"",
+					"pm.request.headers.add({ key: 'x-Esperar-Respuesta', value: true });"
 				]
 			}
 		},
