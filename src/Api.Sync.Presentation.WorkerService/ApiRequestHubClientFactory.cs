@@ -1,4 +1,5 @@
-﻿using Api.Sync.Core.Application.Common.Models;
+﻿using System.Text.Json;
+using Api.Sync.Core.Application.Common.Models;
 using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Options;
@@ -27,6 +28,7 @@ public sealed class ApiRequestHubClientFactory
                 options.Transports = HttpTransportType.WebSockets;
                 options.SkipNegotiation = true;
                 options.Headers.Add("Ocp-Apim-Subscription-Key", _apiSyncConfig.SubscriptionKey);
+                options.Headers.Add("x-Empresas", JsonSerializer.Serialize(_apiSyncConfig.Empresas));
             })
             .WithAutomaticReconnect()
             .Build();
