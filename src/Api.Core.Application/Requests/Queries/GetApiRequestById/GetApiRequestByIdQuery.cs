@@ -16,10 +16,13 @@ public sealed class GetApiRequestByIdQueryHandler : IRequestHandler<GetApiReques
         _applicationDbContext = applicationDbContext;
     }
 
-    public async Task<ApiRequest?> Handle(GetApiRequestByIdQuery request, CancellationToken cancellationToken)
+    public Task<ApiRequest?> Handle(GetApiRequestByIdQuery request, CancellationToken cancellationToken)
     {
-        return await _applicationDbContext.Requests.AsNoTracking()
+        // Hay un error o bug que afecta el rendimiento de la consulta se hace utilizando los metodos asincronos
+        // Leer: https://github.com/dotnet/efcore/issues/18221 y https://github.com/dotnet/SqlClient/issues/245 y https://github.com/dotnet/SqlClient/issues/593
+        // Todo: Convertir a async cuando EF Core libere una una version que corrija el rendimiento
+        return Task.FromResult(_applicationDbContext.Requests.AsNoTracking()
             .Include(m => m.Response)
-            .FirstOrDefaultAsync(m => m.Id == request.ApiRequestId && m.SubscriptionKey == request.SubscriptionKey, cancellationToken);
+            .FirstOrDefault(m => m.Id == request.ApiRequestId && m.SubscriptionKey == request.SubscriptionKey));
     }
 }

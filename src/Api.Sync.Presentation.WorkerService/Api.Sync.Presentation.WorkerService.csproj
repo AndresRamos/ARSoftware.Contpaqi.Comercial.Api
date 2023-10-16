@@ -7,7 +7,7 @@
 		<UserSecretsId>dotnet-Api.Sync.Presentation.WorkerService-4c728662-7534-4398-b83f-07379e4fbfc7</UserSecretsId>
 		<PlatformTarget>x86</PlatformTarget>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
-		<Version>2.4.0</Version>
+		<Version>2.5.0</Version>
 		<Authors>AR Software</Authors>
 		<Company>AR Software</Company>
 		<Description>Sincronizador para procesar solicitudes de la API en CONTPAQi Comercial.</Description>
@@ -15,11 +15,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="7.0.9" />
+		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="7.0.12" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
 		<PackageReference Include="Serilog.Expressions" Version="3.4.1" />
 		<PackageReference Include="Serilog.Extensions.Hosting" Version="7.0.0" />
-		<PackageReference Include="Serilog.Settings.Configuration" Version="7.0.0" />
+		<PackageReference Include="Serilog.Settings.Configuration" Version="7.0.1" />
 		<PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
 		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
 	</ItemGroup>

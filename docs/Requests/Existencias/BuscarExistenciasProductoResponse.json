@@ -1,0 +1,6 @@
+{
+  "$type": "BuscarExistenciasProductoResponse",
+  "model": {
+    "existencias": 1
+  }
+}

@@ -65,6 +65,12 @@ public sealed class Worker : BackgroundService
 
             while (!stoppingToken.IsCancellationRequested)
             {
+                if (_apiSyncConfig.ShouldShutDown())
+                {
+                    _logger.LogInformation("La aplicación debe apagarse.");
+                    break;
+                }
+
                 if (_pendingRequestQueue.IsEmpty)
                 {
                     _logger.LogDebug("Esperando solicitudes nuevas.");
@@ -98,12 +104,6 @@ public sealed class Worker : BackgroundService
 
                         await _mediator.Send(new ProcessApiRequestCommand(apiRequest), stoppingToken);
                     }
-                }
-
-                if (_apiSyncConfig.ShouldShutDown())
-                {
-                    _logger.LogInformation("La aplicación debe apagarse.");
-                    break;
                 }
             }
         }

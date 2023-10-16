@@ -1,0 +1,10 @@
+{
+  "$type": "BuscarExistenciasProductoConCapasRequest",
+  "model": {
+    "codigoProducto": "PRODUCTOPRUEBA",
+    "codigoAlmacen": "ALMACENPRUEBA",
+    "pedimento": "123456789",
+    "lote": "123456789"
+  },
+  "options": {}
+}

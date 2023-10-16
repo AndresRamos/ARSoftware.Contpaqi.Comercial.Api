@@ -2,28 +2,25 @@
   "$type": "CrearFacturaRequest",
   "model": {
     "documento": {
-      "fecha": "2023-05-01T00:00:00-05:00",
+      "id": 0,
       "concepto": {
+        "id": 0,
         "codigo": "402",
         "nombre": "",
         "datosExtra": {}
       },
       "serie": "",
+      "folio": 0,
+      "fecha": "2023-10-16T00:00:00-06:00",
       "cliente": {
-        "tipo": "ClienteProveedor",
+        "id": 0,
         "codigo": "CTEPORTE01",
         "razonSocial": "",
         "rfc": "",
-        "direccionFiscal": {
-          "calle": "",
-          "numeroExterior": "",
-          "numeroInterior": "",
-          "colonia": "",
-          "ciudad": "",
-          "estado": "",
-          "codigoPostal": "",
-          "pais": ""
-        },
+        "tipo": 0,
+        "usoCfdi": null,
+        "regimenFiscal": null,
+        "direccionFiscal": null,
         "datosExtra": {}
       },
       "moneda": {
@@ -31,45 +28,42 @@
         "nombre": "Peso Mexicano"
       },
       "tipoCambio": 1,
+      "agente": {
+        "id": 0,
+        "codigo": "AGENTEPRUEBA",
+        "nombre": "",
+        "tipo": "VentasCobro",
+        "datosExtra": {}
+      },
       "referencia": "Referencia doc",
       "observaciones": "Observaciones del documento.",
-      "agente": {
-        "codigo": "AGE001",
-        "nombre": "Agente 1",
-        "tipo": "VentasCobro",
-        "datosExtra": {
-          "CCOMISIONVENTAAGENTE": "5",
-          "CCOMISIONCOBROAGENTE": "10"
-        }
-      },
-      "direccionFiscal": {
-        "calle": "",
-        "numeroExterior": "",
-        "numeroInterior": "",
-        "colonia": "",
-        "ciudad": "",
-        "estado": "",
-        "codigoPostal": "",
-        "pais": ""
-      },
+      "total": 0,
       "formaPago": "03",
       "metodoPago": "PPD",
       "movimientos": [
         {
+          "id": 0,
           "producto": {
-            "tipo": "Producto",
+            "id": 0,
             "codigo": "PORTE03",
             "nombre": "",
+            "tipo": "Producto",
             "claveSat": "",
             "datosExtra": {}
           },
-          "unidades": 1,
-          "precio": 25000,
           "almacen": {
+            "id": 0,
             "codigo": "1",
             "nombre": "Almacen Uno",
             "datosExtra": {}
           },
+          "unidades": 1,
+          "precio": 25000,
+          "subtotal": 0,
+          "descuentos": null,
+          "impuestos": null,
+          "retenciones": null,
+          "total": 0,
           "referencia": "Referencia mov",
           "observaciones": "Observaciones del movimiento",
           "seriesCapas": [],
@@ -78,7 +72,22 @@
           }
         }
       ],
+      "direccionFiscal": {
+        "id": 0,
+        "tipoCatalogo": 0,
+        "tipo": "Fiscal",
+        "calle": "",
+        "numeroExterior": "",
+        "numeroInterior": "",
+        "colonia": "",
+        "ciudad": "",
+        "estado": "",
+        "codigoPostal": "",
+        "pais": "",
+        "datosExtra": {}
+      },
       "folioDigital": {
+        "id": 0,
         "uuid": "",
         "datosExtra": {}
       },
@@ -88,6 +97,7 @@
   "options": {
     "usarFechaDelDia": true,
     "buscarSiguienteFolio": true,
+    "crearCatalogos": false,
     "timbrar": true,
     "contrasenaCertificado": "12345678a",
     "generarDocumentosDigitales": true,
@@ -95,6 +105,7 @@
     "nombrePlantilla": "Carta_Porte_CFDI_Ingreso_2.rdl",
     "agregarArchivo": true,
     "nombreArchivo": "CartaPorteEjemplo.ini",
-    "contenidoArchivo": "[CartaPorte2.0]\r\nTranspInternac=No\r\nTotalDistRec=100\r\n\r\n[Ubicacion1]\r\nTipoUbicacion=Origen\r\nIDUbicacion=OR000001\r\nFechaHoraSalidaLlegada=2023-03-14T10:00:00\r\nRFCRemitenteDestinatario=URE180429TM6\r\nNombreRemitenteDestinatario=UNIVERSIDAD ROBOTICA ESPANOLA SA DE CV\r\n[Ubicacion1.Domicilio]\r\nPais=MEX\r\nCodigoPostal=88630\r\nEstado=TAM\r\nMunicipio=032\r\nLocalidad=07\r\nColonia=1041\r\nCalle=PRUEBAS\r\nNumeroExterior=1234\r\n\r\n[Ubicacion2]\r\nTipoUbicacion=Destino\r\nIDUbicacion=DE000001\r\nFechaHoraSalidaLlegada=2023-03-14T11:00:00\r\nRFCRemitenteDestinatario=AAA010101AAA\r\nNombreRemitenteDestinatario=CLIENTE CARTA PROTE 1\r\nDistanciaRecorrida=100.00\r\n[Ubicacion2.Domicilio]\r\nPais=MEX\r\nCodigoPostal=84000\r\nEstado=SON\r\nMunicipio=043\r\nLocalidad=10\r\nColonia=0602\r\nCalle=Nogales Centro\r\nNumeroExterior=100\r\n\r\n[Transporte1]\r\nClave=01\r\nPermSCT=TPAF01\r\nNumPermisoSCT=JKL987654\r\nConfigVehicular=C2\r\nPlacaVM=MNC6655\r\nAnioModeloVM=2023\r\nAseguraRespCivil=GNP\r\nPolizaRespCivil=TRE123456\r\nAseguraCarga=GNP\r\nPolizaCarga=POL123456\r\nPrimaSeguro=10000\r\n[Transporte1.Remolque1]\r\nSubTipoRem=CTR002\r\nPlaca=WFG9900\r\n\r\n[Figura1]\r\nTipoFigura=01\r\nRFCFigura=LELD920228KS8\r\nNombreFigura=DIEGO LEON LOPEZ\r\nNumLicencia=1206548981\r\n[Figura1.Domicilio]\r\nPais=MEX\r\nCodigoPostal=83000\r\nEstado=SON\r\nMunicipio=030\r\nLocalidad=07\r\nColonia=3140\r\nCalle=CENTRO NORTE\r\nNumeroExterior=100\r\n\r\n[Mercancias]\r\nNumTotalMercancias=1\r\nUnidadPeso=KGM\r\nPesoBrutoTotal=1.000\r\n\r\n[Mercancia1]\r\nBienesTransp=50101700\r\nDescripcion=Frutos secos\r\nCantidad=1.000000\r\nClaveUnidad=KGM\r\nUnidad=Kilogramo\r\nMaterialPeligroso=No\r\nPesoEnKg=1.000\r\nValorMercancia=100.000000\r\nMoneda=MXN\r\n[Mercancia1.CantidadTransporta1]\r\nCantidad=1.000000\r\nIDOrigen=OR000001\r\nIDDestino=DE000001\r\n"
+    "contenidoArchivo": "[CartaPorte2.0]\r\nTranspInternac=No\r\nTotalDistRec=100\r\n\r\n[Ubicacion1]\r\nTipoUbicacion=Origen\r\nIDUbicacion=OR000001\r\nFechaHoraSalidaLlegada=2023-03-14T10:00:00\r\nRFCRemitenteDestinatario=URE180429TM6\r\nNombreRemitenteDestinatario=UNIVERSIDAD ROBOTICA ESPANOLA SA DE CV\r\n[Ubicacion1.Domicilio]\r\nPais=MEX\r\nCodigoPostal=88630\r\nEstado=TAM\r\nMunicipio=032\r\nLocalidad=07\r\nColonia=1041\r\nCalle=PRUEBAS\r\nNumeroExterior=1234\r\n\r\n[Ubicacion2]\r\nTipoUbicacion=Destino\r\nIDUbicacion=DE000001\r\nFechaHoraSalidaLlegada=2023-03-14T11:00:00\r\nRFCRemitenteDestinatario=AAA010101AAA\r\nNombreRemitenteDestinatario=CLIENTE CARTA PROTE 1\r\nDistanciaRecorrida=100.00\r\n[Ubicacion2.Domicilio]\r\nPais=MEX\r\nCodigoPostal=84000\r\nEstado=SON\r\nMunicipio=043\r\nLocalidad=10\r\nColonia=0602\r\nCalle=Nogales Centro\r\nNumeroExterior=100\r\n\r\n[Transporte1]\r\nClave=01\r\nPermSCT=TPAF01\r\nNumPermisoSCT=JKL987654\r\nConfigVehicular=C2\r\nPlacaVM=MNC6655\r\nAnioModeloVM=2023\r\nAseguraRespCivil=GNP\r\nPolizaRespCivil=TRE123456\r\nAseguraCarga=GNP\r\nPolizaCarga=POL123456\r\nPrimaSeguro=10000\r\n[Transporte1.Remolque1]\r\nSubTipoRem=CTR002\r\nPlaca=WFG9900\r\n\r\n[Figura1]\r\nTipoFigura=01\r\nRFCFigura=LELD920228KS8\r\nNombreFigura=DIEGO LEON LOPEZ\r\nNumLicencia=1206548981\r\n[Figura1.Domicilio]\r\nPais=MEX\r\nCodigoPostal=83000\r\nEstado=SON\r\nMunicipio=030\r\nLocalidad=07\r\nColonia=3140\r\nCalle=CENTRO NORTE\r\nNumeroExterior=100\r\n\r\n[Mercancias]\r\nNumTotalMercancias=1\r\nUnidadPeso=KGM\r\nPesoBrutoTotal=1.000\r\n\r\n[Mercancia1]\r\nBienesTransp=50101700\r\nDescripcion=Frutos secos\r\nCantidad=1.000000\r\nClaveUnidad=KGM\r\nUnidad=Kilogramo\r\nMaterialPeligroso=No\r\nPesoEnKg=1.000\r\nValorMercancia=100.000000\r\nMoneda=MXN\r\n[Mercancia1.CantidadTransporta1]\r\nCantidad=1.000000\r\nIDOrigen=OR000001\r\nIDDestino=DE000001\r\n",
+    "cargarDatosExtra": false
   }
 }

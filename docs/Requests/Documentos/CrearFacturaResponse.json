@@ -11,7 +11,7 @@
       },
       "serie": "",
       "folio": 0,
-      "fecha": "2023-08-05T00:00:00-05:00",
+      "fecha": "2023-10-16T00:00:00-06:00",
       "cliente": {
         "id": 0,
         "codigo": "CLIENTEPRUEBA",
@@ -134,13 +134,13 @@
       "nombre": "FACTURA100.xml",
       "tipo": "text/xml",
       "ubicacion": "C:\\Compac\\Empresas\\adUNIVERSIDAD_ROBOTICA\\XML_SDK\\FACTURA100.xml",
-      "contenido": "HuXrFGV/AfJp4N5GQKtgnW/xG+EfCvoY2dyPBhYOYkBCMiQ1DHX9vwflU/wxdsTcMo0Ca8VSXZOBEX1nPcn9vLaahzjSNg=="
+      "contenido": "eNPMDNmOPExHJf8f9S3xf1LK7OrTRCeMUmC+OWJ5gVkgwhPLNP37Jo9XTgj3oEFXhz1qouGk0KItZmWblkQRj2UL/jw+/Q=="
     },
     "pdf": {
       "nombre": "FACTURA100.pdf",
       "tipo": "application/pdf",
       "ubicacion": "C:\\Compac\\Empresas\\adUNIVERSIDAD_ROBOTICA\\XML_SDK\\FACTURA100.pdf",
-      "contenido": "D0GUpoBKmvO0FW8cgre4WCngeE2hPNEQgxUbEOM7Pco0k+Mnl6hJ3FfTvKogD8/q3Eh1UL3uo8GnGFPw2HNQpdSRmuosaw=="
+      "contenido": "KLZE8VD/fngvCPl1hXsfaHkDaGR/sMCMddCN7F45iYOhaydhFlWalnN2KYtLD/D9vtppBHdQizhUQEIekCYKjePxBPJ1qA=="
     }
   }
 }

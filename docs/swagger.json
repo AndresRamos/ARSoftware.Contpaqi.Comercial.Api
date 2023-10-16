@@ -44,6 +44,14 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "x-Esperar-Respuesta",
+            "in": "header",
+            "style": "simple",
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
@@ -132,6 +140,14 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "x-Esperar-Respuesta",
+            "in": "header",
+            "style": "simple",
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
@@ -190,6 +206,14 @@
             "style": "simple",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "x-Esperar-Respuesta",
+            "in": "header",
+            "style": "simple",
+            "schema": {
+              "type": "boolean"
             }
           }
         ],
@@ -261,6 +285,15 @@
                   },
                   {
                     "$ref": "#/components/schemas/BuscarEmpresasRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarExistenciasProductoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarExistenciasProductoConCapasRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarExistenciasProductoConCaracteristicasRequest"
                   },
                   {
                     "$ref": "#/components/schemas/ActualizarProductoRequest"
@@ -344,6 +377,15 @@
                     "$ref": "#/components/schemas/BuscarEmpresasRequest"
                   },
                   {
+                    "$ref": "#/components/schemas/BuscarExistenciasProductoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarExistenciasProductoConCapasRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarExistenciasProductoConCaracteristicasRequest"
+                  },
+                  {
                     "$ref": "#/components/schemas/ActualizarProductoRequest"
                   },
                   {
@@ -425,6 +467,15 @@
                     "$ref": "#/components/schemas/BuscarEmpresasRequest"
                   },
                   {
+                    "$ref": "#/components/schemas/BuscarExistenciasProductoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarExistenciasProductoConCapasRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarExistenciasProductoConCaracteristicasRequest"
+                  },
+                  {
                     "$ref": "#/components/schemas/ActualizarProductoRequest"
                   },
                   {
@@ -497,6 +548,14 @@
             "style": "simple",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "x-Esperar-Respuesta",
+            "in": "header",
+            "style": "simple",
+            "schema": {
+              "type": "boolean"
             }
           }
         ],
@@ -571,6 +630,14 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "x-Esperar-Respuesta",
+            "in": "header",
+            "style": "simple",
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
@@ -642,6 +709,15 @@
                     },
                     {
                       "$ref": "#/components/schemas/BuscarEmpresasRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BuscarExistenciasProductoRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BuscarExistenciasProductoConCapasRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BuscarExistenciasProductoConCaracteristicasRequest"
                     },
                     {
                       "$ref": "#/components/schemas/ActualizarProductoRequest"
@@ -898,6 +974,15 @@
                       "$ref": "#/components/schemas/BuscarEmpresasResponse"
                     },
                     {
+                      "$ref": "#/components/schemas/BuscarExistenciasProductoResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BuscarExistenciasProductoConCapasResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BuscarExistenciasProductoConCaracteristicasResponse"
+                    },
+                    {
                       "$ref": "#/components/schemas/ActualizarProductoResponse"
                     },
                     {
@@ -920,6 +1005,43 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Worker/IsActive": {
+      "get": {
+        "tags": [
+          "Worker"
+        ],
+        "parameters": [
+          {
+            "name": "Ocp-Apim-Subscription-Key",
+            "in": "header",
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-Empresa-Rfc",
+            "in": "header",
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
                 }
               }
             }
@@ -1388,6 +1510,15 @@
                 "$ref": "#/components/schemas/BuscarEmpresasRequest"
               },
               {
+                "$ref": "#/components/schemas/BuscarExistenciasProductoRequest"
+              },
+              {
+                "$ref": "#/components/schemas/BuscarExistenciasProductoConCapasRequest"
+              },
+              {
+                "$ref": "#/components/schemas/BuscarExistenciasProductoConCaracteristicasRequest"
+              },
+              {
                 "$ref": "#/components/schemas/ActualizarProductoRequest"
               },
               {
@@ -1496,6 +1627,15 @@
               },
               {
                 "$ref": "#/components/schemas/BuscarEmpresasResponse"
+              },
+              {
+                "$ref": "#/components/schemas/BuscarExistenciasProductoResponse"
+              },
+              {
+                "$ref": "#/components/schemas/BuscarExistenciasProductoConCapasResponse"
+              },
+              {
+                "$ref": "#/components/schemas/BuscarExistenciasProductoConCaracteristicasResponse"
               },
               {
                 "$ref": "#/components/schemas/ActualizarProductoResponse"
@@ -1979,6 +2119,209 @@
         },
         "additionalProperties": false,
         "description": "Modelo de la solicitud BuscarEmpresasResponse."
+      },
+      "BuscarExistenciasProductoConCapasRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/BuscarExistenciasProductoConCapasRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/BuscarExistenciasProductoConCapasRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para buscar las existencias de un producto por lote y/o pedimento."
+      },
+      "BuscarExistenciasProductoConCapasRequestModel": {
+        "type": "object",
+        "properties": {
+          "codigoProducto": {
+            "type": "string",
+            "description": "Código del producto.",
+            "nullable": true
+          },
+          "codigoAlmacen": {
+            "type": "string",
+            "description": "Código del almacén.",
+            "nullable": true
+          },
+          "pedimento": {
+            "type": "string",
+            "description": "Numero de pedimento.",
+            "nullable": true
+          },
+          "lote": {
+            "type": "string",
+            "description": "Numero de lote.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud BuscarExistenciasProductoConCapasRequest."
+      },
+      "BuscarExistenciasProductoConCapasRequestOptions": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud BuscarExistenciasProductoConCapasRequest."
+      },
+      "BuscarExistenciasProductoConCapasResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/BuscarExistenciasProductoConCapasResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud BuscarExistenciasProductoConCapasRequest."
+      },
+      "BuscarExistenciasProductoConCapasResponseModel": {
+        "type": "object",
+        "properties": {
+          "existencias": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta BuscarExistenciasProductoConCapasResponse."
+      },
+      "BuscarExistenciasProductoConCaracteristicasRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/BuscarExistenciasProductoConCaracteristicasRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/BuscarExistenciasProductoConCaracteristicasRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para buscar las existencias de un producto con características en un almacén en una fecha determinada."
+      },
+      "BuscarExistenciasProductoConCaracteristicasRequestModel": {
+        "type": "object",
+        "properties": {
+          "codigoProducto": {
+            "type": "string",
+            "description": "Código del producto.",
+            "nullable": true
+          },
+          "codigoAlmacen": {
+            "type": "string",
+            "description": "Código del almacén.",
+            "nullable": true
+          },
+          "fecha": {
+            "type": "string",
+            "description": "Fecha.",
+            "format": "date-time"
+          },
+          "abreviaturaValorCaracteristica1": {
+            "type": "string",
+            "description": "Abreviatura del Valor de la Característica 1 del producto.",
+            "nullable": true
+          },
+          "abreviaturaValorCaracteristica2": {
+            "type": "string",
+            "description": "Abreviatura del Valor de la Característica 2 del producto.",
+            "nullable": true
+          },
+          "abreviaturaValorCaracteristica3": {
+            "type": "string",
+            "description": "Abreviatura del Valor de la Característica 3 del producto.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud BuscarExistenciasProductoConCaracteristicasRequest."
+      },
+      "BuscarExistenciasProductoConCaracteristicasRequestOptions": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud BuscarExistenciasProductoConCaracteristicasRequest."
+      },
+      "BuscarExistenciasProductoConCaracteristicasResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/BuscarExistenciasProductoConCaracteristicasResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud BuscarExistenciasProductoConCaracteristicasRequest."
+      },
+      "BuscarExistenciasProductoConCaracteristicasResponseModel": {
+        "type": "object",
+        "properties": {
+          "existencias": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta BuscarExistenciasProductoConCaracteristicasResponse."
+      },
+      "BuscarExistenciasProductoRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/BuscarExistenciasProductoRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/BuscarExistenciasProductoRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para buscar existencias de un producto en un almacén en una fecha determinada."
+      },
+      "BuscarExistenciasProductoRequestModel": {
+        "type": "object",
+        "properties": {
+          "codigoProducto": {
+            "type": "string",
+            "description": "Código del producto.",
+            "nullable": true
+          },
+          "codigoAlmacen": {
+            "type": "string",
+            "description": "Código del almacén.",
+            "nullable": true
+          },
+          "fecha": {
+            "type": "string",
+            "description": "Fecha.",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud BuscarExistenciasProductoRequest."
+      },
+      "BuscarExistenciasProductoRequestOptions": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud BuscarExistenciasProductoRequest."
+      },
+      "BuscarExistenciasProductoResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/BuscarExistenciasProductoResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud BuscarExistenciasProductoRequest."
+      },
+      "BuscarExistenciasProductoResponseModel": {
+        "type": "object",
+        "properties": {
+          "existencias": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta BuscarExistenciasProductoResponse."
       },
       "BuscarProductosRequest": {
         "type": "object",
@@ -2750,12 +3093,13 @@
           },
           "ubicacion": {
             "type": "string",
-            "description": "Ubicacion del documento.",
+            "description": "Ubicación del documento.",
             "nullable": true
           },
           "contenido": {
             "type": "string",
-            "description": "Contenido del documento. Solo aplica para los XML.",
+            "description": "Contenido del documento. Cuando se serializa a JSON, se convierte a Base64.",
+            "format": "byte",
             "nullable": true
           }
         },
