@@ -43,8 +43,7 @@ public class ResponsesController : ControllerBase
     {
         ApiRequest? request = await _mediator.Send(new GetApiRequestByIdQuery(id, ApimSubscriptionKey));
 
-        if (request?.Response is null)
-            return NotFound();
+        if (request?.Response is null) return NotFound();
 
         return Ok(request.Response);
     }
@@ -52,14 +51,7 @@ public class ResponsesController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> Post([FromRoute] Guid id, ApiResponse apiResponse)
     {
-        try
-        {
-            await _mediator.Send(new CreateApiResponseCommand(apiResponse, ApimSubscriptionKey, id));
-        }
-        catch (Exception e)
-        {
-            BadRequest(e.Message);
-        }
+        await _mediator.Send(new CreateApiResponseCommand(apiResponse, ApimSubscriptionKey, id));
 
         return Ok();
     }
@@ -81,8 +73,7 @@ public class ResponsesController : ControllerBase
 
         Type? type = responseType.Assembly.GetType(responseFullName);
 
-        if (type is null)
-            throw new InvalidOperationException($"Couldn't find type for response with name {responseFullName}.");
+        if (type is null) throw new InvalidOperationException($"Couldn't find type for response with name {responseFullName}.");
 
         if (Activator.CreateInstance(type) is not ContpaqiResponse instance)
             throw new InvalidOperationException($"Couldn't create instance for type {type}.");

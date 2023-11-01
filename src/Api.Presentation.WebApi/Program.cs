@@ -24,6 +24,9 @@ builder.Services.AddControllers(options =>
         options.JsonSerializerOptions.TypeInfoResolver = new PolymorphicTypeResolver();
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
+
+builder.Services.AddProblemDetails();
+
 builder.Services.AddApplicationServices().AddInfrastructureServices(builder.Configuration);
 
 builder.Services.AddSignalR();
