@@ -19,6 +19,7 @@ public static class ConfigureServices
         {
             serviceConfiguration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
             serviceConfiguration.RegisterServicesFromAssemblyContaining<ApiRequest>();
+            serviceConfiguration.AddOpenRequestPreProcessor(typeof(LoggingBehaviour<>));
             serviceConfiguration.AddOpenBehavior(typeof(PerformanceBehaviour<,>));
             serviceConfiguration.AddOpenBehavior(typeof(ValidationBehaviour<,>));
         });

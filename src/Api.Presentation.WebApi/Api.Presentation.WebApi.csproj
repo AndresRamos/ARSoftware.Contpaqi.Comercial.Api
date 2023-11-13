@@ -10,6 +10,7 @@
 		<Company>AR Software</Company>
 		<Description>API para generar solicitudes para ser procesadas en CONTPAQi Comercial.</Description>
 		<Copyright>Copyright © AR Software 2023</Copyright>
+		<UserSecretsId>524665f1-c124-4109-a1c7-3bcdc60a01a8</UserSecretsId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
