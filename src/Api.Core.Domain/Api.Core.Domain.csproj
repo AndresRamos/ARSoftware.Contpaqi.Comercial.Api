@@ -16,9 +16,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="ARSoftware.Contpaqi.Api.Common" Version="1.0.1" />
+		<PackageReference Include="ARSoftware.Contpaqi.Api.Common" Version="1.0.2" />
 		<PackageReference Include="ARSoftware.Contpaqi.Comercial.Sdk.Abstractions" Version="5.1.0" />
-		<PackageReference Include="MediatR" Version="12.1.1" />
 	</ItemGroup>
 
 	<ItemGroup>
