@@ -19,8 +19,8 @@
 		<PackageReference Include="ARSoftware.Contpaqi.Comercial.Sql.Models" Version="6.0.0" />
 		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
 		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.8.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.13" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
