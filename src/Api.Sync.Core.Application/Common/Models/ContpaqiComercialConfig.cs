@@ -7,4 +7,5 @@ public sealed class ContpaqiComercialConfig
     public bool HayIntefazConEmpresaContabilidad { get; set; }
     public string RutaPlantillasPdf { get; set; } = string.Empty;
     public Empresa Empresa { get; set; } = new();
+    public Dictionary<string, string> EmpresasMap { get; set; } = new();
 }
