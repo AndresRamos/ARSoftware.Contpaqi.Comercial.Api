@@ -19,11 +19,13 @@ public static class ConfigureServices
         {
             serviceConfiguration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
             serviceConfiguration.RegisterServicesFromAssemblyContaining<ApiRequest>();
+            serviceConfiguration.AddOpenRequestPreProcessor(typeof(LoggingBehaviour<>));
             serviceConfiguration.AddOpenBehavior(typeof(PerformanceBehaviour<,>));
             serviceConfiguration.AddOpenBehavior(typeof(ValidationBehaviour<,>));
         });
 
         serviceCollection.Configure<ApiSyncConfig>(configuration.GetSection(nameof(ApiSyncConfig)));
+        serviceCollection.PostConfigure<ApiSyncConfig>(apiSyncConfig => { apiSyncConfig.CalculateShutdownDateTime(); });
         serviceCollection.Configure<ContpaqiComercialConfig>(configuration.GetSection(nameof(ContpaqiComercialConfig)));
 
         serviceCollection.AddContpaqiComercialSdkServices();

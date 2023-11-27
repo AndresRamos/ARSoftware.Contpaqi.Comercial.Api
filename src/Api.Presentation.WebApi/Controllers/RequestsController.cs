@@ -132,7 +132,7 @@ public class RequestsController : ControllerBase
         if (EsperarRespuesta == true)
             while (!waitTimeTask.IsCompleted && request!.Status == RequestStatus.Pending)
             {
-                await Task.Delay(1000);
+                await Task.Delay(5000);
                 request = await _mediator.Send(new GetApiRequestByIdQuery(requestId, ApimSubscriptionKey));
             }
 

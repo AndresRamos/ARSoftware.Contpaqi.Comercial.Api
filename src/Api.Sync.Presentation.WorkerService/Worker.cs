@@ -82,7 +82,13 @@ public sealed class Worker : BackgroundService
 
                 if (_pendingRequestQueue.TryDequeue(out GetPendingRequestsMessage? getPendingRequestMessage))
                 {
-                    Empresa? empresa = empresas.FirstOrDefault(e => e.Parametros!.Rfc == getPendingRequestMessage.EmpresaRfc);
+                    bool empresaMapExists =
+                        _contpaqiComercialConfig.EmpresasMap.TryGetValue(getPendingRequestMessage.EmpresaRfc, out string? empresaBaseDatos);
+
+                    Empresa? empresa = empresaMapExists
+                        ? empresas.FirstOrDefault(e =>
+                            e.Parametros!.Rfc == getPendingRequestMessage.EmpresaRfc && e.BaseDatos == empresaBaseDatos)
+                        : empresas.FirstOrDefault(e => e.Parametros!.Rfc == getPendingRequestMessage.EmpresaRfc);
 
                     if (empresa is null) continue;
 
