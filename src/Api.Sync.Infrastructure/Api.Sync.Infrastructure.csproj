@@ -14,7 +14,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="ARSoftware.Contpaqi.Comercial.Sql" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
