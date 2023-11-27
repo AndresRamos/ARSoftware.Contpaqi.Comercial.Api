@@ -25,6 +25,7 @@ public static class ConfigureServices
         });
 
         serviceCollection.Configure<ApiSyncConfig>(configuration.GetSection(nameof(ApiSyncConfig)));
+        serviceCollection.PostConfigure<ApiSyncConfig>(apiSyncConfig => { apiSyncConfig.CalculateShutdownDateTime(); });
         serviceCollection.Configure<ContpaqiComercialConfig>(configuration.GetSection(nameof(ContpaqiComercialConfig)));
 
         serviceCollection.AddContpaqiComercialSdkServices();
