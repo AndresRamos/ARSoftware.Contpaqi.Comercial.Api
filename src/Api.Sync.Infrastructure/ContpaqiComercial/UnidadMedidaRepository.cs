@@ -37,4 +37,13 @@ public class UnidadMedidaRepository : IUnidadMedidaRepository
 
         return unidadMedida;
     }
+
+    public List<UnidadMedida> BuscarTodo()
+    {
+        List<UnidadMedidaDto> unidadesMedidaDto = _unidadMedidaRepository.TraerTodo();
+
+        var unidadesMedida = _mapper.Map<List<UnidadMedida>>(unidadesMedidaDto);
+
+        return unidadesMedida;
+    }
 }
