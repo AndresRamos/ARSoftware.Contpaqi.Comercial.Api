@@ -32,6 +32,18 @@ public sealed class DireccionFactory
         return ActualizaDireccionClienteResponse.CreateInstance(GetModeloPrueba());
     }
 
+    public static BuscarDireccionClienteRequest GetBuscarDireccionClienteRequest()
+    {
+        return new BuscarDireccionClienteRequest(
+            new BuscarDireccionClienteRequestModel { CodigoCliente = "PRUEBA", Tipo = TipoDireccion.Fiscal },
+            new BuscarDireccionClienteRequestOptions());
+    }
+
+    public static BuscarDireccionClienteResponse GetBuscarDireccionClienteResponse()
+    {
+        return BuscarDireccionClienteResponse.CreateInstance(GetModeloPrueba());
+    }
+
     private static Direccion GetModeloPrueba()
     {
         return new Direccion
@@ -66,5 +78,10 @@ public sealed class DireccionFactory
             JsonSerializer.Serialize<ContpaqiRequest>(GetActualizaDireccionClienteRequest(), options));
         File.WriteAllText(Path.Combine(directory, $"{nameof(ActualizaDireccionClienteResponse)}.json"),
             JsonSerializer.Serialize<ContpaqiResponse>(GetActualizaDireccionClienteResponse(), options));
+
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarDireccionClienteRequest)}.json"),
+            JsonSerializer.Serialize<ContpaqiRequest>(GetBuscarDireccionClienteRequest(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarDireccionClienteResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetBuscarDireccionClienteResponse(), options));
     }
 }
