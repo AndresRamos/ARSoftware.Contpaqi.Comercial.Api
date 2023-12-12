@@ -55,6 +55,7 @@ public sealed class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
                     new JsonDerivedType(typeof(EliminarClienteRequest), nameof(EliminarClienteRequest)),
                     new JsonDerivedType(typeof(EliminarDocumentoRequest), nameof(EliminarDocumentoRequest)),
                     new JsonDerivedType(typeof(EliminarProductoRequest), nameof(EliminarProductoRequest)),
+                    new JsonDerivedType(typeof(EliminarUnidadMedidaRequest), nameof(EliminarUnidadMedidaRequest)),
                     new JsonDerivedType(typeof(GenerarDocumentoDigitalRequest), nameof(GenerarDocumentoDigitalRequest)),
                     new JsonDerivedType(typeof(SaldarDocumentoRequest), nameof(SaldarDocumentoRequest)),
                     new JsonDerivedType(typeof(TimbrarDocumentoRequest), nameof(TimbrarDocumentoRequest))
@@ -103,6 +104,7 @@ public sealed class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
                     new JsonDerivedType(typeof(EliminarClienteResponse), nameof(EliminarClienteResponse)),
                     new JsonDerivedType(typeof(EliminarDocumentoResponse), nameof(EliminarDocumentoResponse)),
                     new JsonDerivedType(typeof(EliminarProductoResponse), nameof(EliminarProductoResponse)),
+                    new JsonDerivedType(typeof(EliminarUnidadMedidaResponse), nameof(EliminarUnidadMedidaResponse)),
                     new JsonDerivedType(typeof(EmptyContpaqiResponse), nameof(EmptyContpaqiResponse)),
                     new JsonDerivedType(typeof(ErrorContpaqiResponse), nameof(ErrorContpaqiResponse)),
                     new JsonDerivedType(typeof(GenerarDocumentoDigitalResponse), nameof(GenerarDocumentoDigitalResponse)),
