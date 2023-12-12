@@ -7,27 +7,37 @@ namespace Api.Sdk.ConsoleApp.JsonFactories;
 
 public static class UnidadesMedidaFactory
 {
-    public static CrearUnidadMedidaRequest GetCrearUnidadMedidaRequest()
+    private static CrearUnidadMedidaRequest GetCrearUnidadMedidaRequest()
     {
         return new CrearUnidadMedidaRequest(new CrearUnidadMedidaRequestModel { UnidadMedida = GetModeloPrueba() },
             new CrearUnidadMedidaRequestOptions());
     }
 
-    public static CrearUnidadMedidaResponse GetCrearUnidadMedidaResponse()
+    private static CrearUnidadMedidaResponse GetCrearUnidadMedidaResponse()
     {
         return new CrearUnidadMedidaResponse(new CrearUnidadMedidaResponseModel(GetModeloPrueba()));
     }
 
-    public static ActualizarUnidadMedidaRequest GetActualizarUnidadMedidaRequest()
+    private static ActualizarUnidadMedidaRequest GetActualizarUnidadMedidaRequest()
     {
         return new ActualizarUnidadMedidaRequest(
             new ActualizarUnidadMedidaRequestModel { Nombre = "PRUEBA", UnidadMedida = GetModeloPrueba() },
             new ActualizarUnidadMedidaRequestOptions());
     }
 
-    public static ActualizarUnidadMedidaResponse GetActualizarUnidadMedidaResponse()
+    private static ActualizarUnidadMedidaResponse GetActualizarUnidadMedidaResponse()
     {
         return new ActualizarUnidadMedidaResponse(new ActualizarUnidadMedidaResponseModel(GetModeloPrueba()));
+    }
+
+    private static BuscarUnidadesMedidaRequest GetBuscarUnidadesMedidaRequest()
+    {
+        return new BuscarUnidadesMedidaRequest(new BuscarUnidadesMedidaRequestModel(), new BuscarUnidadesMedidaRequestOptions());
+    }
+
+    private static BuscarUnidadesMedidaResponse GetBuscarUnidadesMedidaResponse()
+    {
+        return new BuscarUnidadesMedidaResponse(new BuscarUnidadesMedidaResponseModel(new List<UnidadMedida> { GetModeloPrueba() }));
     }
 
     public static UnidadMedida GetModeloPrueba()
@@ -52,5 +62,10 @@ public static class UnidadesMedidaFactory
             JsonSerializer.Serialize<ContpaqiRequest>(GetActualizarUnidadMedidaRequest(), options));
         File.WriteAllText(Path.Combine(directory, $"{nameof(ActualizarUnidadMedidaResponse)}.json"),
             JsonSerializer.Serialize<ContpaqiResponse>(GetActualizarUnidadMedidaResponse(), options));
+
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarUnidadesMedidaRequest)}.json"),
+            JsonSerializer.Serialize<ContpaqiRequest>(GetBuscarUnidadesMedidaRequest(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarUnidadesMedidaResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetBuscarUnidadesMedidaResponse(), options));
     }
 }
