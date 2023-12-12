@@ -46,6 +46,11 @@ public sealed class ActualizaDireccionClienteResponse : ContpaqiResponse<Actuali
     public ActualizaDireccionClienteResponse(ActualizaDireccionClienteResponseModel model) : base(model)
     {
     }
+
+    public static ActualizaDireccionClienteResponse CreateInstance(Direccion direccion)
+    {
+        return new ActualizaDireccionClienteResponse(new ActualizaDireccionClienteResponseModel(direccion));
+    }
 }
 
 /// <summary>
