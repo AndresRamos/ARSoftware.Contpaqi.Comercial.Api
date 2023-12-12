@@ -41,10 +41,15 @@ public sealed class ActualizarUnidadMedidaRequestOptions : ILoadRelatedDataOptio
 /// <summary>
 ///     Respuesta de la solicitud ActualizarUnidadMedidaRequest.
 /// </summary>
-public sealed class ActualizarUnidadMedidaResponse : ContpaqiResponse<ActualizaDireccionClienteResponseModel>
+public sealed class ActualizarUnidadMedidaResponse : ContpaqiResponse<ActualizarUnidadMedidaResponseModel>
 {
-    public ActualizarUnidadMedidaResponse(ActualizaDireccionClienteResponseModel model) : base(model)
+    public ActualizarUnidadMedidaResponse(ActualizarUnidadMedidaResponseModel model) : base(model)
     {
+    }
+
+    public static ActualizarUnidadMedidaResponse CreateInstance(UnidadMedida unidadMedida)
+    {
+        return new ActualizarUnidadMedidaResponse(new ActualizarUnidadMedidaResponseModel(unidadMedida));
     }
 }
 
@@ -53,5 +58,10 @@ public sealed class ActualizarUnidadMedidaResponse : ContpaqiResponse<ActualizaD
 /// </summary>
 public sealed class ActualizarUnidadMedidaResponseModel
 {
+    public ActualizarUnidadMedidaResponseModel(UnidadMedida unidadMedida)
+    {
+        UnidadMedida = unidadMedida;
+    }
+
     public UnidadMedida UnidadMedida { get; set; }
 }
