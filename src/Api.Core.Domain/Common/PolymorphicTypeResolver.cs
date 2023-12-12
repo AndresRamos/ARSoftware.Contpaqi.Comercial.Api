@@ -2,6 +2,7 @@
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 using Api.Core.Domain.Requests;
+using Api.Core.Domain.Requests.Direcciones;
 using ARSoftware.Contpaqi.Api.Common.Domain;
 using ARSoftware.Contpaqi.Api.Common.Responses;
 
@@ -43,6 +44,7 @@ public sealed class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
                     new JsonDerivedType(typeof(CrearAgenteRequest), nameof(CrearAgenteRequest)),
                     new JsonDerivedType(typeof(CrearAlmacenRequest), nameof(CrearAlmacenRequest)),
                     new JsonDerivedType(typeof(CrearClienteRequest), nameof(CrearClienteRequest)),
+                    new JsonDerivedType(typeof(CrearDireccionClienteRequest), nameof(CrearDireccionClienteRequest)),
                     new JsonDerivedType(typeof(CrearDocumentoRequest), nameof(CrearDocumentoRequest)),
                     new JsonDerivedType(typeof(CrearFacturaRequest), nameof(CrearFacturaRequest)),
                     new JsonDerivedType(typeof(CrearProductoRequest), nameof(CrearProductoRequest)),
@@ -85,6 +87,7 @@ public sealed class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
                     new JsonDerivedType(typeof(CrearAgenteResponse), nameof(CrearAgenteResponse)),
                     new JsonDerivedType(typeof(CrearAlmacenResponse), nameof(CrearAlmacenResponse)),
                     new JsonDerivedType(typeof(CrearClienteResponse), nameof(CrearClienteResponse)),
+                    new JsonDerivedType(typeof(CrearDireccionClienteResponse), nameof(CrearDireccionClienteResponse)),
                     new JsonDerivedType(typeof(CrearDocumentoResponse), nameof(CrearDocumentoResponse)),
                     new JsonDerivedType(typeof(CrearFacturaResponse), nameof(CrearFacturaResponse)),
                     new JsonDerivedType(typeof(CrearProductoResponse), nameof(CrearProductoResponse)),

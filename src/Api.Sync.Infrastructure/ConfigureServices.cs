@@ -73,6 +73,7 @@ public static class ConfigureServices
         serviceCollection.AddTransient<IFolioDigitalRepository, FolioDigitalRepository>();
         serviceCollection.AddTransient<IMovimientoRepository, MovimientoRepository>();
         serviceCollection.AddTransient<IProductoRepository, ProductoRepository>();
+        serviceCollection.AddTransient<IDireccionRepository, DireccionRepository>();
 
         return serviceCollection;
     }
