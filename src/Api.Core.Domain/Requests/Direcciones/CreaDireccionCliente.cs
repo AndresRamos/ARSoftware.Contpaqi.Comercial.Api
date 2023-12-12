@@ -5,10 +5,10 @@ namespace Api.Core.Domain.Requests.Direcciones;
 /// <summary>
 ///     Solicitud para crear una dirección de un cliente.
 /// </summary>
-public sealed class CreaDireccionClienteRequest : ContpaqiRequest<CreaDireccionClienteRequestModel, CreaDireccionClienteRequestOptions,
-    CreaDireccionClienteResponse>
+public sealed class CrearDireccionClienteRequest : ContpaqiRequest<CrearDireccionClienteRequestModel, CrearDireccionClienteRequestOptions,
+    CrearDireccionClienteResponse>
 {
-    public CreaDireccionClienteRequest(CreaDireccionClienteRequestModel model, CreaDireccionClienteRequestOptions options) : base(model,
+    public CrearDireccionClienteRequest(CrearDireccionClienteRequestModel model, CrearDireccionClienteRequestOptions options) : base(model,
         options)
     {
     }
@@ -17,7 +17,7 @@ public sealed class CreaDireccionClienteRequest : ContpaqiRequest<CreaDireccionC
 /// <summary>
 ///     Modelo de la solicitud CreaDireccionClienteRequest.
 /// </summary>
-public sealed class CreaDireccionClienteRequestModel
+public sealed class CrearDireccionClienteRequestModel
 {
     /// <summary>
     ///     Código del cliente al que se le creara la dirección.
@@ -33,7 +33,7 @@ public sealed class CreaDireccionClienteRequestModel
 /// <summary>
 ///     Opciones de la solicitud CreaDireccionClienteRequest.
 /// </summary>
-public sealed class CreaDireccionClienteRequestOptions : ILoadRelatedDataOptions
+public sealed class CrearDireccionClienteRequestOptions : ILoadRelatedDataOptions
 {
     public bool CargarDatosExtra { get; set; }
 }
@@ -41,24 +41,24 @@ public sealed class CreaDireccionClienteRequestOptions : ILoadRelatedDataOptions
 /// <summary>
 ///     Respuesta de la solicitud CreaDireccionClienteRequest.
 /// </summary>
-public sealed class CreaDireccionClienteResponse : ContpaqiResponse<CreaDireccionClienteResponseModel>
+public sealed class CrearDireccionClienteResponse : ContpaqiResponse<CrearDireccionClienteResponseModel>
 {
-    public CreaDireccionClienteResponse(CreaDireccionClienteResponseModel model) : base(model)
+    public CrearDireccionClienteResponse(CrearDireccionClienteResponseModel model) : base(model)
     {
     }
 
-    public static CreaDireccionClienteResponse CreateInstance(Direccion direccion)
+    public static CrearDireccionClienteResponse CreateInstance(Direccion direccion)
     {
-        return new CreaDireccionClienteResponse(new CreaDireccionClienteResponseModel(direccion));
+        return new CrearDireccionClienteResponse(new CrearDireccionClienteResponseModel(direccion));
     }
 }
 
 /// <summary>
 ///     Modelo de la respuesta CreaDireccionClienteResponse.
 /// </summary>
-public sealed class CreaDireccionClienteResponseModel
+public sealed class CrearDireccionClienteResponseModel
 {
-    public CreaDireccionClienteResponseModel(Direccion direccion)
+    public CrearDireccionClienteResponseModel(Direccion direccion)
     {
         Direccion = direccion;
     }
