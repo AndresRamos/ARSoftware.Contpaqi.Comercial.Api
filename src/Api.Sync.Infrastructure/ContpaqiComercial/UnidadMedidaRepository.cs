@@ -26,4 +26,15 @@ public class UnidadMedidaRepository : IUnidadMedidaRepository
 
         return unidadMedida;
     }
+
+    public UnidadMedida? BuscarPorNombre(string nombre)
+    {
+        UnidadMedidaDto? unidadMedidaDto = _unidadMedidaRepository.BuscarPorNombre(nombre);
+
+        if (unidadMedidaDto is null) return null;
+
+        var unidadMedida = _mapper.Map<UnidadMedida>(unidadMedidaDto);
+
+        return unidadMedida;
+    }
 }
