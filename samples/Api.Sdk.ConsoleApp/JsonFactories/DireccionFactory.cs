@@ -1,5 +1,5 @@
 ﻿using System.Text.Json;
-using Api.Core.Domain.Requests.Direcciones;
+using Api.Core.Domain.Requests;
 using ARSoftware.Contpaqi.Api.Common.Domain;
 using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Enums;
 using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Models;
@@ -18,6 +18,18 @@ public sealed class DireccionFactory
     public static CrearDireccionClienteResponse GetCrearDireccionClienteResponse()
     {
         return CrearDireccionClienteResponse.CreateInstance(GetModeloPrueba());
+    }
+
+    public static ActualizaDireccionClienteRequest GetActualizaDireccionClienteRequest()
+    {
+        return new ActualizaDireccionClienteRequest(
+            new ActualizaDireccionClienteRequestModel { CodigoCliente = "PRUEBA", Direccion = GetModeloPrueba() },
+            new ActualizaDireccionClienteRequestOptions());
+    }
+
+    public static ActualizaDireccionClienteResponse GetActualizaDireccionClienteResponse()
+    {
+        return ActualizaDireccionClienteResponse.CreateInstance(GetModeloPrueba());
     }
 
     private static Direccion GetModeloPrueba()
@@ -49,5 +61,10 @@ public sealed class DireccionFactory
             JsonSerializer.Serialize<ContpaqiRequest>(GetCrearDireccionClienteRequest(), options));
         File.WriteAllText(Path.Combine(directory, $"{nameof(CrearDireccionClienteResponse)}.json"),
             JsonSerializer.Serialize<ContpaqiResponse>(GetCrearDireccionClienteResponse(), options));
+
+        File.WriteAllText(Path.Combine(directory, $"{nameof(ActualizaDireccionClienteRequest)}.json"),
+            JsonSerializer.Serialize<ContpaqiRequest>(GetActualizaDireccionClienteRequest(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(ActualizaDireccionClienteResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetActualizaDireccionClienteResponse(), options));
     }
 }

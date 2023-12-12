@@ -1,6 +1,6 @@
 ﻿using ARSoftware.Contpaqi.Api.Common.Domain;
 
-namespace Api.Core.Domain.Requests.Direcciones;
+namespace Api.Core.Domain.Requests;
 
 /// <summary>
 ///     Solicitud para crear una dirección de un cliente.
