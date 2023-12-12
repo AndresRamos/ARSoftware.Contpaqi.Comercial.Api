@@ -1,5 +1,5 @@
 ﻿using System.Text.Json;
-using Api.Core.Domain.Requests.Direcciones;
+using Api.Core.Domain.Requests;
 using ARSoftware.Contpaqi.Api.Common.Domain;
 using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Enums;
 using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Models;

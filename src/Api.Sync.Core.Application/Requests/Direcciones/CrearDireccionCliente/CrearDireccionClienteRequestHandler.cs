@@ -1,4 +1,4 @@
-﻿using Api.Core.Domain.Requests.Direcciones;
+﻿using Api.Core.Domain.Requests;
 using Api.Sync.Core.Application.ContpaqiComercial.Interfaces;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Extensions;
 using ARSoftware.Contpaqi.Comercial.Sdk.Extras.Interfaces;

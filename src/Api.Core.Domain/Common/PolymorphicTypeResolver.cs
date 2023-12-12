@@ -2,7 +2,6 @@
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 using Api.Core.Domain.Requests;
-using Api.Core.Domain.Requests.Direcciones;
 using ARSoftware.Contpaqi.Api.Common.Domain;
 using ARSoftware.Contpaqi.Api.Common.Responses;
 
