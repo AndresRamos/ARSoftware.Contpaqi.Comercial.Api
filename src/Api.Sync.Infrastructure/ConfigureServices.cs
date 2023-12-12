@@ -74,6 +74,7 @@ public static class ConfigureServices
         serviceCollection.AddTransient<IMovimientoRepository, MovimientoRepository>();
         serviceCollection.AddTransient<IProductoRepository, ProductoRepository>();
         serviceCollection.AddTransient<IDireccionRepository, DireccionRepository>();
+        serviceCollection.AddTransient<IUnidadMedidaRepository, UnidadMedidaRepository>();
 
         return serviceCollection;
     }
