@@ -40,6 +40,17 @@ public static class UnidadesMedidaFactory
         return new BuscarUnidadesMedidaResponse(new BuscarUnidadesMedidaResponseModel(new List<UnidadMedida> { GetModeloPrueba() }));
     }
 
+    private static EliminarUnidadMedidaRequest GetEliminarUnidadMedidaRequest()
+    {
+        return new EliminarUnidadMedidaRequest(new EliminarUnidadMedidaRequestModel { NombreUnidad = "PRUEBA" },
+            new EliminarUnidadMedidaRequestOptions());
+    }
+
+    private static EliminarUnidadMedidaResponse GetEliminarUnidadMedidaResponse()
+    {
+        return new EliminarUnidadMedidaResponse(new EliminarUnidadMedidaResponseModel());
+    }
+
     public static UnidadMedida GetModeloPrueba()
     {
         return new UnidadMedida { Nombre = "PRUEBA", Abreviatura = "PZ", ClaveSat = "H87" };
@@ -67,5 +78,11 @@ public static class UnidadesMedidaFactory
             JsonSerializer.Serialize<ContpaqiRequest>(GetBuscarUnidadesMedidaRequest(), options));
         File.WriteAllText(Path.Combine(directory, $"{nameof(BuscarUnidadesMedidaResponse)}.json"),
             JsonSerializer.Serialize<ContpaqiResponse>(GetBuscarUnidadesMedidaResponse(), options));
+
+        File.WriteAllText(Path.Combine(directory, $"{nameof(EliminarUnidadMedidaRequest)}.json"),
+            JsonSerializer.Serialize<ContpaqiRequest>(GetEliminarUnidadMedidaRequest(), options));
+
+        File.WriteAllText(Path.Combine(directory, $"{nameof(EliminarUnidadMedidaResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetEliminarUnidadMedidaResponse(), options));
     }
 }
