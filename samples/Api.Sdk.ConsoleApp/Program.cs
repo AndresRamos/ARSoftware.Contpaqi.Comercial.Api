@@ -19,5 +19,6 @@ CartaPorteFactory.CearJson(Path.Combine(baseDirectory, "CartaPorte"));
 MovimientoFactory.CearJson(Path.Combine(baseDirectory, "Movimientos"));
 ExistenciasFactory.CearJson(Path.Combine(baseDirectory, "Existencias"));
 DireccionFactory.CearJson(Path.Combine(baseDirectory, "Direcciones"));
+UnidadesMedidaFactory.CearJson(Path.Combine(baseDirectory, "UnidadesMedida"));
 
 Console.WriteLine("Programa Fin");
