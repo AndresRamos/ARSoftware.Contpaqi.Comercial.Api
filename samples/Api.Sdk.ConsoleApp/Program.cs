@@ -4,7 +4,9 @@ Console.WriteLine("Programa Inicio");
 
 const string baseDirectory = @"C:\AR Software\Contpaqi Comercial API\Requests";
 
-Directory.Delete(baseDirectory, true);
+if (Directory.Exists(baseDirectory)) Directory.Delete(baseDirectory, true);
+
+Directory.CreateDirectory(baseDirectory);
 
 AgenteFactory.CearJson(Path.Combine(baseDirectory, "Agentes"));
 AlmacenFactory.CearJson(Path.Combine(baseDirectory, "Almacenes"));
@@ -16,5 +18,6 @@ DocumentoFactory.CearJson(Path.Combine(baseDirectory, "Documentos"));
 CartaPorteFactory.CearJson(Path.Combine(baseDirectory, "CartaPorte"));
 MovimientoFactory.CearJson(Path.Combine(baseDirectory, "Movimientos"));
 ExistenciasFactory.CearJson(Path.Combine(baseDirectory, "Existencias"));
+DireccionFactory.CearJson(Path.Combine(baseDirectory, "Direcciones"));
 
 Console.WriteLine("Programa Fin");
