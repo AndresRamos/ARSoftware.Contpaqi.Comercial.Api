@@ -18,6 +18,7 @@ public sealed class
 /// </summary>
 public sealed class CrearUnidadMedidaRequestModel
 {
+    public UnidadMedida UnidadMedida { get; set; }
 }
 
 /// <summary>
