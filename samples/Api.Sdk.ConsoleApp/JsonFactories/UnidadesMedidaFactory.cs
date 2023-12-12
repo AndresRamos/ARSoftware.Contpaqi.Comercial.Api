@@ -18,9 +18,21 @@ public static class UnidadesMedidaFactory
         return new CrearUnidadMedidaResponse(new CrearUnidadMedidaResponseModel(GetModeloPrueba()));
     }
 
+    public static ActualizarUnidadMedidaRequest GetActualizarUnidadMedidaRequest()
+    {
+        return new ActualizarUnidadMedidaRequest(
+            new ActualizarUnidadMedidaRequestModel { Nombre = "PRUEBA", UnidadMedida = GetModeloPrueba() },
+            new ActualizarUnidadMedidaRequestOptions());
+    }
+
+    public static ActualizarUnidadMedidaResponse GetActualizarUnidadMedidaResponse()
+    {
+        return new ActualizarUnidadMedidaResponse(new ActualizarUnidadMedidaResponseModel(GetModeloPrueba()));
+    }
+
     public static UnidadMedida GetModeloPrueba()
     {
-        return new UnidadMedida { Nombre = "PIEZA", Abreviatura = "PZ", ClaveSat = "H87" };
+        return new UnidadMedida { Nombre = "PRUEBA", Abreviatura = "PZ", ClaveSat = "H87" };
     }
 
     public static void CearJson(string directory)
@@ -35,5 +47,10 @@ public static class UnidadesMedidaFactory
             JsonSerializer.Serialize<ContpaqiRequest>(GetCrearUnidadMedidaRequest(), options));
         File.WriteAllText(Path.Combine(directory, $"{nameof(CrearUnidadMedidaResponse)}.json"),
             JsonSerializer.Serialize<ContpaqiResponse>(GetCrearUnidadMedidaResponse(), options));
+
+        File.WriteAllText(Path.Combine(directory, $"{nameof(ActualizarUnidadMedidaRequest)}.json"),
+            JsonSerializer.Serialize<ContpaqiRequest>(GetActualizarUnidadMedidaRequest(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(ActualizarUnidadMedidaResponse)}.json"),
+            JsonSerializer.Serialize<ContpaqiResponse>(GetActualizarUnidadMedidaResponse(), options));
     }
 }

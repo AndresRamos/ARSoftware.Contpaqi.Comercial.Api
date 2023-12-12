@@ -3,4 +3,6 @@
 public interface IUnidadMedidaRepository
 {
     UnidadMedida? BuscarPorId(int id);
+
+    UnidadMedida? BuscarPorNombre(string nombre);
 }
