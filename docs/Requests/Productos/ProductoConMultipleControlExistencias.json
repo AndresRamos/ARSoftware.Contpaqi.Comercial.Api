@@ -1,9 +1,9 @@
 {
   "id": 0,
-  "codigo": "PROD001",
-  "nombre": "PRODUCTO DE PRUEBAS",
+  "codigo": "PRUEBAEXIS",
+  "nombre": "PRODUCTO CON MULTPLES EXISTENCIAS",
   "tipo": "Producto",
-  "controlExistencias": "Ninguno",
+  "controlExistencias": "Series, Pedimentos",
   "unidadMedida": {
     "id": 0,
     "abreviatura": "",

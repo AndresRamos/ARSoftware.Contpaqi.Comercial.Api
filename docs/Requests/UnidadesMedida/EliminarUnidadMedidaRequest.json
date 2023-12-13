@@ -1,0 +1,7 @@
+{
+  "$type": "EliminarUnidadMedidaRequest",
+  "model": {
+    "nombreUnidad": "PRUEBA"
+  },
+  "options": {}
+}

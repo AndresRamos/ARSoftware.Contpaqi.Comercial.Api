@@ -1,13 +1,13 @@
 {
   "id": 0,
-  "codigo": "PROD001",
-  "nombre": "PRODUCTO DE PRUEBAS",
+  "codigo": "PRUEBAUNI",
+  "nombre": "PRODUCTO CON UNIDAD",
   "tipo": "Producto",
-  "controlExistencias": "Ninguno",
+  "controlExistencias": "Unidades",
   "unidadMedida": {
     "id": 0,
     "abreviatura": "",
-    "nombre": "",
+    "nombre": "PIEZA",
     "claveSat": "",
     "datosExtra": {}
   },

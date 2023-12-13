@@ -1,0 +1,10 @@
+{
+  "$type": "BuscarDireccionClienteRequest",
+  "model": {
+    "codigoCliente": "PRUEBA",
+    "tipo": "Fiscal"
+  },
+  "options": {
+    "cargarDatosExtra": false
+  }
+}

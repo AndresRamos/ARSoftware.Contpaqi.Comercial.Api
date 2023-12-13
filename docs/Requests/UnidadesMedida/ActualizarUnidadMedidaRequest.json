@@ -1,0 +1,16 @@
+{
+  "$type": "ActualizarUnidadMedidaRequest",
+  "model": {
+    "nombre": "PRUEBA",
+    "unidadMedida": {
+      "id": 0,
+      "abreviatura": "PZ",
+      "nombre": "PRUEBA",
+      "claveSat": "H87",
+      "datosExtra": {}
+    }
+  },
+  "options": {
+    "cargarDatosExtra": false
+  }
+}
