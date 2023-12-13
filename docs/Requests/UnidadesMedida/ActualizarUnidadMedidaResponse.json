@@ -1,0 +1,12 @@
+{
+  "$type": "ActualizarUnidadMedidaResponse",
+  "model": {
+    "unidadMedida": {
+      "id": 0,
+      "abreviatura": "PZ",
+      "nombre": "PRUEBA",
+      "claveSat": "H87",
+      "datosExtra": {}
+    }
+  }
+}

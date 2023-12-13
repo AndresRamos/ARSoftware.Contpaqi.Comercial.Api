@@ -11,7 +11,7 @@
       },
       "serie": "",
       "folio": 0,
-      "fecha": "2023-10-16T00:00:00-06:00",
+      "fecha": "2023-12-12T00:00:00-06:00",
       "cliente": {
         "id": 0,
         "codigo": "CTEPORTE01",
@@ -48,6 +48,14 @@
             "codigo": "PORTE03",
             "nombre": "",
             "tipo": "Producto",
+            "controlExistencias": "Ninguno",
+            "unidadMedida": {
+              "id": 0,
+              "abreviatura": "",
+              "nombre": "",
+              "claveSat": "",
+              "datosExtra": {}
+            },
             "claveSat": "",
             "datosExtra": {}
           },

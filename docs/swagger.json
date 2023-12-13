@@ -257,6 +257,15 @@
                     "$ref": "#/components/schemas/BuscarConceptosRequest"
                   },
                   {
+                    "$ref": "#/components/schemas/ActualizaDireccionClienteRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarDireccionClienteRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CrearDireccionClienteRequest"
+                  },
+                  {
                     "$ref": "#/components/schemas/ActualizarDocumentoRequest"
                   },
                   {
@@ -306,6 +315,18 @@
                   },
                   {
                     "$ref": "#/components/schemas/EliminarProductoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ActualizarUnidadMedidaRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarUnidadesMedidaRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CrearUnidadMedidaRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/EliminarUnidadMedidaRequest"
                   }
                 ]
               }
@@ -347,6 +368,15 @@
                     "$ref": "#/components/schemas/BuscarConceptosRequest"
                   },
                   {
+                    "$ref": "#/components/schemas/ActualizaDireccionClienteRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarDireccionClienteRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CrearDireccionClienteRequest"
+                  },
+                  {
                     "$ref": "#/components/schemas/ActualizarDocumentoRequest"
                   },
                   {
@@ -396,6 +426,18 @@
                   },
                   {
                     "$ref": "#/components/schemas/EliminarProductoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ActualizarUnidadMedidaRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarUnidadesMedidaRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CrearUnidadMedidaRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/EliminarUnidadMedidaRequest"
                   }
                 ]
               }
@@ -437,6 +479,15 @@
                     "$ref": "#/components/schemas/BuscarConceptosRequest"
                   },
                   {
+                    "$ref": "#/components/schemas/ActualizaDireccionClienteRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarDireccionClienteRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CrearDireccionClienteRequest"
+                  },
+                  {
                     "$ref": "#/components/schemas/ActualizarDocumentoRequest"
                   },
                   {
@@ -486,6 +537,18 @@
                   },
                   {
                     "$ref": "#/components/schemas/EliminarProductoRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ActualizarUnidadMedidaRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuscarUnidadesMedidaRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CrearUnidadMedidaRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/EliminarUnidadMedidaRequest"
                   }
                 ]
               }
@@ -681,6 +744,15 @@
                       "$ref": "#/components/schemas/BuscarConceptosRequest"
                     },
                     {
+                      "$ref": "#/components/schemas/ActualizaDireccionClienteRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BuscarDireccionClienteRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CrearDireccionClienteRequest"
+                    },
+                    {
                       "$ref": "#/components/schemas/ActualizarDocumentoRequest"
                     },
                     {
@@ -730,6 +802,18 @@
                     },
                     {
                       "$ref": "#/components/schemas/EliminarProductoRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ActualizarUnidadMedidaRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BuscarUnidadesMedidaRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CrearUnidadMedidaRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/EliminarUnidadMedidaRequest"
                     }
                   ]
                 }
@@ -944,6 +1028,15 @@
                       "$ref": "#/components/schemas/BuscarConceptosResponse"
                     },
                     {
+                      "$ref": "#/components/schemas/ActualizaDireccionClienteResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BuscarDireccionClienteResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CrearDireccionClienteResponse"
+                    },
+                    {
                       "$ref": "#/components/schemas/ActualizarDocumentoResponse"
                     },
                     {
@@ -993,6 +1086,18 @@
                     },
                     {
                       "$ref": "#/components/schemas/EliminarProductoResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ActualizarUnidadMedidaResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BuscarUnidadesMedidaResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CrearUnidadMedidaResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/EliminarUnidadMedidaResponse"
                     }
                   ]
                 }
@@ -1052,6 +1157,64 @@
   },
   "components": {
     "schemas": {
+      "ActualizaDireccionClienteRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/ActualizaDireccionClienteRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/ActualizaDireccionClienteRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para actualizar una dirección de un cliente."
+      },
+      "ActualizaDireccionClienteRequestModel": {
+        "type": "object",
+        "properties": {
+          "codigoCliente": {
+            "type": "string",
+            "description": "Código del cliente al que se le actualizara la dirección.",
+            "nullable": true
+          },
+          "direccion": {
+            "$ref": "#/components/schemas/Direccion"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud ActualizaDireccionClienteRequest."
+      },
+      "ActualizaDireccionClienteRequestOptions": {
+        "type": "object",
+        "properties": {
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud ActualizaDireccionClienteRequest."
+      },
+      "ActualizaDireccionClienteResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/ActualizaDireccionClienteResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud ActualizaDireccionClienteRequest."
+      },
+      "ActualizaDireccionClienteResponseModel": {
+        "type": "object",
+        "properties": {
+          "direccion": {
+            "$ref": "#/components/schemas/Direccion"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta ActualizaDireccionClienteResponse."
+      },
       "ActualizarAgenteRequest": {
         "type": "object",
         "properties": {
@@ -1365,6 +1528,64 @@
         "additionalProperties": false,
         "description": "Modelo de la respuesta ActualizarProductoResponse."
       },
+      "ActualizarUnidadMedidaRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/ActualizarUnidadMedidaRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/ActualizarUnidadMedidaRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para actualizar una unidad de medida."
+      },
+      "ActualizarUnidadMedidaRequestModel": {
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "description": "Nombre de la unidad de medida a actualizar.",
+            "nullable": true
+          },
+          "unidadMedida": {
+            "$ref": "#/components/schemas/UnidadMedida"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud ActualizarUnidadMedidaRequest."
+      },
+      "ActualizarUnidadMedidaRequestOptions": {
+        "type": "object",
+        "properties": {
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud ActualizarUnidadMedidaRequest."
+      },
+      "ActualizarUnidadMedidaResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/ActualizarUnidadMedidaResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud ActualizarUnidadMedidaRequest."
+      },
+      "ActualizarUnidadMedidaResponseModel": {
+        "type": "object",
+        "properties": {
+          "unidadMedida": {
+            "$ref": "#/components/schemas/UnidadMedida"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta ActualizarUnidadMedidaResponse."
+      },
       "Agente": {
         "type": "object",
         "properties": {
@@ -1480,6 +1701,15 @@
                 "$ref": "#/components/schemas/BuscarConceptosRequest"
               },
               {
+                "$ref": "#/components/schemas/ActualizaDireccionClienteRequest"
+              },
+              {
+                "$ref": "#/components/schemas/BuscarDireccionClienteRequest"
+              },
+              {
+                "$ref": "#/components/schemas/CrearDireccionClienteRequest"
+              },
+              {
                 "$ref": "#/components/schemas/ActualizarDocumentoRequest"
               },
               {
@@ -1529,6 +1759,18 @@
               },
               {
                 "$ref": "#/components/schemas/EliminarProductoRequest"
+              },
+              {
+                "$ref": "#/components/schemas/ActualizarUnidadMedidaRequest"
+              },
+              {
+                "$ref": "#/components/schemas/BuscarUnidadesMedidaRequest"
+              },
+              {
+                "$ref": "#/components/schemas/CrearUnidadMedidaRequest"
+              },
+              {
+                "$ref": "#/components/schemas/EliminarUnidadMedidaRequest"
               }
             ],
             "nullable": true
@@ -1599,6 +1841,15 @@
                 "$ref": "#/components/schemas/BuscarConceptosResponse"
               },
               {
+                "$ref": "#/components/schemas/ActualizaDireccionClienteResponse"
+              },
+              {
+                "$ref": "#/components/schemas/BuscarDireccionClienteResponse"
+              },
+              {
+                "$ref": "#/components/schemas/CrearDireccionClienteResponse"
+              },
+              {
                 "$ref": "#/components/schemas/ActualizarDocumentoResponse"
               },
               {
@@ -1648,6 +1899,18 @@
               },
               {
                 "$ref": "#/components/schemas/EliminarProductoResponse"
+              },
+              {
+                "$ref": "#/components/schemas/ActualizarUnidadMedidaResponse"
+              },
+              {
+                "$ref": "#/components/schemas/BuscarUnidadesMedidaResponse"
+              },
+              {
+                "$ref": "#/components/schemas/CrearUnidadMedidaResponse"
+              },
+              {
+                "$ref": "#/components/schemas/EliminarUnidadMedidaResponse"
               }
             ],
             "nullable": true
@@ -1965,6 +2228,64 @@
         },
         "additionalProperties": false,
         "description": "Modelo de la respuesta BuscarConceptosRequest."
+      },
+      "BuscarDireccionClienteRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/BuscarDireccionClienteRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/BuscarDireccionClienteRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para buscar una dirección de un cliente."
+      },
+      "BuscarDireccionClienteRequestModel": {
+        "type": "object",
+        "properties": {
+          "codigoCliente": {
+            "type": "string",
+            "description": "Código del cliente.",
+            "nullable": true
+          },
+          "tipo": {
+            "$ref": "#/components/schemas/TipoDireccion"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud BuscarDireccionClienteRequest."
+      },
+      "BuscarDireccionClienteRequestOptions": {
+        "type": "object",
+        "properties": {
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud BuscarDireccionClienteRequest."
+      },
+      "BuscarDireccionClienteResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/BuscarDireccionClienteResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud BuscarDireccionClienteRequest."
+      },
+      "BuscarDireccionClienteResponseModel": {
+        "type": "object",
+        "properties": {
+          "direccion": {
+            "$ref": "#/components/schemas/Direccion"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta BuscarDireccionClienteResponse."
       },
       "BuscarDocumentosRequest": {
         "type": "object",
@@ -2398,6 +2719,63 @@
         },
         "additionalProperties": false
       },
+      "BuscarUnidadesMedidaRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/BuscarUnidadesMedidaRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/BuscarUnidadesMedidaRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para buscar unidades de medida."
+      },
+      "BuscarUnidadesMedidaRequestModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud BuscarUnidadesMedidaRequest."
+      },
+      "BuscarUnidadesMedidaRequestOptions": {
+        "type": "object",
+        "properties": {
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud BuscarUnidadesMedidaRequest."
+      },
+      "BuscarUnidadesMedidaResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/BuscarUnidadesMedidaResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud BuscarUnidadesMedidaRequest."
+      },
+      "BuscarUnidadesMedidaResponseModel": {
+        "type": "object",
+        "properties": {
+          "numeroRegistros": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "unidadesMedida": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UnidadMedida"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta BuscarUnidadesMedidaResponse."
+      },
       "CancelarDocumentoRequest": {
         "type": "object",
         "properties": {
@@ -2535,6 +2913,17 @@
           }
         },
         "additionalProperties": false
+      },
+      "ControlExistencias": {
+        "enum": [
+          "Ninguno",
+          "Unidades",
+          "Caracteristicas",
+          "Series",
+          "Pedimentos",
+          "Lotes"
+        ],
+        "type": "string"
       },
       "CrearAgenteRequest": {
         "type": "object",
@@ -2694,6 +3083,64 @@
         },
         "additionalProperties": false,
         "description": "Modelo de la respuesta CrearClienteResponse"
+      },
+      "CrearDireccionClienteRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/CrearDireccionClienteRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/CrearDireccionClienteRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para crear una dirección de un cliente."
+      },
+      "CrearDireccionClienteRequestModel": {
+        "type": "object",
+        "properties": {
+          "codigoCliente": {
+            "type": "string",
+            "description": "Código del cliente al que se le creara la dirección.",
+            "nullable": true
+          },
+          "direccion": {
+            "$ref": "#/components/schemas/Direccion"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud CreaDireccionClienteRequest."
+      },
+      "CrearDireccionClienteRequestOptions": {
+        "type": "object",
+        "properties": {
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud CreaDireccionClienteRequest."
+      },
+      "CrearDireccionClienteResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/CrearDireccionClienteResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud CreaDireccionClienteRequest."
+      },
+      "CrearDireccionClienteResponseModel": {
+        "type": "object",
+        "properties": {
+          "direccion": {
+            "$ref": "#/components/schemas/Direccion"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta CreaDireccionClienteResponse."
       },
       "CrearDocumentoRequest": {
         "type": "object",
@@ -2911,6 +3358,59 @@
         },
         "additionalProperties": false,
         "description": "Modelo de la respuesta CrearProductoResponse."
+      },
+      "CrearUnidadMedidaRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/CrearUnidadMedidaRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/CrearUnidadMedidaRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para crear una unidad de medida."
+      },
+      "CrearUnidadMedidaRequestModel": {
+        "type": "object",
+        "properties": {
+          "unidadMedida": {
+            "$ref": "#/components/schemas/UnidadMedida"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud CrearUnidadMedidaRequest."
+      },
+      "CrearUnidadMedidaRequestOptions": {
+        "type": "object",
+        "properties": {
+          "cargarDatosExtra": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud CrearUnidadMedidaRequest."
+      },
+      "CrearUnidadMedidaResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/CrearUnidadMedidaResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta de la solicitud CrearUnidadMedidaRequest."
+      },
+      "CrearUnidadMedidaResponseModel": {
+        "type": "object",
+        "properties": {
+          "unidadMedida": {
+            "$ref": "#/components/schemas/UnidadMedida"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta CrearUnidadMedidaResponse."
       },
       "Descuento": {
         "type": "object",
@@ -3237,6 +3737,51 @@
         "type": "object",
         "additionalProperties": false,
         "description": "Modelo de la respuesta EliminarProductoResponse."
+      },
+      "EliminarUnidadMedidaRequest": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/EliminarUnidadMedidaRequestModel"
+          },
+          "options": {
+            "$ref": "#/components/schemas/EliminarUnidadMedidaRequestOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Solicitud para eliminar una unidad de medida."
+      },
+      "EliminarUnidadMedidaRequestModel": {
+        "type": "object",
+        "properties": {
+          "nombreUnidad": {
+            "type": "string",
+            "description": "Nombre de la unidad de medida.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo de la solicitud EliminarUnidadMedidaRequest."
+      },
+      "EliminarUnidadMedidaRequestOptions": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Opciones de la solicitud EliminarUnidadMedidaRequest."
+      },
+      "EliminarUnidadMedidaResponse": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/EliminarUnidadMedidaResponseModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Respuesta a la solicitud EliminarUnidadMedidaRequest."
+      },
+      "EliminarUnidadMedidaResponseModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Modelo de la respuesta EliminarUnidadMedidaResponse."
       },
       "Empresa": {
         "type": "object",
@@ -3565,6 +4110,12 @@
           "tipo": {
             "$ref": "#/components/schemas/TipoProducto"
           },
+          "controlExistencias": {
+            "$ref": "#/components/schemas/ControlExistencias"
+          },
+          "unidadMedida": {
+            "$ref": "#/components/schemas/UnidadMedida"
+          },
           "claveSat": {
             "type": "string",
             "nullable": true
@@ -3863,6 +4414,35 @@
           "Servicio"
         ],
         "type": "string"
+      },
+      "UnidadMedida": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "abreviatura": {
+            "type": "string",
+            "nullable": true
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "claveSat": {
+            "type": "string",
+            "nullable": true
+          },
+          "datosExtra": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "UsoCfdiEnum": {
         "type": "object",

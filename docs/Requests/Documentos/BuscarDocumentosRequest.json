@@ -8,8 +8,8 @@
       "folio": 1
     },
     "conceptoCodigo": "PRUEBA",
-    "fechaInicio": "2023-10-16",
-    "fechaFin": "2023-10-16",
+    "fechaInicio": "2023-12-12",
+    "fechaFin": "2023-12-12",
     "clienteCodigo": "PRUEBA",
     "sqlQuery": "CPENDIENTE \u003E 0"
   },

@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using Api.Core.Domain.Requests;
 using ARSoftware.Contpaqi.Api.Common.Domain;
+using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Enums;
 using ARSoftware.Contpaqi.Comercial.Sdk.Abstractions.Models;
 using ARSoftware.Contpaqi.Comercial.Sql.Models.Empresa;
 
@@ -65,6 +66,31 @@ public static class ProductoFactory
         };
     }
 
+    private static Producto GetModeloConUnidadMedida()
+    {
+        return new Producto
+        {
+            Codigo = "PRUEBAUNI",
+            Nombre = "PRODUCTO CON UNIDAD",
+            ControlExistencias = ControlExistencias.Unidades,
+            UnidadMedida = new UnidadMedida { Nombre = "PIEZA" },
+            ClaveSat = "43231500",
+            DatosExtra = GetDatosExtraPrueba()
+        };
+    }
+
+    private static Producto GetModeloConMultipleControlExistencias()
+    {
+        return new Producto
+        {
+            Codigo = "PRUEBAEXIS",
+            Nombre = "PRODUCTO CON MULTPLES EXISTENCIAS",
+            ControlExistencias = ControlExistencias.Series | ControlExistencias.Pedimentos,
+            ClaveSat = "43231500",
+            DatosExtra = GetDatosExtraPrueba()
+        };
+    }
+
     private static Dictionary<string, string> GetDatosExtraPrueba()
     {
         return new Dictionary<string, string>
@@ -83,6 +109,10 @@ public static class ProductoFactory
         JsonSerializerOptions options = FactoryExtensions.GetJsonSerializerOptions();
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(Producto)}.json"), JsonSerializer.Serialize(GetModeloPrueba(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(Producto)}ConUnidadMedida.json"),
+            JsonSerializer.Serialize(GetModeloConUnidadMedida(), options));
+        File.WriteAllText(Path.Combine(directory, $"{nameof(Producto)}ConMultipleControlExistencias.json"),
+            JsonSerializer.Serialize(GetModeloConMultipleControlExistencias(), options));
 
         File.WriteAllText(Path.Combine(directory, $"{nameof(CrearProductoRequest)}.json"),
             JsonSerializer.Serialize<ContpaqiRequest>(GetCrearProductoRequest(), options));

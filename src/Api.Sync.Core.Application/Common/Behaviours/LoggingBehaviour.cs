@@ -16,7 +16,8 @@ public sealed class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest> 
     {
         string requestName = typeof(TRequest).Name;
 
-        _logger.LogInformation("API Sync Request: {Name} {@Request}", requestName, request);
+        _logger.LogInformation("API Sync Request: {Name} ", requestName);
+        _logger.LogDebug("API Sync Request: {Name} {@Request}", requestName, request);
 
         return Task.CompletedTask;
     }

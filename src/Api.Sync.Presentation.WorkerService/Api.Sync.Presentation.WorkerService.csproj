@@ -7,7 +7,7 @@
 		<UserSecretsId>dotnet-Api.Sync.Presentation.WorkerService-4c728662-7534-4398-b83f-07379e4fbfc7</UserSecretsId>
 		<PlatformTarget>x86</PlatformTarget>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
-		<Version>3.0.0</Version>
+		<Version>3.1.0</Version>
 		<Authors>AR Software</Authors>
 		<Company>AR Software</Company>
 		<Description>Sincronizador para procesar solicitudes de la API en CONTPAQi Comercial.</Description>

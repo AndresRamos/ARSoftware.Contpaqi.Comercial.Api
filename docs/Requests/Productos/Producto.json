@@ -3,6 +3,14 @@
   "codigo": "PROD001",
   "nombre": "PRODUCTO DE PRUEBAS",
   "tipo": "Producto",
+  "controlExistencias": "Ninguno",
+  "unidadMedida": {
+    "id": 0,
+    "abreviatura": "",
+    "nombre": "",
+    "claveSat": "",
+    "datosExtra": {}
+  },
   "claveSat": "43231500",
   "datosExtra": {
     "CCLAVESAT": "43231500",

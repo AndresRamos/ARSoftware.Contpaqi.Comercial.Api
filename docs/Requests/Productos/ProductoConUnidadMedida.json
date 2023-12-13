@@ -1,0 +1,21 @@
+{
+  "id": 0,
+  "codigo": "PRUEBAUNI",
+  "nombre": "PRODUCTO CON UNIDAD",
+  "tipo": "Producto",
+  "controlExistencias": "Unidades",
+  "unidadMedida": {
+    "id": 0,
+    "abreviatura": "",
+    "nombre": "PIEZA",
+    "claveSat": "",
+    "datosExtra": {}
+  },
+  "claveSat": "43231500",
+  "datosExtra": {
+    "CCLAVESAT": "43231500",
+    "CTEXTOEXTRA1": "Texto extra 1",
+    "CTEXTOEXTRA2": "Texto extra 2",
+    "CTEXTOEXTRA3": "Texto extra 3"
+  }
+}
