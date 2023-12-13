@@ -21,14 +21,14 @@ public sealed class DocumentoRepository : IDocumentoRepository
     private readonly IMapper _mapper;
     private readonly IMovimientoRepository _movimientoRepository;
 
-    public DocumentoRepository(ContpaqiComercialEmpresaDbContext context, IMapper mapper)
+    public DocumentoRepository(ContpaqiComercialEmpresaDbContext context, IMapper mapper, IUnidadMedidaRepository unidadMedidaRepository)
     {
         _context = context;
         _mapper = mapper;
         _clienteRepository = new ClienteRepository(context, mapper);
         _folioDigitalRepository = new FolioDigitalRepository(context, mapper);
         _conceptoRepository = new ConceptoRepository(context, mapper);
-        _movimientoRepository = new MovimientoRepository(context, mapper);
+        _movimientoRepository = new MovimientoRepository(context, mapper, unidadMedidaRepository);
         _agenteRepository = new AgenteRepository(context, mapper);
     }
 

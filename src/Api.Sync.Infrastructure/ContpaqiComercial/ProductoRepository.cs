@@ -15,11 +15,13 @@ public sealed class ProductoRepository : IProductoRepository
 {
     private readonly ContpaqiComercialEmpresaDbContext _context;
     private readonly IMapper _mapper;
+    private readonly IUnidadMedidaRepository _unidadMedidaRepository;
 
-    public ProductoRepository(ContpaqiComercialEmpresaDbContext context, IMapper mapper)
+    public ProductoRepository(ContpaqiComercialEmpresaDbContext context, IMapper mapper, IUnidadMedidaRepository unidadMedidaRepository)
     {
         _context = context;
         _mapper = mapper;
+        _unidadMedidaRepository = unidadMedidaRepository;
     }
 
     public async Task<Producto?> BuscarPorIdAsync(int id, ILoadRelatedDataOptions loadRelatedDataOptions,
@@ -92,6 +94,8 @@ public sealed class ProductoRepository : IProductoRepository
     private async Task CargarDatosRelacionadosAsync(Producto producto, ProductoDto productoSql,
         ILoadRelatedDataOptions loadRelatedDataOptions, CancellationToken cancellationToken)
     {
+        producto.UnidadMedida = _unidadMedidaRepository.BuscarPorId(productoSql.CIDUNIDADBASE) ?? new UnidadMedida();
+
         if (loadRelatedDataOptions.CargarDatosExtra)
             producto.DatosExtra = (await _context.admProductos.FirstAsync(m => m.CIDPRODUCTO == productoSql.CIDPRODUCTO, cancellationToken))
                 .ToDatosDictionary<admProductos>();
