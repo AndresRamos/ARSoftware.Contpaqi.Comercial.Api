@@ -303,7 +303,93 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"$type\": \"BuscarConceptosRequest\",\r\n  \"model\": {\r\n    \"id\": 1,\r\n    \"codigo\": \"FACTURAPRUEBA\",\r\n    \"sqlQuery\": \"CCODIGOCONCEPTO = \\u0027PRUEBAFACTURA\\u0027\"\r\n  },\r\n  \"options\": {\r\n    \"cargarDatosExtra\": false\r\n  }\r\n}",
+							"raw": "{\r\n  \"$type\": \"BuscarConceptosRequest\",\r\n  \"model\": {\r\n    \r\n  },\r\n  \"options\": {\r\n    \"cargarDatosExtra\": false\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Direcciones",
+			"item": [
+				{
+					"name": "Crear Direccion Cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"$type\": \"CrearDireccionClienteRequest\",\r\n  \"model\": {\r\n    \"codigoCliente\": \"PRUEBADIR\",\r\n    \"direccion\": {\r\n      \"id\": 0,\r\n      \"tipoCatalogo\": \"Clientes\",\r\n      \"tipo\": \"Fiscal\",\r\n      \"calle\": \"Calle\",\r\n      \"numeroExterior\": \"1\",\r\n      \"numeroInterior\": \"1\",\r\n      \"colonia\": \"Colonia\",\r\n      \"ciudad\": \"Ciudad\",\r\n      \"estado\": \"Estado\",\r\n      \"codigoPostal\": \"123456\",\r\n      \"pais\": \"Mexico\",\r\n      \"datosExtra\": {}\r\n    }\r\n  },\r\n  \"options\": {\r\n    \"cargarDatosExtra\": false\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualiza Direccion Cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"$type\": \"ActualizaDireccionClienteRequest\",\r\n  \"model\": {\r\n    \"codigoCliente\": \"PRUEBA\",\r\n    \"direccion\": {\r\n      \"id\": 0,\r\n      \"tipoCatalogo\": \"Clientes\",\r\n      \"tipo\": \"Fiscal\",\r\n      \"calle\": \"Actualizada\",\r\n      \"numeroExterior\": \"1\",\r\n      \"numeroInterior\": \"1\",\r\n      \"colonia\": \"Colonia\",\r\n      \"ciudad\": \"Ciudad\",\r\n      \"estado\": \"Estado\",\r\n      \"codigoPostal\": \"123456\",\r\n      \"pais\": \"Mexico\",\r\n      \"datosExtra\": {}\r\n    }\r\n  },\r\n  \"options\": {\r\n    \"cargarDatosExtra\": false\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Direccion Cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"$type\": \"BuscarDireccionClienteRequest\",\r\n  \"model\": {\r\n    \"codigoCliente\": \"PRUEBA\",\r\n    \"tipo\": \"Fiscal\"\r\n  },\r\n  \"options\": {\r\n    \"cargarDatosExtra\": false\r\n  }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -335,7 +421,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"$type\": \"CrearDocumentoRequest\",\r\n  \"model\": {\r\n    \"documento\": {\r\n      \"id\": 0,\r\n      \"concepto\": {\r\n        \"id\": 0,\r\n        \"codigo\": \"FACTURAPRUEBA\",\r\n        \"nombre\": \"\",\r\n        \"datosExtra\": {}\r\n      },\r\n      \"serie\": \"\",\r\n      \"folio\": 0,\r\n      \"fecha\": \"2023-08-04T00:00:00-05:00\",\r\n      \"cliente\": {\r\n        \"id\": 0,\r\n        \"codigo\": \"CLIENTEPRUEBA\",\r\n        \"razonSocial\": \"\",\r\n        \"rfc\": \"\",\r\n        \"tipo\": 0,\r\n        \"usoCfdi\": null,\r\n        \"regimenFiscal\": null,\r\n        \"direccionFiscal\": null,\r\n        \"datosExtra\": {}\r\n      },\r\n      \"moneda\": {\r\n        \"id\": 1,\r\n        \"nombre\": \"Peso Mexicano\"\r\n      },\r\n      \"tipoCambio\": 1,\r\n      \"agente\": {\r\n        \"id\": 0,\r\n        \"codigo\": \"AGENTEPRUEBA\",\r\n        \"nombre\": \"\",\r\n        \"tipo\": \"VentasCobro\",\r\n        \"datosExtra\": {}\r\n      },\r\n      \"referencia\": \"Referencia doc\",\r\n      \"observaciones\": \"Observaciones del documento.\",\r\n      \"total\": 0,\r\n      \"formaPago\": \"01\",\r\n      \"metodoPago\": \"PPD\",\r\n      \"movimientos\": [\r\n        {\r\n          \"id\": 0,\r\n          \"producto\": {\r\n            \"id\": 0,\r\n            \"codigo\": \"PROD001\",\r\n            \"nombre\": \"\",\r\n            \"tipo\": \"Producto\",\r\n            \"claveSat\": \"\",\r\n            \"datosExtra\": {}\r\n          },\r\n          \"almacen\": {\r\n            \"id\": 0,\r\n            \"codigo\": \"ALMACENPRUEBA\",\r\n            \"nombre\": \"\",\r\n            \"datosExtra\": {}\r\n          },\r\n          \"unidades\": 1,\r\n          \"precio\": 100,\r\n          \"subtotal\": 0,\r\n          \"descuentos\": {\r\n            \"descuento1\": {\r\n              \"tasa\": 10,\r\n              \"importe\": 0\r\n            },\r\n            \"descuento2\": {\r\n              \"tasa\": 0,\r\n              \"importe\": 0\r\n            },\r\n            \"descuento3\": {\r\n              \"tasa\": 0,\r\n              \"importe\": 0\r\n            },\r\n            \"descuento4\": {\r\n              \"tasa\": 0,\r\n              \"importe\": 0\r\n            },\r\n            \"descuento5\": {\r\n              \"tasa\": 0,\r\n              \"importe\": 0\r\n            }\r\n          },\r\n          \"impuestos\": {\r\n            \"impuesto1\": {\r\n              \"tasa\": 16,\r\n              \"importe\": 0\r\n            },\r\n            \"impuesto2\": {\r\n              \"tasa\": 0,\r\n              \"importe\": 0\r\n            },\r\n            \"impuesto3\": {\r\n              \"tasa\": 0,\r\n              \"importe\": 0\r\n            }\r\n          },\r\n          \"retenciones\": null,\r\n          \"total\": 0,\r\n          \"referencia\": \"Referencia mov\",\r\n          \"observaciones\": \"Observaciones del movimiento\",\r\n          \"seriesCapas\": [],\r\n          \"datosExtra\": {}\r\n        }\r\n      ],\r\n      \"direccionFiscal\": {\r\n        \"id\": 0,\r\n        \"tipoCatalogo\": 0,\r\n        \"tipo\": \"Fiscal\",\r\n        \"calle\": \"\",\r\n        \"numeroExterior\": \"\",\r\n        \"numeroInterior\": \"\",\r\n        \"colonia\": \"\",\r\n        \"ciudad\": \"\",\r\n        \"estado\": \"\",\r\n        \"codigoPostal\": \"\",\r\n        \"pais\": \"\",\r\n        \"datosExtra\": {}\r\n      },\r\n      \"folioDigital\": {\r\n        \"id\": 0,\r\n        \"uuid\": \"\",\r\n        \"datosExtra\": {}\r\n      },\r\n      \"datosExtra\": {\r\n        \"COBSERVACIONES\": \"Observaciones del documento.\",\r\n        \"CTEXTOEXTRA1\": \"Texto extra 1\",\r\n        \"CTEXTOEXTRA2\": \"Texto extra 2\",\r\n        \"CTEXTOEXTRA3\": \"Texto extra 3\"\r\n      }\r\n    }\r\n  },\r\n  \"options\": {\r\n    \"usarFechaDelDia\": true,\r\n    \"buscarSiguienteFolio\": true,\r\n    \"crearCatalogos\": false,\r\n    \"cargarDatosExtra\": false\r\n  }\r\n}",
+							"raw": "{\r\n  \"$type\": \"CrearDocumentoRequest\",\r\n  \"model\": {\r\n    \"documento\": {\r\n      \"id\": 0,\r\n      \"concepto\": {\r\n        \"id\": 0,\r\n        \"codigo\": \"FACTURAPRUEBA\",\r\n        \"nombre\": \"\",\r\n        \"datosExtra\": {}\r\n      },\r\n      \"serie\": \"\",\r\n      \"folio\": 0,\r\n      \"fecha\": \"2023-12-12T00:00:00-06:00\",\r\n      \"cliente\": {\r\n        \"id\": 0,\r\n        \"codigo\": \"CLIENTEPRUEBA\",\r\n        \"razonSocial\": \"\",\r\n        \"rfc\": \"\",\r\n        \"tipo\": 0,\r\n        \"usoCfdi\": null,\r\n        \"regimenFiscal\": null,\r\n        \"direccionFiscal\": null,\r\n        \"datosExtra\": {}\r\n      },\r\n      \"moneda\": {\r\n        \"id\": 1,\r\n        \"nombre\": \"Peso Mexicano\"\r\n      },\r\n      \"tipoCambio\": 1,\r\n      \"agente\": {\r\n        \"id\": 0,\r\n        \"codigo\": \"AGENTEPRUEBA\",\r\n        \"nombre\": \"\",\r\n        \"tipo\": \"VentasCobro\",\r\n        \"datosExtra\": {}\r\n      },\r\n      \"referencia\": \"Referencia doc\",\r\n      \"observaciones\": \"Observaciones del documento.\",\r\n      \"total\": 0,\r\n      \"formaPago\": \"01\",\r\n      \"metodoPago\": \"PPD\",\r\n      \"movimientos\": [\r\n        {\r\n          \"id\": 0,\r\n          \"producto\": {\r\n            \"id\": 0,\r\n            \"codigo\": \"PROD001\",\r\n            \"nombre\": \"\",\r\n            \"tipo\": \"Producto\",\r\n            \"controlExistencias\": \"Ninguno\",\r\n            \"unidadMedida\": {\r\n              \"id\": 0,\r\n              \"abreviatura\": \"\",\r\n              \"nombre\": \"\",\r\n              \"claveSat\": \"\",\r\n              \"datosExtra\": {}\r\n            },\r\n            \"claveSat\": \"\",\r\n            \"datosExtra\": {}\r\n          },\r\n          \"almacen\": {\r\n            \"id\": 0,\r\n            \"codigo\": \"ALMACENPRUEBA\",\r\n            \"nombre\": \"\",\r\n            \"datosExtra\": {}\r\n          },\r\n          \"unidades\": 1,\r\n          \"precio\": 100,\r\n          \"subtotal\": 0,\r\n          \"descuentos\": {\r\n            \"descuento1\": {\r\n              \"tasa\": 10,\r\n              \"importe\": 0\r\n            },\r\n            \"descuento2\": {\r\n              \"tasa\": 0,\r\n              \"importe\": 0\r\n            },\r\n            \"descuento3\": {\r\n              \"tasa\": 0,\r\n              \"importe\": 0\r\n            },\r\n            \"descuento4\": {\r\n              \"tasa\": 0,\r\n              \"importe\": 0\r\n            },\r\n            \"descuento5\": {\r\n              \"tasa\": 0,\r\n              \"importe\": 0\r\n            }\r\n          },\r\n          \"impuestos\": {\r\n            \"impuesto1\": {\r\n              \"tasa\": 16,\r\n              \"importe\": 0\r\n            },\r\n            \"impuesto2\": {\r\n              \"tasa\": 0,\r\n              \"importe\": 0\r\n            },\r\n            \"impuesto3\": {\r\n              \"tasa\": 0,\r\n              \"importe\": 0\r\n            }\r\n          },\r\n          \"retenciones\": null,\r\n          \"total\": 0,\r\n          \"referencia\": \"Referencia mov\",\r\n          \"observaciones\": \"Observaciones del movimiento\",\r\n          \"seriesCapas\": [],\r\n          \"datosExtra\": {}\r\n        }\r\n      ],\r\n      \"direccionFiscal\": {\r\n        \"id\": 0,\r\n        \"tipoCatalogo\": 0,\r\n        \"tipo\": \"Fiscal\",\r\n        \"calle\": \"\",\r\n        \"numeroExterior\": \"\",\r\n        \"numeroInterior\": \"\",\r\n        \"colonia\": \"\",\r\n        \"ciudad\": \"\",\r\n        \"estado\": \"\",\r\n        \"codigoPostal\": \"\",\r\n        \"pais\": \"\",\r\n        \"datosExtra\": {}\r\n      },\r\n      \"folioDigital\": {\r\n        \"id\": 0,\r\n        \"uuid\": \"\",\r\n        \"datosExtra\": {}\r\n      },\r\n      \"datosExtra\": {\r\n        \"COBSERVACIONES\": \"Observaciones del documento.\",\r\n        \"CTEXTOEXTRA1\": \"Texto extra 1\",\r\n        \"CTEXTOEXTRA2\": \"Texto extra 2\",\r\n        \"CTEXTOEXTRA3\": \"Texto extra 3\"\r\n      }\r\n    }\r\n  },\r\n  \"options\": {\r\n    \"usarFechaDelDia\": true,\r\n    \"buscarSiguienteFolio\": true,\r\n    \"crearCatalogos\": false,\r\n    \"cargarDatosExtra\": false\r\n  }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -362,7 +448,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"$type\": \"CrearFacturaRequest\",\r\n  \"model\": {\r\n    \"documento\": {\r\n      \"id\": 0,\r\n      \"concepto\": {\r\n        \"id\": 0,\r\n        \"codigo\": \"FACTURAPRUEBA\",\r\n        \"nombre\": \"\",\r\n        \"datosExtra\": {}\r\n      },\r\n      \"serie\": \"\",\r\n      \"folio\": 0,\r\n      \"fecha\": \"2023-08-04T00:00:00-05:00\",\r\n      \"cliente\": {\r\n        \"id\": 0,\r\n        \"codigo\": \"CLIENTEPRUEBA\",\r\n        \"razonSocial\": \"\",\r\n        \"rfc\": \"\",\r\n        \"tipo\": 0,\r\n        \"usoCfdi\": null,\r\n        \"regimenFiscal\": null,\r\n        \"direccionFiscal\": null,\r\n        \"datosExtra\": {}\r\n      },\r\n      \"moneda\": {\r\n        \"id\": 1,\r\n        \"nombre\": \"Peso Mexicano\"\r\n      },\r\n      \"tipoCambio\": 1,\r\n      \"agente\": {\r\n        \"id\": 0,\r\n        \"codigo\": \"AGENTEPRUEBA\",\r\n        \"nombre\": \"\",\r\n        \"tipo\": \"VentasCobro\",\r\n        \"datosExtra\": {}\r\n      },\r\n      \"referencia\": \"Referencia doc\",\r\n      \"observaciones\": \"Observaciones del documento.\",\r\n      \"total\": 0,\r\n      \"formaPago\": \"01\",\r\n      \"metodoPago\": \"PPD\",\r\n      \"movimientos\": [\r\n        {\r\n          \"id\": 0,\r\n          \"producto\": {\r\n            \"id\": 0,\r\n            \"codigo\": \"PROD001\",\r\n            \"nombre\": \"\",\r\n            \"tipo\": \"Producto\",\r\n            \"claveSat\": \"\",\r\n            \"datosExtra\": {}\r\n          },\r\n          \"almacen\": {\r\n            \"id\": 0,\r\n            \"codigo\": \"ALMACENPRUEBA\",\r\n            \"nombre\": \"\",\r\n            \"datosExtra\": {}\r\n          },\r\n          \"unidades\": 1,\r\n          \"precio\": 100,\r\n          \"subtotal\": 0,\r\n          \"descuentos\": {\r\n            \"descuento1\": {\r\n              \"tasa\": 10,\r\n              \"importe\": 0\r\n            },\r\n            \"descuento2\": {\r\n              \"tasa\": 0,\r\n              \"importe\": 0\r\n            },\r\n            \"descuento3\": {\r\n              \"tasa\": 0,\r\n              \"importe\": 0\r\n            },\r\n            \"descuento4\": {\r\n              \"tasa\": 0,\r\n              \"importe\": 0\r\n            },\r\n            \"descuento5\": {\r\n              \"tasa\": 0,\r\n              \"importe\": 0\r\n            }\r\n          },\r\n          \"impuestos\": {\r\n            \"impuesto1\": {\r\n              \"tasa\": 16,\r\n              \"importe\": 0\r\n            },\r\n            \"impuesto2\": {\r\n              \"tasa\": 0,\r\n              \"importe\": 0\r\n            },\r\n            \"impuesto3\": {\r\n              \"tasa\": 0,\r\n              \"importe\": 0\r\n            }\r\n          },\r\n          \"retenciones\": null,\r\n          \"total\": 0,\r\n          \"referencia\": \"Referencia mov\",\r\n          \"observaciones\": \"Observaciones del movimiento\",\r\n          \"seriesCapas\": [],\r\n          \"datosExtra\": {}\r\n        }\r\n      ],\r\n      \"direccionFiscal\": {\r\n        \"id\": 0,\r\n        \"tipoCatalogo\": 0,\r\n        \"tipo\": \"Fiscal\",\r\n        \"calle\": \"\",\r\n        \"numeroExterior\": \"\",\r\n        \"numeroInterior\": \"\",\r\n        \"colonia\": \"\",\r\n        \"ciudad\": \"\",\r\n        \"estado\": \"\",\r\n        \"codigoPostal\": \"\",\r\n        \"pais\": \"\",\r\n        \"datosExtra\": {}\r\n      },\r\n      \"folioDigital\": {\r\n        \"id\": 0,\r\n        \"uuid\": \"\",\r\n        \"datosExtra\": {}\r\n      },\r\n      \"datosExtra\": {\r\n        \"COBSERVACIONES\": \"Observaciones del documento.\",\r\n        \"CTEXTOEXTRA1\": \"Texto extra 1\",\r\n        \"CTEXTOEXTRA2\": \"Texto extra 2\",\r\n        \"CTEXTOEXTRA3\": \"Texto extra 3\"\r\n      }\r\n    }\r\n  },\r\n  \"options\": {\r\n    \"usarFechaDelDia\": true,\r\n    \"buscarSiguienteFolio\": true,\r\n    \"crearCatalogos\": false,\r\n    \"timbrar\": true,\r\n    \"contrasenaCertificado\": \"12345678a\",\r\n    \"generarDocumentosDigitales\": true,\r\n    \"generarPdf\": true,\r\n    \"nombrePlantilla\": \"Facturav40.rdl\",\r\n    \"agregarArchivo\": false,\r\n    \"nombreArchivo\": \"\",\r\n    \"contenidoArchivo\": \"\",\r\n    \"cargarDatosExtra\": false\r\n  }\r\n}",
+							"raw": "{\r\n  \"$type\": \"CrearFacturaRequest\",\r\n  \"model\": {\r\n    \"documento\": {\r\n      \"id\": 0,\r\n      \"concepto\": {\r\n        \"id\": 0,\r\n        \"codigo\": \"FACTURAPRUEBA\",\r\n        \"nombre\": \"\",\r\n        \"datosExtra\": {}\r\n      },\r\n      \"serie\": \"\",\r\n      \"folio\": 0,\r\n      \"fecha\": \"2023-12-12T00:00:00-06:00\",\r\n      \"cliente\": {\r\n        \"id\": 0,\r\n        \"codigo\": \"CLIENTEPRUEBA\",\r\n        \"razonSocial\": \"\",\r\n        \"rfc\": \"\",\r\n        \"tipo\": 0,\r\n        \"usoCfdi\": null,\r\n        \"regimenFiscal\": null,\r\n        \"direccionFiscal\": null,\r\n        \"datosExtra\": {}\r\n      },\r\n      \"moneda\": {\r\n        \"id\": 1,\r\n        \"nombre\": \"Peso Mexicano\"\r\n      },\r\n      \"tipoCambio\": 1,\r\n      \"agente\": {\r\n        \"id\": 0,\r\n        \"codigo\": \"AGENTEPRUEBA\",\r\n        \"nombre\": \"\",\r\n        \"tipo\": \"VentasCobro\",\r\n        \"datosExtra\": {}\r\n      },\r\n      \"referencia\": \"Referencia doc\",\r\n      \"observaciones\": \"Observaciones del documento.\",\r\n      \"total\": 0,\r\n      \"formaPago\": \"01\",\r\n      \"metodoPago\": \"PPD\",\r\n      \"movimientos\": [\r\n        {\r\n          \"id\": 0,\r\n          \"producto\": {\r\n            \"id\": 0,\r\n            \"codigo\": \"PROD001\",\r\n            \"nombre\": \"\",\r\n            \"tipo\": \"Producto\",\r\n            \"controlExistencias\": \"Ninguno\",\r\n            \"unidadMedida\": {\r\n              \"id\": 0,\r\n              \"abreviatura\": \"\",\r\n              \"nombre\": \"\",\r\n              \"claveSat\": \"\",\r\n              \"datosExtra\": {}\r\n            },\r\n            \"claveSat\": \"\",\r\n            \"datosExtra\": {}\r\n          },\r\n          \"almacen\": {\r\n            \"id\": 0,\r\n            \"codigo\": \"ALMACENPRUEBA\",\r\n            \"nombre\": \"\",\r\n            \"datosExtra\": {}\r\n          },\r\n          \"unidades\": 1,\r\n          \"precio\": 100,\r\n          \"subtotal\": 0,\r\n          \"descuentos\": {\r\n            \"descuento1\": {\r\n              \"tasa\": 10,\r\n              \"importe\": 0\r\n            },\r\n            \"descuento2\": {\r\n              \"tasa\": 0,\r\n              \"importe\": 0\r\n            },\r\n            \"descuento3\": {\r\n              \"tasa\": 0,\r\n              \"importe\": 0\r\n            },\r\n            \"descuento4\": {\r\n              \"tasa\": 0,\r\n              \"importe\": 0\r\n            },\r\n            \"descuento5\": {\r\n              \"tasa\": 0,\r\n              \"importe\": 0\r\n            }\r\n          },\r\n          \"impuestos\": {\r\n            \"impuesto1\": {\r\n              \"tasa\": 16,\r\n              \"importe\": 0\r\n            },\r\n            \"impuesto2\": {\r\n              \"tasa\": 0,\r\n              \"importe\": 0\r\n            },\r\n            \"impuesto3\": {\r\n              \"tasa\": 0,\r\n              \"importe\": 0\r\n            }\r\n          },\r\n          \"retenciones\": null,\r\n          \"total\": 0,\r\n          \"referencia\": \"Referencia mov\",\r\n          \"observaciones\": \"Observaciones del movimiento\",\r\n          \"seriesCapas\": [],\r\n          \"datosExtra\": {}\r\n        }\r\n      ],\r\n      \"direccionFiscal\": {\r\n        \"id\": 0,\r\n        \"tipoCatalogo\": 0,\r\n        \"tipo\": \"Fiscal\",\r\n        \"calle\": \"\",\r\n        \"numeroExterior\": \"\",\r\n        \"numeroInterior\": \"\",\r\n        \"colonia\": \"\",\r\n        \"ciudad\": \"\",\r\n        \"estado\": \"\",\r\n        \"codigoPostal\": \"\",\r\n        \"pais\": \"\",\r\n        \"datosExtra\": {}\r\n      },\r\n      \"folioDigital\": {\r\n        \"id\": 0,\r\n        \"uuid\": \"\",\r\n        \"datosExtra\": {}\r\n      },\r\n      \"datosExtra\": {\r\n        \"COBSERVACIONES\": \"Observaciones del documento.\",\r\n        \"CTEXTOEXTRA1\": \"Texto extra 1\",\r\n        \"CTEXTOEXTRA2\": \"Texto extra 2\",\r\n        \"CTEXTOEXTRA3\": \"Texto extra 3\"\r\n      }\r\n    }\r\n  },\r\n  \"options\": {\r\n    \"usarFechaDelDia\": true,\r\n    \"buscarSiguienteFolio\": true,\r\n    \"crearCatalogos\": false,\r\n    \"timbrar\": true,\r\n    \"contrasenaCertificado\": \"12345678a\",\r\n    \"generarDocumentosDigitales\": true,\r\n    \"generarPdf\": true,\r\n    \"nombrePlantilla\": \"Facturav40.rdl\",\r\n    \"agregarArchivo\": false,\r\n    \"nombreArchivo\": \"\",\r\n    \"contenidoArchivo\": \"\",\r\n    \"cargarDatosExtra\": false\r\n  }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -443,7 +529,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"$type\": \"EliminarDocumentoRequest\",\r\n  \"model\": {\r\n    \"llaveDocumento\": {\r\n      \"conceptoCodigo\": \"FACTURAPRUEBA\",\r\n      \"serie\": \"FP\",\r\n      \"folio\": 1\r\n    }\r\n  },\r\n  \"options\": {}\r\n}",
+							"raw": "{\r\n  \"$type\": \"EliminarDocumentoRequest\",\r\n  \"model\": {\r\n    \"llaveDocumento\": {\r\n      \"conceptoCodigo\": \"1\",\r\n      \"serie\": \"\",\r\n      \"folio\": 2\r\n    }\r\n  },\r\n  \"options\": {}\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -470,7 +556,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"$type\": \"GenerarDocumentoDigitalRequest\",\r\n  \"model\": {\r\n    \"llaveDocumento\": {\r\n      \"conceptoCodigo\": \"FACTURAPRUEBA\",\r\n      \"serie\": \"FP\",\r\n      \"folio\": 1\r\n    }\r\n  },\r\n  \"options\": {\r\n    \"tipo\": \"Pdf\",\r\n    \"nombrePlantilla\": \"Facturav40.rdl\"\r\n  }\r\n}",
+							"raw": "{\r\n  \"$type\": \"GenerarDocumentoDigitalRequest\",\r\n  \"model\": {\r\n    \"llaveDocumento\": {\r\n      \"conceptoCodigo\": \"1\",\r\n      \"serie\": \"\",\r\n      \"folio\": 2\r\n    }\r\n  },\r\n  \"options\": {\r\n    \"tipo\": \"Pdf\",\r\n    \"nombrePlantilla\": \"Facturav40.rdl\"\r\n  }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -701,7 +787,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"$type\": \"CrearProductoRequest\",\r\n  \"model\": {\r\n    \"producto\": {\r\n      \"id\": 0,\r\n      \"codigo\": \"PROD001\",\r\n      \"nombre\": \"PRODUCTO DE PRUEBAS\",\r\n      \"tipo\": \"Producto\",\r\n      \"claveSat\": \"43231500\",\r\n      \"datosExtra\": {\r\n        \"CCLAVESAT\": \"43231500\",\r\n        \"CTEXTOEXTRA1\": \"Texto extra 1\",\r\n        \"CTEXTOEXTRA2\": \"Texto extra 2\",\r\n        \"CTEXTOEXTRA3\": \"Texto extra 3\"\r\n      }\r\n    }\r\n  },\r\n  \"options\": {\r\n    \"cargarDatosExtra\": false\r\n  }\r\n}",
+							"raw": "{\r\n  \"$type\": \"CrearProductoRequest\",\r\n  \"model\": {\r\n    \"producto\": {\r\n      \"id\": 0,\r\n      \"codigo\": \"PROD001\",\r\n      \"nombre\": \"PRODUCTO DE PRUEBAS\",\r\n      \"tipo\": \"Producto\",\r\n      \"controlExistencias\": \"Ninguno\",\r\n      \"unidadMedida\": {\r\n        \"id\": 0,\r\n        \"abreviatura\": \"\",\r\n        \"nombre\": \"\",\r\n        \"claveSat\": \"\",\r\n        \"datosExtra\": {}\r\n      },\r\n      \"claveSat\": \"43231500\",\r\n      \"datosExtra\": {\r\n        \"CCLAVESAT\": \"43231500\",\r\n        \"CTEXTOEXTRA1\": \"Texto extra 1\",\r\n        \"CTEXTOEXTRA2\": \"Texto extra 2\",\r\n        \"CTEXTOEXTRA3\": \"Texto extra 3\"\r\n      }\r\n    }\r\n  },\r\n  \"options\": {\r\n    \"cargarDatosExtra\": false\r\n  }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -799,6 +885,132 @@
 								"requests"
 							]
 						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Unidades Medida",
+			"item": [
+				{
+					"name": "Crear Unidad Medida",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"$type\": \"CrearUnidadMedidaRequest\",\r\n  \"model\": {\r\n    \"unidadMedida\": {\r\n      \"id\": 0,\r\n      \"abreviatura\": \"PZ\",\r\n      \"nombre\": \"PRUEBA\",\r\n      \"claveSat\": \"H87\",\r\n      \"datosExtra\": {}\r\n    }\r\n  },\r\n  \"options\": {\r\n    \"cargarDatosExtra\": false\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Unidad Medida",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"$type\": \"ActualizarUnidadMedidaRequest\",\r\n  \"model\": {\r\n    \"nombre\": \"PRUEBA\",\r\n    \"unidadMedida\": {\r\n      \"id\": 0,\r\n      \"abreviatura\": \"PZ\",\r\n      \"nombre\": \"PRUEBA\",\r\n      \"claveSat\": \"H87\",\r\n      \"datosExtra\": {}\r\n    }\r\n  },\r\n  \"options\": {\r\n    \"cargarDatosExtra\": false\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Unidades Medida",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"$type\": \"BuscarUnidadesMedidaRequest\",\r\n  \"model\": {},\r\n  \"options\": {\r\n    \"cargarDatosExtra\": false\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Unidad Medida",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"$type\": \"EliminarUnidadMedidaRequest\",\r\n  \"model\": {\r\n    \"nombreUnidad\": \"PRUEBA\"\r\n  },\r\n  \"options\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/requests",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"requests"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Responses",
+			"item": [
+				{
+					"name": "Create Response",
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}
