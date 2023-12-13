@@ -1,0 +1,23 @@
+{
+  "$type": "ActualizaDireccionClienteRequest",
+  "model": {
+    "codigoCliente": "PRUEBA",
+    "direccion": {
+      "id": 0,
+      "tipoCatalogo": "Clientes",
+      "tipo": "Fiscal",
+      "calle": "Calle",
+      "numeroExterior": "1",
+      "numeroInterior": "1",
+      "colonia": "Colonia",
+      "ciudad": "Ciudad",
+      "estado": "Estado",
+      "codigoPostal": "123456",
+      "pais": "Mexico",
+      "datosExtra": {}
+    }
+  },
+  "options": {
+    "cargarDatosExtra": false
+  }
+}

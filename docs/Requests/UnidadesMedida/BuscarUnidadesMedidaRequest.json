@@ -1,0 +1,7 @@
+{
+  "$type": "BuscarUnidadesMedidaRequest",
+  "model": {},
+  "options": {
+    "cargarDatosExtra": false
+  }
+}

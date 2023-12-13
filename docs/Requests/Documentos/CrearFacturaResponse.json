@@ -11,7 +11,7 @@
       },
       "serie": "",
       "folio": 0,
-      "fecha": "2023-10-16T00:00:00-06:00",
+      "fecha": "2023-12-12T00:00:00-06:00",
       "cliente": {
         "id": 0,
         "codigo": "CLIENTEPRUEBA",
@@ -48,6 +48,14 @@
             "codigo": "PROD001",
             "nombre": "",
             "tipo": "Producto",
+            "controlExistencias": "Ninguno",
+            "unidadMedida": {
+              "id": 0,
+              "abreviatura": "",
+              "nombre": "",
+              "claveSat": "",
+              "datosExtra": {}
+            },
             "claveSat": "",
             "datosExtra": {}
           },
@@ -134,13 +142,13 @@
       "nombre": "FACTURA100.xml",
       "tipo": "text/xml",
       "ubicacion": "C:\\Compac\\Empresas\\adUNIVERSIDAD_ROBOTICA\\XML_SDK\\FACTURA100.xml",
-      "contenido": "eNPMDNmOPExHJf8f9S3xf1LK7OrTRCeMUmC+OWJ5gVkgwhPLNP37Jo9XTgj3oEFXhz1qouGk0KItZmWblkQRj2UL/jw+/Q=="
+      "contenido": "/mhCJePUdYKr0RKHVYeaTMRCUapf+zPYv7ZzPIvJNAkalKxHsK0Co5ccIXrGmV+HwitZ/cRIkLcoNA7f8lvk+nhmPI9gWA=="
     },
     "pdf": {
       "nombre": "FACTURA100.pdf",
       "tipo": "application/pdf",
       "ubicacion": "C:\\Compac\\Empresas\\adUNIVERSIDAD_ROBOTICA\\XML_SDK\\FACTURA100.pdf",
-      "contenido": "KLZE8VD/fngvCPl1hXsfaHkDaGR/sMCMddCN7F45iYOhaydhFlWalnN2KYtLD/D9vtppBHdQizhUQEIekCYKjePxBPJ1qA=="
+      "contenido": "HlRqIBdapRqO2lFmdSuwKErwoYjR/NLY/ghABYmH50qEMwYXDJeQ7aIG0DQpkWuylk27DBUyTt9Kb0IZJML+/X3QEwRjxg=="
     }
   }
 }

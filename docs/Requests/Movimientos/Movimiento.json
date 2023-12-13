@@ -5,6 +5,14 @@
     "codigo": "PROD001",
     "nombre": "",
     "tipo": "Producto",
+    "controlExistencias": "Ninguno",
+    "unidadMedida": {
+      "id": 0,
+      "abreviatura": "",
+      "nombre": "",
+      "claveSat": "",
+      "datosExtra": {}
+    },
     "claveSat": "",
     "datosExtra": {}
   },
