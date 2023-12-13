@@ -17,11 +17,11 @@ public sealed class MovimientoRepository : IMovimientoRepository
     private readonly IMapper _mapper;
     private readonly IProductoRepository _productoRepository;
 
-    public MovimientoRepository(ContpaqiComercialEmpresaDbContext context, IMapper mapper)
+    public MovimientoRepository(ContpaqiComercialEmpresaDbContext context, IMapper mapper, IUnidadMedidaRepository unidadMedidaRepository)
     {
         _context = context;
         _mapper = mapper;
-        _productoRepository = new ProductoRepository(context, mapper);
+        _productoRepository = new ProductoRepository(context, mapper, unidadMedidaRepository);
         _almacenRepository = new AlmacenRepository(context, mapper);
     }
 
