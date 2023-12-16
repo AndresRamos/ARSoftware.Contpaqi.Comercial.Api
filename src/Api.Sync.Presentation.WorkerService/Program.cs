@@ -1,4 +1,3 @@
-using System.Reflection;
 using Api.Sync.Core.Application;
 using Api.Sync.Core.Application.ContpaqiComercial.Commands.IniciarSdk;
 using Api.Sync.Infrastructure;
@@ -8,12 +7,13 @@ using MediatR;
 using Serilog;
 
 IHost host = Host.CreateDefaultBuilder(args)
-    .UseContentRoot(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!)
+    //.UseContentRoot(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!)
     .ConfigureServices((hostContext, services) =>
     {
         services.AddHostedService<Worker>();
         services.AddTransient<ApiRequestHubClientFactory>();
         services.AddApplicationServices(hostContext.Configuration).AddInfrastructureServices(hostContext.Configuration);
+        services.AddWindowsService(options => { options.ServiceName = "CONTPAQi Comercial API Service"; });
     })
     .UseSerilog((hostingContext, loggerConfiguration) =>
     {
